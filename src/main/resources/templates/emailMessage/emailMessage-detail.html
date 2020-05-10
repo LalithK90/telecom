@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>Thymeleaf Springboot </title>
+</head>
+<body>
+<nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
+
+
+<!--heading Area-->
+<div class="container-fluid bg-secondary form-Border">
+    <div class="row text-center formManagement border-info">
+        <div class="col">
+            <a class="btn btn-primary" href="/home">
+                <i class="fa fa-home" style="font-size: 20px"></i> &nbsp; Home
+            </a>
+        </div>
+        <div class="col">
+            <h4 class="text-light text-center">
+                <strong>
+                    Send Message Details
+                </strong>
+            </h4>
+        </div>
+        <div class="col">
+            <a href="/emailMessage" class="btn btn-primary">
+                <i class="fa fa-list"></i>&nbsp; View List
+            </a>
+        </div>
+    </div>
+</div>
+
+<div id="employeeDetails" class="container-fluid bg-dark formBorder">
+    <div class="col-sm-12 flex-column ">
+        <div class="row">
+            <!--Left Side-->
+            <div class="form-group col-md-6 col-sm-6 text-left flex-column">
+                <div class="form-row text-right">
+                    <div class="col-md-4">
+                        <label class="control-label" for="subject">Subject :</label>
+                    </div>
+                    <div class="col-md-8">
+                        <p th:text="${emailMessageDetail.subject}" id="subject" class="display_detail"></p>
+                    </div>
+                </div>
+                <div class="form-row text-right">
+                    <div class="col-md-4">
+                        <label class="control-label" for="message">Message :</label>
+                    </div>
+                    <div class="col-md-8">
+                        <p th:text="${emailMessageDetail.message}" id="message" class="display_detail"></p>
+                    </div>
+                </div>
+            </div>
+            <!--Right Side-->
+            <div class="form-group col-md-6 col-sm-6 text-right flex-column">
+                <div class="form-row text-right">
+                    <div class="col-md-4">
+                        <label class="control-label" for="createdAt">Send At :</label>
+                    </div>
+                    <div class="col-md-8 text-left">
+                        <p th:text="${#temporals.format(emailMessageDetail.createdAt, 'dd-MM-yyyy HH:mm')}" id="createdAt" class="display_detail "></p>
+                    </div>
+                </div>
+                <div class="form-row text-right">
+                    <div class="col-md-4">
+                        <label class="control-label" for="createdBy">Send By :</label>
+                    </div>
+                    <div class="col-md-8 text-left">
+                        <p th:text="${emailMessageDetail.createdBy}" id="createdBy" class="display_detail "></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- send employee list-->
+    <div class="col-sm-12 flex-column ">
+        <div class="row">
+            <div class="col-md-2">
+                <label class="control-label" for="subject">Send Employees :</label>
+            </div>
+            <div class="col-md-8 text-left">
+                <table class="table table-striped table-inverse table-responsive">
+                    <thead class="thead-inverse">
+                    <tr>
+                        <th>Index</th>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                        <th>Email</th>
+                        <th>View Employee</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="employee, rowCount : ${emailMessageDetail.employees}">
+                        <td th:text="${rowCount.count}"></td>
+                        <td th:text="${employee.title.title} + ${employee.name}"></td>
+                        <td th:text="${employee.mobileOne}"></td>
+                        <td th:text="${employee.officeEmail}"></td>
+                        <td><a th:href="${'/employee/' + employee.id}" class="btn btn-primary btn-sm"><i
+                                class="fa fa-folder-open"></i>&nbsp;View</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="form-group col-md-12 col-sm-12 text-center flex-column ">
+        <a href="/emailMessage">
+            <button class="btn btn-success" type="button" tabindex="10">
+                <i class="fa fa-backward " style="font-size: 20px"></i>&nbsp; &nbsp;Back
+            </button>
+        </a>
+    </div>
+    <br/>
+</div>
+
+
+<!--footer include-->
+<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+<!--script include-->
+<script th:replace="~{fragments/script :: scriptFragment}"></script>
+
+</body>
+</html>

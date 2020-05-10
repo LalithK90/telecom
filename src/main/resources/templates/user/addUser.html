@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>Thymeleaf Springboot </title>
+</head>
+<body>
+<nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
+
+<!--Page header -->
+<div class="container-fluid bg-secondary form-Border">
+    <div class="row text-center formManagement border-info">
+        <div class="col">
+            <a class="btn btn-primary" href="/home">
+                <i class="fa fa-home" style="font-size: 20px"></i> &nbsp; Home
+            </a>
+        </div>
+        <div class="col">
+            <h4 class="text-light text-center">
+                <strong>
+                    <span id="formHeader" th:text="${addStatus==true?'New User':'Update User'}"></span>
+                </strong>
+            </h4>
+        </div>
+        <div class="col">
+            <a href="/user" class="btn btn-primary">
+                <i class="fa fa-list"></i>&nbsp; View List
+            </a>
+        </div>
+    </div>
+</div>
+<!--Employee find-->
+<div class="container-fluid bg-dark formBorder" id="employeeFindForm" th:if="${employeeDetailShow==false}">
+    <div class="col-sm-12 flex-column ">
+        <form id="form" method="POST" th:action="${'/user/workingPlace'}" th:object="${employee}"
+              enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="col-5 flex-column">
+                    <div class="form-group">
+                        <div class="col-4">
+                            <label class="control-label" for="selectParameter">Parameter :</label>
+                        </div>
+                        <div class="col-8">
+                            <select id="selectParameter" class="form-control" tabindex="1" required>
+                                <option value="">Please select</option>
+                                <option value="nic">NIC Number</option>
+                                <option value="payRoleNumber">Pay Role Number</option>
+                                <option value="departmentIdNumber">Department Id Number</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 flex-column">
+                    <div class="form-group">
+                        <div class="col-5">
+                            <label class="control-label" for="valueEmployee">Value :</label>
+                        </div>
+                        <div class="col-7">
+                            <input id="valueEmployee" tabindex="2" class="form-control" type="text" minlength="3"
+                                   required
+                                   autofocus/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 flex-column">
+                    <div class="form-group">
+                        <div class="">
+                            <div class="col-2">
+                                <label class="control-label"></label>
+                            </div>
+                            <div class="col-10 text-left" id="btnSearchEmployee">
+                                <button class="btn btn-success" tabindex="3" type="submit">
+                                    <i class="fa fa-search " style="font-size: 20px"></i>&nbsp; &nbsp;Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--Employee not fount message-->
+<div id="employeeNotFoundShow" th:if="${employeeNotFoundShow==true}"
+     class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <strong><span id="employeeNotFound" th:text="${employeeNotFound}"></span></strong>
+    <script>
+        $(".alert").alert();
+    </script>
+</div>
+
+<!--User add from-->
+<div class="container-fluid bg-dark formBorder" th:if="${employeeDetailShow==true}" id="userFormShow">
+    <form id="formUser" th:action="${addStatus==true?'/user/add':'/user/update'}" th:object="${user}"
+          class="form-horizontal" method="POST" autocomplete="false">
+        <div class="row">
+            <!--Left Side-->
+            <div class="form-group col-md-5 col-sm-7 text-left flex-column">
+                <div id="idHide" th:if="${addStatus==false}" class="form-row">
+                    <div class="col-md-4">
+                        <label class="control-label" for="id">ID :</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input class="form-control" th:field="*{id}" id="id" type="text" readonly/>
+                    </div>
+                </div>
+                <!--Employee details Display-->
+                <div class="form-row">
+                    <div class="col-md-4">
+                        <label class="control-label" for="employee">Employee :</label>
+                    </div>
+                    <div class="col-md-8">
+                        <select class="form-control" th:field="*{employee}" th:each="e : ${employee}" name="employee"
+                                id="employee" required>
+                            <option id="employeeList"
+                                    th:text="${e.title.title} + ${' '} + ${e.name} +${' - '} + ${e.nic}"
+                                    th:value="${e.id}"
+                                    th:field="*{employee}" value="">Please select
+                            </option>
+                        </select>
+                        <div id="employeeNameBox" th:if="${addStatus==false}">
+                            <strong>
+                                <span id="employeeName"
+                                      th:text="${user.employee.title.title} + ${' '} + ${user.employee.name} +${' - '} + ${user.employee.nic}"></span>
+                                <input type="hidden" id="employeeSelected" th:field="*{employee}">
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+                <!--User name-->
+                <div class="form-row">
+                    <label class="control-label col-md-4" for="username">User Name :</label>
+                    <div class="col-md-8">
+                        <input class="form-control" th:field="*{username}" id="username"
+                               placeholder="Enter User Name Here" required type="text"/>
+                    </div>
+                </div>
+                <!--Password-->
+                <div class="form-row">
+                    <label class="control-label col-md-4" for="password">Password :</label>
+                    <div class="col-md-8">
+                        <input class="form-control pwd" id="password" th:field="*{password}"
+                               placeholder="Enter Password Here" required type="password" min="6"
+                        />
+                        <div class="text-right">
+                            <span id="result"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-row alert alert-danger text-center">
+                        <strong>Attention !</strong>
+                        If Employee is belong to supper senior category.
+                        <strong>Please select one or two work station </strong>.
+                    </div>
+                </div>
+            </div>
+            <!--Right Side-->
+            <div class="form-group col-md-5 col-sm-7 text-left flex-column">
+                <!--Roles Display-->
+                <div class="form-row">
+                    <label class="control-label" for="roles">Roles :</label>
+                    <select id="roles" th:field="*{roles}" class="form-control" size="16" multiple required>
+                        <option id="roleList" th:each="role, rowCount : ${roleList}"
+                                th:text="${rowCount.count} +${'. '}+${role.roleName}"
+                                th:value="${role.id}"
+                                th:field="*{roles}" value=""></option>
+                    </select>
+                </div>
+            </div>
+
+            <!--Button-->
+            <div class="form-group col-md-12 col-sm-12 text-center flex-column">
+                <button class="btn btn-success" type="submit">
+                    <i class="fa fa-save" style="font-size: 20px"></i>&nbsp; &nbsp;<span
+                        id="submit" th:text="${addStatus==true?'Save': 'Update'}">                        </span>
+                </button>
+            </div>
+        </div>
+        <!--Error-->
+        <div class="form-row">
+            <label id="errorLabel" th:if="${#fields.hasErrors('*')}" th:text="'Errors: '">Errors: </label>
+            <ul>
+                <li id="errorDisplay" class="error" th:each="err: ${#fields.errors('*')}" th:text="${err}"></li>
+            </ul>
+        </div>
+    </form>
+
+
+</div>
+
+<!--footer include-->
+<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+<!--script include-->
+<script th:replace="~{fragments/script :: scriptFragment}"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="headerFragment">
+    <title th:if="${headerTitle==null}" th:text="${'W3Academy'}">Spring boot - Thymeleaf</title>
+    <title th:if="${headerTitle!=null}" th:text="${headerTitle}">Spring boot - Thymeleaf</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap core CSS Downloaded file add-->
+    <link th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css} " media="all" rel="stylesheet" type="text/css"/>
+
+    <!--Jquery ui-->
+    <link th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.css} " media="all" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.structure.css}" media="all" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.theme.css}" media="all" rel="stylesheet" type="text/css"/>
+
+    <!--Pdf js -->
+    <link th:href="@{/webjars/pdf-js/2.3.200/web/viewer.css}" media="all" rel="stylesheet" type="text/css">
+
+    <!--Chart js-->
+    <link th:href="@{/webjars/chart.js/2.9.3/dist/Chart.min.css}" media="all" rel="stylesheet" type="text/css">
+
+    <!--table pagination-->
+    <link th:href="@{/css/dataTables.bootstrap.min.css}" media="all" rel="stylesheet" type="text/css"/>
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/myCss.css}" media="all" rel="stylesheet" type="text/css"/>
+    <!-- fontawesome css -->
+    <link th:href="@{/webjars/font-awesome/5.11.2/css/fontawesome.min.css} " media="all" rel="stylesheet" type="text/css"/>
+    <!--image uploader css-->
+    <link th:href="@{/css/image-uploader.min.css}" media="all" rel="stylesheet" type="text/css"/>
+    <!--Floating Label-->
+    <link th:href="@{/css/floating-labels.css}" media="all" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+
+</body>
+</html>
+

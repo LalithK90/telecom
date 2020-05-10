@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>Thymeleaf Springboot </title>
+</head>
+<body id="loginBack">
+<div class="col full-height " id="loginPage">
+    <div class="col-8 col-sm-4 form-box bg-transparent ui-widget-content" id="draggable">
+        <form th:action="${'/login'}" method="post">
+            <br/>
+            <fieldset>
+                <!--   <legend class="text-lg-center bg-white"><h3><strong> Excise Department - Sri Lanka</strong></h3>
+                   </legend>-->
+                <div class="form-label-group">
+                    <input type="text" id="username" th:name="${'username'}" class="form-control" placeholder="username"
+                           required>
+                    <label for="username">Username</label>
+                </div>
+                <div class="form-label-group">
+                    <input type="password" id="inputPassword" th:name="${'password'}" class="form-control"
+                           placeholder="password"
+                           required>
+                    <label for="inputPassword">Password</label>
+                </div>
+                <div class="form-group text-right">
+                    <button class="btn btn-primary " type="submit">LOGIN</button>
+                </div>
+            </fieldset>
+            <div class="container-fluid " th:if="${param.error}">
+                <p class="bg-white text-capitalize text-danger text-lg-center">Invalid username or password. </p>
+            </div>
+            <div class="container-fluid ">
+                <p id="errorMessage" th:text="${err}" class="bg-white text-capitalize text-danger text-lg-center"></p>
+            </div>
+        </form>
+    </div>
+</div>
+<!--footer include-->
+<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+<!--script include-->
+<script th:replace="~{fragments/script :: scriptFragment}"></script>
+
+</body>
+</html>
