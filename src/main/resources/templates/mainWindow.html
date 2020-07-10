@@ -3,148 +3,44 @@
 <head th:replace="~{fragments/header :: headerFragment}">
     <meta charset="UTF-8">
     <title>Thymeleaf Springboot </title>
+    <script>
+        $(document).ready(function(){ $("h2").addClass("animated bounce"); });
+    </script>
 </head>
 <body>
 <nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
 
 <div class="container-fluid">
     <div class="main-section">
-        <p class="welcome-Notes">Welcome To Complaint Management System of Department of
-                                 Excise</p>
         <div class="col-12">
             <div class="row">
                 <div class="col-7">
-                    <div class="form-row">
-                        <div class="col-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="tile wide invoice">
-                                        <div class="header">
-                                            <div class="count">
-                                                <i class="fa fa-street-view" aria-hidden="true"></i>
-                                            </div>
-                                            <div class="title">Employees</div>
-                                        </div>
-                                        <a href="/employee">
-                                            <div class="body">
-                                                <div class="title">Manage Employees</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="tile wide resource">
-                                        <div class="header">
-                                            <div class="">
-                                                <div class="count"><i class="fa fa-shopping-cart"
-                                                                      aria-hidden="true"></i>
-                                                </div>
-                                                <div class="title">Petitions</div>
-                                            </div>
-                                        </div>
-                                        <a href="/petition">
-                                            <div class="body">
-                                                <div class="title">Inspect Petitions</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="tile wide quote">
-                                        <div class="header">
-                                            <div class="">
-                                                <div class="count"><i class="fa fa-newspaper" aria-hidden="true"></i>
-                                                </div>
-                                                <div class="title">Crime</div>
-                                            </div>
 
-                                        </div>
-                                        <a href="/crime">
-                                            <div class="body">
-                                                <div class="title">Observe Crimes</div>
-                                            </div>
-                                        </a>
-                                    </div>
+                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" src="../img/12.jpeg" alt="First slide">
+                                <div class="carousel-caption d-none d-md-block">
+                                <h2 id="animated-example" class="animated bounce">Wel Come</h2>
                                 </div>
+                                <button></button>
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block w-100" src="../img/13.jpeg" alt="Second slide">
+                               <!-- <h2 class="animated-example" class="animated bounce">We Care</h2>-->
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block w-100" src="../img/9.jpg" alt="Third slide">
+                                <!--<h2 class="animated-example" class="animated bounce">Your Choice</h2>-->
                             </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="col-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="tile wide resource">
-                                        <div class="header">
-                                            <div class="">
-                                                <div class="count"><i class="fa fa-universal-access"
-                                                                      aria-hidden="true"></i>
-                                                </div>
-                                                <div class="title">Offenders</div>
-                                            </div>
 
-                                        </div>
-                                        <a class href="/offender">
-                                            <div class="body">
-                                                <div class="title">View Offenders</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="tile wide quote">
-                                        <div class="header">
-                                            <div class="">
-                                                <div class="count"><i class="fa fa-home" aria-hidden="true"></i>
-                                                </div>
-                                                <div class="title">Working Place</div>
-                                            </div>
 
-                                        </div>
-                                        <a href="/workingPlace">
-                                            <div class="body">
-                                                <div class="title">Manage Working Places</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="tile wide invoice">
-                                        <div class="header">
-                                            <div class="">
-                                                <div class="count"><i class="fa fa-bug" aria-hidden="true"></i>
-                                                </div>
-                                                <div class="title">Contravene</div>
-                                            </div>
 
-                                        </div>
-                                        <a href="/workingPlace">
-                                            <div class="body">
-                                                <div class="title">Edit Contravene</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                  <!--To day petition list-->
                 </div>
-                <!--To day petition list-->
                 <div class="col-5 bg-dark formBorder">
                     <p class="welcome-Notes">To Day Petitions</p>
                     <!--Petition Lists -->
@@ -181,7 +77,7 @@
                                 </button>
                                 <h3 class="text-center text-danger">
                                     <strong>There is no petition upto know please add petition to the system
-                                            using add user button.
+                                        using add user button.
                                     </strong>
                                 </h3>
                             </div>

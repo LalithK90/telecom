@@ -4,6 +4,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.thymeleaf.model.IModel;
 
 import javax.validation.Valid;
 
@@ -32,5 +33,10 @@ public interface AbstractController<E, I> {
      * 5. Remove One relevant things belongs provided entity {} id
      */
     String delete(I id, Model model);
+
+    /**
+     * 6.
+     */
+    String Form(Model model);
 
 }
