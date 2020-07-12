@@ -1,9 +1,8 @@
-package lk.crystal.configuration;
+package lk.aroComputers.aro.configuration;
 
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
@@ -17,9 +16,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 
-import javax.annotation.PostConstruct;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.TimeZone;

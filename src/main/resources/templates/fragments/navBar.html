@@ -1,44 +1,167 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+
 <body>
 
+<!--<header th:fragment="navBarFragment">
 
-<nav class="navbar navbar-expand-sm navbar-dark " style="background-color: #2f7efd;" th:fragment="navBarFragment">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+        <div class="container">
+            &lt;!&ndash; Brand and toggle get grouped for better mobile display &ndash;&gt;
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">SSuper</a>
+            </div>
+
+            &lt;!&ndash; Collect the nav links, forms, and other content for toggling &ndash;&gt;
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+
+
+                </ul>
+            </div>&lt;!&ndash; /.navbar-collapse &ndash;&gt;
+        </div>&lt;!&ndash; /.container-fluid &ndash;&gt;
+    </nav>
+
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        &lt;!&ndash;Indicators &ndash;&gt;
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        </ol>
+
+        &lt;!&ndash; Wrapper for slides &ndash;&gt;
+        <div class="carousel-inner" role="listbox">
+
+            <div class="item active">
+                <div class="banner" style="background: url(img/12.jpeg)"></div>
+                <div class="carousel-caption">
+                    <h2 class="animated-bounceInRight" style="animation-delay: 1s">we are <span>creative</span></h2>
+                    <h3 class="animated-bounceInLeft" style="animation-delay: 2s">Web Designers</h3>
+                    <p class="animated-bounceInRight" style="animation-delay: 3s"><a hidden="#">Contact Us</a></p>
+                </div>
+            </div>
+            <div class="item">
+                <div class="banner" style="background: url(img/6.jpg)"></div>
+                <div class="carousel-caption">
+                    <h2 class="animated-slideInDown" style="animation-delay: 1s">we are <span>Franco</span></h2>
+                    <h3 class="animated-fadeInUp" style="animation-delay: 2s">Web Designers</h3>
+                    <p class="animated-zoomIn" style="animation-delay: 3s"><a hidden="#">Contact Us</a></p>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="banner" style="background: url(img/6.jpg)"></div>
+                <div class="carousel-caption">
+                    <h2 class="animated-zoomIn" style="animation-delay: 1s">we are <span>Deligent</span></h2>
+                    <h3 class="animated-fadeInLeft" style="animation-delay: 2s">Web Designers</h3>
+                    <p class="animated-zoomIn" style="animation-delay: 3s"><a hidden="#">Contact Us</a></p>
+                </div>
+            </div>
+
+        </div>
+
+        &lt;!&ndash;Controls &ndash;&gt;
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</header>-->
+
+<nav class="navbar navbar-expand-sm navbar-dark " style="background-color: rgba(85,14,204,0.49);height:60px;" th:fragment="navBarFragment">
+    <a class="navbar-brand" href="#">
+
+        <img src="../img/logo.png" style="width:50px;height:50px;" id="logo" class="animated-spin">
+
+    </a>
     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
             aria-controls="collapsibleNavId"
             aria-expanded="false" aria-label="Toggle navigation"></button>
-    <div class="collapse navbar-collapse" id="collapsibleNavId">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false">Dropdown</a>
-                <div class="dropdown-menu" aria-labelledby="dropdownId">
-                    <a class="dropdown-item" href="#">Action 1</a>
-                    <a class="dropdown-item" href="#">Action 2</a>
-                </div>
-            </li>
-        </ul>
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-            </li>
-            <li class="nav-item active">
-            <a data-th-href="@{'/employee'}" class="nav-link"> Employee</a>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+
+        <form class="form-inline my-1 my-lg-0" style="margin-left:850px;">
+            <input class="form-control mr-sm-2 mt-4" type="text" placeholder="Search" style="height:30px">
+            <button class="btn btn-lg my-lg-1 my-sm-0 " type="submit" style="padding:10px"><i class="fa fa-search" style="font-size: medium;color: white"></i> </button>
         </form>
     </div>
 
 
 </nav>
+
+<nav class="navbar navbar-expand-sm navbar-dark " style="background-color:rgba(27,5,75,0.91);" th:fragment="navBarFragment">
+    <a class="navbar-brand" href="#"><i class="fa fa-home" style="font-size: 18px"></i></a>
+
+
+    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+            aria-controls="collapsibleNavId"
+            aria-expanded="false" aria-label="Toggle navigation"></button>
+    <div class="collapse navbar-collapse" id="collapsibleNavId">
+
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+
+            <li class="nav-itemBatch dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false"> <i class="fa fa-user"></i> General</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownId">
+                    <a data-th-href="@{'/employee'}" class="nav-link"> Employee</a>
+                    <a class="dropdown-itemBatch" href="#">Action 2</a>
+                </div>
+            </li>
+
+            <li class="nav-itemBatch dropdown active">
+                <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false"> <i class="fa fa-bell"></i> Transaction</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownId">
+                    <a data-th-href="@{'/employee'}" class="nav-link"> Employee</a>
+                    <a class="dropdown-itemBatch" href="#">Action 2</a>
+                </div>
+            </li>
+
+            <li class="nav-itemBatch dropdown active">
+                <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false"> <i class="fa fa-book-open"></i> Report</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownId">
+                    <a data-th-href="@{'/employee'}" class="nav-link"> Employee</a>
+                    <a class="dropdown-itemBatch" href="#">Action 2</a>
+                </div>
+            </li>
+
+        </ul>
+
+    <!--    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-itemBatch active">
+            </li>
+            <li class="nav-itemBatch active">
+                <a data-th-href="@{'/employee'}" class="nav-link"> Employee</a>
+        </ul>
+-->
+    </div>
+
+
+</nav>
+
+
 </body>
 </html>
 

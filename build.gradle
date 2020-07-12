@@ -1,92 +1,92 @@
 plugins {
-	id 'org.springframework.boot' version '2.2.6.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-	id 'java'
+    id 'org.springframework.boot' version '2.2.4.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
 }
 
-group = 'lk.crystal'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
 
 configurations {
-	developmentOnly
-	runtimeClasspath {
-		extendsFrom developmentOnly
-	}
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
 }
 
 repositories {
-	jcenter()
-	maven {
-		url "https://maven.springframework.org/release"
-	}
-	maven {
-		url "https://maven.restlet.com"
-	}
+    mavenCentral()
+}
+
+springBoot {
+    buildInfo {
+        properties {
+            group = 'lk.aroComputers'
+            version = '0.0.1-SNAPSHOT'
+            sourceCompatibility = '11'
+        }
+    }
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
-	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
 //twilio - to send SMS
-	implementation group: "com.twilio.sdk", name: "twilio", version: "7.42.0"
+    implementation group: "com.twilio.sdk", name: "twilio", version: "7.42.0"
 //=========================Springboot cache=========//
-	implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
 //================= Following jar is need to check url util - https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 =================//
-	compile group: 'org.apache.commons', name: 'commons-lang3'
+    compile group: 'org.apache.commons', name: 'commons-lang3'
 //================= Following jar is need to generate excel file - https://mvnrepository.com/artifact/org.apache.poi/poi=================//
-	compile group: 'org.apache.poi', name: 'poi', version: '3.8'
-	/*pdf generate related*/
+    compile group: 'org.apache.poi', name: 'poi', version: '3.8'
+    /*pdf generate related*/
 //================= Following jar is need to generate pdf file -https://mvnrepository.com/artifact/com.itextpdf/itextpdf =================//
-	compile group: 'com.itextpdf', name: 'itextpdf', version: '5.5.9'
+    compile group: 'com.itextpdf', name: 'itextpdf', version: '5.5.9'
 // ==== this is need to html content convert to pdf
-	compile group: 'com.itextpdf.tool', name: 'xmlworker', version: '5.5.9'
+    compile group: 'com.itextpdf.tool', name: 'xmlworker', version: '5.5.9'
 //====== use as three jars to set bootstrap and front awesome
 // https://mvnrepository.com/artifact/org.webjars/bootstrap
-	compile group: 'org.webjars', name: 'bootstrap', version: '4.4.1'
+    compile group: 'org.webjars', name: 'bootstrap', version: '4.4.1'
 // https://mvnrepository.com/artifact/org.webjars/popper.js
-	compile group: 'org.webjars', name: 'popper.js', version: '1.15.0'
+    compile group: 'org.webjars', name: 'popper.js', version: '1.15.0'
 // https://mvnrepository.com/artifact/org.webjars/jquery
-	compile group: 'org.webjars', name: 'jquery', version: '3.4.1'
+    compile group: 'org.webjars', name: 'jquery', version: '3.4.1'
 // https://mvnrepository.com/artifact/org.webjars/jquery-ui
-	compile group: 'org.webjars', name: 'jquery-ui', version: '1.12.1'
+    compile group: 'org.webjars', name: 'jquery-ui', version: '1.12.1'
 // https://mvnrepository.com/artifact/org.webjars/font-awesome
-	compile group: 'org.webjars', name: 'font-awesome', version: '5.11.2'
+    compile group: 'org.webjars', name: 'font-awesome', version: '5.11.2'
 // https://mvnrepository.com/artifact/org.webjars/pdf-js
-	compile group: 'org.webjars', name: 'pdf-js', version: '2.3.200'
+    compile group: 'org.webjars', name: 'pdf-js', version: '2.3.200'
 // https://mvnrepository.com/artifact/org.webjars.npm/chart.js
-	compile group: 'org.webjars.npm', name: 'chart.js', version: '2.9.3'
+    compile group: 'org.webjars.npm', name: 'chart.js', version: '2.9.3'
 // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-gradle-plugin -- from build jar file
-	compile group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '2.2.2.RELEASE', ext: 'pom'
-	//====== use as three jars use to enable eh caches -> // https://mvnrepository.com/artifact/org.ehcache/ehcache
-	compile group: 'org.ehcache', name: 'ehcache', version: '3.8.1'
+    compile group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '2.2.2.RELEASE', ext: 'pom'
+    //====== use as three jars use to enable eh caches -> // https://mvnrepository.com/artifact/org.ehcache/ehcache
+    compile group: 'org.ehcache', name: 'ehcache', version: '3.8.1'
 // https://mvnrepository.com/artifact/javax.cache/cache-api
-	compile group: 'javax.cache', name: 'cache-api', version: '1.1.1'
+    compile group: 'javax.cache', name: 'cache-api', version: '1.1.1'
 //========== to aspect oriented programing -> // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-aop
-	compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '2.2.4.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '2.2.4.RELEASE'
 // https://mvnrepository.com/artifact/org.aspectj/aspectjweaver
-	compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.5'
+    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.5'
 
-
-
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'mysql:mysql-connector-java'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
-	testImplementation 'org.springframework.security:spring-security-test'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'mysql:mysql-connector-java'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
 }
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
+}
+
+/*To boot run*/
+bootRun {
+    sourceResources sourceSets.main
 }

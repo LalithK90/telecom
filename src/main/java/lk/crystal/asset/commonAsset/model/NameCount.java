@@ -16,5 +16,5 @@ public class NameCount {
     private String nameOne;
     private Integer count;
 
-    private List< ParameterCount > parameterCounts;
+    private List<ParameterCount> parameterCounts;
 }
