@@ -1,9 +1,6 @@
 package lk.crystal.asset.supplier.controller;
 
-import lk.crystal.asset.supplier.entity.Supplier;
-import lk.crystal.asset.supplier.service.SupplierService;
-import lk.crystal.util.interfaces.AbstractController;
-import lk.crystal.util.service.MakeAutoGenerateNumberService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +12,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/supplier")
-public  class SupplierController implements AbstractController<Supplier, Integer> {
+public  class SupplierController implements AbstractController< Supplier, Integer> {
     private final SupplierService supplierService;
     private final MakeAutoGenerateNumberService makeAutoGenerateNumberService;
 
@@ -37,13 +34,8 @@ public  class SupplierController implements AbstractController<Supplier, Integer
         return "supplier/supplier";
     }
 
-    @Override
-    public String findById(Integer id, Model model) {
-        return null;
-    }
-
     @GetMapping("/add")
-    public String Form(Model model) {
+    public String addForm(Model model) {
         return commonThings(model, new Supplier(), true);
     }
 
@@ -65,12 +57,12 @@ public  class SupplierController implements AbstractController<Supplier, Integer
 
             if (DBSupplier == null) {
                 //need to generate new one
-                supplier.setCode("SS"+makeAutoGenerateNumberService.numberAutoGen(null).toString());
+                supplier.setCode("JNS"+makeAutoGenerateNumberService.numberAutoGen(null).toString());
             } else {
                 System.out.println("last supplier not null");
                 //if there is supplier in db need to get that supplier's code and increase its value
-                String previousCode = DBSupplier.getCode().substring(2);
-                supplier.setCode("SS"+makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
+                String previousCode = DBSupplier.getCode().substring(3);
+                supplier.setCode("JNS"+makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
             }
             //send welcome message and email
             if (supplier.getEmail() != null) {

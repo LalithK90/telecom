@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--/* Styles, meta data, and title are included */-->
+<head data-th-replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>Thymeleaf Springboot </title>
+</head>
+<body>
+<!--/* Nav bar is included */-->
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
+<div class="container bg-light">
+    <div class="container-fluid">
+        <form action="/invoice" method="post" data-th-object="${invoice}">
+            <!--ledgers will list-->
+            <div class="form-group">
+                <!--Ledgers item-->
+                <div class="form-row text-right">
+                    <div class="col-md-2">
+                        <label class="control-label" for="item">Items :</label>
+                    </div>
+                    <div class="col-md-10">
+                        <select id="item" class="form-control" tabindex="9"
+                                required>
+                            <option value="">Please select</option>
+                            <option data-th-each="ledger : ${ledgers}"
+                                    data-th-text="${'Item Name: '+ledger.item.name+'  Sell Price : '+ledger.item.sellPrice+'  Available quantity : '+ledger.quantity+'  Expired Date : '+ledger.expiredDate}"
+                                    data-th-value="${ledger.id}">
+                                Please select
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!--selected ledger items-->
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="container">
+                        <div class="col">
+                            <table class="table table-hover table-striped" id="myTable">
+                                <thead>
+                                <tr>
+                                    <th>Index</th>
+                                    <th>Item Name</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Line Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!--Selected Item -->
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th colspan="4" class="text-right"> Total</th>
+                                    <th><input type="text" class="form-control" placeholder="Total Price"></th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <!--Payment Section-->
+            <div class="form-group">
+                <div class="form-row">
+                    <!--Discount-->
+                    <div class="col-md-6 ">
+                        <div class="form-row text-right">
+                            <div class="col-md-4">
+                                <label class="control-label" for="discountRatio">Discount Ratio :</label>
+                            </div>
+                            <div class="col-md-8">
+                                <select id="discountRatio" data-th-field="*{discountRatio}" class="form-control"
+                                        tabindex="9"
+                                        required>
+                                    <option value="">Please select</option>
+                                    <option data-th-each="discountRatio : ${discountRatios}"
+                                            data-th-text="${discountRatio.amount}"
+                                            data-th-value="${discountRatio.id}">
+                                        Please select
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Discount Amount-->
+                    <div class="col-md-6 ">
+                        <div class="form-row text-right">
+                            <div class="col-md-4">
+                                <label class="control-label" for="nic">Discount Amount :</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input id="nic" data-th-field="*{discountAmount}" class="form-control" tabindex="6"
+                                       type="text"
+                                       required readonly/>
+                                <span class="error" id="nicError" data-th-errors="*{discountAmount}"
+                                      data-th-if="${#fields.hasErrors('discountAmount')}">Error
+                                                               NIC Number</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Payment method and total amount-->
+                <div class="form-row text-right">
+                    <!--payment method-->
+                    <div class="col-md-6 ">
+                        <div class="form-row text-right">
+                            <div class="col-md-4">
+                                <label data-th-for="${paymentMethod}">Payment Method:</label>
+                            </div>
+                            <div class="col-md-8 text-left">
+                                <div class="custom-control custom-checkbox custom-control-inline "
+                                     data-th-each="paymentMethod,index : ${paymentMethods}">
+                                    <input class="custom-control-input gender" required
+                                           data-th-name="${'paymentMethod'}"
+                                           data-th-value="${paymentMethod}"
+                                           data-th-id="${index.index}+${paymentMethod}" type="radio"
+                                    />
+                                    <label class="custom-control-label"
+                                           data-th-for="${index.index}+${paymentMethod}"
+                                           data-th-text="${paymentMethod.paymentMethod}"> radio
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Total Amount-->
+                    <div class="col-md-6 ">
+                        <div class="form-row text-right">
+                            <div class="col-md-4">
+                                <label class="control-label" for="totalAmount">Total Amount :</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input id="totalAmount" data-th-field="*{totalAmount}" class="form-control" tabindex="6"
+                                       type="text"
+                                       required readonly/>
+                                <span class="error" id="totalAmountError" data-th-errors="*{balance}"
+                                      data-th-if="${#fields.hasErrors('totalAmount')}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Amount tendered and balance  -->
+                <div class="form-row text-right" id="cashPayment">
+                    <!--Amount Tendered-->
+                    <div class="col-md-6 ">
+                        <div class="form-row text-right">
+                            <div class="col-md-4">
+                                <label class="control-label" for="amountTendered">Amount Tendered :</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input id="amountTendered" data-th-field="*{amountTendered}"
+                                       class="form-control"
+                                       tabindex="6" type="text"
+                                       required/>
+                                <span class="error" data-th-errors="*{amountTendered}"
+                                      data-th-if="${#fields.hasErrors('amountTendered')}"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Balance-->
+                    <div class="col-md-6 ">
+                        <div class="form-row text-right">
+                            <div class="col-md-4">
+                                <label class="control-label" for="balance">Balance :</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input id="balance" data-th-field="*{balance}" class="form-control" tabindex="6"
+                                       type="text"
+                                       required readonly/>
+                                <span class="error" id="balanceError" data-th-errors="*{balance}"
+                                      data-th-if="${#fields.hasErrors('balance')}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card Payment -> Bank and card Number -->
+                <div class="form-row text-right" id="cardPayment">
+                    <!--Bank -->
+                    <div class="col-md-6 ">
+                        <div class="form-row text-right">
+                            <div class="col-md-4">
+                                <label class="control-label" for="bankName">Bank Name Tendered :</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input id="bankName" data-th-field="*{bankName}"
+                                       class="form-control"
+                                       tabindex="6" type="text"/>
+                                <span class="error" data-th-errors="*{bankName}"
+                                      data-th-if="${#fields.hasErrors('bankName')}"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--card number-->
+                    <div class="col-md-6 ">
+                        <div class="form-row text-right">
+                            <div class="col-md-4">
+                                <label class="control-label" for="cardNumber">Card Number :</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input id="cardNumber" data-th-field="*{cardNumber}" class="form-control" tabindex="6"
+                                       type="text"/>
+                                <span class="error" data-th-errors="*{cardNumber}"
+                                      data-th-if="${#fields.hasErrors('cardNumber')}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <!--customer list-->
+            <div class="form-group">
+                <!--Customers-->
+                <div class="form-row text-right">
+                    <div class="col-md-2">
+                        <label class="control-label" for="customer ">Customer :</label>
+                    </div>
+                    <div class="col-md-10">
+                        <select id="customer " data-th-field="*{customer}" class="form-control" tabindex="9"
+                                required>
+                            <option value="">Please select</option>
+                            <option data-th-each="customer : ${customers}"
+                                    data-th-text="${customer.name+'  '+customer.mobile}"
+                                    data-th-value="${customer.id}">
+                                Please select
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <!--remarks and invoice print or not-->
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <!--invoice print or not-->
+                        <div class="form-row text-right">
+                            <div class="col-md-4">
+                                <label data-th-for="${paymentMethod}">Invoice Print or Not:</label>
+                            </div>
+                            <div class="col-md-8 text-left">
+                                <div class="custom-control custom-checkbox custom-control-inline "
+                                     data-th-each="invoicePrintOrNot,index : ${invoicePrintOrNots}">
+                                    <input class="custom-control-input gender" required
+                                           data-th-name="${'invoicePrintOrNot'}"
+                                           data-th-value="${invoicePrintOrNot}"
+                                           data-th-id="${index.index}+${invoicePrintOrNot}" type="radio"
+                                    />
+                                    <label class="custom-control-label"
+                                           data-th-for="${index.index}+${invoicePrintOrNot}"
+                                           data-th-text="${invoicePrintOrNot.invoicePrintOrNot}"> radio
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Remarks-->
+                    <div class="col-md-6">
+                        <div class="form-row text-right">
+                            <div class="col-md-4">
+                                <label>Remarks :</label></div>
+                            <div class="col-md-8">
+                                <textarea class="form-control" data-th-field="*{remarks}" rows="2"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <!--button-->
+            <div class="form-group">
+                <!--Button-->
+                <div class="form-group col-md-12 col-sm-12 text-center flex-column ">
+                    <!--Back Button-->
+                    <a class="btn btn-dark" href="/invoice" tabindex="14">
+                        <i class="fas fa-arrow-circle-left" style="font-size: 20px"></i>&nbsp;&nbsp;Back
+                    </a>
+                    <!--Save Button-->
+                    <button class="btn btn-success ml-5" tabindex="12" type="submit">
+                        <i class="fa fa-save " style="font-size: 20px"></i>&nbsp;&nbsp;<span
+                            data-th-text="${'Save'}"
+                            id="submit"></span>
+                    </button>
+                    <!--Cancel Button-->
+                    <button class="btn btn-warning ml-5" tabindex="13" type="reset">
+                        <i class="far fa-times-circle" style="font-size: 20px"></i>&nbsp;&nbsp;Cancel
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--/* footer is */-->
+<footer data-th-replace="~{fragments/footer :: footerFragment}"></footer>
+<!--/* script is included */-->
+<script data-th-replace="~{fragments/script :: scriptFragment}"></script>
+<script >
+    $(document).ready(function (){
+
+    });
+</script>
+</body>
+</html>

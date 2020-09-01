@@ -1,5 +1,6 @@
 package lk.crystal.asset.employee.entity.Enum;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -24,7 +25,8 @@ public enum Designation {
     //There is no authority to logo in to the system
     EC("Excise Corporal"),
     EG("Excise Guard"),
-    ED("Excise Driver");
+    ED("Excise Driver"), Owner("");
 
     private final String designation;
 }
+

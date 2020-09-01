@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head data-th-replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>supplier</title>
+</head>
+<body>
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
+<!--heading Area-->
+<div class="container-fluid bg-dark form-Border">
+    <div class="row formManagement">
+
+        <!--List Name-->
+        <div class="col">
+            <h2 class="text-white text-center">
+                <strong>
+                    Supplier List
+                </strong>
+            </h2>
+        </div>
+        <!--Home Button-->
+        <!--    <div class="col">
+                <a href="/home" id="searchShow" class="btn btn-primary" tabindex="2">
+                    &lt;!&ndash;<i class="fa fa-user " style="font-size: 20px"></i>&nbsp;Add&nbsp;&ndash;&gt;
+                    <i class="fas fa-home" style="font-size: 20px"></i>&nbsp;&nbsp;Home&nbsp;
+                </a>
+            </div>-->
+
+    </div>
+</div>
+
+<div class="row formManagement">
+    <div class="col-md-3">
+        <!--New Supplier Button-->
+        <div class="col">
+            <a class="btn btn-success" href="/supplier/add" id="button1" tabindex="1">
+                <i class="fa fa-plus" style="font-size:10px;width:200px;height:100px;"></i>&nbsp;&nbsp;New</a>&nbsp;
+        </div>
+    </div>
+
+    <!--Suppliers List-->
+    <div class="col-md-8  text-center">
+        <!--Supplier List Table-->
+        <div class="col">
+            <div class="col" id="supplierListPresent" data-th-fragment="supplierFragment"
+                 data-th-if="${not #lists.isEmpty(suppliers)}">
+                <table class="table table-hover table-striped" id="myTable">
+                    <thead>
+                    <tr>
+                        <th> Index</th>
+                        <th> Code</th>
+                        <th> Company Name</th>
+                        <th> Contact No1</th>
+                        <th> Email</th>
+                        <th> Address</th>
+                        <th> Modify</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-th-each="supplier, rowCount : ${suppliers}">
+                        <th data-th-text="${rowCount.count}"></th>
+                        <th data-th-text="${supplier.code}"></th>
+                        <th data-th-text="${supplier.name}"></th>
+                        <th data-th-text="${supplier.contactOne}"></th>
+                        <th data-th-text="${supplier.email}"></th>
+                        <th data-th-text="${supplier.address}"></th>
+                        <th data-th-if="${supplierDetailShow !=true}">
+                            <a class="btn btn-primary btn-sm" data-th-href="${'/supplierItem/edit/' + supplier.id}"><i
+                                    class="fa fa-folder-open" style="font-size: 15px"></i>Edit Item </a>
+                            <a class="btn btn-primary btn-sm" data-th-href="${'/supplierItem/supplier/' + supplier.id}"><i
+                                    class="fa fa-folder-open" style="font-size: 15px"></i>Add Item </a>
+                            <a class="btn btn-primary btn-sm" data-th-href="${'/purchaseOrder/supplier/' + supplier.id}"><i
+                                    class="fa fa-folder-open" style="font-size: 15px"></i>Purchase Order</a>
+                            <a class="btn btn-primary btn-sm" data-th-href="${'/supplier/' + supplier.id}"><i
+                                    class="fa fa-folder-open" style="font-size: 15px"></i>&nbsp;View</a>
+                            <a class="btn btn-success btn-sm" data-th-href="${'/supplier/edit/' + supplier.id}"><i
+                                    class="fa fa-edit" style="font-size: 15px"></i>&nbsp;Edit</a>
+                            <a class="btn btn-danger btn-sm" data-th-href="${'/supplier/delete/' + supplier.id}">
+                                <!--data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"--> <i
+                                    class="fa fa-trash" style="font-size: 15px"></i> Delete</a>
+                        </th>
+                        <th data-th-if="${supplierDetailShow==true}">
+                            <a class="btn btn-primary btn-sm" data-th-href="${supplierDetailShow==true ?'/purchaseOrder/supplier/' + supplier.id :'/supplierItem/supplier/' + supplier.id}"><i
+                                    class="fa fa-thumbs-up" style="font-size: 15px"></i>&nbsp;Select</a>
+                        </th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--Error-->
+        <div class="row" data-th-if="${ #lists.isEmpty(suppliers)}">
+            <div class="col-sm-12">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h3 class="text-center text-danger">
+                        <strong>There is no supplier upto now please add supplier to the system using add user
+                            button.</strong>
+                    </h3>
+                </div>
+            </div>
+            <script>
+                /*active boostrap alert - start*/
+                $(".alert").alert();
+                /*active boostrap alert - end*/
+            </script>
+        </div>
+        <!--TODO-->
+        <!--Save supplier show-->
+    </div>
+</div>
+<!--footer include-->
+<footer data-th-replace="~{fragments/footer :: footerFragment}"></footer>
+<!--script include-->
+<script data-th-replace="~{fragments/script :: scriptFragment}"></script>
+
+</body>
+</html>

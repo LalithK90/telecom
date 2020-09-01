@@ -1,7 +1,4 @@
 package lk.crystal.asset.userManagement.entity;
-
-
-import lk.crystal.asset.userManagement.entity.Enum.UserSessionLogStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

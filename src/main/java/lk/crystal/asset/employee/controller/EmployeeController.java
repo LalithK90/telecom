@@ -1,20 +1,5 @@
 package lk.crystal.asset.employee.controller;
 
-import lk.crystal.asset.commonAsset.model.Enum.BloodGroup;
-import lk.crystal.asset.commonAsset.model.Enum.CivilStatus;
-import lk.crystal.asset.commonAsset.model.Enum.Gender;
-import lk.crystal.asset.commonAsset.model.Enum.Title;
-import lk.crystal.asset.commonAsset.service.CommonService;
-import lk.crystal.asset.employee.entity.Employee;
-import lk.crystal.asset.employee.entity.EmployeeFiles;
-import lk.crystal.asset.employee.entity.Enum.Designation;
-import lk.crystal.asset.employee.entity.Enum.EmployeeStatus;
-import lk.crystal.asset.employee.service.EmployeeFilesService;
-import lk.crystal.asset.employee.service.EmployeeService;
-import lk.crystal.asset.userManagement.entity.User;
-import lk.crystal.asset.userManagement.service.UserService;
-import lk.crystal.util.service.DateTimeAgeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,11 +8,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.UUID;
-
-
 
 @RequestMapping("/employee")
 @Controller
@@ -134,7 +118,7 @@ public class EmployeeController {
                     userService.persist(user);
                 }
             }
-            //save employee images file
+            //save employee img file
             for (MultipartFile file : employee.getFiles()) {
                 if (file.getOriginalFilename() != null) {
                     EmployeeFiles employeeFiles = employeeFilesService.findByName(file.getOriginalFilename());

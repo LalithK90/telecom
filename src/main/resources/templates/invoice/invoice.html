@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--/* Styles, meta data, and title are included */-->
+<head data-th-replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>Thymeleaf Springboot </title>
+</head>
+<body>
+<!--/* Nav bar is included */-->
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
+<div class="container">
+    <div class="row">
+        <!--Custom Invoice search-->
+        <button type="button" class="btn btn-info mb-5 btn-block text-capitalize" data-toggle="collapse"
+                data-target="#dataTargetCollapse"
+                aria-expanded="false" aria-controls="dataTargetCollapse"
+        > Custom Invoice Search
+        </button>
+        <div class="collapse mx-auto" id="dataTargetCollapse">
+            <div class="container-fluid text-center">
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3">
+                        <h4 class="text-info"><b> Custom Search</b></h4>
+                        <form class="form-inline" data-th-action="@{/invoice/search}" data-th-method="POST">
+                            <div class="form-group">
+                                <label for="startDate">FROM :</label>
+                                <input class="form-control" id="startDate" name="startDate" type="date"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="endDate">TO :</label>
+                                <input class="form-control" id="endDate" name="endDate" type="date"/>
+                            </div>
+                            <button class="btn btn-success" id="btnSummaryFind" type="submit"><span
+                                    class="glyphicon glyphicon-search"></span>&nbsp;Search
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--There is message about invoice count-->
+    <div class="row" data-th-if="${firstInvoiceMessage}">
+        <div class="col-sm-12 mt-4">
+            <div class="form-group text-left col-sm-2">
+                <a class="btn btn-primary" href="/invoice/add"><span
+                        class="glyphicon glyphicon-list-alt"></span>&nbsp; New Invoice</a>
+            </div>
+            <div class="alert alert-warning col-sm-8" role="alert">
+                <strong>Following table show details belongs to there month. if you need to more please
+                        search
+                        using above method</strong>
+            </div>
+            <div class="form-group text-right col-sm-2">
+                <a class="btn btn-info" href="/invoice/search"><span
+                        class="glyphicon glyphicon-search"></span>&nbsp; Search Invoice</a>
+            </div>
+        </div>
+    </div>
+    <!--List all invoice-->
+    <div class="row">
+        <div class="table-responsive mt-4">
+            <table class="table table-hover" id="myTable">
+                <thead>
+                <tr>
+                    <th>Index</th>
+                    <th>Number</th>
+                    <th> Amount</th>
+                    <th> Created By</th>
+                    <th> Date of Invoice</th>
+                    <th>View</th>
+                    <th data-th-if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}"> Delete Invoice
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-th-each="invoice, rowCount : ${invoices}">
+                    <th data-th-text="${rowCount.count}"></th>
+                    <th data-th-text="${invoice.number}"></th>
+                    <th data-th-text="${invoice.amount}"></th>
+                    <th data-th-text="${invoice.createdBy}"></th>
+                    <th data-th-text="${{invoice.createdAt}}"></th>
+                    <th><a class="btn btn-success" data-th-href="${'/invoice/'+ invoice.id}"><i
+                            class="fa fa-folder-open"></i>&nbsp;View</a>&nbsp;
+                    </th>
+                    <th data-th-if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}"><a
+                            class="btn btn-danger" data-th-href="${'/invoice/remove/' + invoice.id}">Delete</a>
+                    </th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--/* footer is */-->
+<footer data-th-replace="~{fragments/footer :: footerFragment}"></footer>
+<!--/* script is included */-->
+<script data-th-replace="~{fragments/script :: scriptFragment}"></script>
+<script>
+    $(document).ready(function () {
+        let startDate = $('#startDate').val();
+        let endDate = $('#endDate').val();
+        let nowTime = new Date().toDateString();
+
+        if (startDate !== "" && endDate !== "") {
+            if (Date.parse(endDate) > Date.parse(startDate) && Date.parse(nowTime) > Date.parse(startDate) &&
+                Date.parse(nowTime) > Date.parse(endDate)) {
+                swal({
+                    title: "Could you accept those days.. !",
+                    icon: "warning",
+                    text: "Please check your entered date \n",
+                })
+                $('#endDate').val(startDate);
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

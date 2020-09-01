@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/header :: headerFragment}">
+<head data-th-replace="~{fragments/header :: headerFragment}">
     <meta charset="UTF-8">
     <title>Thymeleaf Springboot </title>
 </head>
 <body>
-<nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
 
 <!--heading Area-->
 <div class="container-fluid bg-secondary form-Border">
@@ -18,7 +18,7 @@
         <div class="col">
             <h4 class="text-light text-center">
                 <strong>
-                    <p th:text="${employeeDetail.title.title} +${' '} +${employeeDetail.name}"></p>
+                    <p data-th-text="${employeeDetail.title.title} +${' '} +${employeeDetail.name}"></p>
                 </strong>
             </h4>
         </div>
@@ -30,7 +30,7 @@
     </div>
 </div>
 <!--details-->
-<div th:fragment="employeeDetailsFragment" class="container-fluid bg-dark formBorder">
+<div data-th-fragment="employeeDetailsFragment" class="container-fluid ">
     <div class="col-sm-12 flex-column ">
         <div class="row">
             <!--Left Side-->
@@ -40,7 +40,7 @@
                         <label class="control-label" for="id">ID :</label>
                     </div>
                     <div class="col-md-8">
-                        <p id="id" th:text="${employeeDetail.id}" class="display_detail"></p>
+                        <p id="id" data-th-text="${employeeDetail.id}" class="display_detail"></p>
                     </div>
                 </div>
                 <div class="form-row text-right">
@@ -48,7 +48,7 @@
                         <label class="control-label" for="payRoleNumber">Pay Role No :</label>
                     </div>
                     <div class="col-md-8">
-                        <p id="payRoleNumber" th:text="${employeeDetail.payRoleNumber}" class="display_detail"></p>
+                        <p id="payRoleNumber" data-th-text="${employeeDetail.payRoleNumber}" class="display_detail"></p>
                     </div>
                 </div>
                 <div class="form-row text-right">
@@ -56,14 +56,14 @@
                         <label class="control-label" for="departmentIdNumber">Depart Id No :</label>
                     </div>
                     <div class="col-md-8">
-                        <p id="departmentIdNumber" th:text="${employeeDetail.departmentIdNumber}" class="display_detail"></p></div>
+                        <p id="departmentIdNumber" data-th-text="${employeeDetail.departmentIdNumber}" class="display_detail"></p></div>
                 </div>
                 <div class="form-row text-right">
                     <div class="col-md-4">
                         <label class="control-label" for="name">Name :</label>
                     </div>
                     <div class="col-md-8">
-                        <p id="name" th:text="${employeeDetail.title.title} +${' '} +${employeeDetail.name}" class="display_detail"></p>
+                        <p id="name" data-th-text="${employeeDetail.title.title} +${' '} +${employeeDetail.name}" class="display_detail"></p>
                     </div>
                 </div>
                 <div class="form-row text-right">
@@ -71,7 +71,7 @@
                         <label class="control-label" for="callingName">Calling Name :</label>
                     </div>
                     <div class="col-md-8">
-                        <p id="callingName" th:text="${employeeDetail.callingName}" class="display_detail"></p>
+                        <p id="callingName" data-th-text="${employeeDetail.callingName}" class="display_detail"></p>
                     </div>
                 </div>
                 <div class="form-row text-right">
@@ -79,7 +79,7 @@
                         <label class="control-label" for="nic">NIC No :</label>
                     </div>
                     <div class="col-md-8">
-                        <p id="nic" th:text="${employeeDetail.nic}" class="display_detail"></p>
+                        <p id="nic" data-th-text="${employeeDetail.nic}" class="display_detail"></p>
                     </div>
                 </div>
                 <div class="form-row text-right">
@@ -87,7 +87,7 @@
                         <label class="control-label" for="gender">Gender :</label>
                     </div>
                     <div class="col-md-8">
-                        <p id="gender" th:text="${employeeDetail.gender.gender}" class="display_detail"></p>
+                        <p id="gender" data-th-text="${employeeDetail.gender.gender}" class="display_detail"></p>
                     </div>
                 </div>
                 <div class="form-row text-right">
@@ -95,7 +95,7 @@
                         <label class="control-label" for="dateOfBirth">Birth date :</label>
                     </div>
                     <div class="col-md-8">
-                        <p id="dateOfBirth" th:text="${employeeDetail.dateOfBirth}" class="display_detail">Error Birthday</p>
+                        <p id="dateOfBirth" data-th-text="${employeeDetail.dateOfBirth}" class="display_detail">Error Birthday</p>
                     </div>
                 </div>
                 <div class="form-row text-right">
@@ -103,7 +103,7 @@
                         <label class="control-label" for="bloodGroup">Blood Group :</label>
                     </div>
                     <div class="col-md-8">
-                        <p id="bloodGroup" th:text="${employeeDetail.bloodGroup.bloodGroup}" class="display_detail">
+                        <p id="bloodGroup" data-th-text="${employeeDetail.bloodGroup.bloodGroup}" class="display_detail">
                         </p>
                     </div>
                 </div>
@@ -112,7 +112,7 @@
                         <label class="control-label" for="designation">Designation :</label>
                     </div>
                     <div class="col-md-8">
-                        <p id="designation" th:text="${employeeDetail.designation.designation}" class="display_detail">
+                        <p id="designation" data-th-text="${employeeDetail.designation.designation}" class="display_detail">
                         </p>
                     </div>
                 </div>
@@ -121,7 +121,7 @@
                         <label class="control-label" for="civilStatus">Civil State :</label>
                     </div>
                     <div class="col-md-8">
-                        <p id="civilStatus" th:text="${employeeDetail.civilStatus.civilStatus}" class="display_detail"></p>
+                        <p id="civilStatus" data-th-text="${employeeDetail.civilStatus.civilStatus}" class="display_detail"></p>
                     </div>
                 </div>
                 <div class="form-row text-right">
@@ -129,7 +129,7 @@
                         <label class="control-label" for="employeeStatus">Employee Status :</label>
                     </div>
                     <div class="col-md-8">
-                        <p id="employeeStatus" th:text="${employeeDetail.employeeStatus.employeeStatus}" class="display_detail"></p>
+                        <p id="employeeStatus" data-th-text="${employeeDetail.employeeStatus.employeeStatus}" class="display_detail"></p>
                     </div>
                 </div>
             </div>
@@ -140,7 +140,7 @@
                         <label class="control-label" for="address">Address :</label>
                     </div>
                     <div class="col-md-8 text-left">
-                        <p id="address" class="display_detail " th:utext="${employeeDetail.address}"></p>
+                        <p id="address" class="display_detail " data-th-utext="${employeeDetail.address}"></p>
                     </div>
                 </div>
                 <div class="form-row text-right">
@@ -148,7 +148,7 @@
                         <label class="control-label" for="mobileOne">Mobile One No :</label>
                     </div>
                     <div class="col-md-8">
-                        <p id="mobileOne" th:text="${employeeDetail.mobileOne}" class="display_detail"></p>
+                        <p id="mobileOne" data-th-text="${employeeDetail.mobileOne}" class="display_detail"></p>
                     </div>
                 </div>
                 <div class="form-row text-right">
@@ -156,7 +156,7 @@
                         <label class="control-label" for="mobileTwo">Mobile Two No :</label>
                     </div>
                     <div class="col-md-8">
-                        <p id="mobileTwo" th:text="${employeeDetail.mobileTwo}" class="display_detail"></p>
+                        <p id="mobileTwo" data-th-text="${employeeDetail.mobileTwo}" class="display_detail"></p>
                     </div>
                 </div>
                 <div class="form-row text-right">
@@ -164,7 +164,7 @@
                         <label class="control-label" for="land">Land No :</label>
                     </div>
                     <div class="col-md-8">
-                        <p id="land" th:text="${employeeDetail.land}" class="display_detail"></p>
+                        <p id="land" data-th-text="${employeeDetail.land}" class="display_detail"></p>
                     </div>
                 </div>
                 <div class="form-row text-right">
@@ -172,7 +172,7 @@
                         <label class="control-label" for="email">Email :</label>
                     </div>
                     <div class="col-md-8">
-                        <p id="email" th:text="${employeeDetail.email}" class="display_detail"></p>
+                        <p id="email" data-th-text="${employeeDetail.email}" class="display_detail"></p>
                     </div>
                 </div>
                 <div class="form-row text-right">
@@ -180,7 +180,7 @@
                         <label class="control-label" for="officeEmail">Office Email :</label>
                     </div>
                     <div class="col-md-8">
-                        <p id="officeEmail" th:text="${employeeDetail.officeEmail}" class="display_detail"></p>
+                        <p id="officeEmail" data-th-text="${employeeDetail.officeEmail}" class="display_detail"></p>
                     </div>
                 </div>
                 <div class="form-row text-right">
@@ -188,7 +188,7 @@
                         <label class="control-label" for="dateOfAssignment">Date Of Assignment :</label>
                     </div>
                     <div class="col-md-8">
-                        <p id="dateOfAssignment" th:text="${{employeeDetail.dateOfAssignment}}" class="display_detail"></p>
+                        <p id="dateOfAssignment" data-th-text="${{employeeDetail.dateOfAssignment}}" class="display_detail"></p>
                     </div>
                 </div>
                 <div class="form-row text-right">
@@ -196,7 +196,7 @@
                         <label class="control-label" for="createdBy">Created By :</label>
                     </div>
                     <div class="col-md-8">
-                        <p id="createdBy" th:text="${employeeDetail.createdBy}" class="display_detail"></p>
+                        <p id="createdBy" data-th-text="${employeeDetail.createdBy}" class="display_detail"></p>
                     </div>
                 </div>
                 <div class="form-row text-right">
@@ -204,7 +204,7 @@
                         <label class="control-label" for="createdAt">Created At :</label>
                     </div>
                     <div class="col-md-8">
-                        <p id="createdAt" th:text="${#temporals.format(employeeDetail.createdAt, 'dd-MM-yyyy HH:mm')}" class="display_detail"></p>
+                        <p id="createdAt" data-th-text="${#temporals.format(employeeDetail.createdAt, 'dd-MM-yyyy HH:mm')}" class="display_detail"></p>
                     </div>
                 </div>
                 <div class="form-row text-right">
@@ -212,7 +212,7 @@
                         <label class="control-label" for="updatedBy">Updated By :</label>
                     </div>
                     <div class="col-md-8">
-                        <p id="updatedBy" th:text="${employeeDetail.updatedBy}" class="display_detail"></p>
+                        <p id="updatedBy" data-th-text="${employeeDetail.updatedBy}" class="display_detail"></p>
                     </div>
                 </div>
                 <div class="form-row text-right">
@@ -220,12 +220,12 @@
                         <label class="control-label" for="updatedAt">Updated At :</label>
                     </div>
                     <div class="col-md-8">
-                        <p id="updatedAt" th:text="${{employeeDetail.updatedAt}}" class="display_detail"></p>
+                        <p id="updatedAt" data-th-text="${{employeeDetail.updatedAt}}" class="display_detail"></p>
                     </div>
                 </div>
             </div>
             <!--Current Working Place Details-->
-            <!--<div class="container-fluid bg-dark formBorder">
+            <!--<div class="container-fluid ">
                 <h3 class="control-label">Current Working Place Details</h3>
                 <div class="col-sm-12 flex-column">
                     <div class="row">
@@ -236,7 +236,7 @@
                                     <label class="control-label" for="employeeWorkingPlaceName">Name :</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <p id="employeeWorkingPlaceName" th:text="${employeeDetail.workingPlace.name}" class="display_detail"></p>
+                                    <p id="employeeWorkingPlaceName" data-th-text="${employeeDetail.workingPlace.name}" class="display_detail"></p>
                                 </div>
                             </div>
                             <div class="form-row text-right">
@@ -244,7 +244,7 @@
                                     <label class="control-label" for="employeeWorkingPlaceCode">Code :</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <p id="employeeWorkingPlaceCode" th:text="${employeeDetail.workingPlace.code}" class="display_detail"></p>
+                                    <p id="employeeWorkingPlaceCode" data-th-text="${employeeDetail.workingPlace.code}" class="display_detail"></p>
                                 </div>
                             </div>
                             <div class="form-row text-right">
@@ -252,7 +252,7 @@
                                     <label class="control-label" for="employeeWorkingPlaceProvince">Province :</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <p id="employeeWorkingPlaceProvince" th:text="${employeeDetail.workingPlace.province.province}" class="display_detail">
+                                    <p id="employeeWorkingPlaceProvince" data-th-text="${employeeDetail.workingPlace.province.province}" class="display_detail">
                                     </p>
                                 </div>
                             </div>
@@ -263,7 +263,7 @@
                                                                                                             :</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <p id="employeeWorkingPlaceWorkingPlaceType" th:text="${employeeDetail.workingPlace.workingPlaceType.workingPlaceType}" class="display_detail">
+                                    <p id="employeeWorkingPlaceWorkingPlaceType" data-th-text="${employeeDetail.workingPlace.workingPlaceType.workingPlaceType}" class="display_detail">
                                     </p>
                                 </div>
                             </div>
@@ -272,7 +272,7 @@
                                     <label class="control-label" for="employeeWorkingPlaceEmailOne">Email One :</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <p id="employeeWorkingPlaceEmailOne" class="display_detail" th:text="${employeeDetail.workingPlace.emailOne}"></p>
+                                    <p id="employeeWorkingPlaceEmailOne" class="display_detail" data-th-text="${employeeDetail.workingPlace.emailOne}"></p>
                                 </div>
                             </div>
                             <div class="form-row text-right">
@@ -280,7 +280,7 @@
                                     <label class="control-label" for="employeeWorkingPlaceEmailTwo">Email Two :</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <p id="employeeWorkingPlaceEmailTwo" class="display_detail" th:text="${employeeDetail.workingPlace.emailTwo}"></p>
+                                    <p id="employeeWorkingPlaceEmailTwo" class="display_detail" data-th-text="${employeeDetail.workingPlace.emailTwo}"></p>
                                 </div>
                             </div>
                             <div class="form-row text-right">
@@ -288,7 +288,7 @@
                                     <label class="control-label" for="employeeWorkingPlaceAddress">Address :</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <p id="employeeWorkingPlaceAddress" class="display_detail" th:utext="${employeeDetail.workingPlace.address}"></p>
+                                    <p id="employeeWorkingPlaceAddress" class="display_detail" data-th-utext="${employeeDetail.workingPlace.address}"></p>
                                 </div>
                             </div>
                         </div>-->
@@ -299,7 +299,7 @@
                                     <label class="control-label" for="employeeWorkingPlaceLandOne">Land No One:</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <p id="employeeWorkingPlaceLandOne" class="display_detail land" th:text="${employeeDetail.workingPlace.landOne}"></p>
+                                    <p id="employeeWorkingPlaceLandOne" class="display_detail land" data-th-text="${employeeDetail.workingPlace.landOne}"></p>
                                 </div>
                             </div>
                             <div class="form-row text-right">
@@ -307,7 +307,7 @@
                                     <label class="control-label" for="employeeWorkingPlaceLandTwo">Land No Two:</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <p id="employeeWorkingPlaceLandTwo" class="display_detail land" th:text="${employeeDetail.workingPlace.landTwo}"></p>
+                                    <p id="employeeWorkingPlaceLandTwo" class="display_detail land" data-th-text="${employeeDetail.workingPlace.landTwo}"></p>
                                 </div>
                             </div>
                             <div class="form-row text-right">
@@ -316,7 +316,7 @@
                                                                                                       :</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <p id="employeeWorkingPlaceLandThree" class="display_detail land" th:text="${employeeDetail.workingPlace.landThree}"></p>
+                                    <p id="employeeWorkingPlaceLandThree" class="display_detail land" data-th-text="${employeeDetail.workingPlace.landThree}"></p>
                                 </div>
                             </div>
                             <div class="form-row text-right">
@@ -325,7 +325,7 @@
                                                                                                     :</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <p id="employeeWorkingPlaceLandFour" class="display_detail land" th:text="${employeeDetail.workingPlace.landFour}"></p>
+                                    <p id="employeeWorkingPlaceLandFour" class="display_detail land" data-th-text="${employeeDetail.workingPlace.landFour}"></p>
                                 </div>
                             </div>
                             <div class="form-row text-right">
@@ -333,7 +333,7 @@
                                     <label class="control-label" for="employeeWorkingPlaceFaxNumber">Fax No :</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <p id="employeeWorkingPlaceFaxNumber" class="display_detail land" th:text="${employeeDetail.workingPlace.faxNumber}"></p>
+                                    <p id="employeeWorkingPlaceFaxNumber" class="display_detail land" data-th-text="${employeeDetail.workingPlace.faxNumber}"></p>
                                 </div>
                             </div>
                             <div id="createdByDiv" class="form-row text-right">
@@ -342,7 +342,7 @@
                                                                                                      :</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <p id="employeeWorkingPlaceCreatedBy" class="display_detail" th:text="${employeeDetail.workingPlace.createdBy}"></p>
+                                    <p id="employeeWorkingPlaceCreatedBy" class="display_detail" data-th-text="${employeeDetail.workingPlace.createdBy}"></p>
                                 </div>
                             </div>
                             <div class="form-row text-right" id="createdAtDiv">
@@ -351,33 +351,33 @@
                                                                                                      :</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <p id="employeeWorkingPlaceCreatedAt" class="display_detail" th:text="${#temporals.format(employeeDetail.workingPlace.createdAt, 'dd-MM-yyyy HH:mm')}"></p>
+                                    <p id="employeeWorkingPlaceCreatedAt" class="display_detail" data-th-text="${#temporals.format(employeeDetail.workingPlace.createdAt, 'dd-MM-yyyy HH:mm')}"></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--images-->
+            <!--img-->
             <div class="form-group col-md-12 col-sm-12 text-left flex-column ">
                 <div class="col" id="photoDetails">
                     <div>
                         <label class="control-label ">Photo Details : </label>
                     </div>
                     <div class="row">
-                        <div class="col" id="filesList" th:each="file, rowStat: ${files}">
+                        <div class="col" id="filesList" data-th-each="file, rowStat: ${files}">
                             <div class="col">
                                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                                     <div class="card text-center">
                                         <div class="card-body">
                                             <img id="img" class="rounded"
                                                  style="height: 150px; width: 150px; border-radius: 10px"
-                                                 alt="Employee images" th:src="${file.url}"/>
+                                                 alt="Employee img" data-th-src="${file.url}"/>
                                         </div>
                                         <div class="card-footer bg-secondary text-light text-center">
-                                            <p id="imgName" th:text="${file.filename}"></p>
+                                            <p id="imgName" data-th-text="${file.filename}"></p>
                                             <span> Uploaded Date :
-                                            <p id="imgCreateAt" th:text="${{file.createAt}}"></p>
+                                            <p id="imgCreateAt" data-th-text="${{file.createAt}}"></p>
                                             </span>
                                         </div>
                                     </div>
@@ -389,10 +389,10 @@
             </div>
         </div>
         <!--Working Place History Details show-->
-        <div class="container-fluid text-center bg-dark formBorder" th:if="${not #lists.isEmpty(employeeDetail.employeeWorkingHistories)}" id="workingPlaceHistoryDetails">
+        <div class="container-fluid text-center " data-th-if="${not #lists.isEmpty(employeeDetail.employeeWorkingHistories)}" id="workingPlaceHistoryDetails">
             <div class="col-sm-12 flex-column ">
                 <div class="header ">
-                    <h3><strong><span id="captionEmployeeName" th:text="${employeeDetail.title.title} +${' '} +${employeeDetail.name}"></span>'s Working History</strong></h3>
+                    <h3><strong><span id="captionEmployeeName" data-th-text="${employeeDetail.title.title} +${' '} +${employeeDetail.name}"></span>'s Working History</strong></h3>
                 </div>
                 <table class="table table-striped table-inverse table-responsive">
                     <thead class="thead-inverse">
@@ -406,13 +406,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="workingPlaceHistory : ${employeeDetail.employeeWorkingHistories}" class="text-left text-light">
-                        <td th:text="${workingPlaceHistory.workingPlace.name}" scope="row"></td>
-                        <td th:text="${workingPlaceHistory.from_place}"></td>
-                        <td th:text="${workingPlaceHistory.to_place}"></td>
-                        <td th:text="${workingPlaceHistory.workingDuration}"></td>
-                        <td th:text="${workingPlaceHistory.workingPlaceChangeReason.workingPlaceChangeReason}"></td>
-                        <td th:text="${workingPlaceHistory.remark}"></td>
+                    <tr data-th-each="workingPlaceHistory : ${employeeDetail.employeeWorkingHistories}" class="text-left text-light">
+                        <td data-th-text="${workingPlaceHistory.workingPlace.name}" scope="row"></td>
+                        <td data-th-text="${workingPlaceHistory.from_place}"></td>
+                        <td data-th-text="${workingPlaceHistory.to_place}"></td>
+                        <td data-th-text="${workingPlaceHistory.workingDuration}"></td>
+                        <td data-th-text="${workingPlaceHistory.workingPlaceChangeReason.workingPlaceChangeReason}"></td>
+                        <td data-th-text="${workingPlaceHistory.remark}"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -433,9 +433,9 @@
 </div>
 
 <!--footer include-->
-<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+<footer data-th-replace="~{fragments/footer :: footerFragment}"></footer>
 <!--script include-->
-<script th:replace="~{fragments/script :: scriptFragment}"></script>
+<script data-th-replace="~{fragments/script :: scriptFragment}"></script>
 
 </body>
 </html>

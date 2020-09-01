@@ -1,8 +1,5 @@
 package lk.crystal.asset.branch.service;
 
-import lk.crystal.asset.branch.dao.BranchDao;
-import lk.crystal.asset.branch.entity.Branch;
-import lk.crystal.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Example;
@@ -13,7 +10,7 @@ import java.util.List;
 
 @Service
 @CacheConfig( cacheNames = "branch" )
-public class BranchService implements AbstractService<Branch, Integer> {
+public class BranchService implements AbstractService< Branch, Integer> {
     private final BranchDao branchDao;
 
     @Autowired
@@ -47,3 +44,4 @@ public class BranchService implements AbstractService<Branch, Integer> {
         return branchDao.findAll(branchExample);
     }
 }
+

@@ -1,8 +1,5 @@
 package lk.crystal.asset.userManagement.service;
 
-import lk.crystal.asset.userManagement.dao.RoleDao;
-import lk.crystal.asset.userManagement.entity.Role;
-import lk.crystal.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.*;
 import org.springframework.data.domain.Example;
@@ -13,7 +10,7 @@ import java.util.List;
 
 @Service
 @CacheConfig( cacheNames = {"role"} ) // tells Spring where to store cache for this class
-public class RoleService implements AbstractService<Role, Integer > {
+public class RoleService implements AbstractService< Role, Integer > {
     private final RoleDao roleDao;
 
     @Autowired
@@ -22,7 +19,7 @@ public class RoleService implements AbstractService<Role, Integer > {
     }
 
     @Cacheable
-    public List< Role > findAll() {
+    public List<Role> findAll() {
         return roleDao.findAll();
     }
 
@@ -46,7 +43,7 @@ public class RoleService implements AbstractService<Role, Integer > {
     }
 
     @Cacheable
-    public List< Role > search(Role role) {
+    public List<Role> search(Role role) {
         ExampleMatcher matcher = ExampleMatcher
                 .matching()
                 .withIgnoreCase()

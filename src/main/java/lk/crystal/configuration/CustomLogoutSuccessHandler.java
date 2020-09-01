@@ -1,10 +1,5 @@
 package lk.crystal.configuration;
 
-import lk.crystal.asset.userManagement.entity.Enum.UserSessionLogStatus;
-import lk.crystal.asset.userManagement.entity.User;
-import lk.crystal.asset.userManagement.entity.UserSessionLog;
-import lk.crystal.asset.userManagement.service.UserService;
-import lk.crystal.asset.userManagement.service.UserSessionLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;

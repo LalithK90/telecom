@@ -1,12 +1,5 @@
 package lk.crystal.asset.userManagement.controller;
 
-import lk.crystal.asset.employee.entity.Employee;
-import lk.crystal.asset.employee.entity.Enum.Designation;
-import lk.crystal.asset.employee.entity.Enum.EmployeeStatus;
-import lk.crystal.asset.employee.service.EmployeeService;
-import lk.crystal.asset.userManagement.entity.User;
-import lk.crystal.asset.userManagement.service.RoleService;
-import lk.crystal.asset.userManagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +20,7 @@ public class UserController {
 
     @Autowired
     public UserController(UserService userService, EmployeeService employeeService, RoleService roleService
-                         ) {
+    ) {
         this.userService = userService;
         this.employeeService = employeeService;
         this.roleService = roleService;

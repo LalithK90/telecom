@@ -1,16 +1,7 @@
 package lk.crystal.asset.employee.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonFilter;
-import lk.crystal.asset.branch.entity.Branch;
-import lk.crystal.asset.commonAsset.model.Enum.BloodGroup;
-import lk.crystal.asset.commonAsset.model.Enum.CivilStatus;
-import lk.crystal.asset.commonAsset.model.Enum.Gender;
-import lk.crystal.asset.commonAsset.model.Enum.Title;
-import lk.crystal.asset.commonAsset.model.FileInfo;
-import lk.crystal.asset.employee.entity.Enum.Designation;
-import lk.crystal.asset.employee.entity.Enum.EmployeeStatus;
-import lk.crystal.asset.message.entity.EmailMessage;
-import lk.crystal.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +14,7 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Entity
 @Getter
@@ -91,9 +83,6 @@ public class Employee extends AuditEntity {
     @ManyToOne
     private Branch branch;
 
-    @ManyToMany(mappedBy = "employees")
-    private List<EmailMessage> emailMessages;
-
     @Transient
     private List<MultipartFile> files = new ArrayList<>();
 
@@ -101,6 +90,6 @@ public class Employee extends AuditEntity {
     private List<String> removeImages = new ArrayList<>();
 
     @Transient
-    private List<FileInfo> fileInfos = new ArrayList<>();
+    private List< FileInfo > fileInfos = new ArrayList<>();
 
 }

@@ -1,47 +1,65 @@
 package lk.crystal.asset.ledger.controller;
 
-import lk.crystal.asset.ledger.entity.Ledger;
-import lk.crystal.asset.ledger.service.LedgerService;
-import lk.crystal.util.interfaces.AbstractController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/ledger")
-public class LedgerController implements AbstractController<Ledger,Integer> {
+@RequestMapping( "/ledger" )
+public class LedgerController {
     private final LedgerService ledgerService;
+    private final DateTimeAgeService dateTimeAgeService;
 
-    public LedgerController(LedgerService ledgerService) {
+    public LedgerController(LedgerService ledgerService, DateTimeAgeService dateTimeAgeService) {
         this.ledgerService = ledgerService;
+        this.dateTimeAgeService = dateTimeAgeService;
     }
 
-
-    public String findAll(Model model) {
-        return null;
+    //all ledgers
+    @GetMapping
+    public String findAllLed(Model model) {
+        model.addAttribute("title", "All Items In Stock");
+        model.addAttribute("ledgers", ledgerService.findAll());
+        return "ledger/ledger";
     }
 
-    public String findById(Integer id, Model model) {
-        return null;
+    //reorder point < item count
+    @GetMapping( "/reorderPoint" )
+    public String reorderPoint(Model model) {
+        model.addAttribute("title", "Reorder Point Limit Exceeded");
+        model.addAttribute("ledgers", ledgerService.findAll()
+                .stream()
+                .filter(x -> Integer.parseInt(x.getQuantity()) < Integer.parseInt(x.getItem().getRop()))
+                .collect(Collectors.toList()));
+        return "ledger/ledger";
     }
 
-    public String edit(Integer id, Model model) {
-        return null;
+    //near expired date
+    @PostMapping( "/expiredDate" )
+    public String expiredDate(@RequestAttribute( "startDate" ) LocalDate startDate,
+                              @RequestAttribute( "endDate" ) LocalDate endDate, Model model) {
+        model.addAttribute("title", "All items on given date range start at " + startDate + " end at " + endDate);
+        model.addAttribute("ledgers",
+                           ledgerService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(startDate), dateTimeAgeService.dateTimeToLocalDateEndInDay(endDate)));
+
+        return "ledger/ledger";
     }
 
-    public String persist(@Valid Ledger ledger, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
-        return null;
-    }
-
-    public String delete(Integer id, Model model) {
-        return null;
-    }
-
-    public String Form(Model model) {
-        return null;
+    @GetMapping( "/{id}" )
+    @ResponseBody
+   /* public MappingJacksonValue findId(@PathVariable Integer id) {
+        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(ledgerService.findById(id));
+        SimpleBeanPropertyFilter simpleBeanPropertyFilter = SimpleBeanPropertyFilter
+                .filterOutAllExcept("id", "quantity", "item", "sellPrice");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("Ledger", simpleBeanPropertyFilter);
+        mappingJacksonValue.setFilters(filters);
+        return mappingJacksonValue;
+    }*/
+    public Ledger find(@PathVariable Integer id){
+        return ledgerService.findById(id);
     }
 }

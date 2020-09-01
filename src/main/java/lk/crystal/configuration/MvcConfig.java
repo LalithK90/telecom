@@ -1,4 +1,4 @@
-package lk.aroComputers.aro.configuration;
+package lk.crystal.configuration;
 
 
 import org.slf4j.Logger;

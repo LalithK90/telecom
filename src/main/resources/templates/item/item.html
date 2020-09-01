@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>item</title>
+</head>
+<body>
+<nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
+
+<!--heading Area-->
+<div class="container-fluid bg-dark form-Border">
+    <div class="row text-center formManagement border-info">
+        <!-- New Item Button-->
+        <div class="col">
+            <a class="btn btn-success" href="/item/add" tabindex="1"><i class="fas fa-plus" style="font-size: 20px"></i>&nbsp;&nbsp;New</a>&nbsp;
+        </div>
+        <!-- List Name-->
+        <div class="col">
+            <h2 class="text-white text-center">
+                <strong>
+                    Item List
+                </strong>
+            </h2>
+        </div>
+        <!-- Home Button-->
+        <div class="col">
+            <a class="btn btn-primary" href="/home" id="searchShow" tabindex="2">
+                <!--<i class="fa fa-user " style="font-size: 20px"></i>&nbsp;Add&nbsp;-->
+                <i class="fas fa-home" style="font-size: 20px"></i>&nbsp;&nbsp;Home
+                &nbsp;
+            </a>
+        </div>
+    </div>
+</div>
+<div class="container-fluid bg-info formBorder text-center">
+    <!--Table view-->
+    <div class="col">
+        <div class="col" id="itemListPresent" th:if="${not #lists.isEmpty(items)}">
+            <table class="table table-hover table-striped" id="myTable">
+                <thead>
+                <tr>
+                    <th> Index</th>
+                    <th> Main Category</th>
+                    <th> Sub Category</th>
+                    <th> Name</th>
+                    <th> ROP</th>
+                    <th> Modify</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item, rowCount : ${items}">
+                    <th th:text="${rowCount.count}"></th>
+                    <th th:text="${item.category.mainCategory.mainCategory}"></th>
+                    <th th:text="${item.category.name}"></th>
+                    <th th:text="${item.name}"></th>
+                    <th th:text="${item.rop}"></th>
+                    <th>
+                        <a class="btn btn-primary btn-sm" th:href="${'/item/' + item.id}"><i class="fa fa-folder-open"
+                                                                                             style="font-size: 15px"></i>&nbsp;View</a>
+                        <a class="btn btn-success btn-sm" th:href="${'/item/edit/' + item.id}"><i class="fa fa-edit"
+                                                                                                  style="font-size: 15px"></i>&nbsp;Edit</a>
+                        <a class="btn btn-danger btn-sm" th:href="${'/item/delete/' + item.id}"
+                           th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                            <i class="fa fa-trash" style="font-size: 15px"></i> Delete</a>
+                    </th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--Error-->
+    <div class="row" th:if="${ #lists.isEmpty(items)}">
+        <div class="col-sm-12">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="text-center text-danger">
+                    <strong>There is no item upto now please add item to the system using "New" button.</strong>
+                </h3>
+            </div>
+        </div>
+        <script>
+            /*active boostrap alert - start*/
+            $(".alert").alert();
+            /*active boostrap alert - end*/
+        </script>
+    </div>
+</div>
+
+<!--footer include-->
+<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+<!--script include-->
+<script th:replace="~{fragments/script :: scriptFragment}"></script>
+
+</body>
+</html>

@@ -1,9 +1,6 @@
 package lk.crystal.asset.userManagement.service;
 
-import lk.crystal.asset.employee.entity.Employee;
-import lk.crystal.asset.userManagement.dao.UserDao;
-import lk.crystal.asset.userManagement.entity.User;
-import lk.crystal.util.interfaces.AbstractService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.*;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -15,18 +12,18 @@ import java.util.List;
 
 @Service
 @CacheConfig( cacheNames = {"user"} ) // tells Spring where to store cache for this class
-public class UserService implements AbstractService<User, Integer > {
+public class UserService implements AbstractService< User, Integer> {
     private final UserDao userDao;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserDao userDao, PasswordEncoder passwordEncoder) {
-        this.userDao = userDao;
+    @Autowired
+    public UserService(PasswordEncoder passwordEncoder, UserDao userDao) {
         this.passwordEncoder = passwordEncoder;
+        this.userDao = userDao;
     }
 
-
     @Cacheable
-    public List< User > findAll() {
+    public List<User> findAll() {
         return userDao.findAll();
     }
 
@@ -57,7 +54,7 @@ public class UserService implements AbstractService<User, Integer > {
     }
 
     @Cacheable
-    public List< User > search(User user) {
+    public List<User> search(User user) {
         ExampleMatcher matcher =
                 ExampleMatcher.matching().withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
         Example< User > userExample = Example.of(user, matcher);
