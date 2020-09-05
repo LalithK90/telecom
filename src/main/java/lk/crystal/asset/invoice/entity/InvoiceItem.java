@@ -3,6 +3,8 @@ package lk.crystal.asset.invoice.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import lk.crystal.asset.item.entity.Item;
+import lk.crystal.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

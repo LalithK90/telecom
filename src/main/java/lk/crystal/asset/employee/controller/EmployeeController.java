@@ -1,5 +1,20 @@
 package lk.crystal.asset.employee.controller;
 
+import lk.crystal.asset.commonAsset.model.Enum.BloodGroup;
+import lk.crystal.asset.commonAsset.model.Enum.CivilStatus;
+import lk.crystal.asset.commonAsset.model.Enum.Gender;
+import lk.crystal.asset.commonAsset.model.Enum.Title;
+import lk.crystal.asset.commonAsset.service.CommonService;
+import lk.crystal.asset.employee.entity.Employee;
+import lk.crystal.asset.employee.entity.EmployeeFiles;
+import lk.crystal.asset.employee.entity.Enum.Designation;
+import lk.crystal.asset.employee.entity.Enum.EmployeeStatus;
+import lk.crystal.asset.employee.service.EmployeeFilesService;
+import lk.crystal.asset.employee.service.EmployeeService;
+import lk.crystal.asset.userManagement.entity.User;
+import lk.crystal.asset.userManagement.service.UserService;
+import lk.crystal.util.service.DateTimeAgeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

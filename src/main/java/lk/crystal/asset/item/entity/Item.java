@@ -4,12 +4,12 @@ package lk.crystal.asset.item.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import lk.samarasingherSuper.asset.PurchaseOrder.entity.PurchaseOrderItem;
-import lk.samarasingherSuper.asset.category.entity.Category;
-import lk.samarasingherSuper.asset.item.entity.Enum.ItemStatus;
-import lk.samarasingherSuper.asset.ledger.entity.Ledger;
-import lk.samarasingherSuper.asset.supplierItem.entity.SupplierItem;
-import lk.samarasingherSuper.util.audit.AuditEntity;
+import lk.crystal.asset.PurchaseOrder.entity.PurchaseOrderItem;
+import lk.crystal.asset.category.entity.Category;
+import lk.crystal.asset.item.entity.Enum.ItemStatus;
+import lk.crystal.asset.ledger.entity.Ledger;
+import lk.crystal.asset.supplierItem.entity.SupplierItem;
+import lk.crystal.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

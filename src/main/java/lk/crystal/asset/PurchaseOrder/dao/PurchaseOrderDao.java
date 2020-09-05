@@ -1,5 +1,8 @@
 package lk.crystal.asset.PurchaseOrder.dao;
 
+import lk.crystal.asset.PurchaseOrder.entity.Enum.PurchaseOrderStatus;
+import lk.crystal.asset.PurchaseOrder.entity.PurchaseOrder;
+import lk.crystal.asset.supplier.entity.Supplier;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,5 +1,8 @@
 package lk.crystal.asset.userManagement.service;
 
+import lk.crystal.asset.userManagement.dao.RoleDao;
+import lk.crystal.asset.userManagement.entity.Role;
+import lk.crystal.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.*;
 import org.springframework.data.domain.Example;

@@ -3,6 +3,10 @@ package lk.crystal.asset.supplier.entity;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 
+import lk.crystal.asset.PurchaseOrder.entity.PurchaseOrder;
+import lk.crystal.asset.supplierItem.entity.Enum.ItemSupplierStatus;
+import lk.crystal.asset.supplierItem.entity.SupplierItem;
+import lk.crystal.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

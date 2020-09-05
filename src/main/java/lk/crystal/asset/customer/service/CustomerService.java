@@ -2,6 +2,9 @@ package lk.crystal.asset.customer.service;
 
 
 
+import lk.crystal.asset.customer.dao.CustomerDao;
+import lk.crystal.asset.customer.entity.Customer;
+import lk.crystal.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Example;

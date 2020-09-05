@@ -3,6 +3,10 @@ package lk.crystal.asset.goodReceivedNote.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import lk.crystal.asset.PurchaseOrder.entity.PurchaseOrder;
+import lk.crystal.asset.goodReceivedNote.entity.Enum.GoodReceivedNoteState;
+import lk.crystal.asset.ledger.entity.Ledger;
+import lk.crystal.util.audit.AuditEntity;
 import lombok.*;
 
 import javax.persistence.*;

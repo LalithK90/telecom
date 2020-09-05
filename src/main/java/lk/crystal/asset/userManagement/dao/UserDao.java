@@ -1,5 +1,7 @@
 package lk.crystal.asset.userManagement.dao;
 
+import lk.crystal.asset.employee.entity.Employee;
+import lk.crystal.asset.userManagement.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

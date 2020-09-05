@@ -2,6 +2,15 @@ package lk.crystal.asset.employee.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import lk.crystal.asset.branch.entity.Branch;
+import lk.crystal.asset.commonAsset.model.Enum.BloodGroup;
+import lk.crystal.asset.commonAsset.model.Enum.CivilStatus;
+import lk.crystal.asset.commonAsset.model.Enum.Gender;
+import lk.crystal.asset.commonAsset.model.Enum.Title;
+import lk.crystal.asset.commonAsset.model.FileInfo;
+import lk.crystal.asset.employee.entity.Enum.Designation;
+import lk.crystal.asset.employee.entity.Enum.EmployeeStatus;
+import lk.crystal.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

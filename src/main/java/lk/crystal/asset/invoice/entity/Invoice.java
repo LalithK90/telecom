@@ -4,6 +4,12 @@ package lk.crystal.asset.invoice.entity;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lk.crystal.asset.customer.entity.Customer;
+import lk.crystal.asset.discountRatio.entity.DiscountRatio;
+import lk.crystal.asset.invoice.entity.Enum.InvoicePrintOrNot;
+import lk.crystal.asset.invoice.entity.Enum.InvoiceValidOrNot;
+import lk.crystal.asset.invoice.entity.Enum.PaymentMethod;
+import lk.crystal.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

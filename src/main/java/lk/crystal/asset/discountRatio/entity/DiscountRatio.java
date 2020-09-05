@@ -3,6 +3,9 @@ package lk.crystal.asset.discountRatio.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import lk.crystal.asset.discountRatio.entity.Enum.DiscountRatioStatus;
+import lk.crystal.asset.invoice.entity.Invoice;
+import lk.crystal.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

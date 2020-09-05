@@ -1,5 +1,11 @@
 package lk.crystal.asset.item.service;
 
+import lk.crystal.asset.category.entity.Category;
+import lk.crystal.asset.item.dao.ItemDao;
+import lk.crystal.asset.item.entity.Enum.ItemStatus;
+import lk.crystal.asset.item.entity.Item;
+import lk.crystal.asset.ledger.dao.LedgerDao;
+import lk.crystal.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Example;

@@ -2,6 +2,9 @@ package lk.crystal.asset.category.service;
 
 
 
+import lk.crystal.asset.category.dao.CategoryDao;
+import lk.crystal.asset.category.entity.Category;
+import lk.crystal.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Example;

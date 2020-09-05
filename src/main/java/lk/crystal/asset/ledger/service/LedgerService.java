@@ -1,6 +1,10 @@
 package lk.crystal.asset.ledger.service;
 
 
+import lk.crystal.asset.item.entity.Item;
+import lk.crystal.asset.ledger.dao.LedgerDao;
+import lk.crystal.asset.ledger.entity.Ledger;
+import lk.crystal.util.interfaces.AbstractService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;

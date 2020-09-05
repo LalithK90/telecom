@@ -4,6 +4,8 @@ package lk.crystal.asset.category.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import lk.crystal.asset.item.entity.Enum.MainCategory;
+import lk.crystal.asset.item.entity.Item;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

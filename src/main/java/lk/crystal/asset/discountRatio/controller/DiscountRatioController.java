@@ -1,4 +1,7 @@
 package lk.crystal.asset.discountRatio.controller;
+import lk.crystal.asset.discountRatio.entity.DiscountRatio;
+import lk.crystal.asset.discountRatio.entity.Enum.DiscountRatioStatus;
+import lk.crystal.asset.discountRatio.service.DiscountRatioService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

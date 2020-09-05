@@ -1,5 +1,8 @@
 package lk.crystal.asset.invoice.service;
 
+import lk.crystal.asset.invoice.dao.InvoiceDao;
+import lk.crystal.asset.invoice.entity.Invoice;
+import lk.crystal.util.interfaces.AbstractService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;

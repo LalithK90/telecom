@@ -1,5 +1,6 @@
 package lk.crystal.asset.userManagement;
 
+import lk.crystal.asset.userManagement.entity.User;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
