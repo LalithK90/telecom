@@ -1,9 +1,12 @@
 package lk.crystal.asset.commonAsset.controller;
 
+
+
+
+
 import lk.crystal.asset.userManagement.entity.PasswordChange;
 import lk.crystal.asset.userManagement.entity.User;
 import lk.crystal.asset.userManagement.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import javax.validation.Valid;
 import java.security.Principal;
 
@@ -21,11 +25,11 @@ public class ProfileController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
     public ProfileController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
     }
+
 
     @GetMapping( value = "/profile" )
     public String userProfile(Model model, Principal principal) {

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head data-th-replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>addItem</title>
+</head>
+<body>
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
+
+<!--heading Area-->
+<div class="container-fluid bg-dark form-Border">
+    <div class="row text-center formManagement border-info">
+        <!--View list Button-->
+        <div class="col">
+            <a class="btn btn-primary" href="/item" tabindex="1">
+                <i class="fa fa-list" style="font-size: 20px"></i>&nbsp; View List
+            </a>
+        </div>
+        <!--Form Name-->
+        <div class="col">
+            <h2 class="text-white text-center">
+                <strong>
+                    <span data-th-text="${addStatus==true?'Add New Item':'Update Item Details'}"></span>
+                </strong>
+            </h2>
+        </div>
+        <!--Home Button-->
+        <div class="col">
+            <a class="btn btn-primary" href="/home" tabindex="2">
+                <i class="fa fa-home" style="font-size: 20px"></i>&nbsp;Home
+            </a>
+        </div>
+    </div>
+</div>
+<!--Form Content-->
+<div class="container-fluid bg-info formBorder">
+    <div class="col-sm-12 flex-column ">
+        <form class="form-horizontal" data-th-action="${addStatus==true?'/item/save':'/item/update'}" data-th-object="${item}"
+              enctype="multipart/form-data" id="form" method="POST">
+            <div class="row">
+                <div class="form-group col-md-12 col-sm-12 text-center flex-column ">
+                    <!--Id-->
+                    <input class="form-control" data-th-field="*{id}" data-th-if="${addStatus==false}" hidden
+                           type="text"/>
+                    <!--Code-->
+                    <div class="form-row text-right" data-th-if="${addStatus==false}">
+                        <div class="col-md-4">
+                            <label class="control-label" for="code"> Code :</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input class="form-control" data-th-field="*{code}" id="code" readonly tabindex="6"
+                                   type="text"/>
+                            <span  data-th-errors="*{code}"
+                                  data-th-if="${#fields.hasErrors('code')}" >Error Name</span>
+                        </div>
+                    </div>
+                    <!--Main Category -->
+                    <div class="form-row text-right">
+                        <div class="col-md-4">
+                            <label class="control-label" for="mainCategory">Main Category :</label>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control" id="mainCategory" required style="font-size: large"
+                                    tabindex="4">
+                                <option value="" selected>Please select</option>
+                                <option data-th-each="mainCategory : ${mainCategories}"
+                                        data-th-text="${mainCategory.mainCategory}"
+                                        data-th-value="${mainCategory}"
+                                >
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--Sub Category -->
+                    <div class="form-row text-right">
+                        <div class="col-md-4">
+                            <label class="control-label" for="subCategory">Sub Category :</label>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control" data-th-name="${'category'}" id="subCategory" required
+                                    style="font-size: large" tabindex="4">
+                                <option disabled value="">Please select</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--Name-->
+                    <div class="form-row text-right">
+                        <div class="col-md-4">
+                            <label class="control-label" for="iName">Name :</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input class="form-control" data-th-field="*{name}" id="iName" required tabindex="6"
+                                   type="text"/>
+                            <span class="error" data-th-errors="*{name}"
+                                  data-th-if="${#fields.hasErrors('name')}" id="nameError">Error Name</span>
+                        </div>
+                    </div>
+                    <!--ReOrder Point-->
+                    <div class="form-row text-right">
+                        <div class="col-md-4">
+                            <label class="control-label" for="rop">Reorder Point :</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input class="form-control" data-th-field="*{rop}" id="rop" step="0.01" required
+                                   tabindex="8"
+                                   type="number"/>
+                            <span class="error"
+                                  data-th-errors="*{rop}" data-th-if="${#fields.hasErrors('rop')}">Error ROP</span>
+                        </div>
+                    </div>
+                    <!--Sell Price-->
+                    <div class="form-row text-right">
+                        <div class="col-md-4">
+                            <label class="control-label" for="sellPrice">Sell Price :</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input class="form-control" data-th-field="*{sellPrice}" id="sellPrice" required tabindex="8"
+                                   type="number" step="0.01"/>
+                            <span class="error"
+                                  data-th-errors="*{sellPrice}" data-th-if="${#fields.hasErrors('sellPrice')}">Error ROP</span>
+                        </div>
+                    </div>
+                    <!--Item Status -->
+                    <div class="form-row text-right" data-th-if="${addStatus==false}">
+                        <div class="col-md-4">
+                            <label class="control-label" for="itemStatus">Item Status :</label>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control" data-th-field="*{itemStatus}" id="itemStatus" required style="font-size:
+                             large"
+                                    tabindex="4">
+                                <option disabled value="">Please select</option>
+                                <option data-th-each="itemStatus : ${itemStatuses}"
+                                        data-th-text="${itemStatus.itemStatus}"
+                                        data-th-value="${itemStatus}"
+                                >
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--Created by and created at-->
+                    <div data-th-if="${addStatus==false}" id="updateStatus">
+                        <!--hidden url -->
+                        <input data-th-value="${item.category.mainCategory}" id="mainCategoryValueBind" type="hidden">
+                        <!--Created by-->
+                        <div class="form-row text-right">
+                            <div class="col-md-4">
+                                <label class="control-label" for="createdBy">Created By :</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control" data-th-field="*{createdBy}" id="createdBy" readonly
+                                       type="text"/>
+                            </div>
+                        </div>
+                        <!--Created at-->
+                        <div class="form-row text-right">
+                            <div class="col-md-4">
+                                <label class="control-label" for="createdAt">Created At :</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control" data-th-field="*{createdAt}" id="createdAt" readonly
+                                       type="text"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Button-->
+                <div class="form-group col-md-12 col-sm-12 text-center flex-column ">
+                    <!--Back Button-->
+                    <a class="btn btn-dark" href="/item" tabindex="14">
+                        <i class="fas fa-arrow-circle-left" style="font-size: 20px"></i>&nbsp;&nbsp;Back
+                    </a>
+                    <!--Save Button-->
+                    <button class="btn btn-success ml-5" tabindex="12" type="submit">
+                        <i class="fa fa-save " style="font-size: 20px"></i>&nbsp;&nbsp;<span data-th-text="${addStatus==true?'Save': 'Update'}"
+                                                                                             id="submit"></span>
+                    </button>
+                    <!--Cancel Button-->
+                    <button class="btn btn-warning ml-5" tabindex="13" type="reset">
+                        <i class="far fa-times-circle" style="font-size: 20px"></i>&nbsp;&nbsp;Cancel
+                    </button>
+                </div>
+                <!--Error-->
+                <div class="form-row">
+                    <label data-th-if="${#fields.hasErrors('*')}" data-th-text="'Errors: '"
+                           id="errorLabel">Errors: </label>
+                    <ul>
+                        <li class="error" data-th-each="err: ${#fields.errors('*')}" data-th-text="${err}"
+                            id="error"></li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!--footer include-->
+<footer data-th-replace="~{fragments/footer :: footerFragment}"></footer>
+<!--script include-->
+<script data-th-replace="~{fragments/script :: scriptFragment}"></script>
+<script>
+    $(document).ready(function () {
+            let mainCategoryValueBind = $("#mainCategoryValueBind").val();
+            if (mainCategoryValueBind !== null || mainCategoryValueBind !== undefined) {
+                $("#mainCategory").val(mainCategoryValueBind);
+                getSubCategory(mainCategoryValueBind);
+            }
+        }
+    );
+    $("#mainCategory").bind("change", function () {
+        getSubCategory(this.value);
+    });
+    let getSubCategory = function (val) {
+        let url = "[[${urlMainCategory}]]" + val;
+        removeOption('subCategory');
+        $.getJSON(url, function (val) {
+            $.each(val, function () {
+                $("#subCategory").append(`<option value="${this.id}">${this.name}</option>`);
+            });
+        });
+
+    };
+    let removeOption = function (idValue) {
+        $(`#${idValue}`).find('option')
+            .remove();
+    }
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head data-th-replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>Kmart Super</title>
+</head>
+<body>
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
+<!--Table view-->
+<div class="col">
+    <div class="col" id="purchaseRequestListPresent" data-th-if="${not #lists.isEmpty(notCompleteAll)}">
+        <table class="table table-hover table-striped" id="myTable">
+            <thead>
+            <tr>
+                <th> Index</th>
+                <th> Code</th>
+                <th> Supplier</th>
+                <th> Priority</th>
+                <th> Amount</th>
+                <th> Created Date</th>
+                <th> Modify</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-th-each="purchaseOrder, rowCount : ${notCompleteAll}">
+                <th data-th-text="${rowCount.count}"></th>
+                <th data-th-text="${purchaseOrder.code}"></th>
+                <th data-th-text="${purchaseOrder.supplier.name}"></th>
+                <th data-th-text="${purchaseOrder.purchaseOrderPriority.purchaseOrderPriority}"></th>
+                <th data-th-text="${purchaseOrder.price}"></th>
+                <th data-th-text="${{purchaseOrder.createdAt}}"></th>
+                <th>
+                    <a  data-th-href="${'/purchaseOrder/view' + purchaseOrder.id}"
+                        class="btn btn-primary btn-sm"><i class="fa fa-folder-open" style="font-size: 15px"></i>&nbsp;View</a>
+                    <a  data-th-href="${'/goodReceivedNote/' + purchaseOrder.id}" class="btn btn-success btn-sm"><i
+                            class="fa fa-edit" style="font-size: 15px"></i>&nbsp; Confirm </a>
+                    <a  data-th-href="${'/purchaseOrder/delete/' + purchaseOrder.id}" class="btn btn-danger btn-sm">
+                        <!--data-th-if="${#authorization.expurchaseOrderession('hasRole(''ROLE_ADMIN'')')}"--><i
+                            class="fa fa-trash" style="font-size: 15px"></i> Delete</a>
+                </th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--Error-->
+<div class="row" data-th-if="${ #lists.isEmpty(notCompleteAll)}">
+    <div class="col-sm-12">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h3 class="text-center text-danger">
+                <strong>There is no purchaseOrder upto now please add purchaseOrder to the system using "New" button.</strong>
+            </h3>
+        </div>
+    </div>
+    <script>
+        /*active boostrap alert - start*/
+        $(".alert").alert();
+        /*active boostrap alert - end*/
+    </script>
+</div>
+
+
+<footer data-th-replace="~{fragments/footer :: footerFragment}"></footer>
+<script data-th-replace="~{fragments/script :: scriptFragment}"></script>
+</body>
+</html>

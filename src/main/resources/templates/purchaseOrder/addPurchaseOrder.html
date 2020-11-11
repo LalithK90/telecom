@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head data-th-replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>JN_Super</title>
+</head>
+<body>
+<!--Multi CSS-->
+<link data-th-href="@{/css/multi.css}" media="all" rel="stylesheet" type="text/css"/>
+
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
+<!--Heading Area -->
+<div class="container-fluid bg-dark form-Border">
+    <div class="row text-center formManagement border-info">
+        <!--View List Button-->
+        <div class="col">
+            <a class="btn btn-primary" href="/purchaseOrder">
+                <i class="fa fa-list" style="font-size: 20px"></i>&nbsp;&nbsp;View List
+            </a>
+        </div>
+        <!--Form Name-->
+        <div class="col">
+            <h2 class="text-white text-center">
+                <strong>
+                    Purchase Order Management
+                </strong>
+            </h2>
+        </div>
+        <!--Home Button-->
+        <div class="col">
+            <a class="btn btn-primary" href="/home">
+                <i class="fa fa-home" style="font-size: 20px"></i> &nbsp;&nbsp;Home
+            </a>
+        </div>
+    </div>
+</div>
+
+<!--Form Content - start -->
+<div class="container-fluid bg-info">
+    <!--Supplier Search - Start-->
+    <div class="offset-1 flex-column" data-th-if="${searchAreaShow==true}">
+        <form class="form-inline" data-th-action="${'/purchaseOrder/find'}" data-th-object="${purchaseOrder}"
+              id="form" method="POST">
+            <div class="form-row">
+                <label class="mr-5 ml-5" for="searchCriteria">Search By</label>
+                <select class="form-control mr-5 ml-5" id="searchCriteria" required tabindex="1">
+                    <option disabled selected value="">Please Select</option>
+                    <option value="name">Name</option>
+                    <option value="code">Code</option>
+                    <option value="contactOne">Mobile Number</option>
+                </select>
+                <label class="mr-5 ml-5" for="searchValue">Search Value</label>
+                <input class="form-control mr-5 ml-5" id="searchValue" minlength="5" required tabindex="2" type="text">
+                <!--Search Button-->
+                <button class="btn btn-success mr-5 ml-5" id="searchButton" tabindex="3" type="submit">
+                    <i class="fa fa-search " style="font-size: 20px"></i>&nbsp;&nbsp; Search
+                </button>
+            </div>
+        </form>
+    </div>
+    <!--Supplier Search - end-->
+    <!--Supplier List Show - start-->
+    <div class="col-12 flex-column" data-th-if="${supplierDetailShow==true}">
+        <div data-th-replace="~{supplier/supplier :: supplierFragment}"></div>
+    </div>
+    <!--Supplier List Show - end-->
+    <!--Supplier Item add- start-->
+    <div class="col-12 flex-column" data-th-if="${supplierDetailShow==false}">
+        <a aria-controls="hrefCollapse" aria-expanded="false" class="btn btn-primary col-12" data-toggle="collapse"
+           href="#hrefCollapse">Show Supplier Details</a>
+        <div class="collapse" id="hrefCollapse">
+            <section data-th-replace="~{supplier/supplier-detail :: supplierDetailsFragment}"></section>
+        </div>
+        <!--Purchase Order Item add Form - start-->
+        <form class="mb-5" data-th-action="${'/purchaseOrder/save'}" data-th-object="${purchaseOrder}" method="POST">
+            <input data-th-name="${'supplier'}" data-th-value="${supplierDetail.id}" id="supplier" type="hidden">
+            <div class="form-row col-md-6" data-th-if="${purchaseOrderItemEdit==false}">
+                <div class="col-md-4">
+                    <label class="control-label" for="item">Select Items:</label>
+                </div>
+                <div class="text-left col-md-8">
+                    <select class="form-control" id="item">
+                        <option selected value=""> Please Select</option>
+                        <option data-th-each="item : ${items}"
+                                data-th-text="${item.name}"
+                                data-th-value="${item.id}"
+                        > Please Select
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row col-md-12 col-sm-12 mt-4 text-center">
+                <div class="form-row container-fluid">
+                    <div class="col-6 text-left h3 text-capitalize font-weight-bold">Selected Item List</div>
+                    <div class="col-6 form-row">
+                        <div class="col-6 text-left h3 text-capitalize font-weight-bold">Selected Item Count:</div>
+                        <div class="col-3 text-left h3 text-capitalize font-weight-bold">
+                            <span id="selectedItemCount"></span>
+                        </div>
+                    </div>
+                </div>
+                <!--Add new Item-->
+                <table class="table table-striped table-inverse border" id="selectedItemInTable">
+                    <thead class="thead-inverse">
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Available Quantity</th>
+                        <th>ROP</th>
+                        <th>Price (Rs.)</th>
+                        <th>Request Quantity</th>
+                        <th>Line Total</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <td colspan="6" class="text-right font-weight-bold">Purchase Order Value (Rs.)</td>
+                        <td>
+                            <label>
+                                <input class="form-control" id="purchaseOrderValue" data-th-name="${'price'}" readonly
+                                       type="number" step="0.01" required>
+                            </label>
+                        </td>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    <tr>
+
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+            <div class="form-row col-md-6" data-th-if="${purchaseOrderItemEdit==false}">
+                <div class="col-md-4">
+                    <label class="control-label" for="priority">Select Priority:</label>
+                </div>
+                <div class="text-left col-md-8">
+                    <select class="form-control" data-th-name="${'purchaseOrderPriority'}" id="priority" required>
+                        <option selected value=""> Please Select</option>
+                        <option data-th-each="purchaseOrderPriority : ${purchaseOrderPriorities}"
+                                data-th-text="${purchaseOrderPriority.purchaseOrderPriority}"
+                                data-th-value="${purchaseOrderPriority}"> Please Select
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group" data-th-if="${purchaseOrderItemEdit==false}">
+                <label for="remark">Remarks</label>
+                <textarea class="form-control" data-th-name="${'remark'}" id="remark" rows="2"></textarea>
+            </div>
+            <!--Button-->
+            <div class="form-group col-md-12 col-sm-12 mt-4 text-center flex-column ">
+                <!--Back Button-->
+                <a class="btn btn-dark" href="/supplier" tabindex="11">
+                    <i class="fas fa-arrow-circle-left" style="font-size: 20px"></i>&nbsp;&nbsp;Back
+                </a>
+                <!--Save Button-->
+                <button class="btn btn-success ml-5" tabindex="9" type="submit">
+                    <i class="fa fa-save " style="font-size: 20px"></i>&nbsp;&nbsp;Save
+                </button>
+                <!--Cancel Button-->
+                <button class="btn btn-warning ml-5" tabindex="10" type="reset">
+                    <i class="far fa-times-circle" style="font-size: 20px"></i>&nbsp;&nbsp;Cancel
+                </button>
+            </div>
+        </form>
+        <!--Supplier Item add Form - end-->
+    </div>
+</div>
+<input data-th-if="${supplierDetailShow==false}" data-th-value="${purchaseOrderItemUrl}" hidden
+       id="purchaseOrderItemUrl" type="text">
+<!--Supplier Item add - end-->
+<footer data-th-replace="~{fragments/footer :: footerFragment}"></footer>
+<script data-th-replace="~{fragments/script :: scriptFragment}"></script>
+<script>
+    //when change supplier search criteria that value set search value input
+    $(document).ready(function () {
+        $("#searchCriteria").bind("change", function () {
+            $("#searchValue").attr("name", $(this).val());
+        });
+    });
+    //taken supplier id
+    let supplierIdValue = $("#supplier").val();
+    if (supplierIdValue.length !== 0) {
+        $("#item").bind('change', function () {
+            //taken item id
+            let itemIdValue = $(this).val();       //get data from a database using supplier and item
+            let purchaseOrderItemUrl = $("#purchaseOrderItemUrl").val().split("?");
+            let finalUrl = purchaseOrderItemUrl[0] + `?supplierId=${supplierIdValue}&itemId=${itemIdValue}`;
+
+            $.ajax({
+                type: 'GET',
+                url: finalUrl,
+                success: function (resp) {
+                    tableRowAdd(resp);
+                    optionElementRemove("#item");
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+    }
+    //table row add
+    let tableRowAdd = function (value) {
+        let rows = $("#selectedItemInTable tbody tr").length;
+        // let rowCount = rows;
+        let rowCount = rows - 1;
+
+        let html = `<tr>
+                        <td>
+                            <span id='nm${value.itemId}'>${value.itemName}</span>
+                            <input id="id${value.itemId}" type="hidden" name="purchaseOrderItems[${rowCount}].item.id" value="${value.itemId}">
+                        </td>
+                        <td>
+                         <span>${value.availableQuantity}</span>
+                        </td>
+                        <td>
+                         <span>${value.rop}</span>
+                        </td>
+                        <td>
+                        <label>
+                        <input type="text" id="pr${value.itemId}" class="form-control" name="purchaseOrderItems[${rowCount}].buyingPrice" value="${value.price}" readonly></label>
+                        </td>
+                        <td>
+                         <div class="form-row form-inline">
+                                <label>
+                          <input type="number" id="rq${value.itemId}" class="form-control" name="purchaseOrderItems[${rowCount}].quantity"
+                           onkeyup="lineTotalCalculateByLine(this)" required>
+                                </label>
+                         </div>
+                        </td>
+                        <td>
+                          <label>
+                          <input type="number" id="lt${value.itemId}" class="form-control lineTotal" name="purchaseOrderItems[${rowCount}].lineTotal" readonly>
+                                </label>
+                        </td>
+                        <td>
+                            <button type="button" id="rm${value.itemId}" class="btn btn-outline-danger" onclick="tableRowRemove(this)">Remove</button>
+                        </td>
+                    </tr>`;
+
+        $("#selectedItemInTable tbody tr:last").after(html);
+        selectedItemCount();
+    }
+    //table row remove
+    let tableRowRemove = function (obj) {
+        let selectedFiledId = obj.getAttribute('id').slice(2);
+        let removeItemText = $(`#nm${selectedFiledId}`).html();
+        let removeItemValue = $(`#id${selectedFiledId}`).val();
+        $("#item").append(new Option(removeItemText, removeItemValue));
+        let i = obj.parentNode.parentNode.rowIndex;
+        document.getElementById("selectedItemInTable").deleteRow(i);
+        purchaseOrderValue();
+        selectedItemCount();
+    };
+    //calculate line total
+    let lineTotalCalculateByLine = function (obj) {
+        let selectedFiledId = obj.getAttribute('id').slice(2);
+        let price = $(`#pr${selectedFiledId}`).val();
+        $(`#lt${selectedFiledId}`).val(price * obj.value);
+        purchaseOrderValue();
+    };
+    //total purchase order value
+    let purchaseOrderValue = function () {
+        let lineTotals = $('.lineTotal');
+        let purchaseOrderTotal = 0;
+        for (let k = 0; k < lineTotals.length; k++) {
+            purchaseOrderTotal += parseFloat(lineTotals[k].value);
+        }
+        $('#purchaseOrderValue').val(purchaseOrderTotal);
+    }
+    //option tag remove
+    let optionElementRemove = function (id) {
+        let selectedValue = $(id).val();
+        let selectedItemId = `${id} option[value='${selectedValue}']`;
+        $(selectedItemId).remove();
+    }
+    //seledted item count dispaly
+    let selectedItemCount = function () {
+        $('#selectedItemCount').html($('#selectedItemInTable tr').length - 3);
+    };
+</script>
+</body>
+</html>

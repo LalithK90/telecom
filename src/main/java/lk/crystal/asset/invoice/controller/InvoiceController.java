@@ -1,47 +1,118 @@
 package lk.crystal.asset.invoice.controller;
 
+import lk.crystal.asset.customer.service.CustomerService;
+import lk.crystal.asset.discountRatio.service.DiscountRatioService;
+import lk.crystal.asset.invoice.entity.Enum.InvoicePrintOrNot;
+import lk.crystal.asset.invoice.entity.Enum.InvoiceValidOrNot;
+import lk.crystal.asset.invoice.entity.Enum.PaymentMethod;
 import lk.crystal.asset.invoice.entity.Invoice;
 import lk.crystal.asset.invoice.service.InvoiceService;
-import lk.crystal.util.interfaces.AbstractController;
+import lk.crystal.asset.item.service.ItemService;
+import lk.crystal.asset.ledger.service.LedgerService;
+import lk.crystal.util.service.DateTimeAgeService;
+import lk.crystal.util.service.MakeAutoGenerateNumberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/invoice")
-public  class InvoiceController implements AbstractController<Invoice,Integer> {
+@RequestMapping( "/invoice" )
+public class InvoiceController {
     private final InvoiceService invoiceService;
+    private final ItemService itemService;
+    private final CustomerService customerService;
+    private final LedgerService ledgerService;
+    private final DateTimeAgeService dateTimeAgeService;
+    private final DiscountRatioService discountRatioService;
+    private final MakeAutoGenerateNumberService makeAutoGenerateNumberService;
 
-    public InvoiceController(InvoiceService invoiceService) {
+    public InvoiceController(InvoiceService invoiceService, ItemService itemService, CustomerService customerService,
+                             LedgerService ledgerService, DateTimeAgeService dateTimeAgeService,
+                             DiscountRatioService discountRatioService,
+                             MakeAutoGenerateNumberService makeAutoGenerateNumberService) {
         this.invoiceService = invoiceService;
+        this.itemService = itemService;
+        this.customerService = customerService;
+        this.ledgerService = ledgerService;
+        this.dateTimeAgeService = dateTimeAgeService;
+        this.discountRatioService = discountRatioService;
+        this.makeAutoGenerateNumberService = makeAutoGenerateNumberService;
+    }
+
+    @GetMapping
+    public String invoice(Model model) {
+        model.addAttribute("invoices",
+                           invoiceService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(dateTimeAgeService.getPastDateByMonth(3)), dateTimeAgeService.dateTimeToLocalDateEndInDay(LocalDate.now())));
+        model.addAttribute("firstInvoiceMessage", true);
+        return "invoice/invoice";
+    }
+
+    @GetMapping( "/search" )
+    public String invoiceSearch(@RequestAttribute( "startDate" ) LocalDate startDate,
+                                @RequestAttribute( "endDate" ) LocalDate endDate, Model model) {
+        model.addAttribute("invoices",
+                           invoiceService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(startDate), dateTimeAgeService.dateTimeToLocalDateEndInDay(endDate)));
+        model.addAttribute("firstInvoiceMessage", true);
+        return "invoice/invoice";
+    }
+
+    private String common(Model model, Invoice invoice) {
+        model.addAttribute("invoice", invoice);
+        model.addAttribute("invoicePrintOrNots", InvoicePrintOrNot.values());
+        model.addAttribute("paymentMethods", PaymentMethod.values());
+        model.addAttribute("customers", customerService.findAll());
+        model.addAttribute("discountRatios", discountRatioService.findAll());
+        //send not expired and not zero quantity
+        model.addAttribute("ledgers", ledgerService.findAll()
+                .stream()
+                .filter(x -> 0 < Integer.parseInt(x.getQuantity()) && x.getExpiredDate().isBefore( LocalDate.now()))
+                .collect(Collectors.toList()));
+        return "invoice/addInvoice";
+    }
+
+    @GetMapping( "/add" )
+    public String getInvoiceForm(Model model) {
+        return common(model, new Invoice());
+    }
+
+    @GetMapping( "/{id}" )
+    public String viewDetails(@PathVariable Integer id, Model model) {
+        model.addAttribute("invoiceDetail", invoiceService.findById(id));
+        return "invoice/invoice-detail";
+    }
+
+    @PostMapping
+    public String persistInvoice(@Valid @ModelAttribute Invoice invoice, BindingResult bindingResult, Model model) {
+        if ( bindingResult.hasErrors() ) {
+            return common(model, invoice);
+        }
+        if ( invoice.getId() == null ) {
+            if ( invoiceService.findByLastInvoice() == null ) {
+                //need to generate new one
+                invoice.setCode("JNPI" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
+            } else {
+                System.out.println("last customer not null");
+                //if there is customer in db need to get that customer's code and increase its value
+                String previousCode = invoiceService.findByLastInvoice().getCode().substring(4);
+                invoice.setCode("JNPI" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
+            }
+        }
+        invoice.setInvoiceValidOrNot(InvoiceValidOrNot.VALID);
+
+        return "redirect:/invoice";
     }
 
 
-    public String findAll(Model model) {
-        return null;
+    @GetMapping( "/remove/{id}" )
+    public String removeInvoice(@PathVariable( "id" ) Integer id) {
+        Invoice invoice = invoiceService.findById(id);
+        invoice.setInvoiceValidOrNot(InvoiceValidOrNot.NOTVALID);
+        invoiceService.persist(invoice);
+        return "redirect:/invoice";
     }
-
-    public String findById(Integer id, Model model) {
-        return null;
-    }
-
-    public String edit(Integer id, Model model) {
-        return null;
-    }
-
-    public String persist(@Valid Invoice invoice, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
-        return null;
-    }
-
-    public String delete(Integer id, Model model) {
-        return null;
-    }
-
-    public String Form(Model model) {
-        return null;
-    }
-}
+} 

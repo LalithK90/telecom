@@ -23,11 +23,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.UUID;
-
-
 
 @RequestMapping("/employee")
 @Controller
@@ -134,7 +133,7 @@ public class EmployeeController {
                     userService.persist(user);
                 }
             }
-            //save employee images file
+            //save employee img file
             for (MultipartFile file : employee.getFiles()) {
                 if (file.getOriginalFilename() != null) {
                     EmployeeFiles employeeFiles = employeeFilesService.findByName(file.getOriginalFilename());

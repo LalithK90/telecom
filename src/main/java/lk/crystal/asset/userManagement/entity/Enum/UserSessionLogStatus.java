@@ -1,5 +1,6 @@
 package lk.crystal.asset.userManagement.entity.Enum;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

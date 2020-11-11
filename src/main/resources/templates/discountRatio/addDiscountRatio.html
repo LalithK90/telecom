@@ -1,122 +1,101 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/header :: headerFragment}">
+<html lang="en">
+<head data-th-replace="~{fragments/header :: headerFragment}">
     <meta charset="UTF-8">
-    <title>addDiscountRatio</title>
+    <title>Thymeleaf Springboot </title>
 </head>
 <body>
-<nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
-<!--Heading Area-->
-<div class="container-fluid bg-dark form-Border">
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
+
+<div class="container-fluid bg-secondary form-Border">
     <div class="row text-center formManagement border-info">
-        <!--ViewList Button-->
         <div class="col">
-            <a href="/discountRatio" class="btn btn-primary" tabindex="1">
-                <i class="fa fa-list" style="font-size: 20px"></i>&nbsp;&nbsp;View List
+            <a class="btn btn-primary" href="/home">
+                <i class="fa fa-home" style="font-size: 20px"></i> &nbsp; Home
             </a>
         </div>
-        <!--Form Name-->
         <div class="col">
-            <h2 class="text-light text-center">
+            <h4 class="text-light text-center">
                 <strong>
-                    <span th:text="${addStatus==true?'Add New DiscountRatio':'Update DiscountRatio Details'}"></span>
+                    <span
+                            data-th-text="${addStatus==true?'New Discount Ratio Add':'Update Discount Ratio Details'}"></span>
                 </strong>
-            </h2>
+            </h4>
         </div>
-        <!--Home Button-->
         <div class="col">
-            <a class="btn btn-primary" href="/home" tabindex="2">
-                <i class="fa fa-home" style="font-size: 20px"></i> &nbsp;&nbsp;Home
+            <a class="btn btn-primary" href="/discountRatio">
+                <i class="fa fa-list"></i>&nbsp; View List
             </a>
         </div>
     </div>
 </div>
-<!--Form Content-->
-<div class="container-fluid bg-dark formBorder">
+<!--Form Content - start -->
+<div class="container-fluid ">
     <div class="col-sm-12 flex-column ">
-        <form id="form" class="form-horizontal" th:action="${addStatus==true?'/discountRatio/save':'/discountRatio/update'}"
-              th:object="${discountRatio}" method="POST" enctype="multipart/form-data">
+        <form data-th-action="${addStatus==true?'/discountRatio/save':'/discountRatio/update'}"
+              data-th-object="${discountRatio}"
+              method="POST">
             <div class="row">
                 <!--Left Side-->
                 <div class="form-group col-md-6 col-sm-6 text-left flex-column">
-                    <!--Id-->
-                    <div id="idStatus" th:if="${addStatus==false}" class="form-row text-right">
-                        <div class="col-md-4">
-                            <label class="control-label" for="id">ID :</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input id="id" th:field="*{id}" class="form-control" type="text" readonly/>
-                        </div>
-                    </div>
+                    <input data-th-field="*{id}" data-th-if="${addStatus==false}" hidden type="text"/>
+
                     <!--Name-->
                     <div class="form-row text-right">
                         <div class="col-md-4">
                             <label class="control-label" for="name">Name :</label>
                         </div>
                         <div class="col-md-8">
-                           <input id="name" th:field="*{name}" class="form-control" tabindex="4" type="text" required/>
-                            <span id="nameError" th:errors="*{name}"
-                                  th:if="${#fields.hasErrors('name')}" class="error">Error Name</span>
+                            <input class="form-control" data-th-field="*{name}" id="name" required tabindex="4"
+                                   type="text"/>
+                            <span class="error" data-th-errors="*{name}"
+                                  data-th-if="${#fields.hasErrors('name')}" id="nameError">Error Name</span>
                         </div>
                     </div>
 
-                    <!--Amount-->
+                    <!--amount-->
                     <div class="form-row text-right">
                         <div class="col-md-4">
-                            <label class="control-label" for="amount">Amount :</label>
+                            <label class="control-label" for="name">Amount :</label>
                         </div>
                         <div class="col-md-8">
-                            <input id="amount" th:field="*{amount}" class="form-control" tabindex="4" type="text" required/>
-                            <span id="amountError" th:errors="*{amount}"
-                                  th:if="${#fields.hasErrors('name')}" class="error">Error Name</span>
+                            <input class="form-control" data-th-field="*{amount}" id="amount" required tabindex="4"
+                                   type="text"/>
+                            <span class="error" data-th-errors="*{amount}"
+                                  data-th-if="${#fields.hasErrors('amount')}" >Error Name</span>
+                        </div>
+                    </div>
+                    <!--Discount Ratio status-->
+                    <div class="form-row text-right" data-th-if="${addStatus==false}">
+                        <div class="col-md-4">
+                            <label class="control-label" for="discountRatioStatus">Discount Ratio Status :</label>
+                        </div>
+                        <div class="col-md-8">
+                            <select id="discountRatioStatus" data-th-field="*{discountRatioStatus}" class="form-control" tabindex="7" required>
+                                <option value="">Please select</option>
+                                <option data-th-each="discountRatioStatus : ${discountRatioStatuses}"
+                                        data-th-text="${discountRatioStatus.discountRatioStatus}"
+                                        data-th-value="${discountRatioStatus}"></option>
+                            </select>
                         </div>
                     </div>
 
                 </div>
-                <!--Right Side-->
-                <div class="form-group col-md-6 col-sm-6 text-right flex-column">
-                    <!--Created by and created at-->
-                    <div id="updateStatus" th:if="${addStatus==false}">f
-                        <!--Created By-->
-                        <div class="form-row text-right">
-                            <div class="col-md-4">
-                                <label class="control-label" for="createdBy">Created By :</label>
-                            </div>
-                            <div class="col-mrd-8">
-                                <input id="createdBy" th:field="*{createdBy}" class="form-control" type="text" readonly/>
-                            </div>
-                        </div>
-                        <!--Created At-->
-                        <div class="form-row text-right">
-                            <div class="col-md-4">
-                                <label class="control-label" for="createdAt">Created At :</label>
-                            </div>
-                            <div class="col-md-8">
-                                <input id="createdAt" th:field="*{createdAt}" class="form-control" type="text" readonly/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
                 <!--Button-->
                 <div class="form-group col-md-12 col-sm-12 text-center flex-column ">
-                    <!--Back Button-->
-                    <a class="btn btn-dark"  tabindex="8" href="/discountRatio">
-                        <i class="fas fa-arrow-circle-left" style="font-size: 20px"></i>&nbsp;&nbsp;Back
-                    </a>
-                    <!--Save Button-->
-                    <button class="btn btn-success ml-5" type="submit" tabindex="9">
-                        <i class="fa fa-save " style="font-size: 20px"></i>&nbsp;&nbsp;<span id="submit" th:text="${addStatus==true?'Save': 'Update'}"></span>
-                    </button>
-                    <!--Cancel Button-->
-                    <button class="btn btn-warning ml-5" type="reset" tabindex="10">
-                        <i class="far fa-times-circle" style="font-size: 20px"></i>&nbsp;&nbsp;Cancel
+                    <button class="btn btn-success" tabindex="21" type="submit">
+                        <i class="fa fa-save " style="font-size: 20px"></i>&nbsp; &nbsp;<span
+                            data-th-text="${addStatus==true?'Save': 'Update'}"
+                            id="submit"></span>
                     </button>
                 </div>
-                <!--Error-->
                 <div class="form-row">
-                    <label id="errorLabel" th:if="${#fields.hasErrors('*')}" th:text="'Errors: '">Errors: </label>
+                    <label data-th-if="${#fields.hasErrors('*')}" data-th-text="'Errors: '"
+                           id="errorLabel">Errors: </label>
                     <ul>
-                        <li id="error" th:each="err: ${#fields.errors('*')}" th:text="${err}" class="error"></li>
+                        <li class="error" data-th-each="err: ${#fields.errors('*')}" data-th-text="${err}"
+                            id="error"></li>
                     </ul>
                 </div>
             </div>
@@ -124,9 +103,9 @@
     </div>
 </div>
 <!--footer include-->
-<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+<footer data-th-replace="~{fragments/footer :: footerFragment}"></footer>
 <!--script include-->
-<script th:replace="~{fragments/script :: scriptFragment}"></script>
+<script data-th-replace="~{fragments/script :: scriptFragment}"></script>
 
 </body>
 </html>

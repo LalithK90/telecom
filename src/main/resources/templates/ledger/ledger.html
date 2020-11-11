@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--/* Styles, meta data, and title are included */-->
+<head data-th-replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>Thymeleaf Springboot </title>
+</head>
+<body>
+<!--/* Nav bar is included */-->
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
+
+<div class="container mt-3">
+    <div class="row">
+        <!--Custom Invoice search-->
+        <button type="button" class="btn btn-info mb-5 btn-block text-capitalize" data-toggle="collapse"
+                data-target="#dataTargetCollapse" data-th-text="${message}"
+                aria-expanded="false" aria-controls="dataTargetCollapse"
+        >
+        </button>
+        <div class="collapse container-fluid" id="dataTargetCollapse">
+            <h4 class="text-info"><b> Custom Search</b></h4>
+            <div class="container-fluid mx-auto">
+                <form class="form" data-th-action="@{/invoice/search}" data-th-method="POST">
+                    <div class="form-row">
+                        <div class="col-md-4 form-row">
+                            <div class="col-md-4">
+                                <label for="startDate">FROM :</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input class="form-control" id="startDate" name="startDate" type="date"/>
+                            </div>
+                        </div>
+                        <div class="col-md-4 form-row">
+                            <div class="col-md-4">
+                                <label for="endDate">TO :</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input class="form-control" id="endDate" name="endDate" type="date"/>
+                            </div>
+                        </div>
+                        <div class="col-md-4 form-row">
+                            <button class="btn btn-success" id="btnSummaryFind" type="submit"><span
+                                    class="glyphicon glyphicon-search"></span>&nbsp;Search
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--List all invoice-->
+    <div class="row">
+        <div class="col mt-4">
+            <table class="table table-hover" id="myTable">
+                <thead>
+                <tr>
+                    <th>Index</th>
+                    <th>Item Name</th>
+                    <th> Quantity</th>
+                    <th> Sell Price</th>
+                    <th> M Date</th>
+                    <th> E Date</th>
+                    <th>View</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-th-each="ledger, rowCount : ${ledgers}">
+                    <th data-th-text="${rowCount.count}"></th>
+                    <th data-th-text="${ledger.item.name}"></th>
+                    <th data-th-text="${ledger.quantity}"></th>
+                    <th data-th-text="${ledger.sellPrice}"></th>
+                    <th data-th-text="${ledger.manufactureDate}"></th>
+                    <th data-th-text="${ledger.expiredDate}"></th>
+                    <th><a class="btn btn-success" data-th-href="${'/item/'+ ledger.item.id}"><i
+                            class="fa fa-folder-open"></i>&nbsp;View Item</a>&nbsp;
+                    </th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--/* footer is */-->
+<footer data-th-replace="~{fragments/footer :: footerFragment}"></footer>
+<!--/* script is included */-->
+<script data-th-replace="~{fragments/script :: scriptFragment}"></script>
+
+<script>
+    $(document).ready(function () {
+        let startDate = $('#startDate').val();
+        let endDate = $('#endDate').val();
+        let nowTime = new Date().toDateString();
+
+        if (startDate !== "" && endDate !== "") {
+            if (Date.parse(endDate) > Date.parse(startDate) && Date.parse(nowTime) > Date.parse(startDate) &&
+                Date.parse(nowTime) > Date.parse(endDate)) {
+                swal({
+                    title: "Could you accept those days.. !",
+                    icon: "warning",
+                    text: "Please check your entered date \n",
+                })
+                $('#endDate').val(startDate);
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

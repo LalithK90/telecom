@@ -1,5 +1,6 @@
 package lk.crystal.asset.commonAsset.model.Enum;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -16,5 +17,10 @@ public enum Title {
     PRO("Prof. "),
     SISTER("Sister. ");
 
+    public static Object Mr;
     private final String title;
+
+    public class Mr {
+    }
 }
+

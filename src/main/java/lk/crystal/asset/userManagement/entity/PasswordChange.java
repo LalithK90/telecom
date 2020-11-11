@@ -1,5 +1,6 @@
 package lk.crystal.asset.userManagement.entity;
 
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

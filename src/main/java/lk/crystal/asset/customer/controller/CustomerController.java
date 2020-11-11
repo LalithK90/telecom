@@ -1,5 +1,7 @@
 package lk.crystal.asset.customer.controller;
 
+
+
 import lk.crystal.asset.commonAsset.model.Enum.Title;
 import lk.crystal.asset.customer.entity.Customer;
 import lk.crystal.asset.customer.service.CustomerService;
@@ -7,7 +9,6 @@ import lk.crystal.util.interfaces.AbstractController;
 import lk.crystal.util.service.EmailService;
 import lk.crystal.util.service.MakeAutoGenerateNumberService;
 import lk.crystal.util.service.TwilioMessageService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,19 +20,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/customer")
-public  class CustomerController implements AbstractController<Customer, Integer> {
+public class CustomerController implements AbstractController< Customer, Integer> {
     private final CustomerService customerService;
     private final MakeAutoGenerateNumberService makeAutoGenerateNumberService;
     private final EmailService emailService;
     private final TwilioMessageService twilioMessageService;
 
-    @Autowired
     public CustomerController(CustomerService customerService, MakeAutoGenerateNumberService makeAutoGenerateNumberService, EmailService emailService, TwilioMessageService twilioMessageService) {
         this.customerService = customerService;
         this.makeAutoGenerateNumberService = makeAutoGenerateNumberService;
         this.emailService = emailService;
         this.twilioMessageService = twilioMessageService;
     }
+
 
     private String commonThings(Model model, Customer customer, Boolean addState) {
         model.addAttribute("title", Title.values());
@@ -46,13 +47,8 @@ public  class CustomerController implements AbstractController<Customer, Integer
         return "customer/customer";
     }
 
-    @Override
-    public String findById(Integer id, Model model) {
-        return null;
-    }
-
     @GetMapping("/add")
-    public String Form(Model model) {
+    public String addForm(Model model) {
         return commonThings(model, new Customer(), true);
     }
 
@@ -62,16 +58,16 @@ public  class CustomerController implements AbstractController<Customer, Integer
             return commonThings(model, customer, true);
         }
 //phone number length validator
-        /*if (customer.getMobile() != null) {
+        if (customer.getMobile() != null) {
             customer.setMobile(makeAutoGenerateNumberService.phoneNumberLengthValidator(customer.getMobile()));
-        }*/
+        }
 
 //if customer has id that customer is not a new customer
         if (customer.getId() == null) {
             //if there is not customer in db
             if (customerService.lastCustomer() == null) {
                 System.out.println("last customer null");
-                //need to generate new one
+                //need to generate new onecustomer
                 customer.setCode("KMC"+makeAutoGenerateNumberService.numberAutoGen(null).toString());
             } else {
                 System.out.println("last customer not null");
@@ -81,10 +77,10 @@ public  class CustomerController implements AbstractController<Customer, Integer
             }
             //send welcome message and email
             if (customer.getEmail() != null) {
-              //  emailService.sendEmail(customer.getEmail(), "Welcome Message", "Welcome to Kmart Super...");
+                //  emailService.sendEmail(customer.getEmail(), "Welcome Message", "Welcome to Kmart Super...");
             }
             if (customer.getMobile() != null) {
-            //    twilioMessageService.sendSMS(customer.getMobile(), "Welcome to Kmart Super");
+                //    twilioMessageService.sendSMS(customer.getMobile(), "Welcome to Kmart Super");
             }
         }
 
