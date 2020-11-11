@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head data-th-replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>Thymeleaf Springboot </title>
+</head>
+<body>
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
+
+<div class="container-fluid ">
+    <div class="row text-center formManagement border-info">
+        <div class="col">
+
+        </div>
+        <div class="col ">
+            <h4 class="text-info text-center">
+                <strong>
+                    Payment Management
+                </strong>
+            </h4>
+        </div>
+        <div class="col">
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <!--Not Paid Purchase order history-->
+    <div class="form-row">
+        <button type="button" class="btn btn-info mb-5 btn-block text-capitalize" data-toggle="collapse"
+                data-target="#dataTargetCollapse"
+                aria-expanded="false" aria-controls="dataTargetCollapse"
+                data-th-text="${purchaseOrderNeedToPay.supplier.name +' need to pay purchase order list'}"></button>
+        <div class="collapse mx-auto" id="dataTargetCollapse">
+            <div class="container-fluid" data-th-if="${not #lists.isEmpty(purchaseOrders)}">
+                <div class="table-responsive">
+                    <table class="table table-striped table-condensed">
+                        <thead>
+                        <tr>
+                            <th> Index</th>
+                            <th>Purchase Order Number</th>
+                            <th>Purchase Amount</th>
+                            <th>Paid Amount</th>
+                            <th>Need to be Paid</th>
+                            <th>Requested Date</th>
+                            <th>GRN Date</th>
+                            <th> Modify</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr data-th-each="purchaseOrder, rowCount : ${purchaseOrders}">
+                            <th data-th-text="${rowCount.count}"></th>
+                            <th data-th-text="${purchaseOrder.code}"></th>
+                            <th data-th-text="${purchaseOrder.price}"></th>
+                            <th data-th-text="${purchaseOrder.paidAmount}"></th>
+                            <th data-th-text="${purchaseOrder.needToPaid}"></th>
+                            <th data-th-text="${{purchaseOrder.createdAt}}"></th>
+                            <th data-th-text="${{purchaseOrder.grnAt}}"></th>
+                            <th>
+                                <a id="edit" data-th-href="${'/payment/' + purchaseOrder.id}"
+                                   class="btn btn-primary btn-sm mr-2 p-2">Pay
+                                </a>
+                            </th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--payment history according to particular purchase order -->
+    <div class="form-row" data-th-if="${not #lists.isEmpty(purchaseOrderNeedToPay.payments)}">
+        <div class="table-responsive">
+            <table class="table table-striped table-condensed">
+                <thead>
+                <tr>
+                    <th>Index</th>
+                    <th>Payment Code</th>
+                    <th>Payment Amount</th>
+                    <th>Bank Name</th>
+                    <th>Payment Method</th>
+                    <th>Paid Amount</th>
+                    <th>Paid Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-th-each="payment ,rowCount : ${purchaseOrderNeedToPay.payments}">
+                    <th data-th-text="${rowCount.count}"></th>
+                    <th data-th-text="${payment.code}"></th>
+                    <th data-th-text="${payment.amount}"></th>
+                    <th data-th-text="${payment.bankName}"></th>
+                    <th data-th-text="${payment.paymentMethod.paymentMethod}"></th>
+                    <th data-th-text="${payment.amount}"></th>
+                    <th data-th-text="${{payment.createdAt}}"></th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--Payment-->
+    <div class="container mx-auto ">
+        <form action="/payment" method="post" data-th-object="${payment}">
+            <!--purchase order-->
+            <input type="hidden" data-th-value="${purchaseOrderNeedToPay.id}" data-th-name="${'purchaseOrder.id'}">
+            <!--Payment Method-->
+            <div class="form-group">
+                <div class="form-row ">
+                    <div class="col-md-4 text-right">
+                        <label data-th-for="${paymentMethod}">Payment Method:</label>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="custom-control custom-checkbox custom-control-inline "
+                             data-th-each="paymentMethod,index : ${paymentMethods}">
+                            <input class="custom-control-input" required
+                                   data-th-name="${'paymentMethod'}"
+                                   data-th-value="${paymentMethod}"
+                                   data-th-id="${index.index}+${paymentMethod}" type="radio"
+                                   data-th-checked="${genders==gender}"/>
+                            <label class="custom-control-label"
+                                   data-th-for="${index.index}+${paymentMethod}"
+                                   data-th-text="${paymentMethod.paymentMethod}"> radio
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Bank Name-->
+            <div class="form-group">
+                <div class="form-row text-right" id="bankNameBlock">
+                    <div class="col-md-4">
+                        <label class="control-label" for="bankName">Bank Name :</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input id="bankName" data-th-field="*{bankName}" class="form-control" tabindex="5"
+                               type="text"/>
+                    </div>
+                </div>
+            </div>
+            <!--This purchase order value-->
+            <div class="form-group">
+                <div class="form-row text-right">
+                    <div class="col-md-4">
+                        <label class="control-label" for="allAmount">Purchase Order's Amount :</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input class="form-control" data-th-value="${purchaseOrderNeedToPay.price}" id="allAmount"
+                               required
+                               tabindex="8"
+                               type="number" step="0.01" readonly/>
+                    </div>
+                </div>
+            </div>
+            <!--This purchase order value-->
+            <div class="form-group">
+                <div class="form-row text-right">
+                    <div class="col-md-4">
+                        <label class="control-label" for="poAmount">Need To Paid :</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input class="form-control" data-th-value="${purchaseOrderNeedToPay.needToPaid}" id="poAmount"
+                               required
+                               tabindex="8"
+                               type="number" step="0.01" readonly/>
+                    </div>
+                </div>
+            </div>
+            <!--Amount-->
+            <div class="form-group">
+                <div class="form-row text-right">
+                    <div class="col-md-4">
+                        <label class="control-label" for="amount">Amount :</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input class="form-control" data-th-field="*{amount}" id="amount" required tabindex="8"
+                               type="number" step="0.01"/>
+                        <span class="text-warning"
+                              data-th-errors="*{amount}" data-th-if="${#fields.hasErrors('amount')}">Error ROP</span>
+                    </div>
+                </div>
+            </div>
+            <!--Balance-->
+            <div class="form-group">
+                <div class="form-row text-right">
+                    <div class="col-md-4">
+                        <label class="control-label" for="balance">Balance :</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input class="form-control" id="balance" required
+                               type="number" step="0.01" readonly/>
+
+                    </div>
+                </div>
+            </div>
+            <!--remarks-->
+            <div class="form-row text-right">
+                <div class="col-md-4">
+                    <label>Remarks</label></div>
+                <div class="col-md-8">
+                    <textarea class="form-control" data-th-field="*{remarks}" rows="2"></textarea>
+                </div>
+            </div>
+            <!--Button-->
+            <div class="form-group col-md-12 col-sm-12 text-center mt-5 flex-column ">
+                <!--Back Button-->
+                <a class="btn btn-dark" href="/payment" tabindex="14">
+                    <i class="fas fa-arrow-circle-left" style="font-size: 20px"></i>&nbsp;&nbsp;Back
+                </a>
+                <!--Save Button-->
+                <button class="btn btn-success ml-5" tabindex="12" type="submit">
+                    <i class="fa fa-save " style="font-size: 20px"></i>&nbsp;&nbsp;<span
+                        data-th-text="${'Save'}"
+                        id="submit"></span>
+                </button>
+                <!--Cancel Button-->
+                <button class="btn btn-warning ml-5" tabindex="13" type="reset">
+                    <i class="far fa-times-circle" style="font-size: 20px"></i>&nbsp;&nbsp;Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--footer include-->
+<footer data-th-replace="~{fragments/footer :: footerFragment}"></footer>
+<!--script include-->
+<script data-th-replace="~{fragments/script :: scriptFragment}"></script>
+<script>
+    $(document).ready(function () {
+        $("input[name='paymentMethod']").bind('change', function () {
+            let paymentMethodValue = $("input[name='paymentMethod']:checked").val();
+            if (paymentMethodValue === 'CASH') {
+                $("#bankNameBlock").hide();
+            } else {
+                $("#bankNameBlock").show();
+            }
+        });
+        //enter amount check
+        $("#amount").bind('keyup', function () {
+            let poValue = parseInt($("#allAmount").val());
+            let poAmountString = $("#poAmount").val();
+            let poAmount = parseInt(poAmountString);
+            let amountString = $(this).val();
+            let amount = parseInt(amountString);
+            if ((poAmount !== amount && poAmountString.length === amountString.length) && (amount > poAmount &&
+                poAmountString.length === amountString.length)) {
+                swal({
+                    title: "Could you accept this amount as a payment.. !",
+                    icon: "warning",
+                    text: "Please check what your are entered. \n",
+                });
+                $(this).val(poAmount);
+            }
+            $("#balance").val(poValue -(poAmount+amount));
+        });
+    });
+</script>
+</body>
+</html>

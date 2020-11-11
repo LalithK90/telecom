@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('.input-images').imageUploader();
+    $('.input-img').imageUploader();
 
     $('#callingNameButton').bind('click', function () {
         addCallingNameRow();

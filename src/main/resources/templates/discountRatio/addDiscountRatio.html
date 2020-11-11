@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head data-th-replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>Thymeleaf Springboot </title>
+</head>
+<body>
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
+
+<div class="container-fluid bg-secondary form-Border">
+    <div class="row text-center formManagement border-info">
+        <div class="col">
+            <a class="btn btn-primary" href="/home">
+                <i class="fa fa-home" style="font-size: 20px"></i> &nbsp; Home
+            </a>
+        </div>
+        <div class="col">
+            <h4 class="text-light text-center">
+                <strong>
+                    <span
+                            data-th-text="${addStatus==true?'New Discount Ratio Add':'Update Discount Ratio Details'}"></span>
+                </strong>
+            </h4>
+        </div>
+        <div class="col">
+            <a class="btn btn-primary" href="/discountRatio">
+                <i class="fa fa-list"></i>&nbsp; View List
+            </a>
+        </div>
+    </div>
+</div>
+<!--Form Content - start -->
+<div class="container-fluid ">
+    <div class="col-sm-12 flex-column ">
+        <form data-th-action="${addStatus==true?'/discountRatio/save':'/discountRatio/update'}"
+              data-th-object="${discountRatio}"
+              method="POST">
+            <div class="row">
+                <!--Left Side-->
+                <div class="form-group col-md-6 col-sm-6 text-left flex-column">
+                    <input data-th-field="*{id}" data-th-if="${addStatus==false}" hidden type="text"/>
+
+                    <!--Name-->
+                    <div class="form-row text-right">
+                        <div class="col-md-4">
+                            <label class="control-label" for="name">Name :</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input class="form-control" data-th-field="*{name}" id="name" required tabindex="4"
+                                   type="text"/>
+                            <span class="error" data-th-errors="*{name}"
+                                  data-th-if="${#fields.hasErrors('name')}" id="nameError">Error Name</span>
+                        </div>
+                    </div>
+
+                    <!--amount-->
+                    <div class="form-row text-right">
+                        <div class="col-md-4">
+                            <label class="control-label" for="name">Amount :</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input class="form-control" data-th-field="*{amount}" id="amount" required tabindex="4"
+                                   type="text"/>
+                            <span class="error" data-th-errors="*{amount}"
+                                  data-th-if="${#fields.hasErrors('amount')}" >Error Name</span>
+                        </div>
+                    </div>
+                    <!--Discount Ratio status-->
+                    <div class="form-row text-right" data-th-if="${addStatus==false}">
+                        <div class="col-md-4">
+                            <label class="control-label" for="discountRatioStatus">Discount Ratio Status :</label>
+                        </div>
+                        <div class="col-md-8">
+                            <select id="discountRatioStatus" data-th-field="*{discountRatioStatus}" class="form-control" tabindex="7" required>
+                                <option value="">Please select</option>
+                                <option data-th-each="discountRatioStatus : ${discountRatioStatuses}"
+                                        data-th-text="${discountRatioStatus.discountRatioStatus}"
+                                        data-th-value="${discountRatioStatus}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--Button-->
+                <div class="form-group col-md-12 col-sm-12 text-center flex-column ">
+                    <button class="btn btn-success" tabindex="21" type="submit">
+                        <i class="fa fa-save " style="font-size: 20px"></i>&nbsp; &nbsp;<span
+                            data-th-text="${addStatus==true?'Save': 'Update'}"
+                            id="submit"></span>
+                    </button>
+                </div>
+                <div class="form-row">
+                    <label data-th-if="${#fields.hasErrors('*')}" data-th-text="'Errors: '"
+                           id="errorLabel">Errors: </label>
+                    <ul>
+                        <li class="error" data-th-each="err: ${#fields.errors('*')}" data-th-text="${err}"
+                            id="error"></li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--footer include-->
+<footer data-th-replace="~{fragments/footer :: footerFragment}"></footer>
+<!--script include-->
+<script data-th-replace="~{fragments/script :: scriptFragment}"></script>
+
+</body>
+</html>

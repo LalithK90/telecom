@@ -1,8 +1,6 @@
 package lk.crystal.asset.employee.entity;
 
 
-
-import lk.crystal.asset.employee.entity.Employee;
 import lk.crystal.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,8 +1,7 @@
 package lk.crystal.util.service;
 
-import lk.crystal.util.service.DateTimeAgeService;
-import org.springframework.stereotype.Service;
 
+import org.springframework.stereotype.Service;
 
 @Service
 public class MakeAutoGenerateNumberService {

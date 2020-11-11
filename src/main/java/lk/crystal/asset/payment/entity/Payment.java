@@ -1,8 +1,10 @@
 package lk.crystal.asset.payment.entity;
 
+
+
 import com.fasterxml.jackson.annotation.JsonFilter;
-import lk.crystal.asset.payment.entity.Enum.PaymentMethod;
-import lk.crystal.asset.purchaseOrder.entity.PurchaseOrder;
+import lk.crystal.asset.PurchaseOrder.entity.PurchaseOrder;
+import lk.crystal.asset.invoice.entity.Enum.PaymentMethod;
 import lk.crystal.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +21,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @JsonFilter("Payment")
 public class Payment extends AuditEntity {
+
     private String bankName;
 
     private String remarks;
@@ -32,6 +35,6 @@ public class Payment extends AuditEntity {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal amount;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private PurchaseOrder purchaseOrder;
 }

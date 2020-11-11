@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @CacheConfig( cacheNames = "branch" )
-public class BranchService implements AbstractService<Branch, Integer> {
+public class BranchService implements AbstractService< Branch, Integer> {
     private final BranchDao branchDao;
 
     @Autowired
@@ -47,3 +47,4 @@ public class BranchService implements AbstractService<Branch, Integer> {
         return branchDao.findAll(branchExample);
     }
 }
+

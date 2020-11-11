@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>category-detail</title>
+</head>
+<body>
+<nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
+
+<!--heading Area-->
+<div class="container-fluid bg-dark form-Border">
+    <div class="row text-center formManagement border-info">
+        <!--View List Button-->
+        <div class="col">
+            <a href="/category" class="btn btn-primary">
+                <i class="fa fa-list" style="font-size: 20px"></i>&nbsp;&nbsp;View List
+            </a>
+        </div>
+        <!--Category Name-->
+        <div class="col">
+            <h2 class="text-light text-center">
+                <strong>
+                    <p th:text="${categoryDetail.name}"></p>
+                </strong>
+            </h2>
+        </div>
+        <!--Home Button-->
+        <div class="col">
+            <a class="btn btn-primary" href="/home">
+                <i class="fa fa-home" style="font-size: 20px"></i> &nbsp;&nbsp;Home
+            </a>
+        </div>
+    </div>
+</div>
+<!--details-->
+<div th:fragment="categoryDetailsFragment" class="container-fluid bg-info formBorder">
+    <div class="col-sm-12 flex-column ">
+        <div class="row">
+            <div class="form-group col-md-12 col-sm-12 text-center flex-column ">
+                <!--id-->
+                <div class="form-row text-right">
+                    <div class="col-md-4">
+                        <label class="control-label" for="id">ID :</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p id="id" th:text="${categoryDetail.id}" class="display_detail"></p>
+                    </div>
+                </div>
+                <!--Main Category-->
+                <div class="form-row text-right">
+                    <div class="col-md-4">
+                        <label class="control-label" for="mainCategory">Main Category :</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p id="mainCategory" th:text="${categoryDetail.mainCategory.mainCategory}"
+                           class="display_detail"></p>
+                    </div>
+                </div>
+                <!--Name-->
+                <div class="form-row text-right">
+                    <div class="col-md-4">
+                        <label class="control-label" for="name">Name :</label>
+                    </div>
+                    <div class="col-md-4">
+                        <p id="name" th:text="${categoryDetail.name}"
+                           class="display_detail"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Back Button-->
+    <div class="form-group col-md-12 col-sm-12 text-center flex-column ">
+        <a href="/category">
+            <button class="btn btn-dark" type="button" tabindex="10">
+                <i class="fas fa-arrow-circle-left" style="font-size: 20px"></i>&nbsp; &nbsp;Back
+            </button>
+        </a>
+    </div>
+    <br/>
+</div>
+
+<!--footer include-->
+<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+<!--script include-->
+<script th:replace="~{fragments/script :: scriptFragment}"></script>
+
+</body>
+</html>

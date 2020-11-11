@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @CacheConfig( cacheNames = {"userSessionLog"} )
-public class UserSessionLogService implements AbstractService<UserSessionLog, Integer > {
+public class UserSessionLogService implements AbstractService< UserSessionLog, Integer > {
     private final UserSessionLogDao userSessionLogDao;
 
     @Autowired
@@ -23,7 +23,7 @@ public class UserSessionLogService implements AbstractService<UserSessionLog, In
 
     @Override
     @Cacheable
-    public List< UserSessionLog > findAll() {
+    public List<UserSessionLog> findAll() {
         return userSessionLogDao.findAll();
     }
 
@@ -48,11 +48,11 @@ public class UserSessionLogService implements AbstractService<UserSessionLog, In
     }
 
     public void delete(UserSessionLog userSessionLog){
-         userSessionLogDao.delete(userSessionLog);
+        userSessionLogDao.delete(userSessionLog);
     }
 
     @Override
-    public List< UserSessionLog > search(UserSessionLog userSessionLog) {
+    public List<UserSessionLog> search(UserSessionLog userSessionLog) {
         return null;
     }
 
@@ -61,3 +61,4 @@ public class UserSessionLogService implements AbstractService<UserSessionLog, In
         return userSessionLogDao.findByUserAndUserSessionLogStatus(user, userSessionLogStatus);
     }
 }
+

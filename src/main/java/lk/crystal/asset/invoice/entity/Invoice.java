@@ -1,10 +1,14 @@
 package lk.crystal.asset.invoice.entity;
 
+
+
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lk.crystal.asset.customer.entity.Customer;
+import lk.crystal.asset.discountRatio.entity.DiscountRatio;
 import lk.crystal.asset.invoice.entity.Enum.InvoicePrintOrNot;
-import lk.crystal.asset.payment.entity.Enum.PaymentMethod;
+import lk.crystal.asset.invoice.entity.Enum.InvoiceValidOrNot;
+import lk.crystal.asset.invoice.entity.Enum.PaymentMethod;
 import lk.crystal.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +17,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Getter
@@ -33,14 +37,11 @@ public class Invoice extends AuditEntity {
     @Column(nullable = false, unique = true)
     private String code;
 
-    @Enumerated(EnumType.STRING)
-    private PaymentMethod paymentMethod;
-
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal totalPrice;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal TotalAmount;
+    private BigDecimal totalAmount;
 
     @Column(precision = 10, scale = 2)
     private BigDecimal discountAmount;
@@ -54,6 +55,12 @@ public class Invoice extends AuditEntity {
     @Enumerated(EnumType.STRING)
     private InvoicePrintOrNot invoicePrintOrNot;
 
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
+
+    @Enumerated(EnumType.STRING)
+    private InvoiceValidOrNot invoiceValidOrNot;
+
     @ManyToOne
     private Customer customer;
 
@@ -61,7 +68,7 @@ public class Invoice extends AuditEntity {
     private DiscountRatio discountRatio;
 
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "invoice")
-    private List<InvoiceItemQuantity> invoiceItemQuantities;
+    private List< InvoiceItem > invoiceItemQuantities;
 
 
 }

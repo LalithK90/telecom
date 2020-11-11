@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>addCategory</title>
+</head>
+<body>
+<nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
+
+<!--Heading Area-->
+<div class="container-fluid bg-dark form-Border">
+    <div class="row text-center formManagement border-info">
+        <!--View list Button-->
+        <div class="col">
+            <a href="/category" class="btn btn-primary">
+                <i class="fa fa-list" style="font-size: 20px"></i>&nbsp;&nbsp;View List
+            </a>
+        </div>
+        <!--Form Name-->
+        <div class="col">
+            <h2 class="text-light text-center">
+                <strong>
+                    <span th:text="${addStatus==true?'Add New Category':'Update Category Details'}"></span>
+                </strong>
+            </h2>
+        </div>
+        <!--Home Button-->
+        <div class="col">
+            <a class="btn btn-primary" href="/home">
+                <i class="fa fa-home" style="font-size: 20px"></i> &nbsp;&nbsp;Home
+            </a>
+        </div>
+    </div>
+</div>
+<!--Form Content-->
+<div class="container-fluid bg-info formBorder">
+    <div class="col-sm-12 flex-column ">
+        <form id="form" class="form-horizontal" th:action="${addStatus==true?'/category/add':'/category/update'}"
+              th:object="${category}" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="form-group col-md-12 col-sm-12 text-center flex-column ">
+                    <!--Id-->
+                    <div id="idStatus" th:if="${addStatus==false}" class="form-row text-right">
+                        <div class="col-md-4">
+                            <label class="control-label" for="id">ID :</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input id="id" th:field="*{id}" class="form-control" type="text" readonly/>
+                        </div>
+                    </div>
+                    <!--Main Category -->
+                    <div class="form-row text-right">
+                        <div class="col-md-4">
+                            <label class="control-label" for="mainCategory">Main Category :</label>
+                        </div>
+                        <div class="col-md-4">
+                            <select id="mainCategory" th:field="*{mainCategory}" class="form-control" tabindex="4" style="font-size: large" required>
+                                <option value="">Please select</option>
+                                <option th:each="mainCategory : ${mainCategories}"
+                                        th:text="${mainCategory.mainCategory}"
+                                        th:value="${mainCategory}"
+                                        th:selected="${mainCategory==category.mainCategory?'selected':'unselected'}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--Name-->
+                    <div class="form-row text-right">
+                        <div class="col-md-4">
+                            <label class="control-label" for="name">Name :</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input id="name" th:field="*{name}" class="form-control" tabindex="4" type="text" required/>
+                            <span id="nameError" th:errors="*{name}"
+                                  th:if="${#fields.hasErrors('name')}" class="error">Error Name</span>
+                        </div>
+                    </div>
+                </div>
+                <!--Button-->
+                <div class="form-group col-md-12 col-sm-12 text-center flex-column ">
+                    <button class="btn btn-primary"  >
+                        <i class="fas fa-arrow-circle-left" style="font-size: 20px"></i>&nbsp;&nbsp;Back
+                    </button>
+                    <button class="btn btn-success ml-5" type="submit" tabindex="21">
+                        <i class="fa fa-save " style="font-size: 20px"></i>&nbsp;&nbsp;<span id="submit" th:text="${addStatus==true?'Save': 'Update'}"></span>
+                    </button>
+                    <button class="btn btn-warning ml-5" type="reset" tabindex="21">
+                        <i class="far fa-times-circle" style="font-size: 20px"></i>&nbsp;&nbsp;Cancel
+                    </button>
+                </div>
+                <!--Error-->
+                <div class="form-row">
+                    <label id="errorLabel" th:if="${#fields.hasErrors('*')}" th:text="'Errors: '">Errors: </label>
+                    <ul>
+                        <li id="error" th:each="err: ${#fields.errors('*')}" th:text="${err}" class="error"></li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--footer include-->
+<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+<!--script include-->
+<script th:replace="~{fragments/script :: scriptFragment}"></script>
+
+</body>
+</html>
