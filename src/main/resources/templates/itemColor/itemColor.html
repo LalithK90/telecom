@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>itemColor</title>
+</head>
+<body>
+<nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
+<!--heading Area-->
+<div class="container-fluid bg-dark form-Border">
+    <div class="row text-center formManagement border-info">
+        <!--New Color Button-->
+        <div class="col">
+            <a class="btn btn-success" href="/itemColor/add" tabindex="1">
+                <i class="fas fa-plus" style="font-size: 20px"></i>&nbsp;&nbsp;New
+            </a>
+        </div>
+        <!--List Name-->
+        <div class="col">
+            <h2 class="text-white text-center">
+                <strong>
+                    Color List
+                </strong>
+            </h2>
+        </div>
+        <!--Home Button-->
+        <div class="col">
+            <a href="/home" id="searchShow" class="btn btn-primary" tabindex="2">
+                <!--<i class="fa fa-user " style="font-size: 20px"></i>&nbsp;Add&nbsp;-->
+                <i class="fas fa-home" style="font-size: 20px"></i>&nbsp;&nbsp;Home
+            </a>
+        </div>
+    </div>
+</div>
+<!--Colores List-->
+<div class="container-fluid bg-dark formBorder text-center">
+    <!--Table view-->
+    <div class="col">
+        <div class="col" id="itemColorListPresent" th:if="${not #lists.isEmpty(itemColors)}">
+            <table class="table table-hover table-striped" id="myTable">
+                <thead>
+                <tr>
+                    <th> Index</th>
+                    <th> Name</th>
+                    <th> Modify</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="itemColor, rowCount : ${itemColors}">
+                    <th th:text="${rowCount.count}"></th>
+                    <th th:text="${itemColor.name}"></th>
+                    <th>
+                        <a id="itemColorEdit" th:href="${'/itemColor/edit/' + itemColor.id}" class="btn btn-success btn-sm"><i
+                                class="fa fa-edit" style="font-size: 15px"></i>&nbsp;Edit</a>
+                        <a id="itemColorRemove" th:href="${'/itemColor/delete/' + itemColor.id}" class="btn btn-danger btn-sm">
+                            <!--th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" --> <i
+                                class="fa fa-trash" style="font-size: 15px"></i>
+                            Delete</a>
+                    </th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--footer include-->
+<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+<!--script include-->
+<script th:replace="~{fragments/script :: scriptFragment}"></script>
+
+</body>
+</html>

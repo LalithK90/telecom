@@ -81,7 +81,7 @@ category.setName(category.getName().toUpperCase());
         if (mainCategory != null) {
             category.setMainCategory(MainCategory.valueOf(mainCategory));
         } else {
-            category.setMainCategory(MainCategory.DP);
+            category.setMainCategory(MainCategory.PROCESSED_MEAT);
         }
 
         //MappingJacksonValue
