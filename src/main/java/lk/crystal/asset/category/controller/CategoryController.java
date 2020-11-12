@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import lk.crystal.asset.category.entity.Category;
 import lk.crystal.asset.category.service.CategoryService;
-import lk.crystal.asset.item.entity.Enum.MainCategory;
+import lk.crystal.asset.item.entity.enums.MainCategory;
 import lk.crystal.util.interfaces.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;

@@ -3,11 +3,10 @@ package lk.crystal.asset.item.controller;
 import lk.crystal.asset.brand.service.BrandService;
 import lk.crystal.asset.category.controller.CategoryController;
 import lk.crystal.asset.color.service.ItemColorService;
-import lk.crystal.asset.item.entity.Enum.ItemStatus;
-import lk.crystal.asset.item.entity.Enum.MainCategory;
 import lk.crystal.asset.item.entity.Item;
+import lk.crystal.asset.item.entity.enums.ItemStatus;
+import lk.crystal.asset.item.entity.enums.MainCategory;
 import lk.crystal.asset.item.service.ItemService;
-import lk.crystal.util.interfaces.AbstractController;
 import lk.crystal.util.service.MakeAutoGenerateNumberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/item")
-public  class ItemController{
+public  class ItemController  {
     private final ItemService itemService;
     private final MakeAutoGenerateNumberService makeAutoGenerateNumberService;
     private final ItemColorService itemColorService;
@@ -57,7 +56,8 @@ public  class ItemController{
         return "item/item";
     }
 
-        public String findById(Integer id, Model model) {
+
+    public String findById(Integer id, Model model) {
         return null;
     }
 
