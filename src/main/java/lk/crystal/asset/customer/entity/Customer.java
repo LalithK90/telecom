@@ -3,7 +3,7 @@ package lk.crystal.asset.customer.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import lk.crystal.asset.common_asset.model.Enum.Title;
+import lk.crystal.asset.common_asset.model.enums.Title;
 import lk.crystal.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

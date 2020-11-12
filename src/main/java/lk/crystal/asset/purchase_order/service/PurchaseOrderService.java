@@ -1,7 +1,7 @@
 package lk.crystal.asset.purchase_order.service;
 
 import lk.crystal.asset.purchase_order.dao.PurchaseOrderDao;
-import lk.crystal.asset.purchase_order.entity.Enum.PurchaseOrderStatus;
+import lk.crystal.asset.purchase_order.entity.enums.PurchaseOrderStatus;
 import lk.crystal.asset.purchase_order.entity.PurchaseOrder;
 import lk.crystal.asset.supplier.entity.Supplier;
 import lk.crystal.util.interfaces.AbstractService;

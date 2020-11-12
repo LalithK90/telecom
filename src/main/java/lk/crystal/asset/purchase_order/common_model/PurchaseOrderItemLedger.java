@@ -1,4 +1,4 @@
-package lk.crystal.asset.purchase_order.commonModel;
+package lk.crystal.asset.purchase_order.common_model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

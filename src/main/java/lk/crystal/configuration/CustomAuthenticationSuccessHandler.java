@@ -1,6 +1,6 @@
 package lk.crystal.configuration;
 
-import lk.crystal.asset.user_management.entity.Enum.UserSessionLogStatus;
+import lk.crystal.asset.user_management.entity.enums.UserSessionLogStatus;
 import lk.crystal.asset.user_management.entity.User;
 import lk.crystal.asset.user_management.entity.UserSessionLog;
 import lk.crystal.asset.user_management.service.UserService;

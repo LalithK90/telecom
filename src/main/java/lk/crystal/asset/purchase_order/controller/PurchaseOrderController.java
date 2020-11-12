@@ -1,8 +1,8 @@
 package lk.crystal.asset.purchase_order.controller;
 
 
-import lk.crystal.asset.purchase_order.entity.Enum.PurchaseOrderPriority;
-import lk.crystal.asset.purchase_order.entity.Enum.PurchaseOrderStatus;
+import lk.crystal.asset.purchase_order.entity.enums.PurchaseOrderPriority;
+import lk.crystal.asset.purchase_order.entity.enums.PurchaseOrderStatus;
 import lk.crystal.asset.purchase_order.entity.PurchaseOrder;
 import lk.crystal.asset.purchase_order.entity.PurchaseOrderItem;
 import lk.crystal.asset.purchase_order.service.PurchaseOrderItemService;

@@ -1,4 +1,4 @@
-package lk.crystal.asset.purchase_order.entity.Enum;
+package lk.crystal.asset.purchase_order.entity.enums;
 
 
 import lombok.AllArgsConstructor;

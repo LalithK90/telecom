@@ -1,4 +1,4 @@
-package lk.crystal.asset.common_asset.model.Enum;
+package lk.crystal.asset.common_asset.model.enums;
 
 
 import lombok.AllArgsConstructor;

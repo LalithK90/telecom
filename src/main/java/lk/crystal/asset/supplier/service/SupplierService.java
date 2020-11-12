@@ -2,7 +2,7 @@ package lk.crystal.asset.supplier.service;
 
 import lk.crystal.asset.supplier.dao.SupplierDao;
 import lk.crystal.asset.supplier.entity.Supplier;
-import lk.crystal.asset.supplier_item.entity.Enum.ItemSupplierStatus;
+import lk.crystal.asset.supplier_item.entity.enums.ItemSupplierStatus;
 import lk.crystal.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;

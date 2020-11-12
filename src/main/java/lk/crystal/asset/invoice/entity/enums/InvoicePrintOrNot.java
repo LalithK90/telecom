@@ -1,4 +1,4 @@
-package lk.crystal.asset.invoice.entity.Enum;
+package lk.crystal.asset.invoice.entity.enums;
 
 
 import lombok.AllArgsConstructor;

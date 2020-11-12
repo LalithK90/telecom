@@ -1,4 +1,4 @@
-package lk.crystal.asset.discount_ratio.entity.Enum;
+package lk.crystal.asset.discount_ratio.entity.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

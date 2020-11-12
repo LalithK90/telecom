@@ -4,7 +4,7 @@ package lk.crystal.asset.good_received_note.entity;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import lk.crystal.asset.purchase_order.entity.PurchaseOrder;
-import lk.crystal.asset.good_received_note.entity.Enum.GoodReceivedNoteState;
+import lk.crystal.asset.good_received_note.entity.enums.GoodReceivedNoteState;
 import lk.crystal.asset.ledger.entity.Ledger;
 import lk.crystal.util.audit.AuditEntity;
 import lombok.*;

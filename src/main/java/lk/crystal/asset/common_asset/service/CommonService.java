@@ -7,7 +7,7 @@ import lk.crystal.asset.item.entity.Item;
 import lk.crystal.asset.item.service.ItemService;
 import lk.crystal.asset.supplier.entity.Supplier;
 import lk.crystal.asset.supplier.service.SupplierService;
-import lk.crystal.asset.supplier_item.entity.Enum.ItemSupplierStatus;
+import lk.crystal.asset.supplier_item.entity.enums.ItemSupplierStatus;
 import lk.crystal.asset.supplier_item.entity.SupplierItem;
 import lk.crystal.asset.supplier_item.service.SupplierItemService;
 import lk.crystal.util.service.MakeAutoGenerateNumberService;

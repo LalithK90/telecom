@@ -1,4 +1,4 @@
-package lk.crystal.asset.good_received_note.entity.Enum;
+package lk.crystal.asset.good_received_note.entity.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

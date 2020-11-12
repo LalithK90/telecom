@@ -1,4 +1,4 @@
-package lk.crystal.asset.user_management.entity.Enum;
+package lk.crystal.asset.user_management.entity.enums;
 
 
 import lombok.AllArgsConstructor;
