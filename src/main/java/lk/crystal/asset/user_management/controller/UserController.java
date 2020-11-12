@@ -1,8 +1,8 @@
 package lk.crystal.asset.user_management.controller;
 
 import lk.crystal.asset.employee.entity.Employee;
-import lk.crystal.asset.employee.entity.Enum.Designation;
-import lk.crystal.asset.employee.entity.Enum.EmployeeStatus;
+import lk.crystal.asset.employee.entity.enums.Designation;
+import lk.crystal.asset.employee.entity.enums.EmployeeStatus;
 import lk.crystal.asset.employee.service.EmployeeService;
 import lk.crystal.asset.user_management.entity.User;
 import lk.crystal.asset.user_management.service.RoleService;

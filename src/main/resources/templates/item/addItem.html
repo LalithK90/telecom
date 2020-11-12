@@ -123,6 +123,18 @@
                             </select>
                         </div>
                     </div>
+                    <!--Sell Price-->
+                    <div class="form-row text-right">
+                        <div class="col-md-4">
+                            <label class="control-label" for="sellPrice">Sell Price :</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input class="form-control" data-th-field="*{sellPrice}" id="sellPrice" required tabindex="8"
+                                   type="number" step="0.01"/>
+                            <span class="error"
+                                  data-th-errors="*{sellPrice}" data-th-if="${#fields.hasErrors('sellPrice')}">Error ROP</span>
+                        </div>
+                    </div>
                     <!--ReOrder Point-->
                     <div class="form-row text-right">
                         <div class="col-md-4">
