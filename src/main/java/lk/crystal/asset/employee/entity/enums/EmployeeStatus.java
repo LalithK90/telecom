@@ -1,6 +1,4 @@
-package lk.crystal.asset.employee.entity.Enum;
-
-
+package lk.crystal.asset.employee.entity.enums;
 
 public enum EmployeeStatus {
     WORKING("Working"),
