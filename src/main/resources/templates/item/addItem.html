@@ -24,7 +24,7 @@
                 </strong>
             </h2>
         </div>
-        <!--Home Button-->
+        <!--Home Button--K>
         <div class="col">
             <a class="btn btn-primary" href="/home" tabindex="2">
                 <i class="fa fa-home" style="font-size: 20px"></i>&nbsp;Home
@@ -92,10 +92,10 @@
                     <!--Color-->
                     <div class="form-row text-right">
                         <div class="col-md-4">
-                            <label class="control-label" for="rop">Colour :</label>
+                            <label class="control-label" for="color">Colour :</label>
                         </div>
                         <div class="col-md-4">
-                            <select id="" class="form-control" th:field="*{itemColor}"  tabindex="4" style="font-size: large"
+                            <select id="color" class="form-control" th:field="*{itemColor}"  tabindex="4" style="font-size: large"
                                     required>
                                 <option value="" disabled>Please select</option>
                                 <option th:each="itemColor : ${itemColors}"
@@ -109,10 +109,10 @@
                     <!--brand-->
                     <div class="form-row text-right">
                         <div class="col-md-4">
-                            <label class="control-label" for="rop">Brand :</label>
+                            <label class="control-label" for="brand">Brand :</label>
                         </div>
                         <div class="col-md-4">
-                            <select id="" class="form-control" th:field="*{brand}"  tabindex="4" style="font-size: large"
+                            <select id="brand" class="form-control" th:field="*{brand}"  tabindex="4" style="font-size: large"
                                     required>
                                 <option value="" disabled>Please select</option>
                                 <option th:each="brand : ${brands}"

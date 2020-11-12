@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @CacheConfig( cacheNames = "item" )
-public class ItemService implements AbstractService<Item, Integer> {
+public class ItemService implements AbstractService< Item, Integer> {
     private final ItemDao itemDao;
 
     @Autowired
