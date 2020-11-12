@@ -1,10 +1,10 @@
 package lk.crystal.asset.employee.entity;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import lk.crystal.asset.commonAsset.model.Enum.CivilStatus;
-import lk.crystal.asset.commonAsset.model.Enum.Gender;
-import lk.crystal.asset.commonAsset.model.Enum.Title;
-import lk.crystal.asset.commonAsset.model.FileInfo;
+import lk.crystal.asset.common_asset.model.Enum.CivilStatus;
+import lk.crystal.asset.common_asset.model.Enum.Gender;
+import lk.crystal.asset.common_asset.model.Enum.Title;
+import lk.crystal.asset.common_asset.model.FileInfo;
 import lk.crystal.asset.employee.entity.enums.Designation;
 import lk.crystal.asset.employee.entity.enums.EmployeeStatus;
 import lk.crystal.util.audit.AuditEntity;

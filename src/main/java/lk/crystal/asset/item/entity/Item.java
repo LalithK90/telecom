@@ -3,13 +3,13 @@ package lk.crystal.asset.item.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFilter;
-import lk.crystal.asset.PurchaseOrder.entity.PurchaseOrderItem;
+import lk.crystal.asset.purchase_order.entity.PurchaseOrderItem;
 import lk.crystal.asset.brand.entity.Brand;
 import lk.crystal.asset.category.entity.Category;
 import lk.crystal.asset.color.entity.ItemColor;
 import lk.crystal.asset.item.entity.enums.ItemStatus;
 import lk.crystal.asset.ledger.entity.Ledger;
-import lk.crystal.asset.supplierItem.entity.SupplierItem;
+import lk.crystal.asset.supplier_item.entity.SupplierItem;
 import lk.crystal.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

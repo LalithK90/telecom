@@ -2,7 +2,7 @@ package lk.crystal.asset.employee.service;
 
 
 
-import lk.crystal.asset.commonAsset.model.FileInfo;
+import lk.crystal.asset.common_asset.model.FileInfo;
 import lk.crystal.asset.employee.controller.EmployeeController;
 import lk.crystal.asset.employee.dao.EmployeeFilesDao;
 import lk.crystal.asset.employee.entity.Employee;

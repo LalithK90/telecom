@@ -4,7 +4,7 @@ package lk.crystal.asset.ledger.entity;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lk.crystal.asset.goodReceivedNote.entity.GoodReceivedNote;
+import lk.crystal.asset.good_received_note.entity.GoodReceivedNote;
 import lk.crystal.asset.item.entity.Item;
 import lk.crystal.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;

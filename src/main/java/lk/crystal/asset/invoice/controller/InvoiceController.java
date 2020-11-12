@@ -1,7 +1,7 @@
 package lk.crystal.asset.invoice.controller;
 
 import lk.crystal.asset.customer.service.CustomerService;
-import lk.crystal.asset.discountRatio.service.DiscountRatioService;
+import lk.crystal.asset.discount_ratio.service.DiscountRatioService;
 import lk.crystal.asset.invoice.entity.Enum.InvoicePrintOrNot;
 import lk.crystal.asset.invoice.entity.Enum.InvoiceValidOrNot;
 import lk.crystal.asset.invoice.entity.Enum.PaymentMethod;

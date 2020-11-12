@@ -5,7 +5,7 @@ package lk.crystal.asset.invoice.entity;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lk.crystal.asset.customer.entity.Customer;
-import lk.crystal.asset.discountRatio.entity.DiscountRatio;
+import lk.crystal.asset.discount_ratio.entity.DiscountRatio;
 import lk.crystal.asset.invoice.entity.Enum.InvoicePrintOrNot;
 import lk.crystal.asset.invoice.entity.Enum.InvoiceValidOrNot;
 import lk.crystal.asset.invoice.entity.Enum.PaymentMethod;
