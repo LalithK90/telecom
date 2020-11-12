@@ -1,12 +1,12 @@
 package lk.crystal.asset.payment.controller;
 
-import lk.crystal.asset.PurchaseOrder.entity.Enum.PurchaseOrderStatus;
-import lk.crystal.asset.PurchaseOrder.entity.PurchaseOrder;
-import lk.crystal.asset.PurchaseOrder.service.PurchaseOrderService;
-import lk.crystal.asset.goodReceivedNote.entity.Enum.GoodReceivedNoteState;
-import lk.crystal.asset.goodReceivedNote.entity.GoodReceivedNote;
-import lk.crystal.asset.goodReceivedNote.service.GoodReceivedNoteService;
-import lk.crystal.asset.invoice.entity.Enum.PaymentMethod;
+import lk.crystal.asset.purchase_order.entity.enums.PurchaseOrderStatus;
+import lk.crystal.asset.purchase_order.entity.PurchaseOrder;
+import lk.crystal.asset.purchase_order.service.PurchaseOrderService;
+import lk.crystal.asset.good_received_note.entity.enums.GoodReceivedNoteState;
+import lk.crystal.asset.good_received_note.entity.GoodReceivedNote;
+import lk.crystal.asset.good_received_note.service.GoodReceivedNoteService;
+import lk.crystal.asset.invoice.entity.enums.PaymentMethod;
 import lk.crystal.asset.payment.entity.Payment;
 import lk.crystal.asset.payment.service.PaymentService;
 import lk.crystal.util.service.MakeAutoGenerateNumberService;

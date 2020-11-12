@@ -2,7 +2,7 @@ package lk.crystal.asset.customer.controller;
 
 
 
-import lk.crystal.asset.commonAsset.model.Enum.Title;
+import lk.crystal.asset.common_asset.model.enums.Title;
 import lk.crystal.asset.customer.entity.Customer;
 import lk.crystal.asset.customer.service.CustomerService;
 import lk.crystal.util.interfaces.AbstractController;

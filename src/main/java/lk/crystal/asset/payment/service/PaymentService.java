@@ -1,6 +1,6 @@
 package lk.crystal.asset.payment.service;
 
-import lk.crystal.asset.PurchaseOrder.entity.PurchaseOrder;
+import lk.crystal.asset.purchase_order.entity.PurchaseOrder;
 import lk.crystal.asset.payment.dao.PaymentDao;
 import lk.crystal.asset.payment.entity.Payment;
 import lk.crystal.util.interfaces.AbstractService;

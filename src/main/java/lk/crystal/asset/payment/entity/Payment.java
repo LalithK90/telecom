@@ -3,8 +3,8 @@ package lk.crystal.asset.payment.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import lk.crystal.asset.PurchaseOrder.entity.PurchaseOrder;
-import lk.crystal.asset.invoice.entity.Enum.PaymentMethod;
+import lk.crystal.asset.purchase_order.entity.PurchaseOrder;
+import lk.crystal.asset.invoice.entity.enums.PaymentMethod;
 import lk.crystal.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

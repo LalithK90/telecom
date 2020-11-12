@@ -1,5 +1,6 @@
 package lk.crystal.asset.employee.dao;
 
+
 import lk.crystal.asset.employee.entity.Employee;
 import lk.crystal.asset.employee.entity.EmployeeFiles;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,4 +17,6 @@ public interface EmployeeFilesDao extends JpaRepository< EmployeeFiles, Integer 
     EmployeeFiles findByNewName(String filename);
 
     EmployeeFiles findByNewId(String filename);
+
+    EmployeeFiles findByEmployee(Employee employee);
 }
