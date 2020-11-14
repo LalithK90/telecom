@@ -53,7 +53,7 @@
                         <th>
                             <a id="categoryView" th:href="${'/category/' + category.id}" class="btn btn-primary btn-sm"><i class="fa fa-folder-open" style="font-size: 15px"></i>&nbsp;View</a>
                             <a id="categoryEdit" th:href="${'/category/edit/' + category.id}" class="btn btn-success btn-sm"><i class="fa fa-edit" style="font-size: 15px"></i>&nbsp;Edit</a>
-                            <a id="categoryRemove" th:href="${'/category/remove/' + category.id}" class="btn btn-danger btn-sm">
+                            <a id="categoryRemove" th:href="${'/category/delete/' + category.id}" class="btn btn-danger btn-sm">
                              <!-- th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"--> <i class="fa fa-trash" style="font-size: 15px"></i> Delete</a>
                         </th>
                     </tr>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>item</title>
 </head>
-<body>
+<body class="sb-nav-fixed">
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
 <div id="layoutSidenav">
     <div th:replace="~{fragments/sideNav :: sideNavFragment}">
@@ -45,7 +45,7 @@
                     </div>
                     <!--Table view-->
                     <div class="card-body">
-                        <div class="table-responsive" id="itemListPresent" data-th-if="${not #lists.isEmpty(items)}">
+                        <div class="table-responsive-md" id="itemListPresent" data-th-if="${not #lists.isEmpty(items)}">
                             <table class="table table-bordered" id="myTable">
                                 <thead>
                                     <tr>
@@ -77,14 +77,12 @@
                     </div>
                     <!--Error-->
                     <div class="row" data-th-if="${ #lists.isEmpty(items)}">
-                        <div class="col-sm-12">
+                        <div class="col align-self-center mx-4">
                             <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                There is no item upto now please add item to the system using "New" button.
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
-                                <h3 class="text-center text-danger">
-                                    <strong>There is no item upto now please add item to the system using "New" button.</strong>
-                                </h3>
                             </div>
                         </div>
                         <script>
