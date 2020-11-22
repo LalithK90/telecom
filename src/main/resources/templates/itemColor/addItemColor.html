@@ -6,115 +6,98 @@
 </head>
 <body>
 <nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
-<!--Heading Area-->
-<div class="container-fluid bg-dark form-Border">
-    <div class="row text-center formManagement border-info">
-        <!--ViewList Button-->
-        <div class="col">
-            <a href="/itemColor" class="btn btn-primary" tabindex="1">
-                <i class="fa fa-list" style="font-size: 20px"></i>&nbsp;&nbsp;View List
-            </a>
-        </div>
-        <!--Form Name-->
-        <div class="col">
-            <h2 class="text-light text-center">
-                <strong>
-                    <span th:text="${addStatus==true?'Add New Item Color':'Update Item Color Details'}"></span>
-                </strong>
-            </h2>
-        </div>
-        <!--Home Button-->
-        <div class="col">
-            <a class="btn btn-primary" href="/home" tabindex="2">
-                <i class="fa fa-home" style="font-size: 20px"></i> &nbsp;&nbsp;Home
-            </a>
-        </div>
+<div id="layoutSidenav">
+    <div th:replace="~{fragments/sideNav :: sideNavFragment}">
     </div>
-</div>
-<!--Form Content-->
-<div class="container-fluid bg-dark formBorder">
-    <div class="col-sm-12 flex-column ">
-        <form id="form" class="form-horizontal" th:action="${addStatus==true?'/itemColor/save':'/itemColor/update'}"
-              th:object="${itemColor}" method="POST" enctype="multipart/form-data">
-            <div class="row">
-                <!--Left Side-->
-                <div class="form-group col-md-6 col-sm-6 text-left flex-column">
-                    <!--Id-->
-                    <div id="idStatus" th:if="${addStatus==false}" class="form-row text-right">
-                        <div class="col-md-4">
-                            <label class="control-label" for="id">ID :</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input id="id" th:field="*{id}" class="form-control" type="text" readonly/>
-                        </div>
+    <div id="layoutSidenav_content">
+        <main>
+            <!--Heading Area-->
+            <div class="container-fluid">
+                <div class="row formManagement border-info mb-4 mt-4">
+                    <!--ViewList Button-->
+                    <div class="col">
+                        <a href="/itemColor" class="btn btn-outline-primary btn-sm" tabindex="1">
+                            <i class="fa fa-list" style="font-size: 12px"></i>&nbsp;&nbsp;View List
+                        </a>
                     </div>
-                    <!--Name-->
-                    <div class="form-row text-right">
-                        <div class="col-md-4">
-                            <label class="control-label" for="name">Name :</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input id="name" th:field="*{name}" class="form-control" tabindex="4" type="text" required/>
+                    <!--Form Name-->
+                    <div class="col">
+                        <h5 class="text text-right">
+                            <span th:text="${addStatus==true?'Add New Item Color':'Update Item Color Details'}"></span>
+                        </h5>
+                    </div>
+                    <!--Home Button
+                    <div class="col">
+                        <a class="btn btn-primary" href="/home" tabindex="2">
+                            <i class="fa fa-home" style="font-size: 20px"></i> &nbsp;&nbsp;Home
+                        </a>
+                    </div>-->
+                </div>
+            </div>
+
+            <!--Form Content-->
+            <div class="container-fluid formBorder">
+                <form class="mb-4" id="form" th:action="${addStatus==true?'/itemColor/save':'/itemColor/update'}"
+                      th:object="${itemColor}" method="POST" enctype="multipart/form-data">
+                    <div class="row">
+                        <!--Name-->
+                        <div class="form-group col-sm-4">
+                            <label for="name">Name :</label>
+                            <input type="text" class="form-control" placeholder="Color name" id="name" th:field="*{name}" tabindex="4" required/>
                             <span id="nameError" th:errors="*{name}"
                                   th:if="${#fields.hasErrors('name')}" class="error">Error Name</span>
                         </div>
+                        <!--ID-->
+                        <div class="form-group col-sm-4" id="idStatus" th:if="${addStatus==false}">
+                            <label for="id">ID :</label>
+                            <input type="text" class="form-control" id="id" th:field="*{id}" readonly/>
+                        </div>
                     </div>
-
-                </div>
-                <!--Right Side-->
-                <div class="form-group col-md-6 col-sm-6 text-right flex-column">
-                    <!--Created by and created at-->
-                    <div id="updateStatus" th:if="${addStatus==false}">
+                    <div class="row mb-4" id="updateStatus" th:if="${addStatus==false}">
                         <!--Created By-->
-                        <div class="form-row text-right">
-                            <div class="col-md-4">
-                                <label class="control-label" for="createdBy">Created By :</label>
-                            </div>
-                            <div class="col-md-8">
-                                <input id="createdBy" th:field="*{createdBy}" class="form-control" type="text" readonly/>
-                            </div>
+                        <div class="form-group col-sm-4">
+                            <label for="createdBy">Created By :</label>
+                            <input type="text" class="form-control" id="createdBy" th:field="*{createdBy}" readonly/>
                         </div>
                         <!--Created At-->
-                        <div class="form-row text-right">
-                            <div class="col-md-4">
-                                <label class="control-label" for="createdAt">Created At :</label>
-                            </div>
-                            <div class="col-md-8">
-                                <input id="createdAt" th:field="*{createdAt}" class="form-control" type="text" readonly/>
-                            </div>
+                        <div class="form-group col-sm-4">
+                            <label for="createdAt">Created At :</label>
+                            <input type="text" class="form-control" id="createdAt" th:field="*{createdAt}" readonly/>
                         </div>
                     </div>
-                </div>
-                <!--Button-->
-                <div class="form-group col-md-12 col-sm-12 text-center flex-column ">
-                    <!--Back Button-->
-                    <a class="btn btn-dark"  tabindex="8" href="/itemColor">
-                        <i class="fas fa-arrow-circle-left" style="font-size: 20px"></i>&nbsp;&nbsp;Back
-                    </a>
-                    <!--Save Button-->
-                    <button class="btn btn-success ml-5" type="submit" tabindex="9">
-                        <i class="fa fa-save " style="font-size: 20px"></i>&nbsp;&nbsp;<span id="submit" th:text="${addStatus==true?'Save': 'Update'}"></span>
-                    </button>
-                    <!--Cancel Button-->
-                    <button class="btn btn-warning ml-5" type="reset" tabindex="10">
-                        <i class="far fa-times-circle" style="font-size: 20px"></i>&nbsp;&nbsp;Cancel
-                    </button>
-                </div>
-                <!--Error-->
-                <div class="form-row">
-                    <label id="errorLabel" th:if="${#fields.hasErrors('*')}" th:text="'Errors: '">Errors: </label>
-                    <ul>
-                        <li id="error" th:each="err: ${#fields.errors('*')}" th:text="${err}" class="error"></li>
-                    </ul>
-                </div>
+                    <!--Button-->
+                    <div class="form-group">
+                        <!--Back Button-->
+                        <a class="btn btn-outline-secondary"  tabindex="8" href="/itemColor">
+                            <i class="fas fa-arrow-circle-left" style="font-size: 15px"></i>&nbsp;&nbsp;Back
+                        </a>
+                        <!--Save Button-->
+                        <button class="btn btn-outline-success" type="submit" tabindex="9">
+                            <i class="fa fa-save" style="font-size: 15px"></i>&nbsp;&nbsp;<span id="submit" th:text="${addStatus==true?'Save': 'Update'}"></span>
+                        </button>
+                        <!--Cancel Button-->
+                        <button class="btn btn-outline-warning" type="reset" tabindex="10">
+                            <i class="far fa-times-circle" style="font-size: 15px"></i>&nbsp;&nbsp;Cancel
+                        </button>
+                    </div>
+                    <!--Error-->
+                    <div class="form-row">
+                        <label id="errorLabel" th:if="${#fields.hasErrors('*')}" th:text="'Errors: '">Errors: </label>
+                        <ul>
+                            <li id="error" th:each="err: ${#fields.errors('*')}" th:text="${err}" class="error"></li>
+                        </ul>
+                    </div>
+                </form>
             </div>
-        </form>
+
+
+        </main>
+        <!--footer include-->
+        <footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+        <!--script include-->
+        <script th:replace="~{fragments/script :: scriptFragment}"></script>
     </div>
 </div>
-<!--footer include-->
-<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
-<!--script include-->
-<script th:replace="~{fragments/script :: scriptFragment}"></script>
 
 </body>
 </html>

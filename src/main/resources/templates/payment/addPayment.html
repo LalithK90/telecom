@@ -223,35 +223,53 @@
 <footer data-th-replace="~{fragments/footer :: footerFragment}"></footer>
 <!--script include-->
 <script data-th-replace="~{fragments/script :: scriptFragment}"></script>
-<script>
+<script >
     $(document).ready(function () {
-        $("input[name='paymentMethod']").bind('change', function () {
-            let paymentMethodValue = $("input[name='paymentMethod']:checked").val();
-            if (paymentMethodValue === 'CASH') {
-                $("#bankNameBlock").hide();
-            } else {
-                $("#bankNameBlock").show();
-            }
-        });
-        //enter amount check
-        $("#amount").bind('keyup', function () {
-            let poValue = parseInt($("#allAmount").val());
-            let poAmountString = $("#poAmount").val();
-            let poAmount = parseInt(poAmountString);
-            let amountString = $(this).val();
-            let amount = parseInt(amountString);
-            if ((poAmount !== amount && poAmountString.length === amountString.length) && (amount > poAmount &&
-                poAmountString.length === amountString.length)) {
-                swal({
-                    title: "Could you accept this amount as a payment.. !",
-                    icon: "warning",
-                    text: "Please check what your are entered. \n",
-                });
-                $(this).val(poAmount);
-            }
-            $("#balance").val(poValue -(poAmount+amount));
-        });
+        showHideContent();
     });
-</script>
+    $("input[name='paymentMethod']").bind('change', function () {
+        showHideContent();
+    });
+
+    function showHideContent() {
+        let paymentMethodValue = $("input[name='paymentMethod']:checked").val();
+        if (paymentMethodValue === 'CASH') {
+            $("#bankNameBlock").hide();
+        } else {
+            $("#bankNameBlock").show();
+        }
+    }
+
+    //enter amount check
+    $("#amount").bind('keyup', function () {
+        let amountString = $(this).val();
+        balanceCalculate(amountString);
+    });
+
+    function balanceCalculate(amountString) {
+        let poValue = parseInt($("#allAmount").val());
+        let poAmountString = $("#poAmount").val();
+        let poAmount = parseInt(poAmountString);
+        let amount = parseInt(amountString);
+
+        $("#balance").val(parseFloat(balance(poValue, amount)).toFixed(2));
+
+        if ((poAmount !== amount && poAmountString.length === amountString.length) && (amount > poAmount &&
+            poAmountString.length === amountString.length) || balance(poValue, amount) < 0) {
+            swal({
+                title: "Could you accept this amount as a payment.. !",
+                icon: "warning",
+                text: "Please check what your are entered. \n",
+            });
+            $("#balance").val(parseFloat(0).toFixed(2));
+            $("#amount").val(parseFloat(poAmount).toFixed(2));
+        }
+
+    }
+
+    function balance(poValue, amount) {
+        return poValue - amount;
+    }
+</script >
 </body>
 </html>
