@@ -4,69 +4,88 @@
     <meta charset="UTF-8">
     <title>itemColor</title>
 </head>
-<body>
+<body class="sb-nav-fixed">
 <nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
-<!--heading Area-->
-<div class="container-fluid bg-dark form-Border">
-    <div class="row text-center formManagement border-info">
-        <!--New Color Button-->
-        <div class="col">
-            <a class="btn btn-success" href="/itemColor/add" tabindex="1">
-                <i class="fas fa-plus" style="font-size: 20px"></i>&nbsp;&nbsp;New
-            </a>
-        </div>
-        <!--List Name-->
-        <div class="col">
-            <h2 class="text-white text-center">
-                <strong>
-                    Color List
-                </strong>
-            </h2>
-        </div>
-        <!--Home Button-->
-        <div class="col">
-            <a href="/home" id="searchShow" class="btn btn-primary" tabindex="2">
-                <!--<i class="fa fa-user " style="font-size: 20px"></i>&nbsp;Add&nbsp;-->
-                <i class="fas fa-home" style="font-size: 20px"></i>&nbsp;&nbsp;Home
-            </a>
-        </div>
+<div id="layoutSidenav">
+    <div th:replace="~{fragments/sideNav :: sideNavFragment}">
+    </div>
+    <div id="layoutSidenav_content">
+        <main>
+            <!--heading Area-->
+            <div class="container-fluid">
+                <h1 class="mt-4">Item Colors</h1>
+                <div class="row formManagement border-info mb-4 mt-4">
+                    <!--New Color Button-->
+                    <div class="col">
+                        <a class="btn btn-outline-success btn-sm" href="/itemColor/add" tabindex="1">
+                            <i class="fas fa-plus" style="font-size: 12px"></i>&nbsp;&nbsp;New
+                        </a>
+                    </div>
+                    <!--List Name
+                    <div class="col">
+                        <h2 class="text-white text-center">
+                            <strong>
+                                Color List
+                            </strong>
+                        </h2>
+                    </div>-->
+                    <!--Home Button--Commenting this button since the home page has linked to the Dashboard in sideNav
+                    <div class="col">
+                        <a href="/home" id="searchShow" class="btn btn-primary" tabindex="2">
+                            This raw was commented<i class="fa fa-user " style="font-size: 20px"></i>&nbsp;Add&nbsp;
+                            <i class="fas fa-home" style="font-size: 20px"></i>&nbsp;&nbsp;Home
+                        </a>
+                    </div>-->
+                </div>
+
+                <!--Colores List-->
+                <div class="card mb-4">
+                    <!--Table Title-->
+                    <div class="card-header">
+                        <i class="fas fa-table mr-1"></i>
+                        Color List
+                    </div>
+                    <!--Table view-->
+                    <div class="card-body">
+                        <div class="table-responsive-md" id="itemColorListPresent" th:if="${not #lists.isEmpty(itemColors)}">
+                            <table class="table table-bordered" id="myTable">
+                                <thead>
+                                <tr>
+                                    <th> Index</th>
+                                    <th> Name</th>
+                                    <th> Modify</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="itemColor, rowCount : ${itemColors}">
+                                    <th th:text="${rowCount.count}"></th>
+                                    <th th:text="${itemColor.name}"></th>
+                                    <th>
+                                        <a id="itemColorEdit" th:href="${'/itemColor/edit/' + itemColor.id}" class="btn btn-outline-success btn-sm"><i
+                                                class="fa fa-edit" style="font-size: 15px"></i>&nbsp;Edit</a>
+                                        <a id="itemColorRemove" th:href="${'/itemColor/delete/' + itemColor.id}" class="btn btn-outline-danger btn-sm">
+                                            <!--th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" --> <i
+                                                class="fa fa-trash" style="font-size: 15px"></i>
+                                            Delete</a>
+                                    </th>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!--footer include-->
+        <div th:replace="~{fragments/footer :: footerFragment}"></div>
+        <!--script include-->
+        <div th:replace="~{fragments/script :: scriptFragment}"></div>
+
     </div>
 </div>
-<!--Colores List-->
-<div class="container-fluid bg-dark formBorder text-center">
-    <!--Table view-->
-    <div class="col">
-        <div class="col" id="itemColorListPresent" th:if="${not #lists.isEmpty(itemColors)}">
-            <table class="table table-hover table-striped" id="myTable">
-                <thead>
-                <tr>
-                    <th> Index</th>
-                    <th> Name</th>
-                    <th> Modify</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="itemColor, rowCount : ${itemColors}">
-                    <th th:text="${rowCount.count}"></th>
-                    <th th:text="${itemColor.name}"></th>
-                    <th>
-                        <a id="itemColorEdit" th:href="${'/itemColor/edit/' + itemColor.id}" class="btn btn-success btn-sm"><i
-                                class="fa fa-edit" style="font-size: 15px"></i>&nbsp;Edit</a>
-                        <a id="itemColorRemove" th:href="${'/itemColor/delete/' + itemColor.id}" class="btn btn-danger btn-sm">
-                            <!--th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" --> <i
-                                class="fa fa-trash" style="font-size: 15px"></i>
-                            Delete</a>
-                    </th>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-<!--footer include-->
-<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
-<!--script include-->
-<script th:replace="~{fragments/script :: scriptFragment}"></script>
+
+
 
 </body>
 </html>

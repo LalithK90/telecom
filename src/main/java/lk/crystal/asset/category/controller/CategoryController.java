@@ -42,6 +42,7 @@ public class CategoryController implements AbstractController< Category, Integer
         return "category/category";
     }
 
+
     @GetMapping("/add")
     public String addForm(Model model) {
         return commonThings(model, new Category(), true);
@@ -81,7 +82,7 @@ category.setName(category.getName().toUpperCase());
         if (mainCategory != null) {
             category.setMainCategory(MainCategory.valueOf(mainCategory));
         } else {
-            category.setMainCategory(MainCategory.PROCESSED_MEAT);
+            category.setMainCategory(MainCategory.MOBILE_PHONE);
         }
 
         //MappingJacksonValue

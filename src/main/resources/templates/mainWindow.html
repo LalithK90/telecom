@@ -4,221 +4,244 @@
     <meta charset="UTF-8">
     <title>Thymeleaf Springboot </title>
 </head>
-<body>
+<body class="sb-nav-fixed">
 <nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
-
-<div class="container-fluid">
-    <div class="main-section">
-        <p class="welcome-Notes">Welcome To Complaint Management System of Department of
-                                 Excise</p>
-        <div class="col-12">
-            <div class="row">
-                <div class="col-7">
-                    <div class="form-row">
-                        <!--Employee-->
-                        <div class="col-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="tile wide invoice">
-                                        <div class="header">
-                                            <div class="count">
-                                                <i class="fas fa-user-tie" style="font-size: 20px" aria-hidden="true"></i>
-                                            </div>
-                                            <div class="title">Employee</div>
-                                        </div>
-                                        <a href="/employee">
-                                            <div class="body">
-                                                <div class="title">Manage Employees</div>
-                                            </div>
-                                        </a>
-                                        <a href="/branch">
-                                            <div class="body">
-                                                <div class="title">Manage Branches</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--Customer-->
-                        <div class="col-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="tile wide resource">
-                                        <div class="header">
-                                            <div class="">
-                                                <div class="count"><i class="far fa-handshake" style="font-size: 20px" aria-hidden="true"></i>
-                                                </div>
-                                                <div class="title">Customer</div>
-                                            </div>
-                                        </div>
-                                        <a href="/customer">
-                                            <div class="body">
-                                                <div class="title">Manage Customers</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--Supplier-->
-                        <div class="col-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="tile wide quote">
-                                        <div class="header">
-                                            <div class="">
-                                                <div class="count"><i class="fas fa-truck" style="font-size: 20px" aria-hidden="true"></i>
-                                                </div>
-                                                <div class="title">Supplier</div>
-                                            </div>
-                                        </div>
-                                        <a href="/supplier">
-                                            <div class="body">
-                                                <div class="title">Manage Suppliers</div>
-                                            </div>
-                                        </a>
-                                        <a href="/supplierItem">
-                                            <div class="body">
-                                                <div class="title">Manage Supplier Items</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <!--Item-->
-                        <div class="col-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="tile wide resource">
-                                        <div class="header">
-                                            <div class="">
-                                                <div class="count"><i class="fa fa-shopping-cart" style="font-size: 20px" aria-hidden="true"></i>
-
-                                                </div>
-                                                <div class="title">Item</div>
-                                            </div>
-                                        </div>
-                                        <a class href="/item">
-                                            <div class="body">
-                                                <div class="title">Manage Items</div>
-                                            </div>
-                                        </a>
-                                        <a class href="/category">
-                                            <div class="body">
-                                                <div class="title">Manage Categories</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--Purchase-->
-                        <div class="col-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="tile wide quote">
-                                        <div class="header">
-                                            <div class="">
-                                                <div class="count"><i class="fas fa-truck-loading" style="font-size: 20px" aria-hidden="true"></i>
-                                                </div>
-                                                <div class="title">Purchase</div>
-                                            </div>
-
-                                        </div>
-                                        <a href="/workingPlace">
-                                            <div class="body">
-                                                <div class="title">Manage Supplier Orders</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--Invoice-->
-                        <div class="col-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="tile wide invoice">
-                                        <div class="header">
-                                            <div class="">
-                                                <div class="count"><i class="fas fa-file-invoice-dollar" style="font-size: 20px" aria-hidden="true"></i>
-                                                </div>
-                                                <div class="title">Invoice</div>
-                                            </div>
-
-                                        </div>
-                                        <a href="/workingPlace">
-                                            <div class="body">
-                                                <div class="title">Manage Customer orders</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--To day petition list-->
-                <div class="col-5 ">
-                    <p class="welcome-Notes">To Day Petitions</p>
-                    <!--Petition Lists -->
-                    <div class="container-fluid text-center" id="petitionListPresent">
-                        <table class="table table-hover table-striped" id="myTable">
-                            <thead>
-                            <tr>
-                                <th> Petition Number</th>
-                                <th> Petition Priority</th>
-                                <th> Working Place</th>
-                                <th> State</th>
-                                <th> Modify</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr id="petitionList">
-                                <th id="petitionNumber"></th>
-                                <th id="petitionPriority"></th>
-                                <th id="workingPlace"></th>
-                                <th id="petitionState"></th>
-                                <th>
-                                    <a id="petitionView" class="btn btn-success btn-sm"><i
-                                            class="fa fa-folder-open"></i>&nbsp;View</a>
-                                </th>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="row" id="petitionListNotPresent">
-                        <div class="col-sm-12">
-                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <h3 class="text-center text-danger">
-                                    <strong>There is no petition upto know please add petition to the system
-                                            using add user button.
-                                    </strong>
-                                </h3>
-                            </div>
-                        </div>
-                        <script>
-                            $(".alert").alert();
-                        </script>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div id="layoutSidenav">
+    <div th:replace="~{fragments/sideNav :: sideNavFragment}">
     </div>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">Dashboard</h1>
+                <!--Tiles-->
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item active">Home Tabs</li>
+                </ol>
+                <div class="row">
+                    <!--Employee-->
+                    <div class="col-xl-4 col-md-6">
+                        <div class="card bg-primary text-white mb-4">
+                            <div class="card-header font-weight-bold">
+                                <i class="fas fa-user-tie mr-2" style="font-size: 16px" aria-hidden="true"></i>Employee
+                            </div>
+                            <div class="card-body">
+                                <a href="/employee">
+                                    <div class="body">
+                                        <div class="text-white">Manage Employees</div>
+                                    </div>
+                                </a>
+                                <a href="/branch">
+                                    <div class="body">
+                                        <div class="text-white">Manage Branches</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Item-->
+                    <div class="col-xl-4 col-md-6">
+                        <div class="card bg-danger text-white mb-4">
+                            <div class="card-header font-weight-bold">
+                                <i class="fa fa-shopping-cart mr-2" style="font-size: 16px" aria-hidden="true"></i>Item
+                            </div>
+                            <div class="card-body">
+                                <a class href="/item">
+                                    <div class="body">
+                                        <div class="text-white">Manage Items</div>
+                                    </div>
+                                </a>
+                                <a class href="/category">
+                                    <div class="body">
+                                        <div class="text-white">Manage Categories</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Supplier-->
+                    <div class="col-xl-4 col-md-6">
+                        <div class="card bg-success text-white mb-4">
+                            <div class="card-header font-weight-bold">
+                                <i class="fas fa-truck mr-2" style="font-size: 16px" aria-hidden="true"></i></i>Supplier
+                            </div>
+                            <div class="card-body">
+                                <a href="/supplier">
+                                    <div class="body">
+                                        <div class="text-white">Manage Suppliers</div>
+                                    </div>
+                                </a>
+                                <a href="/supplierItem">
+                                    <div class="body">
+                                        <div class="text-white">Manage Supplier Items</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!--Customer-->
+                    <div class="col-xl-4 col-md-6">
+                        <div class="card bg-secondary text-white mb-4">
+                            <div class="card-header font-weight-bold">
+                                <i class="far fa-handshake mr-2" style="font-size: 16px" aria-hidden="true"></i>Customer
+                            </div>
+                            <div class="card-body">
+                                <a href="/customer">
+                                    <div class="body">
+                                        <div class="text-white">Manage Customers</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Invoice-->
+                    <div class="col-xl-4 col-md-6">
+                        <div class="card bg-info text-white mb-4">
+                            <div class="card-header font-weight-bold">
+                                <i class="fas fa-file-invoice-dollar mr-2" style="font-size: 16px" aria-hidden="true"></i></i>Invoice
+                            </div>
+                            <div class="card-body">
+                                <a href="/workingPlace">
+                                    <div class="body">
+                                        <div class="text-white">Manage Customer orders</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Purchase-->
+                    <div class="col-xl-4 col-md-6">
+                        <div class="card bg-warning text-white mb-4">
+                            <div class="card-header font-weight-bold">
+                               <i class="fas fa-truck-loading mr-2" style="font-size: 16px" aria-hidden="true"></i>Purchase
+                            </div>
+                            <div class="card-body">
+                                <a href="/workingPlace">
+                                    <div class="body">
+                                        <div class="text-white">Manage Supplier Orders</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--*********************************Test Table*****************************************-->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table mr-1"></i>
+                        DataTable Example
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Office</th>
+                                    <th>Age</th>
+                                    <th>Start date</th>
+                                    <th>Salary</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Office</th>
+                                    <th>Age</th>
+                                    <th>Start date</th>
+                                    <th>Salary</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                <tr>
+                                    <td>Tiger Nixon</td>
+                                    <td>System Architect</td>
+                                    <td>Edinburgh</td>
+                                    <td>61</td>
+                                    <td>2011/04/25</td>
+                                    <td>$320,800</td>
+                                </tr>
+                                <tr>
+                                    <td>Garrett Winters</td>
+                                    <td>Accountant</td>
+                                    <td>Tokyo</td>
+                                    <td>63</td>
+                                    <td>2011/07/25</td>
+                                    <td>$170,750</td>
+                                </tr>
+                                <tr>
+                                    <td>Ashton Cox</td>
+                                    <td>Junior Technical Author</td>
+                                    <td>San Francisco</td>
+                                    <td>66</td>
+                                    <td>2009/01/12</td>
+                                    <td>$86,000</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--*********************************Test Table End*************************************-->
+                 <!--To day petition list-->
+                 <div class="col">
+                                    <p class="welcome-Notes">To Day Petitions</p>
+                                    <!--Petition Lists -->
+                                    <div class="container-fluid text-center" id="petitionListPresent">
+                                        <table class="table table-hover table-striped" id="myTable">
+                                            <thead>
+                                            <tr>
+                                                <th> Petition Number</th>
+                                                <th> Petition Priority</th>
+                                                <th> Working Place</th>
+                                                <th> State</th>
+                                                <th> Modify</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr id="petitionList">
+                                                <th id="petitionNumber"></th>
+                                                <th id="petitionPriority"></th>
+                                                <th id="workingPlace"></th>
+                                                <th id="petitionState"></th>
+                                                <th>
+                                                    <a id="petitionView" class="btn btn-success btn-sm"><i
+                                                            class="fa fa-folder-open"></i>&nbsp;View</a>
+                                                </th>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="row" id="petitionListNotPresent">
+                                        <div class="col-sm-12">
+                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <h3 class="text-center text-danger">
+                                                    <strong>There is no petition upto know please add petition to the system
+                                                            using add user button.
+                                                    </strong>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        <script>
+                                            $(".alert").alert();
+                                        </script>
+                                    </div>
+                                </div>
+            </div>
+        </main>
+        <!--footer include-->
+        <footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+        <!--script include-->
+        <script th:replace="~{fragments/script :: scriptFragment}"></script>
+    </div>
+
 </div>
-
-<!--footer include-->
-<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
-<!--script include-->
-<script th:replace="~{fragments/script :: scriptFragment}"></script>
-
 </body>
 </html>
 
