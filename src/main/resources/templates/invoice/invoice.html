@@ -5,10 +5,15 @@
     <meta charset="UTF-8">
     <title>Thymeleaf Springboot </title>
 </head>
-<body>
+<body class="sb-nav-fixed">
 <!--/* Nav bar is included */-->
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
-<div class="container">
+<div id="layoutSidenav">
+    <div th:replace="~{fragments/sideNav :: sideNavFragment}">
+    </div>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container">
     <div class="row">
         <!--Custom Invoice search-->
         <button type="button" class="btn btn-info mb-5 btn-block text-capitalize" data-toggle="collapse"
@@ -92,30 +97,31 @@
         </div>
     </div>
 </div>
+        </main>
+        <!--/* footer is */-->
+        <footer data-th-replace="~{fragments/footer :: footerFragment}"></footer>
+        <!--/* script is included */-->
+        <script data-th-replace="~{fragments/script :: scriptFragment}"></script>
+        <script>
+            $(document).ready(function () {
+                let startDate = $('#startDate').val();
+                let endDate = $('#endDate').val();
+                let nowTime = new Date().toDateString();
 
-<!--/* footer is */-->
-<footer data-th-replace="~{fragments/footer :: footerFragment}"></footer>
-<!--/* script is included */-->
-<script data-th-replace="~{fragments/script :: scriptFragment}"></script>
-<script>
-    $(document).ready(function () {
-        let startDate = $('#startDate').val();
-        let endDate = $('#endDate').val();
-        let nowTime = new Date().toDateString();
-
-        if (startDate !== "" && endDate !== "") {
-            if (Date.parse(endDate) > Date.parse(startDate) && Date.parse(nowTime) > Date.parse(startDate) &&
-                Date.parse(nowTime) > Date.parse(endDate)) {
-                swal({
-                    title: "Could you accept those days.. !",
-                    icon: "warning",
-                    text: "Please check your entered date \n",
-                })
-                $('#endDate').val(startDate);
-            }
-        }
-    });
-</script>
-
+                if (startDate !== "" && endDate !== "") {
+                    if (Date.parse(endDate) > Date.parse(startDate) && Date.parse(nowTime) > Date.parse(startDate) &&
+                        Date.parse(nowTime) > Date.parse(endDate)) {
+                        swal({
+                            title: "Could you accept those days.. !",
+                            icon: "warning",
+                            text: "Please check your entered date \n",
+                        })
+                        $('#endDate').val(startDate);
+                    }
+                }
+            });
+        </script>
+    </div>
+</div>
 </body>
 </html>

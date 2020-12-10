@@ -30,10 +30,9 @@ import java.util.List;
 @JsonFilter( "Item" )
 public class Item extends AuditEntity {
 
-    @Size( min = 5, message = "Your name can not be accepted" )
+    @Size( min = 2, message = "Your name can not be accepted" )
     private String name;
 
-    @NotEmpty
     private String rop;
 
     @Column( unique = true )
@@ -45,13 +44,13 @@ public class Item extends AuditEntity {
     @Enumerated( EnumType.STRING )
     private ItemStatus itemStatus;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Brand brand;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private ItemColor itemColor;
 
     @OneToMany( mappedBy = "item" )
