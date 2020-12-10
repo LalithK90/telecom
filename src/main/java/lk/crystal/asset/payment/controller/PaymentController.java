@@ -1,14 +1,15 @@
 package lk.crystal.asset.payment.controller;
 
-import lk.crystal.asset.purchase_order.entity.enums.PurchaseOrderStatus;
-import lk.crystal.asset.purchase_order.entity.PurchaseOrder;
-import lk.crystal.asset.purchase_order.service.PurchaseOrderService;
-import lk.crystal.asset.good_received_note.entity.enums.GoodReceivedNoteState;
+
 import lk.crystal.asset.good_received_note.entity.GoodReceivedNote;
+import lk.crystal.asset.good_received_note.entity.enums.GoodReceivedNoteState;
 import lk.crystal.asset.good_received_note.service.GoodReceivedNoteService;
 import lk.crystal.asset.invoice.entity.enums.PaymentMethod;
 import lk.crystal.asset.payment.entity.Payment;
 import lk.crystal.asset.payment.service.PaymentService;
+import lk.crystal.asset.purchaseOrder.entity.Enum.PurchaseOrderStatus;
+import lk.crystal.asset.purchaseOrder.entity.PurchaseOrder;
+import lk.crystal.asset.purchaseOrder.service.PurchaseOrderService;
 import lk.crystal.util.service.MakeAutoGenerateNumberService;
 import lk.crystal.util.service.OperatorService;
 import org.springframework.stereotype.Controller;
@@ -48,7 +49,7 @@ public class PaymentController {
         //find all purchase order to have to pay using purchase order status
         //1. still not processed po 2. partially paid po
         List< PurchaseOrder > purchaseOrdersDB =
-            purchaseOrderService.findByPurchaseOrderStatus(PurchaseOrderStatus.NOT_PROCEED);
+                purchaseOrderService.findByPurchaseOrderStatus(PurchaseOrderStatus.NOT_PROCEED);
         if ( !purchaseOrdersDB.isEmpty() ) {
             //need to pay po
             List< PurchaseOrder > purchaseOrders = new ArrayList<>();
@@ -77,8 +78,8 @@ public class PaymentController {
 
         //1. still not processed po 2. partially paid po
         List< PurchaseOrder > purchaseOrdersDB =
-            purchaseOrderService.findByPurchaseOrderStatusAndSupplier(PurchaseOrderStatus.NOT_PROCEED,
-                                                                      purchaseOrderNeedToPay.getSupplier());
+                purchaseOrderService.findByPurchaseOrderStatusAndSupplier(PurchaseOrderStatus.NOT_PROCEED,
+                                                                          purchaseOrderNeedToPay.getSupplier());
         List< PurchaseOrder > purchaseOrderNotPaid = new ArrayList<>();
 
         if ( purchaseOrdersDB != null ) {

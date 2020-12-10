@@ -33,7 +33,7 @@ public class CommonService {
         this.supplierItemService = supplierItemService;
     }
 
-    public List< Supplier > commonSupplierSearch(Supplier supplier) {
+    public List<Supplier> commonSupplierSearch(Supplier supplier) {
         List<Supplier> suppliers;
         if (supplier.getContactOne() != null) {
             String contactNumber = makeAutoGenerateNumberService.phoneNumberLengthValidator(supplier.getContactOne());
@@ -51,10 +51,10 @@ public class CommonService {
         }
         if (supplier.getContactOne() != null) {
             suppliers = suppliers.stream()
-                    .filter(supplier1 ->
+                .filter(supplier1 ->
                             supplier.getContactOne().equals(supplier1.getContactTwo()) ||
-                                    supplier.getContactOne().equals(supplier1.getContactOne()))
-                    .collect(Collectors.toList());
+                                supplier.getContactOne().equals(supplier1.getContactOne()))
+                .collect(Collectors.toList());
         }
         return suppliers;
     }
@@ -111,8 +111,8 @@ public class CommonService {
         return mobileTwo;
     }
 
-    public List< Item > activeItemsFromSupplier(Supplier supplier) {
-        List< SupplierItem > supplierItems = supplierItemService.findBySupplierAndItemSupplierStatus(supplier, ItemSupplierStatus.CURRENTLY_BUYING);
+    public List<Item> activeItemsFromSupplier(Supplier supplier) {
+        List<SupplierItem> supplierItems = supplierItemService.findBySupplierAndItemSupplierStatus(supplier, ItemSupplierStatus.CURRENTLY_BUYING);
         List<Item> items = new ArrayList<>();
         for (SupplierItem supplierItem : supplierItems) {
             items.add(supplierItem.getItem());
@@ -135,9 +135,9 @@ public class CommonService {
                 .toString());*/
         Object[] arg = {"designation", "id"};
         model.addAttribute("employeeUrl", MvcUriComponentsBuilder
-                .fromMethodName(EmployeeRestController.class, "getEmployeeByWorkingPlace", arg)
-                .build()
-                .toString());
+            .fromMethodName(EmployeeRestController.class, "getEmployeeByWorkingPlace", arg)
+            .build()
+            .toString());
     }
 
 
