@@ -48,7 +48,7 @@ public class PaymentController {
         //find all purchase order to have to pay using purchase order status
         //1. still not processed po 2. partially paid po
         List< PurchaseOrder > purchaseOrdersDB =
-                purchaseOrderService.findByPurchaseOrderStatus(PurchaseOrderStatus.NOT_PROCEED);
+            purchaseOrderService.findByPurchaseOrderStatus(PurchaseOrderStatus.NOT_PROCEED);
         if ( !purchaseOrdersDB.isEmpty() ) {
             //need to pay po
             List< PurchaseOrder > purchaseOrders = new ArrayList<>();
@@ -77,8 +77,8 @@ public class PaymentController {
 
         //1. still not processed po 2. partially paid po
         List< PurchaseOrder > purchaseOrdersDB =
-                purchaseOrderService.findByPurchaseOrderStatusAndSupplier(PurchaseOrderStatus.NOT_PROCEED,
-                                                                          purchaseOrderNeedToPay.getSupplier());
+            purchaseOrderService.findByPurchaseOrderStatusAndSupplier(PurchaseOrderStatus.NOT_PROCEED,
+                                                                      purchaseOrderNeedToPay.getSupplier());
         List< PurchaseOrder > purchaseOrderNotPaid = new ArrayList<>();
 
         if ( purchaseOrdersDB != null ) {
@@ -102,6 +102,7 @@ public class PaymentController {
         }
         model.addAttribute("payment", new Payment());
         model.addAttribute("purchaseOrders", purchaseOrderNotPaid);
+        System.out.println(purchaseOrderNeedToPay.getNeedToPaid() +"need to pay   paid amount "+ purchaseOrderNeedToPay.getPaidAmount());
         model.addAttribute("purchaseOrderNeedToPay", purchaseOrderNeedToPay);
         model.addAttribute("paymentMethods", PaymentMethod.values());
         return "payment/addPayment";
@@ -117,7 +118,6 @@ public class PaymentController {
                 //need to generate new one
                 payment.setCode("JNPM" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
             } else {
-                System.out.println("last customer not null");
                 //if there is customer in db need to get that customer's code and increase its value
                 String previousCode = paymentService.lastPayment().getCode().substring(4);
                 payment.setCode("JNPM" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
