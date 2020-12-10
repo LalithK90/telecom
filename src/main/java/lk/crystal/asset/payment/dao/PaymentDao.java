@@ -1,7 +1,9 @@
 package lk.crystal.asset.payment.dao;
 
-import lk.crystal.asset.purchase_order.entity.PurchaseOrder;
+
+
 import lk.crystal.asset.payment.entity.Payment;
+import lk.crystal.asset.purchaseOrder.entity.PurchaseOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

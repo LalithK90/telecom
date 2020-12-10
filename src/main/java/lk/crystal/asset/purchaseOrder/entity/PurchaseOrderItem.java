@@ -1,5 +1,4 @@
-package lk.crystal.asset.purchase_order.entity;
-
+package lk.crystal.asset.purchaseOrder.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFilter;

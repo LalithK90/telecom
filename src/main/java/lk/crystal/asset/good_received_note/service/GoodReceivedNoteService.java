@@ -2,9 +2,10 @@ package lk.crystal.asset.good_received_note.service;
 
 
 
-import lk.crystal.asset.purchase_order.entity.PurchaseOrder;
+
 import lk.crystal.asset.good_received_note.dao.GoodReceivedNoteDao;
 import lk.crystal.asset.good_received_note.entity.GoodReceivedNote;
+import lk.crystal.asset.purchaseOrder.entity.PurchaseOrder;
 import lk.crystal.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;

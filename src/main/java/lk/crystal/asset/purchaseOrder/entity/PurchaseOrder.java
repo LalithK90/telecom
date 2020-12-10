@@ -1,10 +1,9 @@
-package lk.crystal.asset.purchase_order.entity;
-
+package lk.crystal.asset.purchaseOrder.entity;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import lk.crystal.asset.purchase_order.entity.enums.PurchaseOrderPriority;
-import lk.crystal.asset.purchase_order.entity.enums.PurchaseOrderStatus;
 import lk.crystal.asset.payment.entity.Payment;
+import lk.crystal.asset.purchaseOrder.entity.Enum.PurchaseOrderPriority;
+import lk.crystal.asset.purchaseOrder.entity.Enum.PurchaseOrderStatus;
 import lk.crystal.asset.supplier.entity.Supplier;
 import lk.crystal.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
