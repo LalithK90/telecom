@@ -22,11 +22,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final String[] ALL_PERMIT_URL = {"/favicon.ico", "/img/**", "/css/**", "/js/**", "/webjars/**",
       "/login", "/select/**", "/", "/index"};
-  private final String[] ADMIN = {"/category/**"};
-  private final String[] MANAGER = {"/category/**"};
-  private final String[] PROCUMENT_MANAGER = {"/category/**"};
+  private final String[] ADMIN = {"/login", "/category/**", "/customer/**", "/employee/**", "/goodReceivedNote/**",
+      "/invoice/**",
+      "/item/**", "/purchaseOrder/**", "/role/**", "/supplier/**", "/supplierItem/**", "/user/**"};
+  private final String[] MANAGER = {"/login", "/category/**", "/customer/**", "/discountRatio/**", "/employee/**",
+      "/goodReceivedNote/**", "/invoice/**",
+      " /item/**", "/ledger/**", "/payment/**", "/purchaseOrder/**", "/role/**", "/supplier/**", "/supplierItem/**",
+      "/user/**"};
+  private final String[] PROCUMENT_MANAGER = {"/category/**", "/goodReceivedNote/**", "/invoice/**", " /item/**",
+      "ledger/**", "/purchaseOrder/**",
+      "/supplier/**", "/supplierItem/**"};
+  private final String[] ACCOUNT_MANAGER = {"/payment/**"};
   private final String[] HR_MANAGER = {"/employee/**"};
-  private final String[] CASHIER = {""};
+  private final String[] CASHIER = {"/category/getCategory/**", "/invoice/add", "/brand/**", "/itemColor/**"};
 
   @Bean
   public UserDetailsServiceImpl userDetailsService() {
