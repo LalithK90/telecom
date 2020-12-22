@@ -1,9 +1,8 @@
 package lk.crystal.asset.discount_ratio.entity;
 
 
-
 import com.fasterxml.jackson.annotation.JsonFilter;
-import lk.crystal.asset.discount_ratio.entity.enums.DiscountRatioStatus;
+import lk.crystal.asset.common_asset.model.enums.LiveDead;
 import lk.crystal.asset.invoice.entity.Invoice;
 import lk.crystal.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
@@ -32,7 +31,7 @@ public class DiscountRatio extends AuditEntity {
     @Column( nullable = false, precision = 10, scale = 2 )
     private BigDecimal amount;
 
-    private DiscountRatioStatus discountRatioStatus;
+    private LiveDead liveDead;
 
     @OneToMany( mappedBy = "discountRatio" )
     private List< Invoice > invoices;

@@ -43,7 +43,6 @@
               <th >Need to be Paid</th >
               <th >Requested Date</th >
               <th >GRN Date</th >
-              <th > Modify</th >
             </tr >
             </thead >
             <tbody >
@@ -55,11 +54,6 @@
               <th data-th-text="${purchaseOrder.needToPaid}" ></th >
               <th data-th-text="${{purchaseOrder.createdAt}}" ></th >
               <th data-th-text="${{purchaseOrder.grnAt}}" ></th >
-              <th >
-                <a id="edit" data-th-href="${'/payment/' + purchaseOrder.id}"
-                   class="btn btn-primary btn-sm mr-2 p-2" >Pay
-                </a >
-              </th >
             </tr >
             </tbody >
           </table >
@@ -227,6 +221,7 @@
     $(document).ready(function () {
         showHideContent();
     });
+
     $("input[name='paymentMethod']").bind('change', function () {
         showHideContent();
     });
@@ -235,7 +230,9 @@
         let paymentMethodValue = $("input[name='paymentMethod']:checked").val();
         if (paymentMethodValue === 'CASH') {
             $("#bankNameBlock").hide();
+            $("#cashPaymentBlock").show();
         } else {
+            $("#cashPaymentBlock").hide();
             $("#bankNameBlock").show();
         }
     }

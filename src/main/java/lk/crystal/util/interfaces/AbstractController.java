@@ -1,28 +1,36 @@
 package lk.crystal.util.interfaces;
 
-
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-public interface AbstractController< E, I > {
+import javax.validation.Valid;
 
-    //1. findAll method create.
-    //2. addForm method create.
-    //3. persist method create.
-    //4. edit method create.
-    //5. delete method create.
-    //6. view details.
-
+public interface AbstractController<E, I> {
+    /**
+     * 1. Find All relevant things belongs provided entity {}
+     */
     String findAll(Model model);
 
-    String addForm(Model model);
+    /**
+     * 2. Find One relevant things belongs provided entity {} id
+     */
+    String findById(I id, Model model);
 
-    String persist(E e, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) throws Exception;
-
+    /**
+     * 3. Find One and send data to frontend to Edit relevant things belongs provided entity {} id
+     */
     String edit(I id, Model model);
 
+    /**
+     * 4. Save and Update {} data using relevant entity belongs to model Attribute
+     */
+    String persist(@Valid @ModelAttribute E e, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model);
+
+    /**
+     * 5. Remove One relevant things belongs provided entity {} id
+     */
     String delete(I id, Model model);
 
-    String view(I id, Model model);
 }

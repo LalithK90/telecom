@@ -1,9 +1,10 @@
 package lk.crystal.asset.payment.service;
 
 
+import lk.crystal.asset.common_asset.model.enums.LiveDead;
 import lk.crystal.asset.payment.dao.PaymentDao;
 import lk.crystal.asset.payment.entity.Payment;
-import lk.crystal.asset.purchaseOrder.entity.PurchaseOrder;
+import lk.crystal.asset.purchase_order.entity.PurchaseOrder;
 import lk.crystal.util.interfaces.AbstractService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -28,13 +29,17 @@ public class PaymentService implements AbstractService< Payment, Integer > {
     }
 
     public Payment persist(Payment payment) {
+        if(payment.getId()==null){
+            payment.setLiveDead(LiveDead.ACTIVE);}
         return paymentDao.save(payment);
     }
 
     public boolean delete(Integer id) {
+        Payment payment =  paymentDao.getOne(id);
+        payment.setLiveDead(LiveDead.STOP);
+        paymentDao.save(payment);
         return false;
     }
-
     public List< Payment > search(Payment payment) {
         ExampleMatcher matcher = ExampleMatcher
                 .matching()

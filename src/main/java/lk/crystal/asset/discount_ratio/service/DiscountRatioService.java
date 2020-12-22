@@ -1,11 +1,9 @@
 package lk.crystal.asset.discount_ratio.service;
 
 
-
-
+import lk.crystal.asset.common_asset.model.enums.LiveDead;
 import lk.crystal.asset.discount_ratio.dao.DiscountRatioDao;
 import lk.crystal.asset.discount_ratio.entity.DiscountRatio;
-import lk.crystal.asset.discount_ratio.entity.enums.DiscountRatioStatus;
 import lk.crystal.util.interfaces.AbstractService;
 import org.springframework.stereotype.Service;
 
@@ -29,12 +27,15 @@ private final DiscountRatioDao discountRatioDao;
 
     public DiscountRatio persist(DiscountRatio discountRatio) {
         if ( discountRatio.getId() == null ){
-            discountRatio.setDiscountRatioStatus(DiscountRatioStatus.ACTIVE);
+            discountRatio.setLiveDead(LiveDead.ACTIVE);
         }
         return discountRatioDao.save(discountRatio);
     }
 
     public boolean delete(Integer id) {
+        DiscountRatio discountRatio =  discountRatioDao.getOne(id);
+        discountRatio.setLiveDead(LiveDead.STOP);
+        discountRatioDao.save(discountRatio);
         return false;
     }
 

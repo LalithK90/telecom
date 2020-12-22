@@ -1,6 +1,6 @@
 package lk.crystal.asset.user_management;
 
-import lk.crystal.asset.user_management.entity.User;
+import lk.crystal.asset.user_management.user.entity.User;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +8,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import java.util.Collection;
 import java.util.stream.Collectors;

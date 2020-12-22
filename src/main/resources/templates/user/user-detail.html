@@ -30,7 +30,7 @@
         </div>
     </div>
 </div>
-<div class="container-fluid ">
+<div class="container-fluid bg-dark formBorder">
     <div class="row">
         <!--Left Side-->
         <div class="form-group col-md-6 col-sm-6 text-left flex-column">
@@ -99,9 +99,8 @@
     </div>
 </div>
 
-<!--footer include-->
-<footer id="footer" class="page-footer"></footer>
+<div  th:replace="~{fragments/footer :: footerFragment}"></div>
 <!--script include-->
-<script id="script"></script>
+<div th:replace="~{fragments/script :: scriptFragment}"></div>
 </body>
 </html>

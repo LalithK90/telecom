@@ -1,6 +1,5 @@
 package lk.crystal;
 
-
 import lk.crystal.asset.common_asset.model.enums.CivilStatus;
 import lk.crystal.asset.common_asset.model.enums.Gender;
 import lk.crystal.asset.common_asset.model.enums.Title;
@@ -8,16 +7,17 @@ import lk.crystal.asset.employee.entity.Employee;
 import lk.crystal.asset.employee.entity.enums.Designation;
 import lk.crystal.asset.employee.entity.enums.EmployeeStatus;
 import lk.crystal.asset.employee.service.EmployeeService;
-import lk.crystal.asset.user_management.entity.Role;
-import lk.crystal.asset.user_management.entity.User;
-import lk.crystal.asset.user_management.service.RoleService;
-import lk.crystal.asset.user_management.service.UserService;
+import lk.crystal.asset.user_management.role.entity.Role;
+import lk.crystal.asset.user_management.user.entity.User;
+import lk.crystal.asset.user_management.role.service.RoleService;
+import lk.crystal.asset.user_management.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.util.stream.Collectors;
+
 @RestController
 public class ApplicationCreateRestController {
     private final RoleService roleService;
@@ -45,14 +45,14 @@ public class ApplicationCreateRestController {
 
 //Employee
         Employee employee = new Employee();
+        employee.setCode("11111111");
         employee.setName("Admin User");
         employee.setCallingName("Admin");
-        employee.setName("901142122V");
-        employee.setMobileOne("0717130052");
-        employee.setMobileTwo("0760870052");
-        employee.setTitle((Title) Title.Mr);
+        employee.setName("908670000V");
+        employee.setMobileOne("0750000000");
+        employee.setTitle(Title.MR);
         employee.setGender(Gender.MALE);
-        employee.setDesignation(Designation.LA);
+        employee.setDesignation(Designation.ADMIN);
         employee.setCivilStatus(CivilStatus.UNMARRIED);
         employee.setEmployeeStatus(EmployeeStatus.WORKING);
         employee.setDateOfBirth(LocalDate.now().minusYears(18));
@@ -68,9 +68,9 @@ public class ApplicationCreateRestController {
         String message = "Username:- " + user.getUsername() + "\n Password:- " + user.getPassword();
         user.setEnabled(true);
         user.setRoles(roleService.findAll()
-                              .stream()
-                              .filter(role -> role.getRoleName().equals("ADMIN"))
-                              .collect(Collectors.toList()));
+                .stream()
+                .filter(role -> role.getRoleName().equals("ADMIN"))
+                .collect(Collectors.toList()));
         userService.persist(user);
 
         return message;

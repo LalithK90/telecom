@@ -28,7 +28,7 @@
         </div>
     </div>
 </div>
-<div class="container-fluid ">
+<div class="container-fluid bg-dark formBorder">
     <div class="col-sm-12 flex-column ">
         <form id="form" class="form-horizontal" method="POST" th:action="${addStatus==true?'/role/add':'/role/update'}"
               th:object="${role}">
@@ -69,10 +69,9 @@
         </form>
     </div>
 </div>
-<!--footer include-->
-<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+<div  th:replace="~{fragments/footer :: footerFragment}"></div>
 <!--script include-->
-<script th:replace="~{fragments/script :: scriptFragment}"></script>
+<div th:replace="~{fragments/script :: scriptFragment}"></div>
 
 </body>
 </html>

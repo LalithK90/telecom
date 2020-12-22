@@ -1,5 +1,6 @@
 package lk.crystal.configuration;
 
+
 import lk.crystal.asset.user_management.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,61 +20,69 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final String[] ALL_PERMIT_URL = {"/favicon.ico", "/img/**", "/css/**", "/js/**", "/webjars/**",
-            "/login", "/select/**", "/", "/index"};
+  private final String[] ALL_PERMIT_URL = {"/favicon.ico", "/img/**", "/css/**", "/js/**", "/webjars/**",
+      "/login", "/select/**", "/", "/index"};
+  private final String[] ADMIN = {"/category/**"};
+  private final String[] MANAGER = {"/category/**"};
+  private final String[] PROCUMENT_MANAGER = {"/category/**"};
+  private final String[] HR_MANAGER = {"/employee/**"};
+  private final String[] CASHIER = {""};
 
-    @Bean
-    public UserDetailsServiceImpl userDetailsService() {
-        return new UserDetailsServiceImpl();
-    }
+  @Bean
+  public UserDetailsServiceImpl userDetailsService() {
+    return new UserDetailsServiceImpl();
+  }
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  @Bean
+  public BCryptPasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService());
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
+  @Bean
+  public DaoAuthenticationProvider authenticationProvider() {
+    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+    authProvider.setUserDetailsService(userDetailsService());
+    authProvider.setPasswordEncoder(passwordEncoder());
+    return authProvider;
+  }
 
-    /*Session management - bean start*/
-    @Bean
-    public HttpSessionEventPublisher httpSessionEventPublisher() {
-        return new HttpSessionEventPublisher();
-    }
+  /*Session management - bean start*/
+  @Bean
+  public HttpSessionEventPublisher httpSessionEventPublisher() {
+    return new HttpSessionEventPublisher();
+  }
 
-    @Bean
-    public SessionRegistry sessionRegistry() {
-        return new SessionRegistryImpl();
-    }
-    /*Session management - bean end*/
+  @Bean
+  public SessionRegistry sessionRegistry() {
+    return new SessionRegistryImpl();
+  }
+  /*Session management - bean end*/
 
-    @Bean
-    public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
-        return new CustomAuthenticationSuccessHandler();
-    }
+  @Bean
+  public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
+    return new CustomAuthenticationSuccessHandler();
+  }
 
-    @Bean
-    public LogoutSuccessHandler customLogoutSuccessHandler() {
-        return new CustomLogoutSuccessHandler();
-    }
+  @Bean
+  public LogoutSuccessHandler customLogoutSuccessHandler() {
+    return new CustomLogoutSuccessHandler();
+  }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(authenticationProvider());
-    }
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) {
+    auth.authenticationProvider(authenticationProvider());
+  }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-            http.authorizeRequests().antMatchers("/").permitAll();
-        // For developing easy to give permission all lin
-    /*   http
-                .authorizeRequests(
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.csrf().disable();
+    http.authorizeRequests().antMatchers("/").permitAll();
+
+    // For developing easy to give permission all lin
+
+/*
+
+        http.authorizeRequests(
                         authorizeRequests ->
                                 authorizeRequests
                                         //Anytime users can access without login
@@ -82,12 +91,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                         //this is used the normal admin to give access every url mapping
                                         .antMatchers("/employee").hasRole("ADMIN")
                                         //Need to login for access those are
-                                        .antMatchers("/employee/**").hasRole("ADMIN")
-                                        .antMatchers("/employee1/**").hasRole("MANAGER")
-                                        .antMatchers("/user/**").hasRole("ADMIN")
-                                        .antMatchers("/petition/**").hasRole("ADMIN")
-                                        .antMatchers("/minutePetition/**").hasRole("MANAGER")
-                                        .antMatchers("/invoiceProcess/add").hasRole("CASHIER")
+                                     .antMatchers("/employee/**").hasRole("ADMIN")
+                                           .antMatchers("/employee1/**").hasRole("MANAGER")
+                                           .antMatchers("/user/**").hasRole("ADMIN")
+                                           .antMatchers("/petition/**").hasRole("ADMIN")
+                                           .antMatchers("/minutePetition/**").hasRole("MANAGER")
+                                           .antMatchers("/invoiceProcess/add").hasRole("CASHIER")
                                         .anyRequest()
                                         .authenticated())
                 // Login form
@@ -100,8 +109,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                         .usernameParameter("username")
                                         .passwordParameter("password")
                                         .successHandler(customAuthenticationSuccessHandler())
-                                        .failureUrl("/login")
-                )
+                                        .failureUrl("/login?error")
+                          )
                 //Logout controlling
                 .logout(
                         logout ->
@@ -118,12 +127,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                         .sessionFixation().migrateSession()
                                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                                         .invalidSessionUrl("/login")
-                                        .maximumSessions(1)
-                                        .expiredUrl("/login")
+                                        .maximumSessions(6)
+                                        .expiredUrl("/logout")
                                         .sessionRegistry(sessionRegistry()))
                 //Cross site disable
                 .csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling();
-  */  }
+*/
+
+  }
 }
 

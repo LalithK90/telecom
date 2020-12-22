@@ -1,11 +1,12 @@
 package lk.crystal.asset.supplier_item.service;
 
 
+import lk.crystal.asset.common_asset.model.enums.LiveDead;
 import lk.crystal.asset.item.entity.Item;
 import lk.crystal.asset.supplier.entity.Supplier;
 import lk.crystal.asset.supplier_item.dao.SupplierItemDao;
-import lk.crystal.asset.supplier_item.entity.enums.ItemSupplierStatus;
 import lk.crystal.asset.supplier_item.entity.SupplierItem;
+import lk.crystal.asset.supplier_item.entity.enums.ItemSupplierStatus;
 import lk.crystal.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -37,6 +38,7 @@ public class SupplierItemService implements AbstractService< SupplierItem, Integ
     public SupplierItem persist(SupplierItem supplierItem) {
         //if item is new supplier should be save as currently buying item
         if ( supplierItem.getId() == null ) {
+            supplierItem.setLiveDead(LiveDead.ACTIVE);
             supplierItem.setItemSupplierStatus(ItemSupplierStatus.CURRENTLY_BUYING);
         }
         //if item buying price was changed (increase/decrease) by supplier,
@@ -56,8 +58,10 @@ public class SupplierItemService implements AbstractService< SupplierItem, Integ
     }
 
     public boolean delete(Integer id) {
-        supplierItemDao.deleteById(id);
-        return true;
+        SupplierItem supplierItem =  supplierItemDao.getOne(id);
+        supplierItem.setLiveDead(LiveDead.STOP);
+        supplierItemDao.save(supplierItem);
+        return false;
     }
 
     public List< SupplierItem > search(SupplierItem supplierItem) {

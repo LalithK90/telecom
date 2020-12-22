@@ -8,7 +8,7 @@
 <nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
 
 <!--heading Area-->
-<div class="container-fluid bg-dark form-Border">
+<div class="container-fluid ">
     <div class="row text-center formManagement border-info">
         <!--ViewList Button-->
         <div class="col">
@@ -33,7 +33,7 @@
     </div>
 </div>
 <!--details-->
-<div th:fragment="customerDetailsFragment" class="container-fluid ">
+<div th:fragment="customerDetailsFragment" class="container-fluid bg-dark formBorder">
     <div class="col-sm-12 flex-column ">
         <div class="row">
             <!--Left Side-->
@@ -153,8 +153,7 @@
         </button>
     </a>
 </div>
-<!--footer include-->
-<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+<div  th:replace="~{fragments/footer :: footerFragment}"></div>
 <!--script include-->
 <script th:replace="~{fragments/script :: scriptFragment}"></script>
 

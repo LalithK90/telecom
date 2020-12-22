@@ -12,29 +12,31 @@ public class MakeAutoGenerateNumberService {
     }
 
     public Integer numberAutoGen(String lastNumber) {
-        System.out.println("last number "+lastNumber);
         int newNumber;
         int previousNumber;
         int newNumberFirstTwoCharacters;
 
         int currentYearLastTwoNumber =
                 Integer.parseInt(String.valueOf(dateTimeAgeService.getCurrentDate().getYear()).substring(2, 4));
-
-        if ( lastNumber != null) {
-            previousNumber = Integer.parseInt(lastNumber.substring(0, 6));
+//if it has own number
+        if (lastNumber != null) {
+            previousNumber = Integer.parseInt(lastNumber);
+            //first two digits of last record
             newNumberFirstTwoCharacters = Integer.parseInt(lastNumber.substring(0, 2));
-
-            if ( currentYearLastTwoNumber == newNumberFirstTwoCharacters ) {
+//if first two number is equal
+            if (currentYearLastTwoNumber == newNumberFirstTwoCharacters) {
                 newNumber = previousNumber + 1;
             } else {
-                newNumber = previousNumber + 10000;
+                newNumber = Integer.parseInt(currentYearLastTwoNumber + "0000");
             }
-        } else {
+        }
+        // if it has not own last number
+        else {
             newNumber = Integer.parseInt(currentYearLastTwoNumber + "0000");
         }
+        System.out.println("new number "+ newNumber);
         return newNumber;
     }
-
     // phone number length validator
     public String phoneNumberLengthValidator(String number) {
         if ( number.length() == 9 ) {

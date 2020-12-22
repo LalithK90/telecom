@@ -1,6 +1,5 @@
 package lk.crystal.asset.common_asset.model.enums;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,6 +9,5 @@ public enum Gender {
     MALE("Male"),
     FEMALE("Female");
 
- private final String gender;
-
+    private final String gender;
 }

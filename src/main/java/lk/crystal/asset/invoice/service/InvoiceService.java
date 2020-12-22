@@ -1,5 +1,6 @@
 package lk.crystal.asset.invoice.service;
 
+import lk.crystal.asset.common_asset.model.enums.LiveDead;
 import lk.crystal.asset.invoice.dao.InvoiceDao;
 import lk.crystal.asset.invoice.entity.Invoice;
 import lk.crystal.util.interfaces.AbstractService;
@@ -28,13 +29,17 @@ public class InvoiceService implements AbstractService< Invoice, Integer > {
     }
 
     public Invoice persist(Invoice invoice) {
+        if(invoice.getId()==null){
+            invoice.setLiveDead(LiveDead.ACTIVE);}
         return invoiceDao.save(invoice);
     }
 
     public boolean delete(Integer id) {
+        Invoice invoice =  invoiceDao.getOne(id);
+        invoice.setLiveDead(LiveDead.STOP);
+        invoiceDao.save(invoice);
         return false;
     }
-
     public List< Invoice > search(Invoice invoice) {
         ExampleMatcher matcher = ExampleMatcher
                 .matching()

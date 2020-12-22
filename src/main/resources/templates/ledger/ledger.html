@@ -1,115 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
-<!--/* Styles, meta data, and title are included */-->
-<head data-th-replace="~{fragments/header :: headerFragment}">
-    <meta charset="UTF-8">
-    <title>Thymeleaf Springboot </title>
-</head>
-<body class="sb-nav-fixed">
-<!--/* Nav bar is included */-->
-<nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
-<div id="layoutSidenav">
-    <div th:replace="~{fragments/sideNav :: sideNavFragment}">
-    </div>
-    <div id="layoutSidenav_content">
-        <main>
-            <div class="container mt-3">
-                <div class="row">
-                    <!--Custom Invoice search-->
-                    <button type="button" class="btn btn-info mb-5 btn-block text-capitalize" data-toggle="collapse"
-                            data-target="#dataTargetCollapse" data-th-text="${message}"
-                            aria-expanded="false" aria-controls="dataTargetCollapse"
-                    >
-                    </button>
-                    <div class="collapse container-fluid" id="dataTargetCollapse">
-                        <h4 class="text-info"><b> Custom Search</b></h4>
-                        <div class="container-fluid mx-auto">
-                            <form class="form" data-th-action="@{/invoice/search}" data-th-method="POST">
-                                <div class="form-row">
-                                    <div class="col-md-4 form-row">
-                                        <div class="col-md-4">
-                                            <label for="startDate">FROM :</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input class="form-control" id="startDate" name="startDate" type="date"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 form-row">
-                                        <div class="col-md-4">
-                                            <label for="endDate">TO :</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input class="form-control" id="endDate" name="endDate" type="date"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 form-row">
-                                        <button class="btn btn-success" id="btnSummaryFind" type="submit"><span
-                                                class="glyphicon glyphicon-search"></span>&nbsp;Search
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!--List all invoice-->
-                <div class="row">
-                    <div class="col mt-4">
-                        <table class="table table-hover" id="myTable">
-                            <thead>
-                            <tr>
-                                <th>Index</th>
-                                <th>Item Name</th>
-                                <th> Quantity</th>
-                                <th> Sell Price</th>
-                                <th> M Date</th>
-                                <th> E Date</th>
-                                <th>View</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr data-th-each="ledger, rowCount : ${ledgers}">
-                                <th data-th-text="${rowCount.count}"></th>
-                                <th data-th-text="${ledger.item.name}"></th>
-                                <th data-th-text="${ledger.quantity}"></th>
-                                <th data-th-text="${ledger.sellPrice}"></th>
-                                <th data-th-text="${ledger.manufactureDate}"></th>
-                                <th data-th-text="${ledger.expiredDate}"></th>
-                                <th><a class="btn btn-success" data-th-href="${'/item/'+ ledger.item.id}"><i
-                                        class="fa fa-folder-open"></i>&nbsp;View Item</a>&nbsp;
-                                </th>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </main>
-        <!--/* footer is */-->
-        <footer data-th-replace="~{fragments/footer :: footerFragment}"></footer>
-        <!--/* script is included */-->
-        <script data-th-replace="~{fragments/script :: scriptFragment}"></script>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >item</title >
+</head >
+<body >
+<nav th:replace="~{fragments/navBar :: navBarFragment}" ></nav >
 
-        <script>
-            $(document).ready(function () {
-                let startDate = $('#startDate').val();
-                let endDate = $('#endDate').val();
-                let nowTime = new Date().toDateString();
+<!--heading Area-->
+<div class="container-fluid " >
+  <div class="row text-center formManagement border-info" >
+    <!-- New Item Button-->
+    <div class="col" >
+      <a class="btn btn-success" href="/supplier" tabindex="1" ><i class="fas fa-plus" style="font-size: 20px" ></i >&nbsp;&nbsp;Supplier
+                                                                                                                     Lis</a >&nbsp;
+    </div >
+    <!-- List Name-->
+    <div class="col" >
+      <h2 class="text-white text-center" >
+        <strong >
+          <span data-th-text="${title}" ></span >
+        </strong >
+      </h2 >
+    </div >
+    <!-- Home Button-->
+    <div class="col" >
+      <a href="/home" id="searchShow" class="btn btn-primary" tabindex="2" >
+        <!--<i class="fa fa-user " style="font-size: 20px"></i>&nbsp;Add&nbsp;-->
+        <i class="fas fa-home" style="font-size: 20px" ></i >&nbsp;&nbsp;Home
+        &nbsp;
+      </a >
+    </div >
+  </div >
+</div >
 
-                if (startDate !== "" && endDate !== "") {
-                    if (Date.parse(endDate) > Date.parse(startDate) && Date.parse(nowTime) > Date.parse(startDate) &&
-                        Date.parse(nowTime) > Date.parse(endDate)) {
-                        swal({
-                            title: "Could you accept those days.. !",
-                            icon: "warning",
-                            text: "Please check your entered date \n",
-                        })
-                        $('#endDate').val(startDate);
-                    }
+<div class="container-fluid bg-info formBorder text-center" >
+
+  <div class="row" >
+    <div class="col-3" >
+      <a href="/ledger/reorderPoint" >
+        <button class="btn btn-primary" >Re Order Point Achieved</button >
+      </a >
+    </div >
+    <form action="/ledger/expiredDate" method="post" >
+      <div class="col-3" >
+        <label class="control-label" > Since :
+          <input type="date" class="form-control" name="startDate" id="startDate" required >
+        </label >
+      </div >
+      <div class="col-3" >
+        <label class="control-label" > To :
+          <input type="date" class="form-control" name="endDate" id="endDate" required >
+        </label >
+      </div >
+      <div class="col-3" >
+        <button type="submit" class="btn btn-success" > Send</button >
+      </div >
+    </form >
+  </div >
+</div >
+<div class="container-fluid bg-info formBorder text-center" >
+  <!--Table view-->
+  <div class="col" th:if="${not #lists.isEmpty(ledgers)}" >
+    <div class="col" id="itemListPresent" >
+      <table class="table table-hover table-striped" id="myTable" >
+        <thead >
+        <tr >
+          <th > Index</th >
+          <th > Item Name</th >
+          <th > ROP</th >
+          <th > Quantity</th >
+          <th > Price</th >
+          <th > M Date</th >
+          <th > E Date</th >
+          <th > Modify</th >
+        </tr >
+        </thead >
+        <tbody >
+        <tr th:each="ledger, rowCount : ${ledgers}" >
+          <th th:text="${rowCount.count}" ></th >
+          <th th:text="${ledger.item.name}" ></th >
+          <th th:text="${ledger.item.rop}" ></th >
+          <th th:text="${ledger.quantity}" ></th >
+          <th th:text="${ledger.sellPrice}" ></th >
+          <th th:text="${ledger.manufactureDate}" ></th >
+          <th th:text="${ledger.expiredDate}" ></th >
+          <th >
+            <a th:href="${'/purchaseOrder/supplier/' + ledger.goodReceivedNote.purchaseOrder.supplier.id}"
+               class="btn btn-primary btn-sm" ><i
+                  class="fa fa-folder-open" style="font-size: 15px" ></i >Purchase Order</a >
+          </th >
+        </tr >
+        </tbody >
+      </table >
+    </div >
+  </div >
+  <!--Error-->
+  <div class="row" th:if="${ #lists.isEmpty(ledgers)}" >
+    <div class="col-sm-12" >
+      <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
+          <span aria-hidden="true" >&times;</span >
+        </button >
+        <h3 class="text-center text-danger" >
+          <strong >There is no item upto now please add item to the system using "New" button.</strong >
+        </h3 >
+      </div >
+    </div >
+  </div >
+</div >
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+
+<script >
+    $("#startDate, #endDate").bind('keyup',
+        function () {
+            let manufactureDate = $(`#startDate`).val();
+            let expiredDate = $(`#endDate`).val();
+
+            if (manufactureDate !== "" && expiredDate !== "") {
+                if (Date.parse(manufactureDate) > Date.parse(expiredDate)) {
+                    swal({
+                        title: "Could you accept those days.. !",
+                        icon: "warning",
+                        text: "Please check your date \n Expire Date can not be less than Manufacture Date",
+                    })
+                    $(`#endDate`).val($(`#startDate`).val());
                 }
-            });
-        </script>
-    </div>
-</div>
-</body>
-</html>
+            }
+        });
+
+    $(".alert").alert();
+</script >
+</body >
+</html >

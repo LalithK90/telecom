@@ -1,5 +1,6 @@
 package lk.crystal.asset.item.service;
 
+import lk.crystal.asset.common_asset.model.enums.LiveDead;
 import lk.crystal.asset.item.dao.ItemDao;
 import lk.crystal.asset.item.entity.Item;
 import lk.crystal.util.interfaces.AbstractService;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Service
 @CacheConfig( cacheNames = "item" )
-public class ItemService implements AbstractService< Item, Integer> {
+public class ItemService implements AbstractService<Item, Integer> {
     private final ItemDao itemDao;
 
     @Autowired
@@ -30,11 +31,15 @@ public class ItemService implements AbstractService< Item, Integer> {
     }
 
     public Item persist(Item item) {
+        if(item.getId()==null){
+            item.setLiveDead(LiveDead.ACTIVE);}
         return itemDao.save(item);
     }
 
     public boolean delete(Integer id) {
-        itemDao.deleteById(id);
+        Item item =  itemDao.getOne(id);
+        item.setLiveDead(LiveDead.STOP);
+        itemDao.save(item);
         return false;
     }
 

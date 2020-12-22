@@ -1,7 +1,7 @@
 package lk.crystal.asset.supplier_item.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonFilter;
+import lk.crystal.asset.common_asset.model.enums.LiveDead;
 import lk.crystal.asset.item.entity.Item;
 import lk.crystal.asset.supplier.entity.Supplier;
 import lk.crystal.asset.supplier_item.entity.enums.ItemSupplierStatus;
@@ -27,6 +27,9 @@ public class SupplierItem extends AuditEntity {
 
     @Enumerated(EnumType.STRING)
     private ItemSupplierStatus itemSupplierStatus;
+
+    @Enumerated(EnumType.STRING)
+    private LiveDead liveDead;
 
     @ManyToOne
     private Item item;

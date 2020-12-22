@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head data-th-replace="~{fragments/header :: headerFragment}">
+<head th:replace="~{fragments/header :: headerFragment}">
     <meta charset="UTF-8">
     <title>Thymeleaf Springboot </title>
 </head>
 <body>
-<nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
+<nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
 
 <!--Page header -->
 <div class="container-fluid bg-secondary form-Border">
@@ -18,7 +18,7 @@
         <div class="col">
             <h4 class="text-light text-center">
                 <strong>
-                    <span id="formHeader" data-th-text="${addStatus==true?'New User':'Update User'}"></span>
+                    <span id="formHeader" th:text="${addStatus==true?'New User':'Update User'}"></span>
                 </strong>
             </h4>
         </div>
@@ -30,9 +30,9 @@
     </div>
 </div>
 <!--Employee find-->
-<div class="container-fluid " id="employeeFindForm" data-th-if="${employeeDetailShow==false}">
+<div class="container-fluid bg-dark formBorder" id="employeeFindForm" th:if="${employeeDetailShow==false}">
     <div class="col-sm-12 flex-column ">
-        <form id="form" method="POST" data-th-action="${'/user/workingPlace'}" data-th-object="${employee}"
+        <form id="form" method="POST" th:action="${'/user/workingPlace'}" th:object="${employee}"
               enctype="multipart/form-data">
             <div class="form-row">
                 <div class="col-5 flex-column">
@@ -81,30 +81,30 @@
     </div>
 </div>
 <!--Employee not fount message-->
-<div id="employeeNotFoundShow" data-th-if="${employeeNotFoundShow==true}"
+<div id="employeeNotFoundShow" th:if="${employeeNotFoundShow==true}"
      class="alert alert-warning alert-dismissible fade show text-center" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
-    <strong><span id="employeeNotFound" data-th-text="${employeeNotFound}"></span></strong>
+    <strong><span id="employeeNotFound" th:text="${employeeNotFound}"></span></strong>
     <script>
         $(".alert").alert();
     </script>
 </div>
 
 <!--User add from-->
-<div class="container-fluid " data-th-if="${employeeDetailShow==true}" id="userFormShow">
-    <form id="formUser" data-th-action="${addStatus==true?'/user/add':'/user/update'}" data-th-object="${user}"
+<div class="container-fluid bg-dark formBorder" th:if="${employeeDetailShow==true}" id="userFormShow">
+    <form id="formUser" th:action="${addStatus==true?'/user/add':'/user/update'}" th:object="${user}"
           class="form-horizontal" method="POST" autocomplete="false">
         <div class="row">
             <!--Left Side-->
             <div class="form-group col-md-5 col-sm-7 text-left flex-column">
-                <div id="idHide" data-th-if="${addStatus==false}" class="form-row">
+                <div id="idHide" th:if="${addStatus==false}" class="form-row">
                     <div class="col-md-4">
                         <label class="control-label" for="id">ID :</label>
                     </div>
                     <div class="col-md-8">
-                        <input class="form-control" data-th-field="*{id}" id="id" type="text" readonly/>
+                        <input class="form-control" th:field="*{id}" id="id" type="text" readonly/>
                     </div>
                 </div>
                 <!--Employee details Display-->
@@ -113,19 +113,19 @@
                         <label class="control-label" for="employee">Employee :</label>
                     </div>
                     <div class="col-md-8">
-                        <select class="form-control" data-th-field="*{employee}" data-th-each="e : ${employee}" name="employee"
+                        <select class="form-control" th:field="*{employee}" th:each="e : ${employee}" name="employee"
                                 id="employee" required>
                             <option id="employeeList"
-                                    data-th-text="${e.title.title} + ${' '} + ${e.name} +${' - '} + ${e.nic}"
-                                    data-th-value="${e.id}"
-                                    data-th-field="*{employee}" value="">Please select
+                                    th:text="${e.title.title} + ${' '} + ${e.name} +${' - '} + ${e.nic}"
+                                    th:value="${e.id}"
+                                    th:field="*{employee}" value="">Please select
                             </option>
                         </select>
-                        <div id="employeeNameBox" data-th-if="${addStatus==false}">
+                        <div id="employeeNameBox" th:if="${addStatus==false}">
                             <strong>
                                 <span id="employeeName"
-                                      data-th-text="${user.employee.title.title} + ${' '} + ${user.employee.name} +${' - '} + ${user.employee.nic}"></span>
-                                <input type="hidden" id="employeeSelected" data-th-field="*{employee}">
+                                      th:text="${user.employee.title.title} + ${' '} + ${user.employee.name} +${' - '} + ${user.employee.nic}"></span>
+                                <input type="hidden" id="employeeSelected" th:field="*{employee}">
                             </strong>
                         </div>
                     </div>
@@ -134,7 +134,7 @@
                 <div class="form-row">
                     <label class="control-label col-md-4" for="username">User Name :</label>
                     <div class="col-md-8">
-                        <input class="form-control" data-th-field="*{username}" id="username"
+                        <input class="form-control" th:field="*{username}" id="username"
                                placeholder="Enter User Name Here" required type="text"/>
                     </div>
                 </div>
@@ -142,20 +142,12 @@
                 <div class="form-row">
                     <label class="control-label col-md-4" for="password">Password :</label>
                     <div class="col-md-8">
-                        <input class="form-control pwd" id="password" data-th-field="*{password}"
+                        <input class="form-control pwd" id="password" th:field="*{password}"
                                placeholder="Enter Password Here" required type="password" min="6"
                         />
                         <div class="text-right">
                             <span id="result"></span>
                         </div>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-row alert alert-danger text-center">
-                        <strong>Attention !</strong>
-                        If Employee is belong to supper senior category.
-                        <strong>Please select one or two work station </strong>.
                     </div>
                 </div>
             </div>
@@ -164,11 +156,11 @@
                 <!--Roles Display-->
                 <div class="form-row">
                     <label class="control-label" for="roles">Roles :</label>
-                    <select id="roles" data-th-field="*{roles}" class="form-control" size="16" multiple required>
-                        <option id="roleList" data-th-each="role, rowCount : ${roleList}"
-                                data-th-text="${rowCount.count} +${'. '}+${role.roleName}"
-                                data-th-value="${role.id}"
-                                data-th-field="*{roles}" value=""></option>
+                    <select id="roles" th:field="*{roles}" class="form-control" size="6" multiple required>
+                        <option id="roleList" th:each="role, rowCount : ${roleList}"
+                                th:text="${rowCount.count} +${'. '}+${role.roleName}"
+                                th:value="${role.id}"
+                                th:field="*{roles}" value=""></option>
                     </select>
                 </div>
             </div>
@@ -177,15 +169,15 @@
             <div class="form-group col-md-12 col-sm-12 text-center flex-column">
                 <button class="btn btn-success" type="submit">
                     <i class="fa fa-save" style="font-size: 20px"></i>&nbsp; &nbsp;<span
-                        id="submit" data-th-text="${addStatus==true?'Save': 'Update'}">                        </span>
+                        id="submit" th:text="${addStatus==true?'Save': 'Update'}">                        </span>
                 </button>
             </div>
         </div>
         <!--Error-->
         <div class="form-row">
-            <label id="errorLabel" data-th-if="${#fields.hasErrors('*')}" data-th-text="'Errors: '">Errors: </label>
+            <label id="errorLabel" th:if="${#fields.hasErrors('*')}" th:text="'Errors: '">Errors: </label>
             <ul>
-                <li id="errorDisplay" class="error" data-th-each="err: ${#fields.errors('*')}" data-th-text="${err}"></li>
+                <li id="errorDisplay" class="error" th:each="err: ${#fields.errors('*')}" th:text="${err}"></li>
             </ul>
         </div>
     </form>
@@ -193,10 +185,9 @@
 
 </div>
 
-<!--footer include-->
-<footer data-th-replace="~{fragments/footer :: footerFragment}"></footer>
+<div  th:replace="~{fragments/footer :: footerFragment}"></div>
 <!--script include-->
-<script data-th-replace="~{fragments/script :: scriptFragment}"></script>
+<script th:replace="~{fragments/script :: scriptFragment}"></script>
 
 
 </body>
