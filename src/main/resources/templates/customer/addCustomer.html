@@ -7,7 +7,7 @@
 <body>
 <nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
 <!--Heading Area-->
-<div class="container-fluid bg-dark form-Border">
+<div class="container-fluid ">
     <div class="row text-center formManagement border-info">
         <!--ViewList Button-->
         <div class="col">
@@ -32,7 +32,7 @@
     </div>
 </div>
 <!--Form Content-->
-<div class="container-fluid ">
+<div class="container-fluid bg-dark formBorder">
     <div class="col-sm-12 flex-column ">
         <form id="form" class="form-horizontal" th:action="${addStatus==true?'/customer/save':'/customer/update'}"
               th:object="${customer}" method="POST" enctype="multipart/form-data">
@@ -46,6 +46,7 @@
                         </div>
                         <div class="col-md-8">
                             <input id="id" th:field="*{id}" class="form-control" type="text" readonly/>
+                            <input type="text" data-th-field="*{liveOrDead}" hidden>
                         </div>
                         <div class="col-md-4">
                             <label class="control-label" for="code">Customer Code :</label>
@@ -176,8 +177,7 @@
         </form>
     </div>
 </div>
-<!--footer include-->
-<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+<div  th:replace="~{fragments/footer :: footerFragment}"></div>
 <!--script include-->
 <script th:replace="~{fragments/script :: scriptFragment}"></script>
 

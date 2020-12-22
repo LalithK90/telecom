@@ -14,22 +14,33 @@ $(document).ready(function () {
 
 
     /*//--------------- data table short using - data table plugin ------- start //*/
-    $("#myTable").DataTable({
-        "lengthMenu": [[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]],
-        "ordering": false,
-        stateSave: true,
-    });
+    if ($("#myTable").val() !== null || $("#myTable").val() === undefined) {
+        $("#myTable").DataTable({
+            "lengthMenu": [[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]],
+            "ordering": false,
+            stateSave: true,
+        });
+    }
     /*//--------------- data table short using - data table plugin ------- start //*/
 
-    /* Patient and employee Nic Validation - start*/
-    $("#nic").bind('keyup', function () {
-        let nic = $(this).val();
-        $("#dateOfBirth").val(calculateDateOfBirth(nic));
-        $("#gender").val(calculateGender(nic));
-    });
-    /* Patient and employee Nic Validation - end*/
+    /*When edit employee if there is a nic number need to select relevant gender*/
+    if ($("#nic").val() !== null || $("#nic").val() !== undefined) {
+        $("input:radio[name=gender]").filter(`[value=${calculateGender($("#nic").val())}]`).prop('checked', true);
+    }
+
+
+        /* Patient and employee Nic Validation - start*/
+        $("#nic").bind('keyup', function () {
+            let nic = $(this).val();
+            $("#dateOfBirth").val(calculateDateOfBirth(nic));
+            //access our front-end gender*/
+            $("input:radio[name=gender]").filter(`[value=${calculateGender(nic)}]`).prop('checked', true);
+
+        });
+        /* Patient and employee Nic Validation - end*/
+
     //input type date can not be selected future date
-    $('.to').prop('max', function () {
+    $('[type="date"]').prop('max', function () {
         return new Date().toJSON().split('T')[0];
     });
 
@@ -38,8 +49,8 @@ $(document).ready(function () {
 
 // regex
 let nicRegex = /^([0-9]{9}[vV|xX])|^([0-9]{12})$/;
-let mobileRegex = /^([0][7][0125678][\d]{7}$)|^([7][0125678][\d]{7})$/;
-let landRegex = /^0((11)|(2(1|[3-7]))|(3[1-8])|(4([157]))|(5([12457]))|(6(3|[5-7]))|([8-9]1))([2-4]|5|7|9)[0-9]{6}$/;
+let mobileRegex = /^([0][7][\d]{8}$)|^([7][\d]{8})$/;
+let landRegex = /^0((11)|(2(1|[3-7]))|(3[1-8])|(4(1|5|7))|(5(1|2|4|5|7))|(6(3|[5-7]))|([8-9]1))([2-4]|5|7|9)[0-9]{6}$/;
 let nameRegex = /^[a-zA-Z .-]{5}[ a-zA-Z.-]+$/;
 let numberRegex = /^([eE][hH][sS][\d]+)$/;
 let invoiceNumberRegex = /^[0-9]{10}$/;
@@ -539,22 +550,6 @@ let deleteAllTableRow = function (tableName) {
     }
 };
 
-/*jquery - ui function*/
-//$( "input" ).checkboxradio;
-
-$(function () {
-    $("#").resizable({
-        autoHide: true,
-        aspectRatio: true,
-        ghost: true,
-    });
-});
-
-//$( ".login" ).draggable();
-//$( "#dateOfBirth" ).datepicker;
-//$( document ).tooltip();
-
-
 //password validator user add
 $('#password').keyup(function () {
     $(this).attr('min', 6);
@@ -632,8 +627,4 @@ $(".reveal").on('click', function () {
     }
 });
 
-/*When edit employee if there is a nic number need to select relevant gender*/
-if ($("#nic").val() !== null || $("#nic").val() === undefined){
-    $("input:radio[name=gender]").filter(`[value=${calculateGender($("#nic").val())}]`).prop('checked',true);
-}
 

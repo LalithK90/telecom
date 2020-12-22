@@ -33,7 +33,7 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/")
-                .setViewName("forward:/login");
+                .setViewName("mainWindow");
         registry.addViewController("/login")
                 .setViewName("login/login");
         registry.addViewController("/mainWindow")
@@ -82,7 +82,7 @@ public class MvcConfig implements WebMvcConfigurer {
     @ControllerAdvice
     public static class ErrorController {
 
-        private Logger logger = LoggerFactory.getLogger(ErrorController.class);
+        private final Logger logger = LoggerFactory.getLogger(ErrorController.class);
 
         @ExceptionHandler( Throwable.class )
         @ResponseStatus( HttpStatus.INTERNAL_SERVER_ERROR )

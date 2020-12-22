@@ -2,8 +2,9 @@ package lk.crystal.asset.payment.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import lk.crystal.asset.common_asset.model.enums.LiveDead;
 import lk.crystal.asset.invoice.entity.enums.PaymentMethod;
-import lk.crystal.asset.purchaseOrder.entity.PurchaseOrder;
+import lk.crystal.asset.purchase_order.entity.PurchaseOrder;
 import lk.crystal.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,6 +31,9 @@ public class Payment extends AuditEntity {
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
+
+    @Enumerated(EnumType.STRING)
+    private LiveDead liveDead;
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal amount;

@@ -1,7 +1,6 @@
 package lk.crystal.asset.common_asset.service;
 
 
-
 import lk.crystal.asset.employee.controller.EmployeeRestController;
 import lk.crystal.asset.item.entity.Item;
 import lk.crystal.asset.item.service.ItemService;
@@ -16,8 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
-import java.util.*;
 
 @Service
 public class CommonService {
@@ -76,8 +75,6 @@ public class CommonService {
     public String purchaseOrder(Supplier supplier, Model model, String htmlFileLocation) {
         List<Supplier> suppliers = commonSupplierSearch(supplier);
 
-        System.out.println(" i am here" + suppliers.size());
-
         model.addAttribute("searchAreaShow", false);
         if (suppliers.size() == 1) {
             model.addAttribute("supplierDetail", suppliers.get(0));
@@ -111,8 +108,8 @@ public class CommonService {
         return mobileTwo;
     }
 
-    public List<Item> activeItemsFromSupplier(Supplier supplier) {
-        List<SupplierItem> supplierItems = supplierItemService.findBySupplierAndItemSupplierStatus(supplier, ItemSupplierStatus.CURRENTLY_BUYING);
+    public List< Item > activeItemsFromSupplier(Supplier supplier) {
+        List< SupplierItem > supplierItems = supplierItemService.findBySupplierAndItemSupplierStatus(supplier, ItemSupplierStatus.CURRENTLY_BUYING);
         List<Item> items = new ArrayList<>();
         for (SupplierItem supplierItem : supplierItems) {
             items.add(supplierItem.getItem());

@@ -1,15 +1,15 @@
 package lk.crystal.asset.payment.controller;
 
 
-import lk.crystal.asset.good_received_note.entity.GoodReceivedNote;
+import lk.crystal.asset.purchase_order.entity.enums.PurchaseOrderStatus;
+import lk.crystal.asset.purchase_order.entity.PurchaseOrder;
+import lk.crystal.asset.purchase_order.service.PurchaseOrderService;
 import lk.crystal.asset.good_received_note.entity.enums.GoodReceivedNoteState;
+import lk.crystal.asset.good_received_note.entity.GoodReceivedNote;
 import lk.crystal.asset.good_received_note.service.GoodReceivedNoteService;
 import lk.crystal.asset.invoice.entity.enums.PaymentMethod;
 import lk.crystal.asset.payment.entity.Payment;
 import lk.crystal.asset.payment.service.PaymentService;
-import lk.crystal.asset.purchaseOrder.entity.Enum.PurchaseOrderStatus;
-import lk.crystal.asset.purchaseOrder.entity.PurchaseOrder;
-import lk.crystal.asset.purchaseOrder.service.PurchaseOrderService;
 import lk.crystal.util.service.MakeAutoGenerateNumberService;
 import lk.crystal.util.service.OperatorService;
 import org.springframework.stereotype.Controller;
@@ -68,6 +68,7 @@ public class PaymentController {
 
             model.addAttribute("purchaseOrders", purchaseOrders);
         }
+        model.addAttribute("addState", true);
         return "payment/payment";
     }
 
@@ -117,11 +118,11 @@ public class PaymentController {
         if ( payment.getId() == null ) {
             if ( paymentService.lastPayment() == null ) {
                 //need to generate new one
-                payment.setCode("JNPM" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
+                payment.setCode("SSMP" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
             } else {
                 //if there is customer in db need to get that customer's code and increase its value
                 String previousCode = paymentService.lastPayment().getCode().substring(4);
-                payment.setCode("JNPM" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
+                payment.setCode("SSMP" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
             }
         }
 

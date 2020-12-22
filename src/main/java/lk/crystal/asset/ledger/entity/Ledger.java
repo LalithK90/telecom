@@ -3,8 +3,9 @@ package lk.crystal.asset.ledger.entity;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lk.crystal.asset.common_asset.model.enums.LiveDead;
 import lk.crystal.asset.good_received_note.entity.GoodReceivedNote;
+import lk.crystal.asset.invoice_item.entity.InvoiceLedger;
 import lk.crystal.asset.item.entity.Item;
 import lk.crystal.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
@@ -13,12 +14,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -40,13 +40,19 @@ public class Ledger extends AuditEntity {
     @DateTimeFormat( pattern = "yyyy-MM-dd" )
     private LocalDate expiredDate;
 
-    @ManyToOne
-    @JsonManagedReference
+    @Enumerated( EnumType.STRING)
+    private LiveDead liveDead;
+
+    @ManyToOne(fetch=FetchType.EAGER)
     private Item item;
 
     @ManyToOne
     @JsonIgnore
     private GoodReceivedNote goodReceivedNote;
+
+
+    @OneToMany(mappedBy = "ledger")
+    private List< InvoiceLedger > invoiceLedgers;
 
 
 }

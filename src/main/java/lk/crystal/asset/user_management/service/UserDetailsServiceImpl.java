@@ -1,8 +1,8 @@
 package lk.crystal.asset.user_management.service;
 
 import lk.crystal.asset.user_management.CustomerUserDetails;
-import lk.crystal.asset.user_management.dao.UserDao;
-import lk.crystal.asset.user_management.entity.User;
+import lk.crystal.asset.user_management.user.dao.UserDao;
+import lk.crystal.asset.user_management.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         User user = userDao.findByUsername(username.toLowerCase());
-       CustomerUserDetails userDetails;
+        CustomerUserDetails userDetails;
         if ( user != null ) {
             userDetails = new CustomerUserDetails();
             userDetails.setUser(user);
