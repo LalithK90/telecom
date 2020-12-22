@@ -1,123 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title></title>
-</head>
-
+<link rel="stylesheet" href="css/styles.css">
 <body>
 
-<nav class="navbar navbar-expand-sm navbar-dark " style="background-color: rgba(85,14,204,0.49);height:60px;"
-     th:fragment="navBarFragment">
-    <a class="navbar-brand" href="#">
 
-        <img data-th-src="${'../img/logo.png'}" style="width:50px;height:50px;" id="logo" class="animated-spin">
-
-    </a>
-    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
-            aria-controls="collapsibleNavId"
-            aria-expanded="false" aria-label="Toggle navigation"></button>
-
-    <form class="form-inline my-1 my-lg-0" style="margin-left:850px;">
-        <input class="form-control mr-sm-2 mt-4" type="text" placeholder="Search" style="height:30px">
-        <button class="btn btn-lg my-lg-1 my-sm-0 " type="submit" style="padding:10px"><i class="fa fa-search"
-                                                                                          style="font-size: medium;color: white"></i>
-        </button>
-    </form>
-
-
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark" th:fragment="navBarFragment">
+    <a class="navbar-brand mr-n5" href="/home">Crystal Telecom</a>
+            <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+            <!-- Navbar Search-->
+            <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
+            <!-- Navbar-->
+    <ul class="navbar-nav ml-auto ml-md-0">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">Settings</a>
+                <a class="dropdown-item" href="#">Activity Log</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="login.html">Logout</a>
+            </div>
+        </li>
+    </ul>
 </nav>
-
-<nav class="navbar navbar-expand-sm navbar-dark " style="background-color:rgba(27,5,75,0.91);"
-     th:fragment="navBarFragment">
-    <a class="navbar-brand" href="#"><i class="fa fa-home" style="font-size: 18px"></i></a>
-
-
-    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
-            aria-controls="collapsibleNavId"
-            aria-expanded="false" aria-label="Toggle navigation"></button>
-    <div class="collapse navbar-collapse" id="collapsibleNavId">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-itemBatch dropdown active">
-                <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false"> <i class="fa fa-user"></i> General</a>
-                <div class="dropdown-menu" aria-labelledby="dropdownId">
-                    <a data-th-href="@{'/employee'}" class="nav-link"> Employee Managment </a>
-                    <a data-th-href="@{'/user'}" class="nav-link"> User Management </a>
-                    <a data-th-href="@{'/role'}" class="nav-link"> Role Management </a>
-                    <a data-th-href="@{'/category'}" class="nav-link"> Category Management </a>
-                    <a data-th-href="@{'/item'}" class="nav-link"> Item Management </a>
-                    <a data-th-href="@{'/supplier'}" class="nav-link"> Supplier Management </a>
-                    <a data-th-href="@{'/purchaseOrder'}" class="nav-link"> Purchase Order Management </a>
-                    <a data-th-href="@{'/goodReceivedNote'}" class="nav-link"> GRN Management </a>
-                    <a data-th-href="@{'/payment'}" class="nav-link"> Payment Management </a>
-                    <a data-th-href="@{'/invoice'}" class="nav-link"> Invoice Management </a>
-                    <a data-th-href="@{'/ledger'}" class="nav-link"> Ledger Management </a>
-                    <a data-th-href="@{'/discout'}" class="nav-link"> Discount Management </a>
-                    <a data-th-href="@{'/customer'}" class="nav-link"> Customer Management </a>
-
-                </div>
-            </li>
-
-            <li class="nav-itemBatch dropdown active">
-                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false"> <i class="fa fa-bell"></i> Transaction</a>
-                <div class="dropdown-menu" aria-labelledby="dropdownId">
-                    <a data-th-href="@{'/employee/add'}" class="nav-link"> New Employee </a>
-                    <a data-th-href="@{'/user/add'}" class="nav-link"> New User </a>
-                    <a data-th-href="@{'/role/add'}" class="nav-link"> New Role </a>
-                    <a data-th-href="@{'/category/add'}" class="nav-link"> New Category </a>
-                    <a data-th-href="@{'/item/add'}" class="nav-link"> New Item </a>
-                    <a data-th-href="@{'/supplier/add'}" class="nav-link"> New Supplier </a>
-                    <a data-th-href="@{'/invoice/add'}" class="nav-link"> New Invoice </a>
-                    <a data-th-href="@{'/discout/add'}" class="nav-link"> New Discount </a>
-                    <a data-th-href="@{'/customer/add'}" class="nav-link"> New Customer </a>
-          
-
-                </div>
-            </li>
-
-            <li class="nav-itemBatch dropdown active">
-                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false"> <i class="fa fa-book-open"></i> Report</a>
-                <div class="dropdown-menu" aria-labelledby="dropdownId">
-                    <a data-th-href="@{'/employee'}" class="nav-link"> Employee</a>
-                    <a class="dropdown-itemBatch" href="#">Action 2</a>
-                </div>
-            </li>
-        </ul>
-    </div>
-    <!--login /logout /profil /password-change link according to sec confi-->
-    <div>
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0 justify-content-end">
-            <li class="nav-item dropdown" data-sec-authorize="isAuthenticated()">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
-                   data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-user-tie fa-lg"></i>&nbsp;&nbsp;
-                    <span data-th-text="${#authentication.name}"></span>
-                    <span class="caret"></span>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                    <a class="dropdown-item dropdown-item btn btn-group-sm" href="/profile">
-                        <i class="fas fa-user-cog"></i> &nbsp;Profile
-                    </a>
-                    <a class="dropdown-item dropdown-item btn btn-group-sm" href="/passwordChange">
-                        <i class="fas fa-key "></i>&nbsp;Change Password</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown " data-sec-authorize="isAuthenticated()">
-                <a href="/logout" class="nav-link"> <i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp; Log
-                    out</a>
-            </li>
-            <li class="nav-item dropdown " data-sec-authorize="!isAuthenticated()">
-                <a href="/login" class="nav-link"><i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;Login</a>
-            </li>
-        </ul>
-    </div>
-
-</nav>
-
-
 </body>
 </html>
 

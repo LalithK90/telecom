@@ -53,7 +53,7 @@ public class ItemController implements AbstractController<Item, Integer> {
         model.addAttribute("itemColors", itemColorService.findAll());
         model.addAttribute("brands", brandService.findAll());
         model.addAttribute("urlMainCategory", MvcUriComponentsBuilder
-            .fromMethodName(CategoryController.class, "getCategoryByMainCategory", "")
+            .fromMethodName(CategoryRestController.class, "getCategoryByMainCategory", "")
             .build()
             .toString());
         return "item/addItem";
@@ -98,6 +98,7 @@ public class ItemController implements AbstractController<Item, Integer> {
         itemService.persist(item);
         return "redirect:/item";
     }
+
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
