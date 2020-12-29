@@ -105,7 +105,7 @@
               <label class="control-label" for="warrantyPeriod" >Warranty Period:</label >
             </div >
             <div class="col-md-4" >
-              <select id="warrantyPeriod" class="form-control" tabindex="4" style="font-size: large"
+              <select th:field="*{warrantyPeriod}" id="warrantyPeriod" class="form-control" tabindex="4" style="font-size: large"
                       required >
                 <option value="" disabled >Please select</option >
                 <option th:each="warrantyPeriod : ${warrantyPeriods}"

@@ -87,11 +87,12 @@ public class ItemController implements AbstractController<Item, Integer> {
             if (itemService.lastItem() == null) {
                 System.out.println("last item null");
                 //need to generate new one
-                item.setCode("SSMI"+makeAutoGenerateNumberService.numberAutoGen(null).toString());
+                item.setItemStatus(ItemStatus.JUSTENTERED);
+                item.setCode("CTMI"+makeAutoGenerateNumberService.numberAutoGen(null).toString());
             } else {
                 //if there is item in db need to get that item's code and increase its value
                 String previousCode = itemService.lastItem().getCode().substring(4);
-                item.setCode("SSMI"+makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
+                item.setCode("CTMI"+makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
             }
         }
 

@@ -1,57 +1,70 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/header :: headerFragment}">
-    <meta charset="UTF-8">
-    <title>Thymeleaf Springboot </title>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Login</title>
+        <script th:src="@{/js/all.min.js}"></script>
+        <link th:href="@{/css/styles.css}" media="all" rel="stylesheet" type="text/css"/>
+        <style>
+            body {
+                background-image: url(../img/loginBackground.png);
+                -webkit-background-size:cover;
+                background-size: cover;
+                background-position:center center;
+                background-repeat: no-repeat;
+            }
+        </style>
+    </head>
+    <body class="bg-dark">
+        <div id="layoutAuthentication">
+            <div id="layoutAuthentication_content">
+                <main>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-5">
+                                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
+                                    <div class="card-body">
+                                        <form th:action="${'/login'}" method="post">
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="username">Username</label>
+                                                <input class="form-control py-4" id="username" th:name="${'username'}" type="text" placeholder="Enter username" required/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="inputPassword">Password</label>
+                                                <input class="form-control py-4" id="inputPassword" th:name="${'password'}" type="password" placeholder="Enter password" required/>
+                                            </div>
 
-</head>
-<body id="loginback">
+                                            <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
+                                               <a class="btn btn-primary" id="btnLogin" type="submit">Login</a>
+                                            </div>
 
-<div class="form-area">
-    <div class="img-area">
-        <img src="../img/user.png" alt="">
-    </div>
 
-    <br/>
-    <br/>
-    <br/>
+                                            <div class="container-fluid " th:if="${param.error}">
+                                                <p class="bg-white text-capitalize text-danger text-lg-center">Invalid username or password. </p>
+                                            </div>
+                                            <div class="container-fluid ">
+                                                <p id="errorMessage" th:text="${err}" class="bg-white text-capitalize text-danger text-lg-center"></p>
+                                            </div>
 
-    <h2 style="font-size:24px;">Samarasinghe Super</h2> <br/> <br/>
-
-    <form th:action="${'/login'}" method="post">
-        <p> User Name :</p>
-        <input type="text" id="username" th:name="${'username'}" placeholder="Enter User Name" required/>
-
-        <p>Password :</p>
-        <input type="password" id="inputPassword" th:name="${'password'}" placeholder="Enter Password" required>
-
-        <div style="margin-top:10px">
-            <button id="btnLogin" class="col-md-12 btn btn-primary"><i class="fa fa-key"
-                                                                       style="margin-right: 10px;font-size: 18px"></i>Login
-            </button>
+                                        </form>
+                                    </div>
+                                    <div class="card-footer text-center">
+                                        <div class="small">Crystal Telecom Services</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>            
         </div>
-
-        <div class="container-fluid " th:if="${param.error}">
-            <p class="bg-white text-capitalize text-danger text-lg-center">Invalid username or password. </p>
-        </div>
-        <div class="container-fluid ">
-            <p id="errorMessage" th:text="${err}" class="bg-white text-capitalize text-danger text-lg-center"></p>
-        </div>
-
-        <div>
-            <a href="#" class="for-pass">Forgot Password ?</a>
-        </div>
-
-    </form>
-
-</div>
-
-<div  th:replace="~{fragments/footer :: footerFragment}"></div>
-<!--script include-->
-<script th:replace="~{fragments/script :: scriptFragment}"></script>
-
-</body>
+        <div  th:replace="~{fragments/footer :: footerFragment}"></div>
+        <!--script include-->
+        <script th:replace="~{fragments/script :: scriptFragment}"></script>
+    </body>
 </html>
-
-
-
