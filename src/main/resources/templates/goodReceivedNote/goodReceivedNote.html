@@ -48,7 +48,7 @@
                 <th data-th-text="${purchaseOrder.price}"></th>
                 <th data-th-text="${{purchaseOrder.createdAt}}"></th>
                 <th>
-                    <a  data-th-href="${'/purchaseOrder/view' + purchaseOrder.id}"
+                    <a  data-th-href="${'/purchaseOrder/' + purchaseOrder.id}"
                         class="btn btn-primary btn-sm"><i class="fa fa-folder-open" style="font-size: 15px"></i>&nbsp;View</a>
                     <a  data-th-href="${'/goodReceivedNote/' + purchaseOrder.id}" class="btn btn-success btn-sm"><i
                             class="fa fa-edit" style="font-size: 15px"></i>&nbsp; Confirm </a>

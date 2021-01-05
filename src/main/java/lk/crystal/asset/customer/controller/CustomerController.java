@@ -78,12 +78,12 @@ public  class CustomerController implements AbstractController<Customer, Integer
             if (customerService.lastCustomer() == null) {
                 System.out.println("last customer null");
                 //need to generate new one
-                customer.setCode("SSMC"+makeAutoGenerateNumberService.numberAutoGen(null).toString());
+                customer.setCode("CTMC"+makeAutoGenerateNumberService.numberAutoGen(null).toString());
             } else {
                 System.out.println("last customer not null");
                 //if there is customer in db need to get that customer's code and increase its value
                 String previousCode = customerService.lastCustomer().getCode().substring(4);
-                customer.setCode("SSMC"+makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
+                customer.setCode("CTMC"+makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
             }
             //send welcome message and email
             if (customer.getEmail() != null) {

@@ -32,7 +32,7 @@
     </div>
 </div>
 <!--Form Content-->
-<div class="container-fluid bg-dark formBorder">
+<div class="container-fluid formBorder">
     <div class="col-sm-12 flex-column ">
         <form id="form" class="form-horizontal" th:action="${addStatus==true?'/customer/save':'/customer/update'}"
               th:object="${customer}" method="POST" enctype="multipart/form-data">
@@ -46,7 +46,7 @@
                         </div>
                         <div class="col-md-8">
                             <input id="id" th:field="*{id}" class="form-control" type="text" readonly/>
-                            <input type="text" data-th-field="*{liveOrDead}" hidden>
+                            <input type="text" data-th-field="*{liveDead}" hidden>
                         </div>
                         <div class="col-md-4">
                             <label class="control-label" for="code">Customer Code :</label>
