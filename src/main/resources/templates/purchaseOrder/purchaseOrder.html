@@ -3,103 +3,101 @@
 <head th:replace="~{fragments/header :: headerFragment}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
-    <title>J N Super </title>
+    <title>Purchase Orders </title>
 </head>
 
-
-
-<body>
+<body class="sb-nav-fixed">
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
+<div id="layoutSidenav">
+    <div th:replace="~{fragments/sideNav :: sideNavFragment}">
+    </div>
+    <div id="layoutSidenav_content">
+        <main>
+            <!--heading Area-->
+            <div class="container-fluid ">
+                <h1 class="mt-4">Purchase Orders</h1>
+                <div class="row formManagement border-info mb-4 mt-4">
+                    <!--New Color Button-->
+                    <div class="col">
+                        <a class="btn btn-outline-success btn-sm" href="/purchaseOrder/add" tabindex="1">
+                            <i class="fas fa-plus" style="font-size: 12px"></i>&nbsp;&nbsp;New
+                        </a>
+                    </div>
+                </div>
 
-<!--heading Area-->
-<div class="container-fluid ">
-    <div class="row text-center formManagement border-info">
-        <!-- New PR Button-->
-        <div class="col">
-            <a class="btn btn-success" href="/purchaseOrder/add" tabindex="1"><i class="fas fa-plus" style="font-size: 20px"></i>&nbsp;&nbsp;New</a>&nbsp;
-        </div>
-        <!-- List Name-->
-        <div class="col">
-            <h2 class="text-white text-center">
-                <strong>
-                  Pending Purchase Order List
-                </strong>
-            </h2>
-        </div>
-        <!-- Home Button-->
-        <div class="col">
-            <a href="/home" id="searchShow" class="btn btn-primary" tabindex="2">
-                <!--<i class="fa fa-user " style="font-size: 20px"></i>&nbsp;Add&nbsp;-->
-                <i class="fas fa-home" style="font-size: 20px"></i>&nbsp;&nbsp;Home
-                &nbsp;
-            </a>
-        </div>
-    </div>
-</div>
-<div class="container-fluid bg-info formBorder text-center">
-    <!--Table view-->
-    <div class="col">
-        <div class="col" id="purchaseRequestListPresent"
-             data-th-if="${not #lists.isEmpty(purchaseOrders)}">
-            <table class="table table-hover table-striped" id="myTable">
-                <thead>
-                    <tr>
-                        <th> Index</th>
-                        <th> Code</th>
-                        <th> Supplier</th>
-                        <th> Priority</th>
-                        <th> Amount</th>
-                        <th> Created Date</th>
-                        <th> Modify</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr data-th-each="purchaseOrder, rowCount : ${purchaseOrders}">
-                        <th data-th-text="${rowCount.count}"></th>
-                        <th data-th-text="${purchaseOrder.code}"></th>
-                        <th data-th-text="${purchaseOrder.supplier.name}"></th>
-                        <th data-th-text="${purchaseOrder.purchaseOrderPriority.purchaseOrderPriority}"></th>
-                        <th data-th-text="${purchaseOrder.price}"></th>
-                        <th data-th-text="${{purchaseOrder.createdAt}}"></th>
-                        <th >
-                            <a data-th-href="${'/purchaseOrder/' + purchaseOrder.id}" class="btn btn-primary btn-sm"><i
-                                    class="fa fa-folder-open" style="font-size: 15px"></i>&nbsp;View</a>
-                            <a data-th-if="${grnStatus}" data-th-href="${'/goodReceivedNote/' + purchaseOrder.id}"
-                               class="btn btn-success btn-sm"><i
-                                    class="fa fa-edit" style="font-size: 15px"></i>&nbsp;GRN</a>
-                            <a data-th-href="${'/purchaseOrder/delete/' + purchaseOrder.id}"
-                               class="btn btn-danger btn-sm">
-                                <!--data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"--> <i
-                                    class="fa fa-trash" style="font-size: 15px"></i> Delete</a>
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <!--Error-->
-    <div class="row" data-th-if="${ #lists.isEmpty(purchaseOrders)}">
-        <div class="col-sm-12">
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h3 class="text-center text-danger">
-                    <strong>There is no purchaseOrder upto now please add purchaseOrder to the system using "New" button.</strong>
-                </h3>
+                <div class="card mb-4">
+                    <!--Table Title-->
+                    <div class="card-header">
+                        <i class="fas fa-table mr-1"></i>
+                        Purchase Order List
+                    </div>
+                    <!--Table view-->
+                    <div class="card-body">
+                        <div class="table-responsive-md" id="purchaseRequestListPresent"
+                             data-th-if="${not #lists.isEmpty(purchaseOrders)}">
+                            <table class="table table-bordered" id="myTable">
+                                <thead>
+                                    <tr>
+                                        <th> Index</th>
+                                        <th> Code</th>
+                                        <th> Supplier</th>
+                                        <th> Priority</th>
+                                        <th> Amount</th>
+                                        <th> Created Date</th>
+                                        <th> Status</th>
+                                        <th> Modify</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-th-each="purchaseOrder, rowCount : ${purchaseOrders}">
+                                        <th data-th-text="${rowCount.count}"></th>
+                                        <th data-th-text="${purchaseOrder.code}"></th>
+                                        <th data-th-text="${purchaseOrder.supplier.name}"></th>
+                                        <th data-th-text="${purchaseOrder.purchaseOrderPriority.purchaseOrderPriority}"></th>
+                                        <th data-th-text="${purchaseOrder.price}"></th>
+                                        <th data-th-text="${{purchaseOrder.createdAt}}"></th>
+                                        <th data-th-text="${{purchaseOrder.purchaseOrderStatus}}"></th>
+                                        <th >
+                                            <a data-th-href="${'/purchaseOrder/' + purchaseOrder.id}" class="btn btn-outline-primary btn-sm"><i
+                                                    class="fa fa-folder-open" style="font-size: 15px"></i>&nbsp;View</a>
+                                            <a data-th-if="${grnStatus}" data-th-href="${'/goodReceivedNote/' + purchaseOrder.id}"
+                                               class="btn btn-outline-success btn-sm"><i
+                                                    class="fa fa-edit" style="font-size: 15px"></i>&nbsp;GRN</a>
+                                            <a data-th-href="${'/purchaseOrder/delete/' + purchaseOrder.id}"
+                                               class="btn btn-outline-danger btn-sm">
+                                                <!--data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"--> <i
+                                                    class="fa fa-trash" style="font-size: 15px"></i> Delete</a>
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--Error-->
+                    <div class="row" data-th-if="${ #lists.isEmpty(purchaseOrders)}">
+                        <div class="col-sm-12">
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h3 class="text-center text-danger">
+                                    <strong>There is no purchaseOrder upto now please add purchaseOrder to the system using "New" button.</strong>
+                                </h3>
+                            </div>
+                        </div>
+                        <script>
+                            /*active boostrap alert - start*/
+                            $(".alert").alert();
+                            /*active boostrap alert - end*/
+                        </script>
+                    </div>
+                </div>
             </div>
-        </div>
-        <script>
-            /*active boostrap alert - start*/
-            $(".alert").alert();
-            /*active boostrap alert - end*/
-        </script>
+        </main>
+        <div  data-th-replace="~{fragments/footer :: footerFragment}"></div>
+        <!--script include-->
+        <div data-th-replace="~{fragments/script :: scriptFragment}"></div>
     </div>
 </div>
-
-<div  data-th-replace="~{fragments/footer :: footerFragment}"></div>
-<!--script include-->
-<div data-th-replace="~{fragments/script :: scriptFragment}"></div>
-
 </body>
 </html>

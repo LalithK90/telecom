@@ -4,154 +4,151 @@
     <meta charset="UTF-8">
     <title>item-detail</title>
 </head>
-<body>
+<body class="sb-nav-fixed">
 <nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
-
-<!--heading Area-->
-<div class="container-fluid ">
-    <div class="row text-center formManagement border-info">
-        <!--View List Button-->
-        <div class="col">
-            <a href="/item" class="btn btn-primary" tabindex="2">
-                <i class="fa fa-list" style="font-size: 20px"></i>&nbsp; View List
-            </a>
-        </div>
-        <!--Item Name-->
-        <div class="col">
-            <h2 class="text-white text-center">
-                <strong>
-                    <p th:text="${itemDetail.name}"></p>
-                </strong>
-            </h2>
-        </div>
-        <!--Home Button-->
-        <div class="col">
-            <a class="btn btn-primary" href="/home" tabindex="1">
-                <i class="fa fa-home" style="font-size: 20px"></i> &nbsp; Home
-            </a>
-        </div>
+<div id="layoutSidenav">
+    <div th:replace="~{fragments/sideNav :: sideNavFragment}">
+    </div>
+    <div id="layoutSidenav_content">
+        <main>
+            <!--heading Area-->
+            <div class="container-fluid ">
+                <div class="row formManagement border-info mb-4 mt-4">
+                    <!--View List Button-->
+                    <div class="col">
+                        <a href="/item" class="btn btn-outline-primary btn-sm" tabindex="2">
+                            <i class="fa fa-list" style="font-size: 12px"></i>&nbsp; View List
+                        </a>
+                    </div>
+                    <!--Item Name-->
+                    <div class="col">
+                        <h5 class="text text-right">
+                            <p th:text="${itemDetail.name}"></p>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <!--details-->
+            <div th:fragment="itemDetailsFragment" class="container-fluid formBorder">
+                <div class="col-sm-12 flex-column ">
+                    <div class="row">
+                        <!--Left Side-->
+                        <div class="form-group col-md-6 col-sm-6 text-left flex-column">
+                            <!--id-->
+                            <div class="form-row text-right">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="id">ID :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p id="id" th:text="${itemDetail.id}" class="display_detail"></p>
+                                </div>
+                            </div>
+                            <!--Code-->
+                            <!--<div class="form-row text-right">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="departmentIdNumber">Depart Id No :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p id="departmentIdNumber" th:text="${itemDetail.departmentIdNumber}" class="display_detail"></p></div>
+                            </div>-->
+                            <!--Main Category-->
+                            <div class="form-row text-right">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="mainCategory">Main Category :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p id="mainCategory" th:text="${itemDetail.category.mainCategory.mainCategory}"
+                                       class="display_detail"></p>
+                                </div>
+                            </div>
+                            <!--Sub Category-->
+                            <div class="form-row text-right">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="subCategory">Main Category :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p id="subCategory" th:text="${itemDetail.category.name}"
+                                       class="display_detail"></p>
+                                </div>
+                            </div>
+                            <!--Name-->
+                            <div class="form-row text-right">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="name">Name :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p id="name" th:text="${itemDetail.name}"
+                                       class="display_detail"></p>
+                                </div>
+                            </div>
+                            <!--Reorder Point-->
+                            <div class="form-row text-right">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="rop">ROP :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p id="rop" th:text="${itemDetail.rop}"
+                                       class="display_detail"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Right Side-->
+                        <div class="form-group col-md-6 col-sm-6 text-right flex-column">
+                            <!--Created By-->
+                            <div class="form-row text-right">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="createdBy">Created By :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p id="createdBy" th:text="${itemDetail.createdBy}" class="display_detail"></p>
+                                </div>
+                            </div>
+                            <!--Created at-->
+                            <div class="form-row text-right">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="createdAt">Created At :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p id="createdAt" th:text="${#temporals.format(itemDetail.createdAt, 'dd-MM-yyyy HH:mm')}"
+                                       class="display_detail"></p>
+                                </div>
+                            </div>
+                            <!--Updated by-->
+                            <div class="form-row text-right">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="updatedBy">Updated By :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p id="updatedBy" th:text="${itemDetail.updatedBy}" class="display_detail"></p>
+                                </div>
+                            </div>
+                            <!--Updated at-->
+                            <div class="form-row text-right">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="updatedAt">Updated At :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p id="updatedAt" th:text="${#temporals.format(itemDetail.updatedAt, 'dd-MM-yyyy HH:mm')}"
+                                       class="display_detail"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Back Button-->
+                        <div class="form-group col-md-12 col-sm-12 text-center flex-column ">
+                            <a href="/item">
+                                <button class="btn btn-dark" type="button" tabindex="3">
+                                    <i class="fas fa-arrow-circle-left" style="font-size: 20px"></i>&nbsp; &nbsp;Back
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div  th:replace="~{fragments/footer :: footerFragment}"></div>
+        <!--script include-->
+        <script th:replace="~{fragments/script :: scriptFragment}"></script>
     </div>
 </div>
-<!--details-->
-<div th:fragment="itemDetailsFragment" class="container-fluid bg-info formBorder">
-    <div class="col-sm-12 flex-column ">
-        <div class="row">
-            <!--Left Side-->
-            <div class="form-group col-md-6 col-sm-6 text-left flex-column">
-                <!--id-->
-                <div class="form-row text-right">
-                    <div class="col-md-4">
-                        <label class="control-label" for="id">ID :</label>
-                    </div>
-                    <div class="col-md-8">
-                        <p id="id" th:text="${itemDetail.id}" class="display_detail"></p>
-                    </div>
-                </div>
-                <!--Code-->
-                <!--<div class="form-row text-right">
-                    <div class="col-md-4">
-                        <label class="control-label" for="departmentIdNumber">Depart Id No :</label>
-                    </div>
-                    <div class="col-md-8">
-                        <p id="departmentIdNumber" th:text="${itemDetail.departmentIdNumber}" class="display_detail"></p></div>
-                </div>-->
-                <!--Main Category-->
-                <div class="form-row text-right">
-                    <div class="col-md-4">
-                        <label class="control-label" for="mainCategory">Main Category :</label>
-                    </div>
-                    <div class="col-md-8">
-                        <p id="mainCategory" th:text="${itemDetail.category.mainCategory.mainCategory}"
-                           class="display_detail"></p>
-                    </div>
-                </div>
-                <!--Sub Category-->
-                <div class="form-row text-right">
-                    <div class="col-md-4">
-                        <label class="control-label" for="subCategory">Main Category :</label>
-                    </div>
-                    <div class="col-md-8">
-                        <p id="subCategory" th:text="${itemDetail.category.name}"
-                           class="display_detail"></p>
-                    </div>
-                </div>
-                <!--Name-->
-                <div class="form-row text-right">
-                    <div class="col-md-4">
-                        <label class="control-label" for="name">Name :</label>
-                    </div>
-                    <div class="col-md-8">
-                        <p id="name" th:text="${itemDetail.name}"
-                           class="display_detail"></p>
-                    </div>
-                </div>
-                <!--Reorder Point-->
-                <div class="form-row text-right">
-                    <div class="col-md-4">
-                        <label class="control-label" for="rop">ROP :</label>
-                    </div>
-                    <div class="col-md-8">
-                        <p id="rop" th:text="${itemDetail.rop}"
-                           class="display_detail"></p>
-                    </div>
-                </div>
-            </div>
-            <!--Right Side-->
-            <div class="form-group col-md-6 col-sm-6 text-right flex-column">
-                <!--Created By-->
-                <div class="form-row text-right">
-                    <div class="col-md-4">
-                        <label class="control-label" for="createdBy">Created By :</label>
-                    </div>
-                    <div class="col-md-8">
-                        <p id="createdBy" th:text="${itemDetail.createdBy}" class="display_detail"></p>
-                    </div>
-                </div>
-                <!--Created at-->
-                <div class="form-row text-right">
-                    <div class="col-md-4">
-                        <label class="control-label" for="createdAt">Created At :</label>
-                    </div>
-                    <div class="col-md-8">
-                        <p id="createdAt" th:text="${#temporals.format(itemDetail.createdAt, 'dd-MM-yyyy HH:mm')}"
-                           class="display_detail"></p>
-                    </div>
-                </div>
-                <!--Updated by-->
-                <div class="form-row text-right">
-                    <div class="col-md-4">
-                        <label class="control-label" for="updatedBy">Updated By :</label>
-                    </div>
-                    <div class="col-md-8">
-                        <p id="updatedBy" th:text="${itemDetail.updatedBy}" class="display_detail"></p>
-                    </div>
-                </div>
-                <!--Updated at-->
-                <div class="form-row text-right">
-                    <div class="col-md-4">
-                        <label class="control-label" for="updatedAt">Updated At :</label>
-                    </div>
-                    <div class="col-md-8">
-                        <p id="updatedAt" th:text="${#temporals.format(itemDetail.updatedAt, 'dd-MM-yyyy HH:mm')}"
-                           class="display_detail"></p>
-                    </div>
-                </div>
-            </div>
-            <!--Back Button-->
-            <div class="form-group col-md-12 col-sm-12 text-center flex-column ">
-                <a href="/item">
-                    <button class="btn btn-dark" type="button" tabindex="3">
-                        <i class="fas fa-arrow-circle-left" style="font-size: 20px"></i>&nbsp; &nbsp;Back
-                    </button>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div  th:replace="~{fragments/footer :: footerFragment}"></div>
-<!--script include-->
-<script th:replace="~{fragments/script :: scriptFragment}"></script>
-
 </body>
 </html>

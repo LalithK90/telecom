@@ -4,115 +4,110 @@
     <meta charset="UTF-8">
     <title>customer</title>
 </head>
-<body>
+<body class="sb-nav-fixed">
 <nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
-<!--heading Area-->
-<div class="container-fluid  form-Border">
-    <div class="row text-center formManagement border-info">
-        <!--New Customer Button-->
-        <div class="col">
-            <a class="btn btn-success" href="/customer/add" tabindex="1">
-                <i class="fas fa-plus" style="font-size: 20px"></i>&nbsp;&nbsp;New
-            </a>
-        </div>
-        <!--List Name-->
-        <div class="col">
-            <h2 class="text-white text-center">
-                <strong>
-                    Customer List
-                </strong>
-            </h2>
-        </div>
-        <!--Home Button-->
-        <div class="col">
-            <a href="/home" id="searchShow" class="btn btn-primary" tabindex="2">
-                <!--<i class="fa fa-user " style="font-size: 20px"></i>&nbsp;Add&nbsp;-->
-                <i class="fas fa-home" style="font-size: 20px"></i>&nbsp;&nbsp;Home
-            </a>
-        </div>
+<div id="layoutSidenav">
+    <div th:replace="~{fragments/sideNav :: sideNavFragment}">
+    </div>
+    <div id="layoutSidenav_content">
+        <main>
+            <!--heading Area-->
+            <div class="container-fluid">
+                <h1 class="mt-4">Customers</h1>
+                <div class="row formManagement border-info mb-4 mt-4">
+                    <!--New Color Button-->
+                    <div class="col">
+                        <a class="btn btn-outline-success btn-sm" href="/customer/add" tabindex="1">
+                            <i class="fas fa-plus" style="font-size: 12px"></i>&nbsp;&nbsp;New
+                        </a>
+                    </div>
+                </div>
+                <!--Customer List-->
+                <div class="card mb-4">
+                    <!--Table Title-->
+                    <div class="card-header">
+                        <i class="fas fa-table mr-1"></i>
+                        Customers List
+                    </div>
+                    <!--Table view-->
+                    <div class="card-body">
+                        <div class="table-responsive-md" id="customerListPresent" th:if="${not #lists.isEmpty(customers)}">
+                            <table class="table table-hover table-bordered" id="myTable">
+                                <thead>
+                                <tr>
+                                    <th> Index</th>
+                                    <th> Name</th>
+                                    <th> Code</th>
+                                    <th> Mobile</th>
+                                    <th> Address</th>
+                                    <th> Modify</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="customer, rowCount : ${customers}">
+                                    <th th:text="${rowCount.count}"></th>
+                                    <th th:text="${customer.title}+${'. '}+${customer.name}"></th>
+                                    <th th:text="${customer.code}"></th>
+                                    <th th:text="${customer.mobile}"></th>
+                                    <th th:text="${customer.address}"></th>
+                                    <th>
+                                        <a id="customerView" th:href="${'/customer/' + customer.id}" class="btn btn-primary btn-sm"><i
+                                                class="fa fa-folder-open" style="font-size: 15px"></i>&nbsp;View</a>
+                                        <a id="customerEdit" th:href="${'/customer/edit/' + customer.id}"
+                                           class="btn btn-success btn-sm"><i class="fa fa-edit"
+                                                                             style="font-size: 15px"></i>&nbsp;Edit</a>
+                                        <a id="customerRemove" th:href="${'/customer/delete/' + customer.id}"
+                                           class="btn btn-danger btn-sm">
+                                            <!--th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" --> <i
+                                                class="fa fa-trash" style="font-size: 15px"></i>
+                                            Delete</a>
+                                    </th>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--Error-->
+                    <div class="row" th:if="${ #lists.isEmpty(customers)}">
+                        <div class="col align-self-center mx-4">
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                There is no customer upto now please add customer to the system
+                                using "New" button.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                        <script>
+                            /*active boostrap alert - start*/
+                            $(".alert").alert();
+                            /*active boostrap alert - end*/
+                        </script>
+                    </div>
+                    <!--Save customer-->
+                    <div class="row" th:if="${customerDetail != null}">
+                        <div class="col-sm-12">
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <!--save customer include-->
+                                <div th:replace="~{customer/customer-detail :: customerDetailsFragment}"></div>
+                            </div>
+                        </div>
+                        <script>
+                            /*active boostrap alert - start*/
+                            $(".alert").alert();
+                            /*active boostrap alert - end*/
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div  th:replace="~{fragments/footer :: footerFragment}"></div>
+        <!--script include-->
+        <script th:replace="~{fragments/script :: scriptFragment}"></script>
     </div>
 </div>
-<!--Customers List-->
-<div class="container-fluid bg-primary text-center">
-    <!--Table view-->
-    <div class="col">
-        <div class="col" id="customerListPresent" th:if="${not #lists.isEmpty(customers)}">
-            <table class="table table-hover table-striped" id="myTable">
-                <thead>
-                <tr>
-                    <th> Index</th>
-                    <th> Name</th>
-                    <th> Code</th>
-                    <th> Mobile</th>
-                    <th> Address</th>
-                    <th> Modify</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="customer, rowCount : ${customers}">
-                    <th th:text="${rowCount.count}"></th>
-                    <th th:text="${customer.title}+${'. '}+${customer.name}"></th>
-                    <th th:text="${customer.code}"></th>
-                    <th th:text="${customer.mobile}"></th>
-                    <th th:text="${customer.address}"></th>
-                    <th>
-                        <a id="customerView" th:href="${'/customer/' + customer.id}" class="btn btn-primary btn-sm"><i
-                                class="fa fa-folder-open" style="font-size: 15px"></i>&nbsp;View</a>
-                        <a id="customerEdit" th:href="${'/customer/edit/' + customer.id}"
-                           class="btn btn-success btn-sm"><i class="fa fa-edit"
-                                                             style="font-size: 15px"></i>&nbsp;Edit</a>
-                        <a id="customerRemove" th:href="${'/customer/delete/' + customer.id}"
-                           class="btn btn-danger btn-sm">
-                            <!--th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" --> <i
-                                class="fa fa-trash" style="font-size: 15px"></i>
-                            Delete</a>
-                    </th>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <!--Error-->
-    <div class="row" th:if="${ #lists.isEmpty(customers)}">
-        <div class="col-sm-12">
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h3 class="text-center text-danger">
-                    <strong>There is no customer upto now please add customer to the system
-                        using "New" button.
-                    </strong>
-                </h3>
-            </div>
-        </div>
-        <script>
-            /*active boostrap alert - start*/
-            $(".alert").alert();
-            /*active boostrap alert - end*/
-        </script>
-    </div>
-    <!--Save customer-->
-    <div class="row" th:if="${customerDetail != null}">
-        <div class="col-sm-12">
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <!--save customer include-->
-                <div th:replace="~{customer/customer-detail :: customerDetailsFragment}"></div>
-            </div>
-        </div>
-        <script>
-            /*active boostrap alert - start*/
-            $(".alert").alert();
-            /*active boostrap alert - end*/
-        </script>
-    </div>
-</div>
-<div  th:replace="~{fragments/footer :: footerFragment}"></div>
-<!--script include-->
-<script th:replace="~{fragments/script :: scriptFragment}"></script>
-
 </body>
 </html>
