@@ -3,226 +3,222 @@
 <head th:replace="~{fragments/header :: headerFragment}" >
   <meta charset="UTF-8" >
   <title >addItem</title >
-</head >
-<body >
+</head>
+<body class="sb-nav-fixed">
 <nav th:replace="~{fragments/navBar :: navBarFragment}" ></nav >
+<div id="layoutSidenav">
+  <div th:replace="~{fragments/sideNav :: sideNavFragment}">
+  </div>
+  <div id="layoutSidenav_content">
+    <main>
+      <!--heading Area-->
+      <div class="container-fluid">
+        <div class="row formManagement border-info mb-4 mt-4">
+          <!--View list Button-->
+          <div class="col" >
+            <a href="/item" class="btn btn-outline-primary btn-sm" tabindex="1" >
+              <i class="fa fa-list" style="font-size: 12px" ></i >&nbsp; View List
+            </a >
+          </div >
+          <!--Form Name-->
+          <div class="col" >
+              <h5 class="text text-right">
+                <span th:text="${addStatus==true?'Add New Item':'Update Item Details'}" ></span >
+              </h5 >
+           </div >
+        </div>
+      </div>
+      <!--Form Content-->
+      <div class="container-fluid formBorder" >
+        <div class="col-sm-12 flex-column" >
+          <form id="form" class="form-horizontal" th:action="${addStatus==true?'/item/save':'/item/update'}"
+                th:object="${item}" method="POST" enctype="multipart/form-data" >
+            <div class="row" >
+              <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
+                <!--Id-->
+                <div id="idStatus" th:if="${addStatus==false}" class="form-row text-right" >
+                  <div class="col-md-4" >
+                    <label class="control-label" for="id" >ID :</label >
+                  </div >
+                  <div class="col-md-4" >
+                    <input id="id" th:field="*{id}" class="form-control" type="text" readonly />
+                    <input type="text" data-th-field="*{liveDead}" hidden >
+                  </div >
+                </div >
+                <!--Main Category -->
+                <div class="form-row text-right" >
+                  <div class="col-md-4" >
+                    <label class="control-label" for="mainCategory" >Main Category :</label >
+                  </div >
+                  <div class="col-md-4" >
+                    <select id="mainCategory" class="form-control" tabindex="4" style="font-size: large"
+                            required >
+                      <option value="" disabled >Please select</option >
+                      <option th:each="mainCategory : ${mainCategories}"
+                              th:text="${mainCategory.mainCategory}"
+                              th:value="${mainCategory}"
+                      >
+                      </option >
+                    </select >
+                  </div >
+                </div ><!--Color-->
+                <div class="form-row text-right">
+                  <div class="col-md-4">
+                    <label class="control-label" for="color">Colour :</label>
+                  </div>
+                  <div class="col-md-4">
+                    <select id="color" class="form-control" th:field="*{itemColor}"  tabindex="4" style="font-size: large"
+                            required>
+                      <option value="" disabled>Please select</option>
+                      <option th:each="itemColor : ${itemColors}"
+                              th:text="${itemColor.name}"
+                              th:value="${itemColor.id}"
+                      >
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <!--brand-->
+                <div class="form-row text-right">
+                  <div class="col-md-4">
+                    <label class="control-label" for="brand">Brand :</label>
+                  </div>
+                  <div class="col-md-4">
+                    <select id="brand" class="form-control" th:field="*{brand}"  tabindex="4" style="font-size: large"
+                            required>
+                      <option value="" disabled>Please select</option>
+                      <option th:each="brand : ${brands}"
+                              th:text="${brand.name}"
+                              th:value="${brand.id}"
+                      >
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <!--Warranty Period-->
+                <div class="form-row text-right" >
+                  <div class="col-md-4" >
+                    <label class="control-label" for="warrantyPeriod" >Warranty Period:</label >
+                  </div >
+                  <div class="col-md-4" >
+                    <select th:field="*{warrantyPeriod}" id="warrantyPeriod" class="form-control" tabindex="4" style="font-size: large"
+                            required >
+                      <option value="" disabled >Please select</option >
+                      <option th:each="warrantyPeriod : ${warrantyPeriods}"
+                              th:text="${warrantyPeriod.warrantyPeriod}"
+                              th:value="${warrantyPeriod}"
+                      >
+                      </option >
+                    </select >
+                  </div >
+                </div >
+                <!--Sub Category -->
+                <div class="form-row text-right" >
+                  <div class="col-md-4" >
+                    <label class="control-label" for="subCategory" >Sub Category :</label >
+                  </div >
+                  <div class="col-md-4" >
+                    <select id="subCategory" th:name="${'category'}" class="form-control" tabindex="4"
+                            style="font-size: large" required >
+                      <option value="" disabled >Please select</option >
+                    </select >
+                  </div >
+                </div >
+                <!--Name-->
+                <div class="form-row text-right" >
+                  <div class="col-md-4" >
+                    <label class="control-label" for="iName" >Name :</label >
+                  </div >
+                  <div class="col-md-4" >
+                    <input id="iName" th:field="*{name}" class="form-control" tabindex="6" type="text"
+                           required />
+                    <span id="nameError" th:errors="*{name}"
+                          th:if="${#fields.hasErrors('name')}" class="error" >Error Name</span >
+                  </div >
+                </div >
+                <!--ReOrder Point-->
+                <div class="form-row text-right" >
+                  <div class="col-md-4" >
+                    <label class="control-label" for="rop" >Reorder Point :</label >
+                  </div >
+                  <div class="col-md-4" >
+                    <input id="rop" th:field="*{rop}" class="form-control" tabindex="8" type="number" required />
+                    <span id="ropError" th:errors="*{rop}"
+                          th:if="${#fields.hasErrors('rop')}" class="error" >Error ROP</span >
+                  </div >
+                </div >
+                <!--Sell Price-->
+                <div class="form-row text-right" >
+                  <div class="col-md-4" >
+                    <label class="control-label" for="sellPrice" >Sell Price :</label >
+                  </div >
+                  <div class="col-md-4" >
+                    <input id="sellPrice" th:field="*{sellPrice}" class="form-control" tabindex="8" type="number" required />
+                    <span th:errors="*{sellPrice}"
+                          th:if="${#fields.hasErrors('sellPrice')}" class="error" >Error ROP</span >
+                  </div >
+                </div >
+                <!--Created by and created at-->
+                <div id="updateStatus" th:if="${addStatus==false}" >
+                  <!--hidden url -->
+                  <input type="hidden" th:value="${item.category.mainCategory}" id="mainCategoryValueBind" >
+                  <!--Created by-->
+                  <div class="form-row text-right" >
+                    <div class="col-md-4" >
+                      <label class="control-label" for="createdBy" >Created By :</label >
+                    </div >
+                    <div class="col-md-4" >
+                      <input id="createdBy" th:field="*{createdBy}" class="form-control" type="text"
+                             readonly />
+                    </div >
+                  </div >
+                  <!--Created at-->
+                  <div class="form-row text-right" >
+                    <div class="col-md-4" >
+                      <label class="control-label" for="createdAt" >Created At :</label >
+                    </div >
+                    <div class="col-md-4" >
+                      <input id="createdAt" th:field="*{createdAt}" class="form-control" type="text"
+                             readonly />
+                    </div >
+                  </div >
+                </div >
+              </div >
 
-<!--heading Area-->
-<div class="container-fluid " >
-  <div class="row text-center formManagement border-info" >
-    <!--View list Button-->
-    <div class="col" >
-      <a href="/item" class="btn btn-primary" tabindex="1" >
-        <i class="fa fa-list" style="font-size: 20px" ></i >&nbsp; View List
-      </a >
-    </div >
-    <!--Form Name-->
-    <div class="col" >
-      <h2 class="text-white text-center" >
-        <strong >
-          <span th:text="${addStatus==true?'Add New Item':'Update Item Details'}" ></span >
-        </strong >
-      </h2 >
-    </div >
-    <!--Home Button-->
-    <div class="col" >
-      <a class="btn btn-primary" href="/home" tabindex="2" >
-        <i class="fa fa-home" style="font-size: 20px" ></i >&nbsp;Home
-      </a >
-    </div >
-  </div >
-</div >
-<!--Form Content-->
-<div class="container-fluid bg-info formBorder" >
-  <div class="col-sm-12 flex-column " >
-    <form id="form" class="form-horizontal" th:action="${addStatus==true?'/item/save':'/item/update'}"
-          th:object="${item}" method="POST" enctype="multipart/form-data" >
-      <div class="row" >
-        <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
-          <!--Id-->
-          <div id="idStatus" th:if="${addStatus==false}" class="form-row text-right" >
-            <div class="col-md-4" >
-              <label class="control-label" for="id" >ID :</label >
-            </div >
-            <div class="col-md-4" >
-              <input id="id" th:field="*{id}" class="form-control" type="text" readonly />
-              <input type="text" data-th-field="*{liveDead}" hidden >
-            </div >
-          </div >
-          <!--Main Category -->
-          <div class="form-row text-right" >
-            <div class="col-md-4" >
-              <label class="control-label" for="mainCategory" >Main Category :</label >
-            </div >
-            <div class="col-md-4" >
-              <select id="mainCategory" class="form-control" tabindex="4" style="font-size: large"
-                      required >
-                <option value="" disabled >Please select</option >
-                <option th:each="mainCategory : ${mainCategories}"
-                        th:text="${mainCategory.mainCategory}"
-                        th:value="${mainCategory}"
-                >
-                </option >
-              </select >
-            </div >
-          </div ><!--Color-->
-          <div class="form-row text-right">
-            <div class="col-md-4">
-              <label class="control-label" for="color">Colour :</label>
-            </div>
-            <div class="col-md-4">
-              <select id="color" class="form-control" th:field="*{itemColor}"  tabindex="4" style="font-size: large"
-                      required>
-                <option value="" disabled>Please select</option>
-                <option th:each="itemColor : ${itemColors}"
-                        th:text="${itemColor.name}"
-                        th:value="${itemColor.id}"
-                >
-                </option>
-              </select>
-            </div>
-          </div>
-          <!--brand-->
-          <div class="form-row text-right">
-            <div class="col-md-4">
-              <label class="control-label" for="brand">Brand :</label>
-            </div>
-            <div class="col-md-4">
-              <select id="brand" class="form-control" th:field="*{brand}"  tabindex="4" style="font-size: large"
-                      required>
-                <option value="" disabled>Please select</option>
-                <option th:each="brand : ${brands}"
-                        th:text="${brand.name}"
-                        th:value="${brand.id}"
-                >
-                </option>
-              </select>
-            </div>
-          </div>
-          <!--Warranty Period-->
-          <div class="form-row text-right" >
-            <div class="col-md-4" >
-              <label class="control-label" for="warrantyPeriod" >Warranty Period:</label >
-            </div >
-            <div class="col-md-4" >
-              <select th:field="*{warrantyPeriod}" id="warrantyPeriod" class="form-control" tabindex="4" style="font-size: large"
-                      required >
-                <option value="" disabled >Please select</option >
-                <option th:each="warrantyPeriod : ${warrantyPeriods}"
-                        th:text="${warrantyPeriod.warrantyPeriod}"
-                        th:value="${warrantyPeriod}"
-                >
-                </option >
-              </select >
-            </div >
-          </div >
-          <!--Sub Category -->
-          <div class="form-row text-right" >
-            <div class="col-md-4" >
-              <label class="control-label" for="subCategory" >Sub Category :</label >
-            </div >
-            <div class="col-md-4" >
-              <select id="subCategory" th:name="${'category'}" class="form-control" tabindex="4"
-                      style="font-size: large" required >
-                <option value="" disabled >Please select</option >
-              </select >
-            </div >
-          </div >
-          <!--Name-->
-          <div class="form-row text-right" >
-            <div class="col-md-4" >
-              <label class="control-label" for="iName" >Name :</label >
-            </div >
-            <div class="col-md-4" >
-              <input id="iName" th:field="*{name}" class="form-control" tabindex="6" type="text"
-                     required />
-              <span id="nameError" th:errors="*{name}"
-                    th:if="${#fields.hasErrors('name')}" class="error" >Error Name</span >
-            </div >
-          </div >
-          <!--ReOrder Point-->
-          <div class="form-row text-right" >
-            <div class="col-md-4" >
-              <label class="control-label" for="rop" >Reorder Point :</label >
-            </div >
-            <div class="col-md-4" >
-              <input id="rop" th:field="*{rop}" class="form-control" tabindex="8" type="number" required />
-              <span id="ropError" th:errors="*{rop}"
-                    th:if="${#fields.hasErrors('rop')}" class="error" >Error ROP</span >
-            </div >
-          </div >
-          <!--Sell Price-->
-          <div class="form-row text-right" >
-            <div class="col-md-4" >
-              <label class="control-label" for="sellPrice" >Sell Price :</label >
-            </div >
-            <div class="col-md-4" >
-              <input id="sellPrice" th:field="*{sellPrice}" class="form-control" tabindex="8" type="number" required />
-              <span th:errors="*{sellPrice}"
-                    th:if="${#fields.hasErrors('sellPrice')}" class="error" >Error ROP</span >
-            </div >
-          </div >
-          <!--Created by and created at-->
-          <div id="updateStatus" th:if="${addStatus==false}" >
-            <!--hidden url -->
-            <input type="hidden" th:value="${item.category.mainCategory}" id="mainCategoryValueBind" >
-            <!--Created by-->
-            <div class="form-row text-right" >
-              <div class="col-md-4" >
-                <label class="control-label" for="createdBy" >Created By :</label >
+              <!--Button-->
+              <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
+                <!--Back Button-->
+                <a class="btn btn-dark btn-sm" tabindex="14" href="/item" >
+                  <i class="fas fa-arrow-circle-left" style="font-size: 15px" ></i >&nbsp;&nbsp;Back
+                </a >
+                <!--Save Button-->
+                <button class="btn btn-success btn-sm" type="submit" tabindex="12" >
+                  <i class="fa fa-save " style="font-size: 15px" ></i >&nbsp;&nbsp;<span id="submit"
+                  th:text="${addStatus==true?'Save': 'Update'}" ></span >
+                </button >
+                <!--Cancel Button-->
+                <button class="btn btn-warning btn-sm" type="reset" tabindex="13" >
+                  <i class="far fa-times-circle" style="font-size: 15px" ></i >&nbsp;&nbsp;Cancel
+                </button >
               </div >
-              <div class="col-md-4" >
-                <input id="createdBy" th:field="*{createdBy}" class="form-control" type="text"
-                       readonly />
-              </div >
-            </div >
-            <!--Created at-->
-            <div class="form-row text-right" >
-              <div class="col-md-4" >
-                <label class="control-label" for="createdAt" >Created At :</label >
-              </div >
-              <div class="col-md-4" >
-                <input id="createdAt" th:field="*{createdAt}" class="form-control" type="text"
-                       readonly />
-              </div >
-            </div >
-          </div >
-        </div >
 
-        <!--Button-->
-        <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
-          <!--Back Button-->
-          <a class="btn btn-dark" tabindex="14" href="/item" >
-            <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
-          </a >
-          <!--Save Button-->
-          <button class="btn btn-success ml-5" type="submit" tabindex="12" >
-            <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;<span id="submit"
-                                                                                   th:text="${addStatus==true?'Save': 'Update'}" ></span >
-          </button >
-          <!--Cancel Button-->
-          <button class="btn btn-warning ml-5" type="reset" tabindex="13" >
-            <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
-          </button >
-        </div >
-
-        <!--Error-->
-        <div class="form-row" >
-          <label id="errorLabel" th:if="${#fields.hasErrors('*')}" th:text="'Errors: '" >Errors: </label >
-          <ul >
-            <li id="error" th:each="err: ${#fields.errors('*')}" th:text="${err}" class="error" ></li >
-          </ul >
+              <!--Error-->
+              <div class="form-row" >
+                <label id="errorLabel" th:if="${#fields.hasErrors('*')}" th:text="'Errors: '" >Errors: </label >
+                <ul >
+                  <li id="error" th:each="err: ${#fields.errors('*')}" th:text="${err}" class="error" ></li >
+                </ul >
+              </div >
+            </div >
+          </form >
         </div >
       </div >
-    </form >
-  </div >
-</div >
+    </main>
 
-
-<div th:replace="~{fragments/footer :: footerFragment}" ></div >
-<!--script include-->
-<div th:replace="~{fragments/script :: scriptFragment}" ></div >
-<script >
+    <div th:replace="~{fragments/footer :: footerFragment}" ></div >
+    <!--script include-->
+    <div th:replace="~{fragments/script :: scriptFragment}" ></div >
+    <script >
     $(document).ready(function () {
             let mainCategoryValueBind = $("#mainCategoryValueBind").val();
             if (mainCategoryValueBind !== null || mainCategoryValueBind !== undefined) {
@@ -251,5 +247,7 @@
 
 
 </script >
+  </div>
+</div>
 </body >
 </html >
