@@ -43,6 +43,8 @@ public class BrandService implements AbstractService<Brand, Integer> {
         return false;
     }
 
+
+
     @Override
     public List<Brand> search(Brand brand) {
         ExampleMatcher matcher = ExampleMatcher

@@ -102,7 +102,7 @@
                             <label class="control-label" for="mobile">Mobile :</label>
                         </div>
                         <div class="col-md-8">
-                            <input id="mobile" th:field="*{mobile}" class="form-control mobile" tabindex="6" type="text" minlength="9" maxlength="10" required/>
+                            <input id="mobile" th:field="*{mobile}" class="form-control mobile" tabindex="6" type="number" minlength="9" maxlength="10" required/>
                             <span class="error" th:errors="*{mobile}"
                                   th:if="${#fields.hasErrors('mobile')}" id="mobileError">Error Mobile Number</span>
                         </div>

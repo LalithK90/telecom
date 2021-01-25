@@ -1,63 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head data-th-replace="~{fragments/header :: headerFragment}">
     <meta charset="UTF-8">
     <title>Thymeleaf Springboot </title>
 </head>
-<body>
+<body class="sb-nav-fixed">
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
+<div id="layoutSidenav">
+    <div th:replace="~{fragments/sideNav :: sideNavFragment}">
+    </div>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid ">
+                <div class="row text-center formManagement border-info">
+                    <div class="col">
+                        <a class="btn btn-success" href="/payment/add">
+                            <i class="fa fa-user-plus" style="font-size: 18px;"></i> &nbsp; New Payment </a>
 
-<div class="container-fluid ">
-    <div class="row text-center formManagement border-info">
-        <div class="col">
-            <a class="btn btn-success" href="/payment/add">
-                <i class="fa fa-user-plus" style="font-size: 18px;"></i> &nbsp; New Payment </a>
-
-        </div>
-        <div class="col ">
-            <h4 class="text-info text-center">
-                <strong>
-                    Payment Management
-                </strong>
-            </h4>
-        </div>
-        <div class="col">
-        </div>
+                    </div>
+                    <div class="col ">
+                        <h4 class="text-info text-center">
+                            <strong>
+                                Payment Management
+                            </strong>
+                        </h4>
+                    </div>
+                    <div class="col">
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="offset-2 col-8 col-sm-8 col-md-8"  data-th-if="${not #lists.isEmpty(purchaseOrders)}">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-condensed">
+                            <thead>
+                            <tr>
+                                <th> Index</th>
+                                <th> Supplier Name</th>
+                                <th>Purchase Order Number</th>
+                                <th>Need to be Paid</th>
+                                <th data-th-if="${addState}"> Modify</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-th-each="purchaseOrder, rowCount : ${purchaseOrders}">
+                                <th data-th-text="${rowCount.count}"></th>
+                                <th data-th-text="${purchaseOrder.supplier.name}"></th>
+                                <th data-th-text="${purchaseOrder.code}"></th>
+                                <th data-th-text="${purchaseOrder.price}"></th>
+                                <th data-th-if="${addState}">
+                                    <a id="edit" data-th-href="${'/payment/' + purchaseOrder.id}"
+                                       class="btn btn-primary btn-sm mr-2 p-2">Pay
+                                    </a>
+                                  </th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div  data-th-replace="~{fragments/footer :: footerFragment}"></div>
+        <!--script include-->
+        <div data-th-replace="~{fragments/script :: scriptFragment}"></div>
     </div>
 </div>
-<div class="container-fluid">
-    <div class="offset-2 col-8 col-sm-8 col-md-8"  data-th-if="${not #lists.isEmpty(purchaseOrders)}">
-        <div class="table-responsive">
-            <table class="table table-striped table-condensed">
-                <thead>
-                <tr>
-                    <th> Index</th>
-                    <th> Supplier Name</th>
-                    <th>Purchase Order Number</th>
-                    <th>Need to be Paid</th>
-                    <th data-th-if="${addState}"> Modify</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr data-th-each="purchaseOrder, rowCount : ${purchaseOrders}">
-                    <th data-th-text="${rowCount.count}"></th>
-                    <th data-th-text="${purchaseOrder.supplier.name}"></th>
-                    <th data-th-text="${purchaseOrder.code}"></th>
-                    <th data-th-text="${purchaseOrder.price}"></th>
-                    <th data-th-if="${addState}">
-                        <a id="edit" data-th-href="${'/payment/' + purchaseOrder.id}"
-                           class="btn btn-primary btn-sm mr-2 p-2">Pay
-                        </a>
-                      </th>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-<div  data-th-replace="~{fragments/footer :: footerFragment}"></div>
-<!--script include-->
-<div data-th-replace="~{fragments/script :: scriptFragment}"></div>
-
 </body>
 </html>

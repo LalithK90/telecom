@@ -60,10 +60,29 @@
                                 <tr th:each="brand, rowCount : ${brands}">
                                     <th th:text="${rowCount.count}"></th>
                                     <th th:text="${brand.name}"></th>
+                                    <script>
+
+                                        function confirmDelete(){
+                                            var txt;
+                                            if (confirm("Want to delete!")) {
+                                                txt = "Deleted!";
+                                                th:href="${'/brand/delete/' + brand.id}";
+                                                // Do the delete when you click ok
+                                            } else {
+                                                txt = "Cancel!";
+                                                // If you click cancel, remove the alert box
+                                            }
+                                            console.log(txt);
+                                        }
+
+
+                                    </script>
                                     <th>
                                         <a id="brandEdit" th:href="${'/brand/edit/' + brand.id}" class="btn btn-outline-success btn-sm"><i
                                                 class="fa fa-edit" style="font-size: 15px"></i>&nbsp;Edit</a>
-                                        <a id="brandRemove" th:href="${'/brand/delete/' + brand.id}" class="btn btn-outline-danger btn-sm">
+                                        <a id="brandRemove" class="btn btn-outline-danger btn-sm"
+                                        onclick="confirmDelete()"
+                                        >
                                             <!--th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" --> <i
                                                 class="fa fa-trash" style="font-size: 15px"></i>
                                             Delete</a>
