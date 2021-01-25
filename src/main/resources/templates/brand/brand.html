@@ -65,13 +65,12 @@
                     <a id="brandEdit" th:href="${'/brand/edit/' + brand.id}" class="btn btn-outline-success btn-sm" ><i
                           class="fa fa-edit" style="font-size: 15px" ></i >&nbsp;Edit</a >
 
-                    <button class="btn btn-outline-danger btn-sm" th:id="${'rmb'+brand.id}"
+                    <button class="btn btn-outline-danger btn-sm" th:id="${'/brand/delete/' + brand.id}"
                             onclick="confirmDelete(this)" >
                       <!--th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" -->
                       <i class="fa fa-trash" style="font-size: 15px" ></i >
                       Delete
                     </button >
-                    <input type="hidden" th:value="${'/brand/delete/' + brand.id}" th:id="${'rmv'+brand.id}" >
                   </th >
                 </tr >
                 </tbody >
@@ -121,14 +120,12 @@
     /*active boostrap alert - end*/
 
     function confirmDelete(obj) {
-        let urlInputId = obj.getAttribute('id').slice(3);
-        let url =location.protocol+ "//"+ location.host+$(`#rmv${urlInputId}`).val();
         swal("Are you sure to delete this?", {
             dangerMode: true,
             buttons: true,
         }).then((x) => {
             if (x) {
-                self.location = url;
+                self.location = location.protocol + "//" + location.host + obj.getAttribute('id');
             }
         });
     }
