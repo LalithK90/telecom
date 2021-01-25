@@ -32,6 +32,7 @@ public class Category {
     private LiveDead liveDead;
 
     @Size( min = 3, message = "Your name cannot be accepted" )
+    @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "category",cascade = CascadeType.ALL, fetch = FetchType.EAGER)

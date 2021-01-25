@@ -78,7 +78,7 @@ public  class SupplierController implements AbstractController<Supplier, Integer
             }
             //send welcome message and email
             if (supplier.getEmail() != null) {
-                //  emailService.sendEmail(supplier.getEmail(), "Welcome Message", "Welcome to Kmart Super...");
+                //  emailService.sendEmail(supplier.getEmail(), "Welcome Message", "Welcome to Crystal Telecom...");
             }
         }
         redirectAttributes.addFlashAttribute("supplierDetail",
