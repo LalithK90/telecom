@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" >
-<head th:replace="~{fragments/header :: headerFragment}" >
+<head  data-th-replace="~{fragments/header :: headerFragment}" >
 
   <meta charset="UTF-8" >
   <title >J N Super </title >
 </head >
 <body >
-<nav th:replace="~{fragments/navBar :: navBarFragment}" ></nav >
+<nav  data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
 
 <div class="container-fluid bg-secondary form-Border" >
   <div class="row text-center formManagement border-info" >
@@ -32,7 +32,7 @@
 </div >
 <div class="container-fluid  text-center" >
   <div class="col" >
-    <div class="col" id="discountRatioListPresent" th:if="${not #lists.isEmpty(discountRatios)}" >
+    <div class="col" id="discountRatioListPresent"  data-th-if="${not #lists.isEmpty(discountRatios)}" >
       <table class="table table-hover table-striped" id="myTable" >
         <thead >
         <tr >
@@ -44,16 +44,16 @@
         </tr >
         </thead >
         <tbody >
-        <tr th:each="discountRatio, rowCount : ${discountRatios}" >
-          <th th:text="${rowCount.count}" ></th >
-          <th th:text="${discountRatio.name}" ></th >
-          <th th:text="${discountRatio.amount}" ></th >
-          <th th:text="${discountRatio.liveDead.liveDeath}" ></th >
+        <tr   data-th-each="discountRatio, rowCount : ${discountRatios}" >
+          <th  data-th-text="${rowCount.count}" ></th >
+          <th  data-th-text="${discountRatio.name}" ></th >
+          <th  data-th-text="${discountRatio.amount}" ></th >
+          <th  data-th-text="${discountRatio.liveDead.liveDeath}" ></th >
           <th >
-            <a id="discountRatioEdit" th:href="${'/discountRatio/edit/' + discountRatio.id}"
+            <a id="discountRatioEdit"  data-th-href="${'/discountRatio/edit/' + discountRatio.id}"
                class="btn btn-primary btn-sm" ><i class="fa fa-edit" ></i >&nbsp;Edit</a >
-            <a id="discountRatioRemove" th:href="${'/discountRatio/delete/' + discountRatio.id}"
-               th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="btn btn-danger btn-sm" >
+            <a id="discountRatioRemove"  data-th-href="${'/discountRatio/delete/' + discountRatio.id}"
+                data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="btn btn-danger btn-sm" >
               <i class="fa fa-trash" ></i >
               Delete</a >
           </th >
@@ -62,7 +62,7 @@
       </table >
     </div >
   </div >
-  <div class="row" th:if="${ #lists.isEmpty(discountRatios)}" >
+  <div class="row"  data-th-if="${ #lists.isEmpty(discountRatios)}" >
     <div class="col-sm-12" >
       <div class="alert alert-warning alert-dismissible fade show" role="alert" >
         <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
@@ -82,9 +82,9 @@
     </script >
   </div >
 </div >
-<div th:replace="~{fragments/footer :: footerFragment}" ></div >
+<div  data-th-replace="~{fragments/footer :: footerFragment}" ></div >
 <!--script include-->
-<div th:replace="~{fragments/script :: scriptFragment}" ></div >
+<div  data-th-replace="~{fragments/script :: scriptFragment}" ></div >
 
 </body >
 </html >

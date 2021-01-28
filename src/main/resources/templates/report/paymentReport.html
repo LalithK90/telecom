@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en"  >
+<head  data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<nav  data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+
+<div class="container-fluid bg-secondary form-Border" >
+  <div class="row text-center formManagement border-info" >
+    <div class="col" >
+
+    </div >
+    <div class="col " >
+      <h4 class="text-info text-center" >
+        <strong >
+          Report <br > <span data-th-text="${message}" ></span >
+        </strong >
+      </h4 >
+    </div >
+    <div class="col" >
+    </div >
+  </div >
+</div >
+<!--Custom search -->
+<div class="container-fluid" >
+  <div class="row" >
+    <!--Custom Invoice search-->
+    <button type="button" class="btn btn-info mb-5 btn-block text-capitalize" data-toggle="collapse"
+            data-target="#dataTargetCollapse"
+            aria-expanded="false" aria-controls="dataTargetCollapse"
+    > Custom Payment Search
+    </button >
+    <div class="collapse mx-auto" id="dataTargetCollapse" >
+      <div class="container-fluid text-center" >
+        <div class="row" >
+          <div class="col-sm-6 col-sm-offset-3" >
+            <h4 class="text-info" ><b > Custom Search</b ></h4 >
+            <form class="form-inline" data-th-action="@{/report/payment/search}" data-th-method="POST" >
+              <div class="form-group" >
+                <label for="startDate" >FROM :</label >
+                <input class="form-control" id="startDate" name="startDate" type="date" />
+              </div >
+              <div class="form-group" >
+                <label for="endDate" >TO :</label >
+                <input class="form-control" id="endDate" name="endDate" type="date" />
+              </div >
+              <button class="btn btn-success" id="btnSummaryFind" type="submit" ><span
+                    class="glyphicon glyphicon-search" ></span >&nbsp;Search
+              </button >
+            </form >
+          </div >
+        </div >
+      </div >
+    </div >
+  </div >
+</div >
+<!--Payment-->
+<div class="container-fluid" >
+  <div class="container" >
+    <h3 >All Payment Count </h3 >
+  </div >
+  <div class="offset-2 col-8 col-sm-8 col-md-8" >
+    <div class="container-fluid" >
+      <p >
+        Payment Count <span data-th-text="${paymentTotalCount}" ></span >
+        Total Amount <span data-th-text="${paymentCardAmount+paymentCardAmount}" ></span >
+      </p >
+    </div >
+  </div >
+  <div class="offset-2 col-8 col-sm-8 col-md-8" >
+    <div class="container-fluid" >
+      <p >
+        Payment Card Payment Count <span data-th-text="${paymentCardCount}" ></span >
+        Payment Card Amount (Rs). <span data-th-text="${paymentCardAmount}" ></span >
+      </p >
+    </div >
+  </div >
+  <div class="offset-2 col-8 col-sm-8 col-md-8" >
+    <div class="container-fluid" >
+      <p >
+        Payment Cash Payment Count <span data-th-text="${paymentCashCount}" ></span >
+        Payment Cash Amount (Rs). <span data-th-text="${paymentCardAmount}" ></span >
+      </p >
+    </div >
+  </div >
+</div >
+
+
+<div  data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div  data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+
+</body >
+</html >

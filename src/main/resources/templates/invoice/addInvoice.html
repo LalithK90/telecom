@@ -7,8 +7,64 @@
 </head >
 <body >
 <link data-th-href="@{/css/combo-box-search.css}" media="all" rel="stylesheet" type="text/css" />
+<link data-th-href="@{/css/modal.css}" media="all" rel="stylesheet" type="text/css" />
 <!--/* Nav bar is included */-->
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+
+<!--Creates the popup body-->
+<div class="popup-overlay" >
+  <!--Creates the popup content-->
+  <div class="popup-content" >
+    <div class="form-row" >
+      <!--item name-->
+      <div class="form-group col-md-6" >
+        <label for="itemName" class="text-dark" >Item Name :</label >
+        <input id="itemName" class="form-control" type="text" readonly />
+      </div >
+      <!--Available Quantity-->
+      <div class="form-group col-md-6" >
+        <label for="abQuantity" class="text-dark" >Available Quantity :</label >
+        <input id="abQuantity" class="form-control" type="text" readonly />
+      </div >
+    </div >
+    <div class="form-row" >
+      <!--Expired date-->
+      <div class="form-group col-md-6" >
+        <label for="exDate" class="text-dark" >Expired Date :</label >
+        <input id="exDate" class="form-control" type="text" readonly />
+      </div >
+      <!--Request count-->
+      <div class="form-group col-md-6" >
+        <label for="sellPriceModal" class="text-dark" >Sell Price :</label >
+        <input id="sellPriceModal" class="form-control" type="number" step="0.01" readonly />
+      </div >
+    </div >
+    <div class="form-row" >
+      <!--Expired date-->
+      <div class="form-group col-md-6" >
+        <label for="requestCount" class="text-dark" >Request Count :</label >
+        <input id="requestCount" class="form-control" type="number" step="0.01" />
+      </div >
+      <!--Total -->
+      <div class="form-group col-md-6" >
+        <label for="totalModal" class="text-dark" >Total:</label >
+        <input id="totalModal" class="form-control" type="number" step="0.01" readonly />
+        <input id="ledgerId" class="form-control" type="hidden" hidden />
+      </div >
+    </div >
+    <!--button area-->
+    <div class="form-row" >
+      <div class="col-6" ></div >
+      <div class="col " >
+        <button class="btn btn-danger" id="close" >Close</button >
+      </div >
+      <div class="col " >
+        <button class="btn btn-success" id="addModal" >Add</button >
+      </div >
+    </div >
+  </div >
+</div >
+
 <div class="container-fluid mt-3" >
   <div class="container-fluid" >
     <form action="/invoice" method="post" data-th-object="${invoice}" >
@@ -41,25 +97,22 @@
                 <tr >
                   <th >Index</th >
                   <th >Item Name</th >
+                  <th >Ex Date</th >
+                  <th >Available Quantity</th >
                   <th >Unit Price</th >
                   <th >Quantity</th >
                   <th >Line Total</th >
+                  <th >Modify</th >
                 </tr >
                 </thead >
                 <tbody >
-                <!--Selected Item -->
-                <tr >
-                  <th ></th >
-                  <th ></th >
-                  <th ></th >
-                  <th ></th >
-                  <th ></th >
-                </tr >
+
                 </tbody >
                 <tfoot >
                 <tr >
                   <th colspan="4" class="text-right" ><label for="total" >Total</label ></th >
-                  <th ><input id="total" type="text" class="form-control" placeholder="Total Price" ></th >
+                  <th ><input id="total" type="text" class="form-control" name="totalPrice" placeholder="Total Price" >
+                  </th >
                 </tr >
                 </tfoot >
               </table >
@@ -70,44 +123,6 @@
       <hr >
       <!--Payment Section-->
       <div class="form-group" >
-        <div class="form-row" >
-          <!--Discount-->
-          <div class="col-md-6 " >
-            <div class="form-row text-right" >
-              <div class="col-md-4" >
-                <label class="control-label" for="discountRatio" >Discount Ratio :</label >
-              </div >
-              <div class="col-md-8" >
-                <select id="discountRatio" data-th-field="*{discountRatio}" class="form-control"
-                        tabindex="9"
-                        required >
-                  <option value="" >Please select</option >
-                  <option data-th-each="discountRatio : ${discountRatios}"
-                          data-th-text="${discountRatio.amount}"
-                          data-th-value="${discountRatio.id}" >
-                    Please select
-                  </option >
-                </select >
-              </div >
-            </div >
-          </div >
-          <!--Discount Amount-->
-          <div class="col-md-6 " >
-            <div class="form-row text-right" >
-              <div class="col-md-4" >
-                <label class="control-label" for="discountAmount" >Discount Amount :</label >
-              </div >
-              <div class="col-md-8" >
-                <input id="discountAmount" data-th-field="*{discountAmount}" class="form-control" tabindex="6"
-                       type="text"
-                       required readonly />
-                <span class="error" id="nicError" data-th-errors="*{discountAmount}"
-                      data-th-if="${#fields.hasErrors('discountAmount')}" >Error
-                                                               Discount Amount</span >
-              </div >
-            </div >
-          </div >
-        </div >
         <!--Payment method and total amount-->
         <div class="form-row text-right" >
           <!--payment method-->
@@ -132,6 +147,28 @@
               </div >
             </div >
           </div >
+          <!--Discount-->
+          <div class="col-md-6 " >
+            <div class="form-row text-right" >
+              <div class="col-md-4" >
+                <label class="control-label" for="discountRatio" >Discount Ratio :</label >
+              </div >
+              <div class="col-md-8" >
+                <select id="discountRatio" data-th-field="*{discountRatio}" class="form-control"
+                        tabindex="9"
+                        required >
+                  <option value="" >Please select</option >
+                  <option data-th-each="discountRatio : ${discountRatios}"
+                          data-th-text="${discountRatio.amount}"
+                          data-th-value="${discountRatio.id}" >
+                    Please select
+                  </option >
+                </select >
+              </div >
+            </div >
+          </div >
+        </div >
+        <div class="form-row" >
           <!--Total Amount-->
           <div class="col-md-6 " >
             <div class="form-row text-right" >
@@ -144,6 +181,22 @@
                        required readonly />
                 <span class="error" id="totalAmountError" data-th-errors="*{balance}"
                       data-th-if="${#fields.hasErrors('totalAmount')}" ></span >
+              </div >
+            </div >
+          </div >
+          <!--Discount Amount-->
+          <div class="col-md-6 " >
+            <div class="form-row text-right" >
+              <div class="col-md-4" >
+                <label class="control-label" for="discountAmount" >Discount Amount :</label >
+              </div >
+              <div class="col-md-8" >
+                <input id="discountAmount" data-th-field="*{discountAmount}" class="form-control" tabindex="6"
+                       type="text"
+                       required readonly />
+                <span class="error" id="nicError" data-th-errors="*{discountAmount}"
+                      data-th-if="${#fields.hasErrors('discountAmount')}" >Error
+                                                               Discount Amount</span >
               </div >
             </div >
           </div >
@@ -286,8 +339,8 @@
           <!--Save Button-->
           <button class="btn btn-success ml-5" tabindex="12" type="submit" >
             <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;<span
-                data-th-text="${'Save'}"
-                id="submit" ></span >
+                  data-th-text="${'Save'}"
+                  id="submit" ></span >
           </button >
           <!--Cancel Button-->
           <button class="btn btn-warning ml-5" tabindex="13" type="reset" >
@@ -299,7 +352,6 @@
   </div >
 </div >
 
-
 <input type="hidden" data-th-value="${ledgerItemURL}" id="ledgerItemURL" >
 <!--/* footer is */-->
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
@@ -307,97 +359,237 @@
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
 <script data-th-src="@{/js/combo-box-search.js}" ></script >
 <script >
-    $(document).ready(function () {
-        $("#btnshow").hide();
+  //removes the "active" class to .popup and .popup-content when the "Close" button is clicked
+  $("#close, .popup-overlay body").on("click", function () {
+    $(".popup-overlay, .popup-content").removeClass("active");
+    modalValueZero();
+  });
 
-        $("#item").select2({
-            data: $(this).val()
-        }).change(() => {
-            //todo optionElementRemove("#item");
-            let finalUrl = $('#ledgerItemURL').val() + $("#item").val();
-            $.ajax({
-                type: 'GET',
-                url: finalUrl,
-                success: function (resp) {
-                    console.trace(resp);
-                    swal("Write something here:", {
-                        content: "input",
-                    })
-                        .then((value) => {
-                            swal(`You typed: ${value}`);
-                        });
+  $(document).ready(function () {
+    $("#btnshow").hide();
 
-                },
-                error: function (err) {
-                    console.log(err);
-                }
-            });
-
-        });
-
-        $("#customer").select2({
-            data: $(this).val()
-        });
-        $("input[value='CASH']").prop('checked', true);
-        showHideContent();
-        $("input[value='NOT_PRINTED']").prop('checked', true);
-
-    });
-
-    $("input[name='paymentMethod']").bind('change', function () {
-        showHideContent();
-    });
-
-    function showHideContent() {
-        let paymentMethodValue = $("input[name='paymentMethod']:checked").val();
-        if (paymentMethodValue === 'CASH') {
-            $("#bankNameBlock").hide();
-            $("#cashPaymentBlock").show();
-            $("#amountTendered, #balance").prop('required', true);
-        } else {
-            $("#cashPaymentBlock").hide();
-            $("#bankNameBlock").show();
-            $("#bankName, #cardNumber").prop('required', true);
+    $("#item").select2({
+      data: $(this).val()
+    }).change(() => {
+      let finalUrl = $('#ledgerItemURL').val() + $("#item").val();
+      $.ajax({
+        type: 'GET',
+        url: finalUrl,
+        success: function (resp) {
+          popUpDataSet(resp);
+        },
+        error: function (err) {
+          console.log(err);
         }
-    }
+      });
 
-    //enter amount check
-    // $("#amount").bind('keyup', function () {
-    //     let amountString = $(this).val();
-    //     balanceCalculate(amountString);
-    // });
-    //
-    // function balanceCalculate(amountString) {
-    //     let poValue = parseInt($("#allAmount").val());
-    //     let poAmountString = $("#poAmount").val();
-    //     let poAmount = parseInt(poAmountString);
-    //     let amount = parseInt(amountString);
-    //
-    //     $("#balance").val(parseFloat(balance(poValue, amount)).toFixed(2));
-    //
-    //     if ((poAmount !== amount && poAmountString.length === amountString.length) && (amount > poAmount &&
-    //         poAmountString.length === amountString.length) || balance(poValue, amount) < 0) {
-    //         swal({
-    //             title: "Could you accept this amount as a payment.. !",
-    //             icon: "warning",
-    //             text: "Please check what your are entered. \n",
-    //         });
-    //         $("#balance").val(parseFloat(0).toFixed(2));
-    //         $("#amount").val(parseFloat(poAmount).toFixed(2));
-    //     }
-    //
-    // }
-    //
-    // function balance(poValue, amount) {
-    //     return poValue - amount;
-    // }
+    });
 
-    //option tag remove
-    let optionElementRemove = (id) => {
-        let selectedValue = $(id).val();
-        let selectedItemId = `${id} option[value='${selectedValue}']`;
-        $(selectedItemId).remove();
+    $("#customer").select2({
+      data: $(this).val()
+    });
+    $("input[value='CASH']").prop('checked', true);
+    showHideContent();
+    $("input[value='NOT_PRINTED']").prop('checked', true);
+
+  });
+
+  let selectedInvoiceLedger = [];
+
+  function popUpDataSet(resp) {
+    $("#ledgerId").val(resp.id);
+    $("#itemName").val(resp.item.name);
+    $("#abQuantity").val(resp.quantity);
+    let date = resp.expiredDate[0] + '-' + resp.expiredDate[1] + '-' + resp.expiredDate[2];
+    $("#exDate").val(date);
+    $("#sellPriceModal").val(resp.sellPrice);
+    $(".popup-overlay, .popup-content").addClass("active");
+    addButtonDisable();
+  }
+
+  function addButtonDisable() {
+    let requestInputValue = $('#requestCount').val();
+    if (requestInputValue) {
+      $("#addModal").show();
+    } else {
+      $("#addModal").hide();
     }
+  }
+
+  $('#addModal').bind('click', function () {
+    let receivedLedgerItem = {};// ledgerItem
+    receivedLedgerItem.id = $("#ledgerId").val();
+    receivedLedgerItem.name = $("#itemName").val();
+    receivedLedgerItem.quantity = $("#abQuantity").val();
+    receivedLedgerItem.exDate = $("#exDate").val();
+    receivedLedgerItem.sellPrice = $("#sellPriceModal").val();
+    receivedLedgerItem.requestCount = $("#requestCount").val();
+    receivedLedgerItem.totalModal = $("#totalModal").val();
+    selectedInvoiceLedger.push(receivedLedgerItem);
+    $(".popup-overlay, .popup-content").removeClass("active");
+    optionElementRemove('#item');
+    itemAddToItemSelectTable();
+    modalValueZero();
+  });
+
+  function itemAddToItemSelectTable() {
+    let html = "";
+    for (let i = 0; i < selectedInvoiceLedger.length; i++) {
+      html += tableRowCreate(i, selectedInvoiceLedger[i]);
+    }
+    //$("#myTable tbody tr:last").after(html);
+
+    $("#myTable tbody ").html(html);
+    totalPrice();
+  }
+
+  function tableRowCreate(id, invoiceLedger) {
+    return `<tr >
+                      <th >${id + 1}
+                      <input type="hidden" id="id${id}" class="form-control"  name="invoiceLedgers[${id}].ledger.id" value="${invoiceLedger.id}">
+                      </th >
+                      <th >
+                      <input type="text" id="na${id}" class="form-control" value="${invoiceLedger.name}" readonly>
+                      </th >
+                      <th >
+                      <input type="text" id="ex${id}" class="form-control" value="${invoiceLedger.exDate}" readonly>
+                      </th >
+                      <th >
+                      <input type="number" id="aq${id}" class="form-control" value="${invoiceLedger.quantity}" readonly>
+                      </th >
+                      <th >
+                      <input type="number" id="sp${id}" class="form-control" name="invoiceLedgers[${id}].sellPrice" value="${invoiceLedger.sellPrice}" readonly>
+                      </th >
+                      <th >
+                      <input type="number" id="rq${id}" class="form-control" onchange="lineTotalCalculateByLine(this)"  onkeyup="lineTotalCalculateByLine(this)" name="invoiceLedgers[${id}].quantity" value="${invoiceLedger.requestCount}">
+                      </th >
+                      <th >
+                      <input type="number" id="lt${id}" class="form-control lineTotal" name="invoiceLedgers[${id}].lineTotal" value="${invoiceLedger.totalModal}" readonly>
+                      </th >
+                      <th>
+                      <button type="button" id="rm${id}" class="btn btn-danger" onclick="removeItem(this)">Remove</button>
+                      </th>
+                    </tr >`
+  }
+
+  function removeItem(obj) {
+    let selectedFiledId = obj.getAttribute('id').slice(2);
+    //id,name,sellPrice,abQut,exDate
+    $("#item").append(optionTagAdd(
+            $(`#id${selectedFiledId}`).val(),
+            $(`#na${selectedFiledId}`).val(),
+            $(`#sp${selectedFiledId}`).val(),
+            $(`#aq${selectedFiledId}`).val(),
+            $(`#ex${selectedFiledId}`).val()));
+    selectedInvoiceLedger = selectedInvoiceLedger.filter(function (obj) {
+      return obj.id !== $(`#id${selectedFiledId}`).val();
+    })
+    document.getElementById("myTable").deleteRow(obj.parentNode.parentNode.rowIndex);
+    totalPrice();
+  }
+
+  //calculate line total
+  function lineTotalCalculateByLine(obj) {
+    let selectedFiledId = obj.getAttribute('id').slice(2);
+    let price = $(`#sp${selectedFiledId}`).val();
+    $(`#lt${selectedFiledId}`).val(price * obj.value);
+    totalPrice();
+  }
+
+  function totalPrice() {
+    let lineTotal = document.getElementsByClassName("lineTotal");
+    let totalValue = 0;
+    for (let i = 0; i < lineTotal.length; i++) {
+      totalValue += parseFloat(lineTotal[i].value);
+    }
+    $("#total").val(totalValue);
+    $("#totalAmount").val(totalValue);
+    if ($("#discountRatio").find('option:selected').text() >= 0) {
+      discountRatio();
+    }
+  }
+
+  //modal total mount calculate
+  $("#requestCount").bind('keyup', function () {
+    $("#totalModal").val(parseFloat($("#sellPriceModal").val()) * parseFloat($(this).val()));
+    addButtonDisable();
+  });
+
+  //modal all values zero
+  function modalValueZero() {
+    $("#ledgerId").val(0);
+    $("#itemName").val('');
+    $("#abQuantity").val(0);
+    $("#exDate").val('');
+    $("#sellPriceModal").val(0.00);
+    $("#requestCount").val('');
+    $("#totalModal").val(0.00);
+  }
+
+  $("input[name='paymentMethod']").bind('change', function () {
+    showHideContent();
+  });
+
+  function showHideContent() {
+    let paymentMethodValue = $("input[name='paymentMethod']:checked").val();
+    if (paymentMethodValue === 'CASH') {
+      $("#bankNameBlock").hide();
+      $("#cashPaymentBlock").show();
+      $("#amountTendered, #balance").prop('required', true);
+    } else {
+      $("#cashPaymentBlock").hide();
+      $("#bankNameBlock").show();
+      $("#bankName, #cardNumber").prop('required', true);
+    }
+  }
+
+  $('#discountRatio').bind('change', function () {
+    let total = $("#total").val();
+    if (total <= 0 || total === null) {
+      swal({
+        title: "Before select discount have to select item  ",
+        icon: "warning",
+      });
+    }
+    discountRatio();
+  });
+
+  function discountRatio() {
+    let discountRatio = parseFloat($("#discountRatio").find('option:selected').text());
+    let total = parseFloat($("#total").val());
+    let discountAmount = total * discountRatio / 100;
+    $("#totalAmount").val(total - discountAmount);
+    $("#discountAmount").val(discountAmount);
+  }
+
+  $("#amountTendered").bind('focusout', function () {
+    let tenderedAmount = $(this).val();
+    let totalAmount = $("#totalAmount").val();
+    if (tenderedAmount < totalAmount) {
+      swal({
+        title: "Hey why do you try to pay less money",
+        icon: "warning",
+      });
+      $("#amountTendered").val(totalAmount);
+    } else {
+      $("#balance").val(tenderedAmount - totalAmount);
+    }
+  });
+
+  //option tag remove
+  let optionElementRemove = (id) => {
+    let selectedValue = $(id).val();
+    let selectedItemId = `${id} option[value='${selectedValue}']`;
+    $(selectedItemId).remove();
+  }
+
+  //option tag add
+  function optionTagAdd(id, name, sellPrice, abQut, exDate) {
+    return `<option value="${id}">
+                      Item Name: ${name}  Sell Price : {sellPrice}
+                      Available quantity : ${abQut}  Expired Date : ${exDate}
+                    </option>`;
+  }
 
 </script >
 </body >

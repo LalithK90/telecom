@@ -11,6 +11,7 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @CacheConfig( cacheNames = {"role"} ) // tells Spring where to store cache for this class
@@ -24,7 +25,9 @@ public class RoleService implements AbstractService<Role, Integer > {
 
     @Cacheable
     public List< Role > findAll() {
-        return roleDao.findAll();
+        return roleDao.findAll().stream()
+            .filter(x -> LiveDead.ACTIVE.equals(x.getLiveDead()))
+            .collect(Collectors.toList());
     }
 
     @Cacheable

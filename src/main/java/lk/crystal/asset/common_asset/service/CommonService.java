@@ -1,18 +1,16 @@
 package lk.crystal.asset.common_asset.service;
 
 
-import lk.crystal.asset.employee.controller.EmployeeRestController;
 import lk.crystal.asset.item.entity.Item;
 import lk.crystal.asset.item.service.ItemService;
 import lk.crystal.asset.supplier.entity.Supplier;
 import lk.crystal.asset.supplier.service.SupplierService;
-import lk.crystal.asset.supplier_item.entity.enums.ItemSupplierStatus;
 import lk.crystal.asset.supplier_item.entity.SupplierItem;
+import lk.crystal.asset.supplier_item.entity.enums.ItemSupplierStatus;
 import lk.crystal.asset.supplier_item.service.SupplierItemService;
 import lk.crystal.util.service.MakeAutoGenerateNumberService;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,26 +113,6 @@ public class CommonService {
             items.add(supplierItem.getItem());
         }
         return items;
-    }
-
-    //common things to employee and offender - start
-    public void commonUrlBuilder(Model model) {
-        model.addAttribute("addStatus", true);
-        // model.addAttribute("designations", Designation.values());
-/*        model.addAttribute("provinces", Province.values());
-        model.addAttribute("districtUrl", MvcUriComponentsBuilder
-                .fromMethodName(WorkingPlaceRestController.class, "getDistrict", "")
-                .build()
-                .toString());
-        model.addAttribute("stationUrl", MvcUriComponentsBuilder
-                .fromMethodName(WorkingPlaceRestController.class, "getStation", "")
-                .build()
-                .toString());*/
-        Object[] arg = {"designation", "id"};
-        model.addAttribute("employeeUrl", MvcUriComponentsBuilder
-            .fromMethodName(EmployeeRestController.class, "getEmployeeByWorkingPlace", arg)
-            .build()
-            .toString());
     }
 
 

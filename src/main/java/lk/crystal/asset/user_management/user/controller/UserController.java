@@ -5,8 +5,8 @@ import lk.crystal.asset.employee.entity.Employee;
 import lk.crystal.asset.employee.entity.enums.Designation;
 import lk.crystal.asset.employee.entity.enums.EmployeeStatus;
 import lk.crystal.asset.employee.service.EmployeeService;
-import lk.crystal.asset.user_management.user.entity.User;
 import lk.crystal.asset.user_management.role.service.RoleService;
+import lk.crystal.asset.user_management.user.entity.User;
 import lk.crystal.asset.user_management.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -141,11 +141,7 @@ public class UserController {
     Designation designation = employee.getDesignation();
 
     // userService.persist(user);
-    if ( employee.getEmployeeStatus().equals(EmployeeStatus.WORKING) ) {
-      user.setEnabled(true);
-    } else {
-      user.setEnabled(false);
-    }
+    user.setEnabled(employee.getEmployeeStatus().equals(EmployeeStatus.WORKING));
     user.setRoles(user.getRoles());
     user.setEnabled(true);
     userService.persist(user);

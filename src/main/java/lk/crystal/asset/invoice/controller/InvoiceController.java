@@ -3,10 +3,10 @@ package lk.crystal.asset.invoice.controller;
 
 import lk.crystal.asset.customer.service.CustomerService;
 import lk.crystal.asset.discount_ratio.service.DiscountRatioService;
+import lk.crystal.asset.invoice.entity.Invoice;
 import lk.crystal.asset.invoice.entity.enums.InvoicePrintOrNot;
 import lk.crystal.asset.invoice.entity.enums.InvoiceValidOrNot;
 import lk.crystal.asset.invoice.entity.enums.PaymentMethod;
-import lk.crystal.asset.invoice.entity.Invoice;
 import lk.crystal.asset.invoice.service.InvoiceService;
 import lk.crystal.asset.item.service.ItemService;
 import lk.crystal.asset.ledger.controller.LedgerController;
@@ -50,7 +50,8 @@ public class InvoiceController {
   @GetMapping
   public String invoice(Model model) {
     model.addAttribute("invoices",
-                       invoiceService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(dateTimeAgeService.getPastDateByMonth(3)), dateTimeAgeService.dateTimeToLocalDateEndInDay(LocalDate.now())));
+            invoiceService.findAll());
+    /*invoiceService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(dateTimeAgeService.getPastDateByMonth(3)), dateTimeAgeService.dateTimeToLocalDateEndInDay(LocalDate.now())));*/
     model.addAttribute("firstInvoiceMessage", true);
     return "invoice/invoice";
   }
@@ -59,7 +60,7 @@ public class InvoiceController {
   public String invoiceSearch(@RequestAttribute( "startDate" ) LocalDate startDate,
                               @RequestAttribute( "endDate" ) LocalDate endDate, Model model) {
     model.addAttribute("invoices",
-                       invoiceService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(startDate), dateTimeAgeService.dateTimeToLocalDateEndInDay(endDate)));
+            invoiceService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(startDate), dateTimeAgeService.dateTimeToLocalDateEndInDay(endDate)));
     model.addAttribute("firstInvoiceMessage", true);
     return "invoice/invoice";
   }
@@ -71,27 +72,15 @@ public class InvoiceController {
     model.addAttribute("customers", customerService.findAll());
     model.addAttribute("discountRatios", discountRatioService.findAll());
     model.addAttribute("ledgerItemURL", MvcUriComponentsBuilder
-        .fromMethodName(LedgerController.class, "findId", "")
-        .build()
-        .toString());
+            .fromMethodName(LedgerController.class, "findId", "")
+            .build()
+            .toString());
     System.out.println("Sixe" + ledgerService.findAll().size());
     //send not expired and not zero quantity
     model.addAttribute("ledgers", ledgerService.findAll()
-        .stream()
-        .filter(x -> 0 < Integer.parseInt(x.getQuantity()) && x.getExpiredDate().isAfter(LocalDate.now()))
-        .collect(Collectors.toList()));
-    System.out.println(ledgerService.findAll()
-                           .stream()
-                           .filter(x -> {
-                             if ( 0 < Integer.parseInt(x.getQuantity()) && x.getExpiredDate().isAfter(LocalDate.now()) ) {
-                               System.out.println("condition valid  " +x.getQuantity()+"  ex date "+x.getExpiredDate() );
-                               return true;
-                             } else {
-                               System.out.println("condition invalid  " +x.getQuantity()+"  ex date "+x.getExpiredDate() );
-                               return false;
-                             }
-                           })
-                           .collect(Collectors.toList()).size() + "   afete metjo");
+            .stream()
+            .filter(x -> 0 < Integer.parseInt(x.getQuantity()) && x.getExpiredDate().isAfter(LocalDate.now()))
+            .collect(Collectors.toList()));
     return "invoice/addInvoice";
   }
 
@@ -102,7 +91,9 @@ public class InvoiceController {
 
   @GetMapping( "/{id}" )
   public String viewDetails(@PathVariable Integer id, Model model) {
-    model.addAttribute("invoiceDetail", invoiceService.findById(id));
+    Invoice invoice = invoiceService.findById(id);
+    model.addAttribute("invoiceDetail", invoice);
+    model.addAttribute("customerDetail", invoice.getCustomer());
     return "invoice/invoice-detail";
   }
 
@@ -114,16 +105,18 @@ public class InvoiceController {
     if ( invoice.getId() == null ) {
       if ( invoiceService.findByLastInvoice() == null ) {
         //need to generate new one
-        invoice.setCode("SSMI" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
+        invoice.setCode("JNSI" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
       } else {
         System.out.println("last customer not null");
         //if there is customer in db need to get that customer's code and increase its value
         String previousCode = invoiceService.findByLastInvoice().getCode().substring(4);
-        invoice.setCode("SSMI" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
+        invoice.setCode("JNSI" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
       }
     }
     invoice.setInvoiceValidOrNot(InvoiceValidOrNot.VALID);
     invoiceService.persist(invoice);
+    //todo - if invoice is required needed to send pdf to backend
+
     return "redirect:/invoice/add";
   }
 

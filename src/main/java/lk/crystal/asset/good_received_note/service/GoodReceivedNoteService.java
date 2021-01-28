@@ -1,6 +1,5 @@
 package lk.crystal.asset.good_received_note.service;
 
-import lk.crystal.asset.common_asset.model.enums.LiveDead;
 import lk.crystal.asset.good_received_note.dao.GoodReceivedNoteDao;
 import lk.crystal.asset.good_received_note.entity.GoodReceivedNote;
 import lk.crystal.asset.purchase_order.entity.PurchaseOrder;
@@ -33,16 +32,13 @@ public class GoodReceivedNoteService implements AbstractService<GoodReceivedNote
         return goodReceivedNoteDao.getOne(id);
     }
 
-    public GoodReceivedNote persist(GoodReceivedNote goodRecevingNote) {
-        if(goodRecevingNote.getId()==null){
-            goodRecevingNote.setLiveDead(LiveDead.ACTIVE);}
-        return goodReceivedNoteDao.save(goodRecevingNote);
+    public GoodReceivedNote persist(GoodReceivedNote goodReceivingNote) {
+
+        return goodReceivedNoteDao.save(goodReceivingNote);
     }
 
     public boolean delete(Integer id) {
-        GoodReceivedNote goodRecevingNote =  goodReceivedNoteDao.getOne(id);
-        goodRecevingNote.setLiveDead(LiveDead.STOP);
-        goodReceivedNoteDao.save(goodRecevingNote);
+
         return false;
     }
 

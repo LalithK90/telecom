@@ -36,8 +36,8 @@ public  class SupplierController implements AbstractController<Supplier, Integer
     @GetMapping
     public String findAll(Model model) {
         model.addAttribute("suppliers", supplierService.findAll().stream()
-            .filter(x-> LiveDead.ACTIVE.equals(x.getLiveDead()))
-            .collect(Collectors.toList()));
+                .filter(x-> LiveDead.ACTIVE.equals(x.getLiveDead()))
+                .collect(Collectors.toList()));
         return "supplier/supplier";
     }
 
@@ -69,16 +69,16 @@ public  class SupplierController implements AbstractController<Supplier, Integer
 
             if (DBSupplier == null) {
                 //need to generate new one
-                supplier.setCode("CTMS"+makeAutoGenerateNumberService.numberAutoGen(null).toString());
+                supplier.setCode("JNSS"+makeAutoGenerateNumberService.numberAutoGen(null).toString());
             } else {
                 System.out.println("last supplier not null");
                 //if there is supplier in db need to get that supplier's code and increase its value
                 String previousCode = DBSupplier.getCode().substring(4);
-                supplier.setCode("CTMS"+makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
+                supplier.setCode("JNSS"+makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
             }
             //send welcome message and email
             if (supplier.getEmail() != null) {
-                //  emailService.sendEmail(supplier.getEmail(), "Welcome Message", "Welcome to Crystal Telecom...");
+                //  emailService.sendEmail(supplier.getEmail(), "Welcome Message", "Welcome to Kmart Super...");
             }
         }
         redirectAttributes.addFlashAttribute("supplierDetail",

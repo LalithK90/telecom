@@ -8,8 +8,8 @@ import lk.crystal.asset.employee.entity.enums.Designation;
 import lk.crystal.asset.employee.entity.enums.EmployeeStatus;
 import lk.crystal.asset.employee.service.EmployeeService;
 import lk.crystal.asset.user_management.role.entity.Role;
-import lk.crystal.asset.user_management.user.entity.User;
 import lk.crystal.asset.user_management.role.service.RoleService;
+import lk.crystal.asset.user_management.user.entity.User;
 import lk.crystal.asset.user_management.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +36,7 @@ public class ApplicationCreateRestController {
     @GetMapping("/select/user")
     public String saveUser() {
         //roles list start
-        String[] roles = {"ADMIN"};
+        String[] roles = {"ADMIN","PROCUREMENT_MANAGER","CASHIER","MANAGER","HR_MANAGER","ACCOUNT_MANAGER"};
         for (String s : roles) {
             Role role = new Role();
             role.setRoleName(s);

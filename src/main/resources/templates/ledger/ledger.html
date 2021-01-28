@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" >
-<head th:replace="~{fragments/header :: headerFragment}" >
+<head  data-th-replace="~{fragments/header :: headerFragment}" >
   <meta charset="UTF-8" >
   <title >item</title >
 </head >
 <body >
-<nav th:replace="~{fragments/navBar :: navBarFragment}" ></nav >
+<nav  data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
 
 <!--heading Area-->
 <div class="container-fluid " >
@@ -61,7 +61,7 @@
 </div >
 <div class="container-fluid bg-info formBorder text-center" >
   <!--Table view-->
-  <div class="col" th:if="${not #lists.isEmpty(ledgers)}" >
+  <div class="col"  data-th-if="${not #lists.isEmpty(ledgers)}" >
     <div class="col" id="itemListPresent" >
       <table class="table table-hover table-striped" id="myTable" >
         <thead >
@@ -77,16 +77,16 @@
         </tr >
         </thead >
         <tbody >
-        <tr th:each="ledger, rowCount : ${ledgers}" >
-          <th th:text="${rowCount.count}" ></th >
-          <th th:text="${ledger.item.name}" ></th >
-          <th th:text="${ledger.item.rop}" ></th >
-          <th th:text="${ledger.quantity}" ></th >
-          <th th:text="${ledger.sellPrice}" ></th >
-          <th th:text="${ledger.manufactureDate}" ></th >
-          <th th:text="${ledger.expiredDate}" ></th >
+        <tr   data-th-each="ledger, rowCount : ${ledgers}" >
+          <th  data-th-text="${rowCount.count}" ></th >
+          <th  data-th-text="${ledger.item.name}" ></th >
+          <th  data-th-text="${ledger.item.rop}" ></th >
+          <th  data-th-text="${ledger.quantity}" ></th >
+          <th  data-th-text="${ledger.sellPrice}" ></th >
+          <th  data-th-text="${ledger.manufactureDate}" ></th >
+          <th  data-th-text="${ledger.expiredDate}" ></th >
           <th >
-            <a th:href="${'/purchaseOrder/supplier/' + ledger.goodReceivedNote.purchaseOrder.supplier.id}"
+            <a  data-th-href="${'/purchaseOrder/supplier/' + ledger.goodReceivedNote.purchaseOrder.supplier.id}"
                class="btn btn-primary btn-sm" ><i
                   class="fa fa-folder-open" style="font-size: 15px" ></i >Purchase Order</a >
           </th >
@@ -96,7 +96,7 @@
     </div >
   </div >
   <!--Error-->
-  <div class="row" th:if="${ #lists.isEmpty(ledgers)}" >
+  <div class="row"  data-th-if="${ #lists.isEmpty(ledgers)}" >
     <div class="col-sm-12" >
       <div class="alert alert-warning alert-dismissible fade show" role="alert" >
         <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
