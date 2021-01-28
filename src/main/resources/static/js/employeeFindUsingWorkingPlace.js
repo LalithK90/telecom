@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    $('.input-img').imageUploader();
+    $('.input-images').imageUploader();
 
 //According to province need to find district and station
     $(".districtShow, .stationShow, #employees, #updateStatus").hide();

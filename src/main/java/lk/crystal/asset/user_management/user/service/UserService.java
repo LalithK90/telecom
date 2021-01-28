@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @CacheConfig( cacheNames = {"user"} ) // tells Spring where to store cache for this class
@@ -29,7 +30,9 @@ public class UserService implements AbstractService< User, Integer > {
 
   @Cacheable
   public List< User > findAll() {
-    return userDao.findAll();
+    return userDao.findAll().stream()
+        .filter(x -> LiveDead.ACTIVE.equals(x.getLiveDead()))
+        .collect(Collectors.toList());
   }
 
   @Cacheable

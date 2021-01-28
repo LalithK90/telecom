@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @CacheConfig(cacheNames = "ledger")
@@ -27,7 +28,9 @@ public class LedgerService implements AbstractService< Ledger, Integer> {
 
 
     public List<Ledger> findAll() {
-        return ledgerDao.findAll();
+        return ledgerDao.findAll().stream()
+            .filter(x -> LiveDead.ACTIVE.equals(x.getLiveDead()))
+            .collect(Collectors.toList());
     }
 
 

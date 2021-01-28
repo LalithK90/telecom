@@ -9,7 +9,7 @@ import lk.crystal.asset.discount_ratio.entity.DiscountRatio;
 import lk.crystal.asset.invoice.entity.enums.InvoicePrintOrNot;
 import lk.crystal.asset.invoice.entity.enums.InvoiceValidOrNot;
 import lk.crystal.asset.invoice.entity.enums.PaymentMethod;
-import lk.crystal.asset.invoice_item.entity.InvoiceLedger;
+import lk.crystal.asset.invoice_ledger.entity.InvoiceLedger;
 import lk.crystal.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -52,9 +52,7 @@ public class Invoice extends AuditEntity {
 
     @Column(precision = 10, scale = 2)
     private BigDecimal balance;
-
-    @Enumerated(EnumType.STRING)
-    private InvoicePrintOrNot invoicePrintOrNot;
+     private InvoicePrintOrNot invoicePrintOrNot;
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;

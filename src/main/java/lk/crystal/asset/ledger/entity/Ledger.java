@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lk.crystal.asset.common_asset.model.enums.LiveDead;
 import lk.crystal.asset.good_received_note.entity.GoodReceivedNote;
-import lk.crystal.asset.invoice_item.entity.InvoiceLedger;
+import lk.crystal.asset.invoice_ledger.entity.InvoiceLedger;
 import lk.crystal.asset.item.entity.Item;
 import lk.crystal.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;

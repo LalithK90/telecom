@@ -12,6 +12,7 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @CacheConfig( cacheNames = "customer" )
@@ -24,7 +25,9 @@ public class CustomerService implements AbstractService<Customer, Integer> {
     }
 
     public List<Customer> findAll() {
-        return customerDao.findAll();
+        return customerDao.findAll().stream()
+            .filter(x -> LiveDead.ACTIVE.equals(x.getLiveDead()))
+            .collect(Collectors.toList());
     }
 
     public Customer findById(Integer id) {

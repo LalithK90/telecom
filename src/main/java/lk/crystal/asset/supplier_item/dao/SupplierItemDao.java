@@ -3,8 +3,8 @@ package lk.crystal.asset.supplier_item.dao;
 
 import lk.crystal.asset.item.entity.Item;
 import lk.crystal.asset.supplier.entity.Supplier;
-import lk.crystal.asset.supplier_item.entity.enums.ItemSupplierStatus;
 import lk.crystal.asset.supplier_item.entity.SupplierItem;
+import lk.crystal.asset.supplier_item.entity.enums.ItemSupplierStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

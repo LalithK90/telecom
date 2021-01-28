@@ -7,10 +7,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Designation {
   ADMIN("Admin"),
-    MANAGER("Manager"),
-    PROCUREMENT_MANAGER("Procurement Manager"),
-    HR_MANAGER("HR Manager"),
-    CASHIER("Cashier");
+  MANAGER("Manager"),
+  PROCUREMENT_MANAGER("Procurement Manager"),
+  HR_MANAGER("HR Manager"),
+  ACCOUNT_MANAGER("Account Manager"),
+  CASHIER("Cashier");
 
-    private final String designation;
+  private final String designation;
 }

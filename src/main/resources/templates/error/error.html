@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/header :: headerFragment}">
+<head  data-th-replace="~{fragments/header :: headerFragment}">
     <meta charset="UTF-8">
     <title>Thymeleaf Springboot </title>
 </head>
 <body>
-<nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
+<nav  data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
 <main>
 <div class="col-12 col-sm-12 col-md-12 mt-4">
     <div class="container-fluid" th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
         <div class="container text-center">
-            <h1 class="invalid-feedback" th:text="|${httpStatus} - ${httpStatus.reasonPhrase}|">404</h1>
-            <h1 class="invalid-feedback" th:if="${accessDenied!=null}" th:text="${accessDenied}">404</h1>
+            <h1 class="invalid-feedback"   data-th-text="|${httpStatus} - ${httpStatus.reasonPhrase}|">404</h1>
+            <h1 class="invalid-feedback"  data-th-if="${accessDenied!=null}"  data-th-text="${accessDenied}">404</h1>
         </div>
         <div class="col-12 col-sm-12 col-md-12 mt-4 mb-4 p-4">
             <marquee behavior="scroll" direction="left">
@@ -23,7 +23,7 @@
             </marquee>
         </div>
         <div class="container-fluid mt-4 text-center">
-            <p class="invalid-feedback" th:text="${errorMessage}">Error java.lang.NullPointerException</p>
+            <p class="invalid-feedback"  data-th-text="${errorMessage}">Error java.lang.NullPointerException</p>
         </div>
         <div class="container-fluid text-center">
             <a href="/home">
@@ -35,9 +35,9 @@
     </div>
 </div>
 </main>
-<div  th:replace="~{fragments/footer :: footerFragment}"></div>
+<div   data-th-replace="~{fragments/footer :: footerFragment}"></div>
 <!--script include-->
-<div th:replace="~{fragments/script :: scriptFragment}"></div>
+<div  data-th-replace="~{fragments/script :: scriptFragment}"></div>
 
 </body>
 </html>

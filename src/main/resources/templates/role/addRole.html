@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/header :: headerFragment}">
+<head  data-th-replace="~{fragments/header :: headerFragment}">
     <meta charset="UTF-8">
     <title>Thymeleaf Springboot </title>
 </head>
 <body>
-<nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
+<nav  data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
 
 <div class="container-fluid bg-secondary form-Border">
     <div class="row text-center formManagement border-info">
@@ -17,7 +17,7 @@
         <div class="col">
             <h4 class="text-light text-center">
                 <strong>
-                    <span id="formHeader" th:text="${addStatus==true?'New Role ':'Update Role'}"></span>
+                    <span id="formHeader"  data-th-text="${addStatus==true?'New Role ':'Update Role'}"></span>
                 </strong>
             </h4>
         </div>
@@ -30,16 +30,16 @@
 </div>
 <div class="container-fluid bg-dark formBorder">
     <div class="col-sm-12 flex-column ">
-        <form id="form" class="form-horizontal" method="POST" th:action="${addStatus==true?'/role/add':'/role/update'}"
-              th:object="${role}">
+        <form id="form" class="form-horizontal" method="POST"  data-th-action="${addStatus==true?'/role/add':'/role/update'}"
+               data-th-object="${role}">
             <div class="form-group col-md-12 col-sm-12 text-center flex-column">
                 <div class="col-sm-6 col-md-6 offset-2">
-                    <div id="idHide" th:if="${addStatus==false}" class="form-row text-right">
+                    <div id="idHide"  data-th-if="${addStatus==false}" class="form-row text-right">
                         <div class="col-md-4">
                             <label class="control-label" for="id">ID :</label>
                         </div>
                         <div class="col-md-8">
-                            <input class="form-control" th:field="*{id}"  id="id" type="text" readonly/>
+                            <input class="form-control"  data-th-field="*{id}"  id="id" type="text" readonly/>
                         </div>
                     </div>
                     <div class="form-row text-right">
@@ -47,8 +47,8 @@
                             <label class="control-label" for="roleName">Name :</label>
                         </div>
                         <div class="col-md-8">
-                            <input id="roleName" th:field="*{roleName}" class="form-control" type="text" required/>
-                            <span id="roleNameError" th:errors="*{roleName}" th:if="${#fields.hasErrors('roleName')}" class="error">Error Role Name</span>
+                            <input id="roleName"  data-th-field="*{roleName}" class="form-control" type="text" required/>
+                            <span id="roleNameError"   data-th-errors="*{roleName}"  data-th-if="${#fields.hasErrors('roleName')}" class="error">Error Role Name</span>
                         </div>
                     </div>
                 </div>
@@ -56,22 +56,22 @@
             <div class="form-group col-md-12 col-sm-12 text-center flex-column">
                 <button class="btn btn-success" type="submit">
                     <i class="fa fa-save" style="font-size: 20px"></i>&nbsp; &nbsp;<span
-                        id="submit" th:text="${addStatus==true?'Save': 'Update'}">                        </span>
+                        id="submit"  data-th-text="${addStatus==true?'Save': 'Update'}">                        </span>
                 </button>
             </div>
             <!--Error-->
             <div class="form-row">
-                <label id="errorLabel" th:if="${#fields.hasErrors('*')}" th:text="'Errors: '">Errors: </label>
+                <label id="errorLabel"  data-th-if="${#fields.hasErrors('*')}"   data-th-text="'Errors: '">Errors: </label>
                 <ul>
-                    <li id="errorDisplay" th:each="err: ${#fields.errors('*')}" th:utext="${err}" class="error"></li>
+                    <li id="errorDisplay"   data-th-each="err: ${#fields.errors('*')}" th:utext="${err}" class="error"></li>
                 </ul>
             </div>
         </form>
     </div>
 </div>
-<div  th:replace="~{fragments/footer :: footerFragment}"></div>
+<div   data-th-replace="~{fragments/footer :: footerFragment}"></div>
 <!--script include-->
-<div th:replace="~{fragments/script :: scriptFragment}"></div>
+<div  data-th-replace="~{fragments/script :: scriptFragment}"></div>
 
 </body>
 </html>

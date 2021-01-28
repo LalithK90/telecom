@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/header :: headerFragment}">
+<head  data-th-replace="~{fragments/header :: headerFragment}">
     <meta charset="UTF-8">
     <title>addCategory</title>
 </head>
 <body class="sb-nav-fixed">
-<nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
+<nav  data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
 <div id="layoutSidenav">
-    <div th:replace="~{fragments/sideNav :: sideNavFragment}">
+    <div  data-th-replace="~{fragments/sideNav :: sideNavFragment}">
     </div>
     <div id="layoutSidenav_content">
         <main>
@@ -23,39 +23,39 @@
                     <!--Form Name-->
                     <div class="col">
                         <h5 class="text text-right">
-                            <span th:text="${addStatus==true?'Add New Category':'Update Category Details'}"></span>
+                            <span  data-th-text="${addStatus==true?'Add New Category':'Update Category Details'}"></span>
                         </h5>
                     </div>
                 </div>
             </div>
             <!--Form Content-->
             <div class="container-fluid formBorder">
-                    <form id="form" class="mb-4" th:action="${addStatus==true?'/category/add':'/category/update'}"
-                          th:object="${category}" method="POST" enctype="multipart/form-data">
+                    <form id="form" class="mb-4"  data-th-action="${addStatus==true?'/category/add':'/category/update'}"
+                           data-th-object="${category}" method="POST" enctype="multipart/form-data">
 
                         <!--ID-->
-                        <div class="form-group row col-sm-4" id="idStatus" th:if="${addStatus==false}">
+                        <div class="form-group row col-sm-4" id="idStatus"  data-th-if="${addStatus==false}">
                             <label for="id">ID :</label>
                             <input type="text" data-th-field="*{liveDead}" hidden>
-                            <input type="text" class="form-control" id="id" th:field="*{id}" readonly/>
+                            <input type="text" class="form-control" id="id"  data-th-field="*{id}" readonly/>
                         </div>
                         <!--Main Category -->
                         <div class="form-group row col-sm-4">
                             <label for="mainCategory">Main Category :</label>
-                            <select id="mainCategory" th:field="*{mainCategory}" class="form-control" tabindex="4" style="font-size: large" required>
+                            <select id="mainCategory"  data-th-field="*{mainCategory}" class="form-control" tabindex="4" style="font-size: large" required>
                                 <option value="">Please select</option>
-                                <option th:each="mainCategory : ${mainCategories}"
-                                        th:text="${mainCategory.mainCategory}"
-                                        th:value="${mainCategory}"
-                                        th:selected="${mainCategory==category.mainCategory?'selected':'unselected'}"></option>
+                                <option   data-th-each="mainCategory : ${mainCategories}"
+                                         data-th-text="${mainCategory.mainCategory}"
+                                          data-th-value="${mainCategory}"
+                                          data-th-selected="${mainCategory==category.mainCategory?'selected':'unselected'}"></option>
                             </select>
                         </div>
                         <!--Name-->
                         <div class="form-group row col-sm-4">
                             <label class="control-label" for="name">Name :</label>
-                            <input id="name" th:field="*{name}" class="form-control" tabindex="4" type="text" required/>
-                            <span id="nameError" th:errors="*{name}"
-                                  th:if="${#fields.hasErrors('name')}" class="error">Error Name</span>
+                            <input id="name"  data-th-field="*{name}" class="form-control" tabindex="4" type="text" required/>
+                            <span id="nameError"   data-th-errors="*{name}"
+                                   data-th-if="${#fields.hasErrors('name')}" class="error">Error Name</span>
                         </div>
 
                         <!--Button-->
@@ -66,7 +66,7 @@
                             </a>
                             <!--Save Button-->
                             <button class="btn btn-outline-success" type="submit" tabindex="21">
-                                <i class="fa fa-save" style="font-size: 15px"></i>&nbsp;&nbsp;<span id="submit" th:text="${addStatus==true?'Save': 'Update'}"></span>
+                                <i class="fa fa-save" style="font-size: 15px"></i>&nbsp;&nbsp;<span id="submit"  data-th-text="${addStatus==true?'Save': 'Update'}"></span>
                             </button>
                             <!--Cancel Button-->
                             <button class="btn btn-outline-warning" type="reset" tabindex="21">
@@ -76,9 +76,9 @@
 
                         <!--Error-->
                         <div class="form-row">
-                            <label id="errorLabel" th:if="${#fields.hasErrors('*')}" th:text="'Errors: '">Errors: </label>
+                            <label id="errorLabel"  data-th-if="${#fields.hasErrors('*')}"   data-th-text="'Errors: '">Errors: </label>
                             <ul>
-                                <li id="error" th:each="err: ${#fields.errors('*')}" th:text="${err}" class="error"></li>
+                                <li id="error"   data-th-each="err: ${#fields.errors('*')}"  data-th-text="${err}" class="error"></li>
                             </ul>
                         </div>
 
@@ -87,9 +87,9 @@
             </div>
 
         </main>
-        <div  th:replace="~{fragments/footer :: footerFragment}"></div>
+        <div   data-th-replace="~{fragments/footer :: footerFragment}"></div>
         <!--script include-->
-        <div th:replace="~{fragments/script :: scriptFragment}"></div>
+        <div  data-th-replace="~{fragments/script :: scriptFragment}"></div>
     </div>
 </div>
 </body>

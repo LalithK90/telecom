@@ -9,7 +9,7 @@ import javax.servlet.ServletContext;
 
 @Controller
 public class MimeTypeFileHandelController {
-    private static Logger logger = LoggerFactory.getLogger(MimeTypeFileHandelController.class);
+    private static final Logger logger = LoggerFactory.getLogger(MimeTypeFileHandelController.class);
     private final ServletContext context;
 
     @Autowired

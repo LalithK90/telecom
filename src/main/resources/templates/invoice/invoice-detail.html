@@ -1,18 +1,215 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <!--/* Styles, meta data, and title are included */-->
-<head data-th-replace="~{fragments/header :: headerFragment}">
-    <meta charset="UTF-8">
-    <title>Thymeleaf Springboot </title>
-</head>
-<body>
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
 <!--/* Nav bar is included */-->
-<nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
-<!--todo invoice detail-->
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+
+<div class="container-fluid" >
+  <!--selected ledger items-->
+  <div class="form-group" >
+    <div class="form-row" >
+      <div class="container" >
+        <div class="col" >
+          <table class="table table-hover table-striped text-white" id="myTable" >
+            <thead >
+            <tr >
+              <th >Index</th >
+              <th >Item Name</th >
+              <th >Ex Date</th >
+              <th >Quantity</th >
+              <th >Unit Price</th >
+              <th >Line Total</th >
+            </tr >
+            </thead >
+            <tbody >
+            <tr data-th-each="invoiceLedger, index : ${invoiceDetail.invoiceLedgers}">
+              <td data-th-text="${index.count}"></td>
+              <td data-th-text="${invoiceLedger.ledger.item.name}"></td>
+              <td data-th-text="${invoiceLedger.ledger.expiredDate}"></td>
+              <td data-th-text="${invoiceLedger.quantity}"></td>
+              <td data-th-text="${invoiceLedger.sellPrice}"></td>
+              <td class="lineTotal"  data-th-text="${invoiceLedger.lineTotal}"></td>
+            </tr>
+            </tbody >
+            <tfoot >
+            <tr >
+              <th colspan="4" class="text-right" ><label for="total" >Total</label ></th >
+              <th ><p id="total"></p>
+              </th >
+            </tr >
+            </tfoot >
+          </table >
+        </div >
+      </div >
+    </div >
+  </div >
+  <hr >
+  <!--Payment Section-->
+  <div class="form-group" >
+    <!--Payment method and total amount-->
+    <div class="form-row text-right" >
+      <!--payment method-->
+      <div class="col-md-6 " >
+        <div class="form-row text-right" >
+          <div class="col-md-4" >
+            <label data-th-for="${paymentMethod}" >Payment Method:</label >
+          </div >
+          <div class="col-md-8 text-left" >
+            <p data-th-text="${invoiceDetail.paymentMethod.paymentMethod}"> </p>
+          </div >
+        </div >
+      </div >
+      <!--Discount-->
+      <div class="col-md-6 " >
+        <div class="form-row text-right" >
+          <div class="col-md-4" >
+            <label class="control-label" for="discountRatio" >Discount Ratio :</label >
+          </div >
+          <div class="col-md-8" >
+            <p id="discountRatio" data-th-text="${invoiceDetail.discountRatio.name}+${' '}+${invoiceDetail.discountRatio.amount}"> </p>
+          </div >
+        </div >
+      </div >
+    </div >
+    <div class="form-row" >
+      <!--Total Amount-->
+      <div class="col-md-6 " >
+        <div class="form-row text-right" >
+          <div class="col-md-4" >
+            <label class="control-label" for="totalAmount" >Total Amount :</label >
+          </div >
+          <div class="col-md-8" >
+            <p id="totalAmount" data-th-text="${invoiceDetail.totalAmount}"> </p>
+          </div >
+        </div >
+      </div >
+      <!--Discount Amount-->
+      <div class="col-md-6 " >
+        <div class="form-row text-right" >
+          <div class="col-md-4" >
+            <label class="control-label" for="discountAmount" >Discount Amount :</label >
+          </div >
+          <div class="col-md-8" >
+            <p id="discountAmount" data-th-text="${invoiceDetail.discountAmount}"> </p>
+          </div >
+        </div >
+      </div >
+    </div >
+    <!--Amount tendered and balance  -->
+    <div class="form-row text-right" id="cashPaymentBlock" >
+      <!--Amount Tendered-->
+      <div class="col-md-6 " >
+        <div class="form-row text-right" >
+          <div class="col-md-4" >
+            <label class="control-label" for="amountTendered" >Amount Tendered :</label >
+          </div >
+          <div class="col-md-8" >
+            <p id="amountTendered" data-th-text="${invoiceDetail.amountTendered}"> </p>
+          </div >
+        </div >
+      </div >
+      <!--Balance-->
+      <div class="col-md-6 " >
+        <div class="form-row text-right" >
+          <div class="col-md-4" >
+            <label class="control-label" for="balance" >Balance :</label >
+          </div >
+          <div class="col-md-8" >
+            <p id="balance" data-th-text="${invoiceDetail.balance}"> </p>
+          </div >
+        </div >
+      </div >
+    </div >
+    <!-- Card Payment -> Bank and card Number -->
+    <div class="form-row text-right" id="bankNameBlock" >
+      <!--Bank -->
+      <div class="col-md-6 " >
+        <div class="form-row text-right" >
+          <div class="col-md-4" >
+            <label class="control-label" for="bankName" >Bank Name Tendered :</label >
+          </div >
+          <div class="col-md-8" >
+            <p id="bankName" data-th-text="${invoiceDetail.bankName}"> </p>
+          </div >
+        </div >
+      </div >
+      <!--card number-->
+      <div class="col-md-6 " >
+        <div class="form-row text-right" >
+          <div class="col-md-4" >
+            <label class="control-label" for="cardNumber" >Card Number :</label >
+          </div >
+          <div class="col-md-8" >
+            <p id="cardNumber" data-th-text="${invoiceDetail.cardNumber}"> </p>
+          </div >
+        </div >
+      </div >
+    </div >
+  </div >
+  <hr >
+  <!--customer -->
+  <div class="form-group" >
+    <!--Customers-->
+      <div data-th-replace="~{customer/customer-detail :: customerDetailsFragment}" ></div >
+  </div >
+  <hr >
+  <!--remarks and invoice print or not-->
+  <div class="form-group" >
+    <div class="form-row" >
+      <div class="col-md-6" >
+        <!--invoice print or not-->
+        <div class="form-row text-right" >
+          <div class="col-md-4" >
+            <label data-th-for="${invoicePrintOrNot}" >Invoice Print or Not:</label >
+          </div >
+          <div class="col-md-8 text-left" >
+            <p data-th-text="${invoiceDetail.invoicePrintOrNot.invoicePrintOrNot}"></p>
+          </div >
+        </div >
+      </div >
+      <!--Remarks-->
+      <div class="col-md-6" >
+        <div class="form-row text-right" >
+          <div class="col-md-4" >
+            <label for="remarks" >Remarks :</label ></div >
+          <div class="col-md-8" >
+            <p id="remarks" class="form-control" data-th-utext="${invoiceDetail.remarks}" ></p >
+          </div >
+        </div >
+      </div >
+    </div >
+  </div >
+  <hr >
+  <!--button-->
+  <div class="form-group" >
+    <!--Button-->
+    <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
+      <!--Back Button-->
+      <a class="btn btn-dark" href="/invoice" tabindex="14" >
+        <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
+      </a >
+    </div >
+  </div >
+</div >
+
 
 <!--/* footer is */-->
-<footer data-th-replace="~{fragments/footer :: footerFragment}"></footer>
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
 <!--/* script is included */-->
-<script data-th-replace="~{fragments/script :: scriptFragment}"></script>
-</body>
-</html>
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+<script >
+  $(document).ready(function (){
+      let total = 0;
+     $(".lineTotal").html().forEach(
+         x=>{total += parseFloat(x);}
+     )
+      $("#total").val(total);
+  });
+</script >
+</body >
+</html >

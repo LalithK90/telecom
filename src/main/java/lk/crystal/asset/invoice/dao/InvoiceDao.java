@@ -12,5 +12,7 @@ import java.util.List;
 public interface InvoiceDao extends JpaRepository< Invoice, Integer > {
     List< Invoice > findByCreatedAtIsBetween(LocalDateTime form, LocalDateTime to);
 
+    List< Invoice > findByCreatedAtIsBetweenAndCreatedBy(LocalDateTime form, LocalDateTime to, String username);
+
     Invoice findFirstByOrderByIdDesc();
 }

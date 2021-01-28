@@ -10,9 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -31,6 +29,7 @@ public class DiscountRatio extends AuditEntity {
     @Column( nullable = false, precision = 10, scale = 2 )
     private BigDecimal amount;
 
+    @Enumerated( EnumType.STRING)
     private LiveDead liveDead;
 
     @OneToMany( mappedBy = "discountRatio" )
