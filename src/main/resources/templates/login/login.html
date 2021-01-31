@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
@@ -47,9 +48,6 @@
                                             <div class="container-fluid "  data-th-if="${param.error}">
                                                 <p class="bg-white text-capitalize text-danger text-lg-center">Invalid username or password. </p>
                                             </div>
-                                            <div class="container-fluid ">
-                                                <p id="errorMessage"  data-th-text="${err}" class="bg-white text-capitalize text-danger text-lg-center"></p>
-                                            </div>
 
                                         </form>
                                     </div>
@@ -64,7 +62,27 @@
             </div>
         </div>
         <div   data-th-replace="~{fragments/footer :: footerFragment}"></div>
-        <!--script include-->
+        &lt;!&ndash;script include&ndash;&gt;
         <div  data-th-replace="~{fragments/script :: scriptFragment}"></div>
     </body>
 </html>
+-->
+
+
+<!doctype html>
+<html lang="en" >
+<head >
+    <meta charset="UTF-8" >
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" >
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" >
+    <title >Document</title >
+</head >
+<body >
+<form action="/login" method="post">
+    <input type="text" name="username" id="" >
+    <input type="text" name="password" id="" >
+    <button type="submit" >Submit</button >
+</form >
+</body >
+</html >
