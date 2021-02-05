@@ -1,6 +1,6 @@
-package lk.crystal.asset.color.dao;
+package lk.crystal.asset.item_color.dao;
 
-import lk.crystal.asset.color.entity.ItemColor;
+import lk.crystal.asset.item_color.entity.ItemColor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

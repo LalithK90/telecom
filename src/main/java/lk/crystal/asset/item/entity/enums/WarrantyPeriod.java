@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum WarrantyPeriod {
+  NOW("No Warrenty"),
   ONEM("One Month"),
   THREEM("Three Month"),
   SIXM("Six Month"),
