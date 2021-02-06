@@ -4,182 +4,158 @@
     <meta charset="UTF-8">
     <title>addCustomer</title>
 </head>
-<body>
-<nav  data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
-<!--Heading Area-->
-<div class="container-fluid ">
-    <div class="row text-center formManagement border-info">
-        <!--ViewList Button-->
-        <div class="col">
-            <a href="/customer" class="btn btn-primary" tabindex="1">
-                <i class="fa fa-list" style="font-size: 20px"></i>&nbsp;&nbsp;View List
-            </a>
-        </div>
-        <!--Form Name-->
-        <div class="col">
-            <h2 class="text-light text-center">
-                <strong>
-                    <span  data-th-text="${addStatus==true?'Add New Customer':'Update Customer Details'}"></span>
-                </strong>
-            </h2>
-        </div>
-        <!--Home Button-->
-        <div class="col">
-            <a class="btn btn-primary" href="/home" tabindex="2">
-                <i class="fa fa-home" style="font-size: 20px"></i> &nbsp;&nbsp;Home
-            </a>
-        </div>
+<body class="sb-nav-fixed">
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
+<div id="layoutSidenav">
+    <div  data-th-replace="~{fragments/sideNav :: sideNavFragment}">
     </div>
-</div>
-<!--Form Content-->
-<div class="container-fluid formBorder">
-    <div class="col-sm-12 flex-column ">
-        <form id="form" class="form-horizontal"  data-th-action="${addStatus==true?'/customer/save':'/customer/update'}"
-               data-th-object="${customer}" method="POST" enctype="multipart/form-data">
-            <div class="row">
-                <!--Left Side-->
-                <div class="form-group col-md-6 col-sm-6 text-left flex-column">
-                    <!--Id-->
-                    <div id="idStatus"  data-th-if="${addStatus==false}" class="form-row text-right">
-                        <div class="col-md-4">
-                            <label class="control-label" for="id">ID :</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input id="id"  data-th-field="*{id}" class="form-control" type="text" readonly/>
-                            <input type="text" data-th-field="*{liveDead}" hidden>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="control-label" for="code">Customer Code :</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input id="code"  data-th-field="*{code}" class="form-control" type="text" readonly/>
-                        </div>
+    <div id="layoutSidenav_content">
+        <main>
+            <!--Heading Area-->
+            <div class="container-fluid ">
+                <div class="row formManagement border-info mb-4 mt-4">
+                    <!--ViewList Button-->
+                    <div class="col">
+                        <a href="/customer" class="btn btn-outline-primary btn-sm" tabindex="1">
+                            <i class="fa fa-list" style="font-size: 12px"></i>&nbsp;&nbsp;View List
+                        </a>
                     </div>
-                    <!--Tittle -->
-                    <div class="form-row text-right">
-                        <div class="col-md-4">
-                            <label class="control-label" for="title">Title :</label>
-                        </div>
-                        <div class="col-md-8">
-                            <select id="title"  data-th-field="*{title}" class="form-control" tabindex="3" required>
-                                <option value="">Please select</option>
-                                <option   data-th-each="titles : ${title}"
-                                         data-th-text="${titles.title}"
-                                          data-th-value="${titles}"
-                                          data-th-selected="${titles==customer.title?'selected':'unselected'}"></option>
-                            </select>
-                        </div>
+                    <!--Form Name-->
+                    <div class="col">
+                        <h5 class="text text-right">
+                            <span  data-th-text="${addStatus==true?'Add New Customer':'Update Customer Details'}"></span>
+                        </h5>
                     </div>
-                    <!--Name-->
-                    <div class="form-row text-right">
-                        <div class="col-md-4">
-                            <label class="control-label" for="name">Name :</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input id="name"  data-th-field="*{name}" class="form-control" tabindex="4" type="text" required/>
-                            <span id="nameError"   data-th-errors="*{name}"
-                                   data-th-if="${#fields.hasErrors('name')}" class="error">Error Name</span>
-                        </div>
-                    </div>
-                    <!--Nic-->
-                    <div class="form-row text-right">
-                        <div class="col-md-4">
-                            <label class="control-label" for="nic">NIC No :</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input id="nic"  data-th-field="*{nic}" class="form-control" tabindex="5" type="text" minlength="10" maxlength="12"/>
-                            <span class="error" id="nicError"   data-th-errors="*{nic}"
-                                   data-th-if="${#fields.hasErrors('nic')}">Error
-                                                               NIC Number</span>
-                        </div>
-                    </div>
-                </div>
-                <!--Right Side-->
-                <div class="form-group col-md-6 col-sm-6 text-right flex-column">
-                    <!--Mobile Number-->
-                    <div class="form-row text-right">
-                        <div class="col-md-4">
-                            <label class="control-label" for="mobile">Mobile :</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input id="mobile"  data-th-field="*{mobile}" class="form-control mobile" tabindex="6" type="number" minlength="9" maxlength="10" required/>
-                            <span class="error"   data-th-errors="*{mobile}"
-                                   data-th-if="${#fields.hasErrors('mobile')}" id="mobileError">Error Mobile Number</span>
-                        </div>
-                    </div>
-                    <!--Email-->
-                    <div class="form-row text-right">
-                        <div class="col-md-4">
-                            <label class="control-label" for="email">Email :</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input id="email"  data-th-field="*{email}" class="form-control" tabindex="6" type="email"/>
-                            <span class="error"   data-th-errors="*{email}"
-                                   data-th-if="${#fields.hasErrors('email')}" id="emailError">Error Mobile Number</span>
-                        </div>
-                    </div>
-                    <!--Address-->
-                    <div class="form-row text-right">
-                        <div class="col-md-4">
-                            <label class="control-label" for="address">Address :</label>
-                        </div>
-                        <div class="col-md-8">
-                            <textarea id="address"  data-th-field="*{address}" class="form-control" tabindex="7" rows="3" style="font-size: medium"></textarea>
-                            <span class="error"   data-th-errors="*{address}"
-                                   data-th-if="${#fields.hasErrors('address')}" id="addressError">Error Address</span>
-                        </div>
-                    </div>
-                    <!--Created by and created at-->
-                    <div id="updateStatus"  data-th-if="${addStatus==false}">
-                        <!--Created By-->
-                        <div class="form-row text-right">
-                            <div class="col-md-4">
-                                <label class="control-label" for="createdBy">Created By :</label>
-                            </div>
-                            <div class="col-md-8">
-                                <input id="createdBy"  data-th-field="*{createdBy}" class="form-control" type="text" readonly/>
-                            </div>
-                        </div>
-                        <!--Created At-->
-                        <div class="form-row text-right">
-                            <div class="col-md-4">
-                                <label class="control-label" for="createdAt">Created At :</label>
-                            </div>
-                            <div class="col-md-8">
-                                <input id="createdAt"  data-th-field="*{createdAt}" class="form-control" type="text" readonly/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--Button-->
-                <div class="form-group col-md-12 col-sm-12 text-center flex-column ">
-                    <!--Back Button-->
-                    <a class="btn btn-outline-dark"  tabindex="10" href="/customer">
-                        <i class="fas fa-arrow-circle-left" style="font-size: 20px"></i>&nbsp;&nbsp;Back
-                    </a>
-                    <!--Save Button-->
-                    <button class="btn btn-outline-success ml-5" type="submit" tabindex="8">
-                        <i class="fa fa-save " style="font-size: 20px"></i>&nbsp;&nbsp;<span id="submit"  data-th-text="${addStatus==true?'Save': 'Update'}"></span>
-                    </button>
-                    <!--Cancel Button-->
-                    <button class="btn btn-outline-warning ml-5" type="reset" tabindex="9">
-                        <i class="far fa-times-circle" style="font-size: 20px"></i>&nbsp;&nbsp;Cancel
-                    </button>
-                </div>
-                <!--Error-->
-                <div class="form-row">
-                    <label id="errorLabel"  data-th-if="${#fields.hasErrors('*')}"   data-th-text="'Errors: '">Errors: </label>
-                    <ul>
-                        <li id="error"   data-th-each="err: ${#fields.errors('*')}"  data-th-text="${err}" class="error"></li>
-                    </ul>
                 </div>
             </div>
-        </form>
+            <!--Form Content-->
+            <div class="container-fluid">
+                <div class="card mb-4">
+                    <!--Table Title-->
+                    <div class="card-header">
+                        <i class="fas fa-table mr-1"></i>
+                        Customer Registration Form
+                    </div>
+                    <!--Table view-->
+                    <div class="card-body bg-light">
+                        <form id="form" class="form-horizontal"  data-th-action="${addStatus==true?'/customer/save':'/customer/update'}"
+                              data-th-object="${customer}" method="POST" enctype="multipart/form-data">
+
+                            <div class="form-row md-2">
+                                <!--Id-->
+                                <div id="idStatus"  data-th-if="${addStatus==false}" class="col-md-6">
+                                    <label class="control-label" for="id">ID :</label>
+                                    <input id="id"  data-th-field="*{id}" class="form-control form-control-sm" type="text" readonly/>
+                                    <input type="text" data-th-field="*{liveDead}" hidden>
+                                </div>
+                                <div id="idStatus"  data-th-if="${addStatus==false}" class="col-md-6">
+                                    <label class="control-label" for="code">Customer Code</label>
+                                    <input id="code" data-th-field="*{code}" class="form-control form-control-sm" type="text" readonly/>
+                                </div>
+                            </div>
+                            <div class="form-row md-2">
+                                <!--Created by and created at-->
+                                <div id="updateStatus"  data-th-if="${addStatus==false}" class="col-md-6">
+                                    <!--Created By-->
+
+                                    <label for="createdBy">Created By :</label>
+                                    <input id="createdBy"  data-th-field="*{createdBy}" class="form-control" type="text" readonly/>
+
+                                </div>
+                                <!--Created At-->
+                                <div id="updateStatus"  data-th-if="${addStatus==false}" class="col-md-6">
+
+                                    <label for="createdAt">Created At :</label>
+                                    <input id="createdAt"  data-th-field="*{createdAt}" class="form-control" type="text" readonly/>
+
+                                </div>
+                            </div>
+                            <div class="form-row md-2">
+                                <!--Tittle -->
+                                <div class="col-md-2">
+                                    <label class="control-label" for="title">Title :</label>
+                                    <select id="title"  data-th-field="*{title}" class="form-control form-control-sm" tabindex="3" required>
+                                        <option value="">Please select</option>
+                                        <option   data-th-each="titles : ${title}"
+                                                  data-th-text="${titles.title}"
+                                                  data-th-value="${titles}"
+                                                  data-th-selected="${titles==customer.title?'selected':'unselected'}"></option>
+                                    </select>
+                                </div>
+                                <!--Name-->
+                                <div class="col-md-10">
+                                    <label class="control-label" for="name">Name :</label>
+                                    <input id="name"  data-th-field="*{name}" class="form-control form-control-sm" tabindex="4" type="text" required/>
+                                    <span id="nameError"   data-th-errors="*{name}"
+                                          data-th-if="${#fields.hasErrors('name')}" class="error">Error Name</span>
+                                </div>
+                            </div>
+                            <div class="form-row md-2">
+                                <!--Nic-->
+                                <div class="col-md-3">
+                                    <label class="control-label" for="nic">NIC No :</label>
+                                    <input id="nic"  data-th-field="*{nic}" class="form-control form-control-sm" tabindex="5" type="text" minlength="10" maxlength="12"/>
+                                    <span class="error" id="nicError"   data-th-errors="*{nic}"
+                                          data-th-if="${#fields.hasErrors('nic')}">Error
+                                                                                       NIC Number</span>
+                                </div>
+                                <!--Mobile Number-->
+                                <div class="col-md-3">
+                                    <label class="control-label" for="mobile">Mobile :</label>
+                                    <input id="mobile"  data-th-field="*{mobile}" class="form-control form-control-sm mobile" tabindex="6" type="number" minlength="9" maxlength="10" required/>
+                                    <span class="error"   data-th-errors="*{mobile}"
+                                          data-th-if="${#fields.hasErrors('mobile')}" id="mobileError">Error Mobile Number</span>
+                                </div>
+                                <!--Email-->
+                                <div class="col-md-6">
+                                    <label class="control-label" for="email">Email :</label>
+                                    <input id="email"  data-th-field="*{email}" class="form-control form-control-sm" tabindex="6" type="email"/>
+                                    <span class="error"   data-th-errors="*{email}"
+                                          data-th-if="${#fields.hasErrors('email')}" id="emailError">Error Mobile Number</span>
+                                </div>
+
+                            </div>
+                            <div class="form-row md-2">
+                                <!--Address-->
+                                <div class="col-md-12">
+                                    <label class="control-label" for="address">Address :</label>
+                                    <textarea id="address"  data-th-field="*{address}" class="form-control" tabindex="7" rows="3" style="font-size: medium"></textarea>
+                                    <span class="error"   data-th-errors="*{address}"
+                                          data-th-if="${#fields.hasErrors('address')}" id="addressError">Error Address</span>
+                                </div>
+                            </div>
+
+                            <!--Button-->
+                            <div class="form-group col-md-12 col-sm-12 text-center flex-column mt-4">
+                                <!--Back Button-->
+                                <a class="btn btn-outline-dark btn-sm" tabindex="10" href="/customer">
+                                    <i class="fas fa-arrow-circle-left" style="font-size: 15px"></i>&nbsp;&nbsp;Back
+                                </a>
+                                <!--Save Button-->
+                                <button class="btn btn-outline-success btn-sm ml-2" type="submit" tabindex="8">
+                                    <i class="fa fa-save " style="font-size: 15px"></i>&nbsp;&nbsp;<span id="submit"  data-th-text="${addStatus==true?'Save': 'Update'}"></span>
+                                </button>
+                                <!--Cancel Button-->
+                                <button class="btn btn-outline-warning btn-sm ml-2" type="reset" tabindex="9">
+                                    <i class="far fa-times-circle" style="font-size: 15px"></i>&nbsp;&nbsp;Cancel
+                                </button>
+                            </div>
+                            <!--Error-->
+                            <div class="form-row">
+                                <label id="errorLabel"  data-th-if="${#fields.hasErrors('*')}"   data-th-text="'Errors: '">Errors: </label>
+                                <ul>
+                                    <li id="error"   data-th-each="err: ${#fields.errors('*')}"  data-th-text="${err}" class="error"></li>
+                                </ul>
+                            </div>
+                        </form>
+                     </div>
+                </div>
+            </div>
+        </main>
+        <div data-th-replace="~{fragments/footer :: footerFragment}"></div>
+        <!--script include-->
+        <div  data-th-replace="~{fragments/script :: scriptFragment}"></div>
     </div>
 </div>
-<div   data-th-replace="~{fragments/footer :: footerFragment}"></div>
-<!--script include-->
-<div  data-th-replace="~{fragments/script :: scriptFragment}"></div>
-
 </body>
 </html>

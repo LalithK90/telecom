@@ -58,9 +58,9 @@
                                 </thead>
                                 <tbody>
                                 <tr th:each="itemColor, rowCount : ${itemColors}">
-                                    <th th:text="${rowCount.count}"></th>
-                                    <th th:text="${itemColor.name}"></th>
-                                    <th>
+                                    <td th:text="${rowCount.count}"></td>
+                                    <td th:text="${itemColor.name}"></td>
+                                    <td>
                                         <a id="itemColorEdit" th:href="${'/itemColor/edit/' + itemColor.id}" class="btn btn-outline-success btn-sm"><i
                                                 class="fa fa-edit" style="font-size: 15px"></i>&nbsp;Edit</a>
 
@@ -70,7 +70,7 @@
                                             <i class="fa fa-trash" style="font-size: 15px" ></i >
                                             Delete
                                         </button >
-                                    </th>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>

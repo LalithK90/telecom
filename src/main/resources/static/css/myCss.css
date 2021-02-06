@@ -97,3 +97,13 @@
 
 }
 /* for login form - end*/
+
+/*Tabels*/
+#myTable th{
+    font-size: 14px;
+    font-weight: 700;
+}
+
+#myTable tr, td{
+    font-weight: 400;
+}
