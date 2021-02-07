@@ -7,7 +7,7 @@
 <body class="sb-nav-fixed">
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
 <div id="layoutSidenav">
-    <div  data-th-replace="~{fragments/sideNav :: sideNavFragment}">
+    <div th:replace="~{fragments/sideNav :: sideNavFragment}">
     </div>
     <div id="layoutSidenav_content">
         <main>
@@ -46,7 +46,7 @@
                     <!--Table view-->
                     <div class="card-body">
                         <div class="table-responsive-md" id="itemListPresent" data-th-if="${not #lists.isEmpty(items)}">
-                            <table class="table table-hover table-bordered" id="myTable">
+                            <table class="table table-bordered" id="myTable">
                                 <thead>
                                     <tr>
                                         <th> Index</th>
@@ -59,17 +59,17 @@
                                 </thead>
                                 <tbody>
                                     <tr data-th-each="item, rowCount : ${items}">
-                                        <th data-th-text="${rowCount.count}"></th>
-                                        <th data-th-text="${item.category.mainCategory.mainCategory}"></th>
-                                        <th data-th-text="${item.category.name}"></th>
-                                        <th data-th-text="${item.name}"></th>
-                                        <th data-th-text="${item.rop}"></th>
-                                        <th>
+                                        <td data-th-text="${rowCount.count}"></td>
+                                        <td data-th-text="${item.category.mainCategory.mainCategory}"></td>
+                                        <td data-th-text="${item.category.name}"></td>
+                                        <td data-th-text="${item.name}"></td>
+                                        <td data-th-text="${item.rop}"></td>
+                                        <td>
                                             <a id="itemView" data-th-href="${'/item/' + item.id}" class="btn btn-outline-primary btn-sm"><i class="fa fa-folder-open" style="font-size: 15px"></i>&nbsp;View</a>
                                             <a id="itemEdit" data-th-href="${'/item/edit/' + item.id}" class="btn btn-outline-success btn-sm"><i class="fa fa-edit" style="font-size: 15px"></i>&nbsp;Edit</a>
                                             <a id="itemRemove" data-th-href="${'/item/delete/' + item.id}" class="btn btn-outline-danger btn-sm">
                                                 <!--data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"--><i class="fa fa-trash" style="font-size: 15px"></i> Delete</a>
-                                        </th>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>

@@ -141,9 +141,9 @@ public class EmployeeController {
     if ( employee.getId() == null ) {
       Employee lastEmployee = employeeService.lastEmployee();
       if ( lastEmployee.getCode() == null ) {
-        employee.setCode("JNSE" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
+        employee.setCode("CTSE" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
       } else {
-        employee.setCode("JNSE" + makeAutoGenerateNumberService.numberAutoGen(lastEmployee.getCode().substring(4)).toString());
+        employee.setCode("CTSE" + makeAutoGenerateNumberService.numberAutoGen(lastEmployee.getCode().substring(4)).toString());
       }
     }
 

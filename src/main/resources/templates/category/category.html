@@ -43,17 +43,17 @@
                                 </thead>
                                 <tbody>
                                 <tr   data-th-each="category, rowCount : ${categorys}">
-                                    <th  data-th-text="${rowCount.count}"></th>
-                                    <th  data-th-text="${category.mainCategory.mainCategory}"></th>
-                                    <th  data-th-text="${category.name}"></th>
-                                    <th>
+                                    <td  data-th-text="${rowCount.count}"></td>
+                                    <td  data-th-text="${category.mainCategory.mainCategory}"></td>
+                                    <td  data-th-text="${category.name}"></td>
+                                    <td>
 
                                         <a id="categoryView"  data-th-href="${'/category/' + category.id}" class="btn btn-outline-primary btn-sm"><i class="fa fa-folder-open" style="font-size: 15px"></i>&nbsp;View</a>
                                         <a id="categoryEdit"  data-th-href="${'/category/edit/' + category.id}" class="btn btn-outline-success btn-sm"><i class="fa fa-edit" style="font-size: 15px"></i>&nbsp;Edit</a>
                                         <a id="categoryRemove"  data-th-href="${'/category/delete/' + category.id}" class="btn btn-outline-danger btn-sm">
                                             <!--  data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"--> <i class="fa fa-trash" style="font-size: 15px"></i> Delete</a>
 
-                                    </th>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>

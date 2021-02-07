@@ -1,7 +1,7 @@
-package lk.crystal.asset.color.controller;
+package lk.crystal.asset.item_color.controller;
 
-import lk.crystal.asset.color.entity.ItemColor;
-import lk.crystal.asset.color.service.ItemColorService;
+import lk.crystal.asset.item_color.entity.ItemColor;
+import lk.crystal.asset.item_color.service.ItemColorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import lk.crystal.asset.brand.entity.Brand;
 import lk.crystal.asset.category.entity.Category;
-import lk.crystal.asset.color.entity.ItemColor;
+import lk.crystal.asset.item_color.entity.ItemColor;
 import lk.crystal.asset.common_asset.model.enums.LiveDead;
 import lk.crystal.asset.item.entity.enums.ItemStatus;
 import lk.crystal.asset.ledger.entity.Ledger;

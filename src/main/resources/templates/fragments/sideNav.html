@@ -22,9 +22,9 @@
                             </a>
                             <div class="collapse" id="collapseSales" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="/invoice">Invoce</a>
-                                    <a class="nav-link" href="/discountRatio">Discount Ratios</a>
-                                    <a class="nav-link" href="/customer">Customers</a>
+                                    <a data-sec-authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_PROCUREMENT_MANAGER' ,'ROLE_ACCOUNT_MANAGER' , 'ROLE_CASHIER')" class="nav-link" href="/invoice">Invoce</a>
+                                    <a data-sec-authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_PROCUREMENT_MANAGER')" class="nav-link" href="/discountRatio">Discount Ratios</a>
+                                    <a data-sec-authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_CASHIER')" class="nav-link" href="/customer">Customers</a>
 
                                 </nav>
                             </div>
@@ -36,11 +36,11 @@
                             </a>
                             <div class="collapse" id="collapsePurchase" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="/purchaseOrder">Purchase Order</a>
-                                    <a class="nav-link" href="/goodReceivedNote">GRN</a>
-                                    <a class="nav-link" href="/payment">Payments</a>
-                                    <a class="nav-link" href="/ledger">Ledger</a>
-                                    <a class="nav-link" href="/supplier">Suppliers</a>
+                                    <a data-sec-authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_PROCUREMENT_MANAGER')" class="nav-link" href="/purchaseOrder">Purchase Order</a>
+                                    <a data-sec-authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_PROCUREMENT_MANAGER')" class="nav-link" href="/goodReceivedNote">GRN</a>
+                                    <a data-sec-authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_ACCOUNT_MANAGER')" class="nav-link" href="/payment">Payments</a>
+                                    <a data-sec-authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_PROCUREMENT_MANAGER' , 'ROLE_CASHIER')" class="nav-link" href="/ledger">Ledger</a>
+                                    <a data-sec-authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_PROCUREMENT_MANAGER')" class="nav-link" href="/supplier">Suppliers</a>
 
                                 </nav>
                             </div>
@@ -52,24 +52,25 @@
                             </a>
                             <div class="collapse" id="collapseInventory" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="/item">Items</a>
-                                    <a class="nav-link" href="/itemColor">Item Color</a>
-                                    <a class="nav-link" href="/brand">Brand</a>
-                                    <a class="nav-link" href="/category">Category</a>
+                                    <a data-sec-authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_PROCUREMENT_MANAGER' ,'ROLE_CASHIER')" class="nav-link" href="/item">Items</a>
+                                    <a data-sec-authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_PROCUREMENT_MANAGER')" class="nav-link" href="/itemColor">Item Color</a>
+                                    <a data-sec-authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_PROCUREMENT_MANAGER')" class="nav-link" href="/brand">Brand</a>
+                                    <a data-sec-authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_PROCUREMENT_MANAGER')" class="nav-link" href="/category">Category</a>
 
                                 </nav>
                             </div>
                             <!--Administration-->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdmin" aria-expanded="false" aria-controls="collapseAdmin">
+                            <a data-sec-authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_HR_MANAGER' , 'ROLE_ADMIN')" class="nav-link collapsed" href="#" data-toggle="collapse"
+                               data-target="#collapseAdmin" aria-expanded="false" aria-controls="collapseAdmin">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Administration
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseAdmin" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="/employee">Employees</a>
-                                    <a class="nav-link" href="/role">Roles</a>
-                                    <a class="nav-link" href="/user">Users</a>
+                                    <a data-sec-authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_HR_MANAGER' , 'ROLE_ADMIN')" class="nav-link" href="/employee">Employees</a>
+                                    <a data-sec-authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_HR_MANAGER' , 'ROLE_ADMIN')" class="nav-link" href="/role">Roles</a>
+                                    <a data-sec-authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_HR_MANAGER' , 'ROLE_ADMIN')" class="nav-link" href="/user">Users</a>
                                 </nav>
                             </div>
                             <!--Nested Dropdowns <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -109,6 +110,28 @@
                                 </nav>
                             </div>-->
                             <div class="sb-sidenav-menu-heading">Reports</div>
+                            <!--Reports-->
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport" aria-expanded="false" aria-controls="collapseReport">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Reports
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseReport" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a data-sec-authorize="hasAnyAuthority('ROLE_MANAGER')" data-th-href="@{'/report/manager'}" class="nav-link"> Manager Report</a>
+                                    <a data-sec-authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_PROCUREMENT_MANAGER' , 'ROLE_CASHIER')" data-th-href="@{'/ledger'}" class="nav-link"> All Items Report</a>
+                                    <a data-sec-authorize="hasAnyAuthority('ROLE_CASHIER')" data-th-href="@{'/report/cashier'}" class="nav-link"> Cashier Daily Report</a>
+                                    <a data-sec-authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_PROCUREMENT_MANAGER' )" data-th-href="@{'/report/payment'}" class="nav-link"> Payment Daily Report</a>
+                                    <a data-sec-authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_PROCUREMENT_MANAGER' )" data-th-href="@{'/report/perCashier'}" class="nav-link"> Per Cashier Report</a>
+                                    <a data-sec-authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_PROCUREMENT_MANAGER' )" data-th-href="@{'/report/perAccount'}" class="nav-link"> Per Account Department User Report</a>
+                                    <a data-sec-authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_PROCUREMENT_MANAGER' )" data-th-href="@{'/report/perItem'}" class="nav-link"> Per Item Report</a>
+                                </nav>
+                            </div>
+
+
+
+
+
                             <a class="nav-link" href="charts.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Charts
@@ -119,10 +142,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Admin
-                    </div>
+
                 </nav>
             </div>
  </body>

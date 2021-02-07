@@ -2,6 +2,8 @@ package lk.crystal.asset.brand.service;
 
 import lk.crystal.asset.brand.dao.BrandDao;
 import lk.crystal.asset.brand.entity.Brand;
+import lk.crystal.asset.common_asset.model.enums.LiveDead;
+import lk.crystal.asset.item_color.entity.ItemColor;
 import lk.crystal.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @CacheConfig(cacheNames = "brand")
@@ -17,13 +20,13 @@ public class BrandService implements AbstractService<Brand, Integer> {
     private final BrandDao brandDao;
 
     @Autowired
-    public BrandService(BrandDao brandDao) {
-        this.brandDao = brandDao;
-    }
+    public BrandService(BrandDao brandDao) {this.brandDao = brandDao;    }
 
     @Override
     public List<Brand> findAll() {
-        return brandDao.findAll();
+        return brandDao.findAll().stream()
+                .filter(x -> LiveDead.ACTIVE.equals(x.getLiveDead()))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -33,13 +36,16 @@ public class BrandService implements AbstractService<Brand, Integer> {
 
     @Override
     public Brand persist(Brand brand) {
+        if(brand.getId()==null){
+            brand.setLiveDead(LiveDead.ACTIVE);}
         return brandDao.save(brand);
     }
 
     @Override
     public boolean delete(Integer id) {
-        brandDao.deleteById(id);
-        //not applicable
+        Brand brand =  brandDao.getOne(id);
+        brand.setLiveDead(LiveDead.STOP);
+        brandDao.save(brand);
         return false;
     }
 

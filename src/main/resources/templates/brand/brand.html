@@ -43,10 +43,10 @@
                 </thead >
                 <tbody >
                 <tr   data-th-each="brand, rowCount : ${brands}" >
-                  <th  data-th-text="${rowCount.count}" ></th >
-                  <th  data-th-text="${brand.name}" ></th >
+                  <td  data-th-text="${rowCount.count}" ></td >
+                  <td  data-th-text="${brand.name}" ></td >
 
-                  <th >
+                  <td >
                     <a id="brandEdit"  data-th-href="${'/brand/edit/' + brand.id}" class="btn btn-outline-success btn-sm" ><i
                           class="fa fa-edit" style="font-size: 15px" ></i >&nbsp;Edit</a >
 
@@ -56,7 +56,7 @@
                       <i class="fa fa-trash" style="font-size: 15px" ></i >
                       Delete
                     </button >
-                  </th >
+                  </td >
                 </tr >
                 </tbody >
               </table >
@@ -99,6 +99,8 @@
 </div >
 
 <script >
+
+
     /*active boostrap alert - start*/
     $(".alert").alert();
 

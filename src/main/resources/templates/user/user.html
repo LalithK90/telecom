@@ -4,85 +4,88 @@
     <meta charset="UTF-8">
     <title>Thymeleaf Springboot </title>
 </head>
-<body>
+<body class="sb-nav-fixed">
 <nav  data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
-
-<div class="container-fluid bg-secondary form-Border">
-    <div class="row text-center formManagement border-info">
-        <div class="col">
-            <a class="btn btn-success" id="newUser"  data-th-href="${'/user/add'}">
-                <i class="fa fa-user-plus" style="font-size: 18px;"></i> &nbsp; Add User </a>
-        </div>
-        <div class="col">
-            <h4 class="text-info text-center">
-                <strong>
-                    User Management
-                </strong>
-            </h4>
-        </div>
-        <div class="col"></div>
+<div id="layoutSidenav">
+    <div th:replace="~{fragments/sideNav :: sideNavFragment}">
     </div>
-</div>
-<div class="container-fluid bg-dark formBorder">
-    <div class="col-sm-12 flex-column ">
-        <div class="row" id="userListTable"  data-th-if="${! #lists.isEmpty(users)}">
-            <div class="col-sm-12">
-                <table class="table table-hover table-striped" id="myTable">
-                    <thead class="thead-inverse">
-                    <tr>
-                        <th>Index</th>
-                        <th>User Name</th>
-                        <th>User Status</th>
-                        <th>Created Date</th>
-                        <th>Modify</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr   data-th-each="user, rowCount : ${users}" scope="row">
-                        <th  data-th-text="${rowCount.count}"></th>
-                        <th  data-th-text="${user.username}"></th>
-                        <th  data-th-text="${user.enabled==true?'Active':'Blocked'}"></th>
-                        <th  data-th-text="${{user.createdAt}}"></th>
-                        <th><a class="btn btn-success btn-sm"  data-th-href="${'/user/' + user.id}"><i
-                                class="fa fa-folder-open" ></i>&nbsp;View</a>
-                            <a class="btn btn-primary btn-sm" id="userEdit"  data-th-href="${'/user/edit/' + user.id}"><i
-                                    class="fa fa-edit"></i>&nbsp;Edit</a>
-                            <a class="btn btn-danger btn-sm" id="userRemove"  data-th-href="${'/user/remove/' + user.id}"
-                                data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
-                            ><i
-                                    aria-hidden="true" class="fa fa-trash"></i>
-                                Delete</a>
-                        </th>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="row" id="userNotList"  data-th-if="${ #lists.isEmpty(users)}">
-            <div class="col-sm-12">
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h3 class="text-center text-danger">
-                        <strong>There is no user upto know please add user to the system
-                                using add user button.
-                        </strong>
-                    </h3>
+    <div id="layoutSidenav_content">
+        <main>
+            <!--heading Area-->
+            <div class="container-fluid">
+                <h1 class="mt-4">User Management</h1>
+                <div class="row formManagement border-info mb-4 mt-4">
+                    <!-- New Item Button-->
+                    <div class="col">
+                        <a class="btn btn-outline-success btn-sm" data-th-href="${'/user/add'}" tabindex="1"><i class="fa fa-user-plus" style="font-size: 12px"></i>&nbsp;&nbsp;Add User</a>&nbsp;
+                    </div>
                 </div>
-            </div>
-            <script>
-                /*active boostrap alert - start*/
-                $(".alert").alert();
-                /*active boostrap alert - end*/
-            </script>
-        </div>
+                <!--Item List-->
+                <div class="card mb-4">
+                    <!--Table Title-->
+                    <div class="card-header">
+                        <i class="fas fa-table mr-1"></i>
+                        User List
+                    </div>
+                    <!--Table view-->
+                    <div class="card-body">
+                        <div class="table-responsive-md" id="userListTable"  data-th-if="${! #lists.isEmpty(users)}">
+                                <div class="col-sm-12">
+                                    <table class="table table-hover table-striped table-sm" id="myTable">
+                                        <thead class="thead-inverse">
+                                        <tr>
+                                            <th>Index</th>
+                                            <th>User Name</th>
+                                            <th>User Status</th>
+                                            <th>Created Date</th>
+                                            <th>Modify</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr   data-th-each="user, rowCount : ${users}" scope="row">
+                                            <td  data-th-text="${rowCount.count}"></td>
+                                            <td  data-th-text="${user.username}"></td>
+                                            <td  data-th-text="${user.enabled==true?'Active':'Blocked'}"></td>
+                                            <td  data-th-text="${{user.createdAt}}"></td>
+                                            <td><a class="btn btn-outline-success btn-sm"  data-th-href="${'/user/' + user.id}"><i
+                                                    class="fa fa-folder-open" ></i>&nbsp;View</a>
+                                                <a class="btn btn-outline-primary btn-sm" id="userEdit"  data-th-href="${'/user/edit/' + user.id}"><i
+                                                        class="fa fa-edit"></i>&nbsp;Edit</a>
+                                                <a class="btn btn-danger btn-sm" id="userRemove"  data-th-href="${'/user/remove/' + user.id}"
+                                                   data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                                                    <iaria-hidden="true" class="fa fa-trash"></i>Delete</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row" id="userNotList"  data-th-if="${ #lists.isEmpty(users)}">
+                                <div class="col-sm-12">
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h3 class="text-center text-danger">
+                                            <strong>There is no user upto know please add user to the system
+                                                using add user button.
+                                            </strong>
+                                        </h3>
+                                    </div>
+                                </div>
+                                <script>
+                                    /*active boostrap alert - start*/
+                                    $(".alert").alert();
+                                    /*active boostrap alert - end*/
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+            </main>
+        <div   data-th-replace="~{fragments/footer :: footerFragment}"></div>
+        <!--script include-->
+        <div  data-th-replace="~{fragments/script :: scriptFragment}"></div>
     </div>
 </div>
-
-<div   data-th-replace="~{fragments/footer :: footerFragment}"></div>
-<!--script include-->
-<div  data-th-replace="~{fragments/script :: scriptFragment}"></div>
-
 </body>
 </html>

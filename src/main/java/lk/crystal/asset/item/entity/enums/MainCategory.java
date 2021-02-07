@@ -6,8 +6,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum MainCategory {
-    SEEDS("Seeds"),
-    SPICES("Spices");
+    MOBILE_PHONE("Mobile Phone"),
+    ACCESSORIES("Accessories");
 
 
 

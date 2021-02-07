@@ -1,0 +1,38 @@
+
+.popup-overlay {
+    /*Hides pop-up when there is no "active" class*/
+    visibility: hidden;
+    z-index: 1050;
+    position:fixed;
+    top:0;
+    width:100vw;
+    height:100vh;
+    background-color: #181a1a;
+    opacity:0.9;
+
+}
+
+.popup-overlay.active {
+    /*displays pop-up when "active" class is present*/
+    visibility: visible;
+
+}
+
+.popup-content {
+    /*Hides pop-up content when there is no "active" class */
+    visibility: hidden;
+
+}
+
+.popup-content.active {
+    /*Shows pop-up content when "active" class is present */
+    visibility: visible;
+    position:fixed;
+    left:50%;
+    top:50%;
+    transform:translate(-50%, -50%);
+    border:solid 1px #000;
+    border-radius: 5%;
+    background-color:#fff;
+
+}

@@ -51,8 +51,10 @@
                         <div class="form-group col-sm-4" id="idStatus"  data-th-if="${addStatus==false}">
                             <label for="id">ID :</label>
                             <input type="text" class="form-control" id="id"  data-th-field="*{id}" readonly/>
+                            <input type="hidden" class="form-control"  data-th-field="*{liveDead}" readonly/>
                         </div>
                     </div>
+
                     <div class="row mb-4" id="updateStatus"  data-th-if="${addStatus==false}">
                         <!--Created By-->
                         <div class="form-group col-sm-4">
