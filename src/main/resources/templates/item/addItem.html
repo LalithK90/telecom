@@ -41,6 +41,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <input id="id" th:field="*{id}" class="form-control" type="text" readonly/>
+                                            <input id="id" th:field="*{liveDead}" class="form-control" type="hidden" readonly/>
                                         </div>
                                     </div>
                                     <!--Main Category -->
@@ -120,6 +121,24 @@
                                             </select>
                                         </div>
                                     </div>
+
+                                    <!--Warranty Period-->
+                                    <div class="form-row text-right">
+                                        <div class="col-md-4">
+                                            <label class="control-label" for="warrantyPeriod"><small>Warranty Period :</small></label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select id="warrantyPeriod" class="form-control form-control-sm" tabindex="4" style="font-size: large"
+                                                    required>
+                                                <option value="" disabled>Please select</option>
+                                                <option th:each="warrantyPeriod : ${warrantyPeriod}"
+                                                        th:text="${warrantyPeriod.warrantyPeriod}"
+                                                        th:value="${warrantyPeriod}"
+                                                >
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <!--Sell Price-->
                                     <div class="form-row text-right">
                                         <div class="col-md-4">
@@ -139,7 +158,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <input id="rop" th:field="*{rop}" class="form-control form-control-sm" tabindex="8"
-                                                   type="select    " required/>
+                                                   type="text" required/>
                                             <span id="ropError" th:errors="*{rop}"
                                                   th:if="${#fields.hasErrors('rop')}" class="error">Error ROP</span>
                                         </div>
@@ -171,6 +190,8 @@
                                         </div>
                                     </div>
                                 </div>
+
+
 
                                 <!-- &lt;!&ndash;Batch&ndash;&gt;
                                  <div class="form-row text-right">
