@@ -50,9 +50,13 @@
 
                                         <a id="categoryView"  data-th-href="${'/category/' + category.id}" class="btn btn-outline-primary btn-sm"><i class="fa fa-folder-open" style="font-size: 15px"></i>&nbsp;View</a>
                                         <a id="categoryEdit"  data-th-href="${'/category/edit/' + category.id}" class="btn btn-outline-success btn-sm"><i class="fa fa-edit" style="font-size: 15px"></i>&nbsp;Edit</a>
-                                        <a id="categoryRemove"  data-th-href="${'/category/delete/' + category.id}" class="btn btn-outline-danger btn-sm">
-                                            <!--  data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"--> <i class="fa fa-trash" style="font-size: 15px"></i> Delete</a>
 
+                                        <button class="btn btn-outline-danger btn-sm" data-th-id="${'/category/delete/' + category.id}"
+                                                onclick="confirmDelete(this)" >
+                                            <!-- data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" -->
+                                            <i class="fa fa-trash" style="font-size: 15px" ></i >
+                                            Delete
+                                        </button >
                                     </td>
                                 </tr>
                                 </tbody>
@@ -87,5 +91,26 @@
         <div  data-th-replace="~{fragments/script :: scriptFragment}"></div>
     </div>
 </div>
+<script >
+
+
+    /*active boostrap alert - start*/
+    $(".alert").alert();
+
+    /*active boostrap alert - end*/
+
+    function confirmDelete(obj) {
+        swal("Are you sure to delete this?", {
+            dangerMode: true,
+            buttons: true,
+        }).then((x) => {
+            if (x) {
+                self.location = location.protocol + "//" + location.host + obj.getAttribute('id');
+            }
+        });
+    }
+
+</script >
+
 </body>
 </html>

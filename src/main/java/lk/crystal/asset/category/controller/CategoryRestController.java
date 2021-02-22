@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import lk.crystal.asset.category.entity.Category;
 import lk.crystal.asset.category.service.CategoryService;
+import lk.crystal.asset.common_asset.model.enums.LiveDead;
 import lk.crystal.asset.item.entity.enums.MainCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/category")
@@ -31,7 +33,9 @@ public class CategoryRestController {
         category.setMainCategory(MainCategory.valueOf(mainCategory));
 
         //MappingJacksonValue
-        List<Category> categories = categoryService.search(category);
+        List<Category> categories = categoryService.search(category).stream()
+                .filter(x -> LiveDead.ACTIVE.equals(x.getLiveDead()))
+                .collect(Collectors.toList());
         //Create new mapping jackson value and set it to which was need to filter
         MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(categories);
 
