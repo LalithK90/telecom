@@ -60,7 +60,7 @@
                         </div>
                         <div class="col-md-8">
                             <input class="form-control" data-th-field="*{amount}" id="amount" required tabindex="4"
-                                   type="text"/>
+                                   type="number"/>
                             <span class="error" data-th-errors="*{amount}"
                                   data-th-if="${#fields.hasErrors('amount')}" >Error Name</span>
                         </div>
@@ -102,9 +102,9 @@
         </form>
     </div>
 </div>
-<div  data-th-replace="~{fragments/footer :: footerFragment}"></footer>
+<div  data-th-replace="~{fragments/footer :: footerFragment}"></div>
 <!--script include-->
-<script data-th-replace="~{fragments/script :: scriptFragment}"></script>
+<div data-th-replace="~{fragments/script :: scriptFragment}"></div>
 
 </body>
 </html>

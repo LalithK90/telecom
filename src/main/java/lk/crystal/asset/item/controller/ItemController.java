@@ -80,23 +80,25 @@ public class ItemController implements AbstractController< Item, Integer > {
       return commonThings(model, item, true);
     }
     if ( item.getId() == null ) {
+      item.setItemStatus(ItemStatus.JUSTENTERED);
       //if there is not item in db
-      if ( itemService.lastItem() == null ) {
+            if ( itemService.lastItem() == null ) {
         //need to generate new one
         item.setCode("CTSI" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
-        item.setItemStatus(ItemStatus.JUSTENTERED);
+
       } else {
         //if there is item in db need to get that item's code and increase its value
         String previousCode = itemService.lastItem().getCode().substring(4);
         item.setCode("CTSI" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
+
       }
     }
-
     itemService.persist(item);
     return "redirect:/item";
   }
 
   @GetMapping( "/edit/{id}" )
+
   public String edit(@PathVariable Integer id, Model model) {
     return commonThings(model, itemService.findById(id), false);
   }

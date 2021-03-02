@@ -36,168 +36,168 @@
 </div>
 
 <!--Form Content - start -->
-<div class="container-fluid bg-info">
+<div class="container-fluid " >
     <!--Supplier Search - Start-->
-    <div class="offset-1 flex-column"  data-th-if="${searchAreaShow==true}">
+    <div class="offset-1 flex-column" data-th-if="${searchAreaShow==true}" >
         <form id="form" class="form-inline"  data-th-action="${'/supplierItem/find'}"
-               data-th-object="${supplierDetail}" method="POST">
-            <div class="form-row">
-                <label for="searchCriteria" class="mr-5 ml-5">Search By</label>
-                <select class="form-control mr-5 ml-5" id="searchCriteria" tabindex="1" required>
-                    <option value="" disabled selected>Please Select</option>
-                    <option value="name">Name</option>
-                    <option value="code">Code</option>
-                    <option value="contactOne">Mobile Number</option>
-                </select>
-                <label for="searchValue" class="mr-5 ml-5">Search Value</label>
-                <input type="text" class="form-control mr-5 ml-5" id="searchValue" tabindex="2" minlength="5" required>
+              data-th-object="${supplierDetail}" method="POST" >
+            <div class="form-row" >
+                <label for="searchCriteria" class="mr-5 ml-5" >Search By</label >
+                <select class="form-control mr-5 ml-5" id="searchCriteria" tabindex="1" required >
+                    <option value="" disabled selected >Please Select</option >
+                    <option value="name" >Name</option >
+                    <option value="code" >Code</option >
+                    <option value="contactOne" >Mobile Number</option >
+                </select >
+                <label for="searchValue" class="mr-5 ml-5" >Search Value</label >
+                <input type="text" class="form-control mr-5 ml-5" id="searchValue" tabindex="2" minlength="5" required >
                 <!--Search Button-->
-                <button class="btn btn-success mr-5 ml-5" type="submit" tabindex="3" id="searchButton">
-                    <i class="fa fa-search " style="font-size: 20px"></i>&nbsp;&nbsp; Search
-                </button>
-            </div>
-        </form>
-    </div>
+                <button class="btn btn-success mr-5 ml-5" type="submit" tabindex="3" id="searchButton" >
+                    <i class="fa fa-search " style="font-size: 20px" ></i >&nbsp;&nbsp; Search
+                </button >
+            </div >
+        </form >
+    </div >
     <!--Supplier Search - end-->
     <!--Supplier List Show - start-->
-    <div class="col-12 flex-column"  data-th-if="${supplierDetailShow==true}">
-        <div  data-th-replace="~{supplier/supplier :: supplierFragment}"></div>
-    </div>
+    <div class="col-12 flex-column" data-th-if="${supplierDetailShow==true}" >
+        <div data-th-replace="~{supplier/supplier :: supplierFragment}" ></div >
+    </div >
     <!--Supplier List Show - end-->
     <!--Supplier Item add- start-->
-    <div class="col-12 flex-column"  data-th-if="${supplierDetailShow==false}">
+    <div class="col-12 flex-column" data-th-if="${supplierDetailShow==false}" >
         <a href="#hrefCollapse" class="btn btn-primary col-12" data-toggle="collapse" aria-expanded="false"
-           aria-controls="hrefCollapse">Show Supplier Details</a>
-        <div class="collapse" id="hrefCollapse">
-            <section  data-th-replace="~{supplier/supplier-detail :: supplierDetailsFragment}"></section>
-        </div>
+           aria-controls="hrefCollapse" >Show Supplier Details</a >
+        <div class="collapse" id="hrefCollapse" >
+            <section data-th-replace="~{supplier/supplier-detail :: supplierDetailsFragment}" ></section >
+        </div >
         <!--Supplier Item add Form - start-->
-        <form  data-th-action="${'/supplierItem'}" method="POST" class="mb-5"  data-th-object="${supplier}">
-            <input type="hidden"   data-th-name="${'supplier'}"   data-th-value="${supplierDetail.id}">
-            <div class="form-row col-md-6"  data-th-if="${supplierItemEdit==false}">
-                <div class="col-md-4">
-                    <label class="control-label" for="item">Select Items:</label>
-                </div>
-                <div class="text-left col-md-8">
-                    <select class="form-control" id="item">
-                        <option value="" selected> Please Select</option>
-                        <option   data-th-each="item : ${items}"
-                                  data-th-value="$item.id}"
-                                 data-th-text="${item.name}"> Please Select
-                        </option>
-                    </select>
-                </div>
-            </div>
+        <form  data-th-action="${'/supplierItem'}" method="POST" class="mb-5"  data-th-object="${supplier}" >
+            <input type="hidden" id="supplierId" data-th-value="${supplierDetail.id}" >
+            <div class="form-row col-md-6" data-th-if="${supplierItemEdit==false}" >
+                <div class="col-md-4" >
+                    <label class="control-label" for="item" >Select Items:</label >
+                </div >
+                <div class="text-left col-md-8" >
+                    <select class="form-control" id="item" >
+                        <option value="" selected > Please Select</option >
+                        <option data-th-each="item : ${items}"
+                                data-th-value="${item.id}"
+                                data-th-text="${item.name}" > Please Select
+                        </option >
+                    </select >
+                </div >
+            </div >
 
-            <div class="form-row col-md-12 col-sm-12 mt-4 text-center">
+            <div class="form-row col-md-12 col-sm-12 mt-4 text-center" >
                 <!--Add new Item-->
-                <div th:class="${supplierItemEdit==true?'container-fluid':'col-md-6'}">
-                    <table class="table table-striped table-inverse" id="selectedItemInTable">
-                        <legend><strong> <i>Selected Items </i></strong></legend>
-                        <thead class="thead-inverse">
-                        <tr>
-                            <th>Index</th>
-                            <th>Item Name</th>
-                            <th>Price</th>
-                            <th  data-th-if="${supplierItemEdit}">Status</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr   data-th-each="supplierItem, index : ${supplierDetail.supplierItems}"  data-th-if="${supplierItemEdit}">
-                            <td>
-                                <strong> <span  data-th-text="${index.count}"></span></strong>
-                            </td>
-                            <td>
-                                <strong>
-                                    <span class="control-label"  data-th-text="${supplierItem.item.name}"></span>
-                                </strong>
-                                <input type="hidden"   data-th-value="${supplierItem.item.id}"
-                                         data-th-name="${'supplierItems[__${index.index}__].item.id'}">
-                                <input type="hidden"   data-th-value="${supplierItem.id}"
-                                         data-th-name="${'supplierItems[__${index.index}__].id'}">
-                                <input type="hidden"   data-th-value="${supplierItem.supplier.id}"
-                                         data-th-name="${'supplierItems[__${index.index}__].supplier.id'}">
-                            </td>
-                            <td>
-                                <div class="form-row form-inline">
-                                    <label> Rs.<input type="number" class="form-control" min="0" step="0.5"
-                                                        data-th-value="${supplierItem.price}"
-                                                        data-th-name="${'supplierItems[__${index.index}__].price'}" required>
-                                    </label>
-                                </div>
-                            </td>
-                            <td>
+                <div th:class="${supplierItemEdit==true?'container-fluid':'col-md-6'}" >
+                    <table class="table table-striped table-inverse" id="selectedItemInTable" >
+                        <legend ><strong > <i >Selected Items </i ></strong ></legend >
+                        <thead class="thead-inverse" >
+                        <tr >
+                            <th >Index</th >
+                            <th >Item Name</th >
+                            <th >Price</th >
+                            <th data-th-if="${supplierItemEdit}" >Status</th >
+                        </tr >
+                        </thead >
+                        <tbody >
+                        <tr data-th-each="supplierItem, index : ${supplierDetail.supplierItems}" data-th-if="${supplierItemEdit}" >
+                            <td >
+                                <strong > <span data-th-text="${index.count}" ></span ></strong >
+                            </td >
+                            <td >
+                                <strong >
+                                    <span class="control-label" data-th-text="${supplierItem.item.name}" ></span >
+                                </strong >
+                                <input type="hidden" data-th-value="${supplierItem.item.id}"
+                                       data-th-name="${'supplierItems[__${index.index}__].item.id'}" >
+                                <input type="hidden" data-th-value="${supplierItem.id}"
+                                       data-th-name="${'supplierItems[__${index.index}__].id'}" >
+                                <input type="hidden" data-th-value="${supplierItem.supplier.id}"
+                                       data-th-name="${'supplierItems[__${index.index}__].supplier.id'}" >
+                            </td >
+                            <td >
+                                <div class="form-row form-inline" >
+                                    <label > Rs.<input type="number" class="form-control" min="0" step="0.5"
+                                                       data-th-value="${supplierItem.price}"
+                                                       data-th-name="${'supplierItems[__${index.index}__].price'}" required >
+                                    </label >
+                                </div >
+                            </td >
+                            <td >
                                 <!--Radio button-->
-                                <div class="col">
+                                <div class="col" >
                                     <div class="custom-control custom-checkbox custom-control-inline "
-                                           data-th-each="itemSupplierStatuses,abc : ${itemSupplierStatus}">
+                                         data-th-each="itemSupplierStatuses,abc : ${itemSupplierStatus}" >
                                         <input class="custom-control-input itemSupplierStatus" required
-                                                 data-th-name="${'supplierItems[__${index.index}__].itemSupplierStatus'}"
-                                                 data-th-value="${itemSupplierStatuses}"
-                                                 data-th-id="${index.index}+${itemSupplierStatuses}" type="radio"
-                                               th:checked="${itemSupplierStatuses==supplierItem.itemSupplierStatus}"/>
+                                               data-th-name="${'supplierItems[__${index.index}__].itemSupplierStatus'}"
+                                               data-th-value="${itemSupplierStatuses}"
+                                               th:id="${index.index}+${itemSupplierStatuses}" type="radio"
+                                               th:checked="${itemSupplierStatuses==supplierItem.itemSupplierStatus}" />
                                         <label class="custom-control-label"
-                                                 data-th-for="${index.index}+${itemSupplierStatuses}"
-                                                data-th-text="${itemSupplierStatuses.itemSupplierStatus}"> radio
-                                        </label>
-                                    </div>
-                                </div>
-                            </td>
+                                               th:for="${index.index}+${itemSupplierStatuses}"
+                                               data-th-text="${itemSupplierStatuses.itemSupplierStatus}" > radio
+                                        </label >
+                                    </div >
+                                </div >
+                            </td >
 
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+                        </tr >
+                        </tbody >
+                    </table >
+                </div >
                 <!--Show already listed item-->
-                <div class="col-md-6"  data-th-if="${supplierItemEdit==false}">
-                    <table class="table table-striped table-inverse">
-                        <legend><strong> <i> Currently Buying Items</i></strong> <span>
-                            <a  data-th-href="${'/supplierItem/edit/'+ supplierDetail.id}">
-                            <button class="btn btn-warning">Edit Item</button>
-                        </a></span></legend>
-                        <thead class="thead-inverse">
-                        <tr>
-                            <th>No</th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Status</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr   data-th-each="currentlyBuyingItem, index : ${currentlyBuyingItems}">
-                            <td  data-th-text="${index.count}"></td>
-                            <td  data-th-text="${currentlyBuyingItem.item.name}"></td>
-                            <td  data-th-text="${currentlyBuyingItem.price}"></td>
-                            <td  data-th-text="${currentlyBuyingItem.itemSupplierStatus.itemSupplierStatus}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                <div class="col-md-6" data-th-if="${supplierItemEdit==false}" >
+                    <table class="table table-striped table-inverse" >
+                        <legend ><strong > <i > Currently Buying Items</i ></strong > <span >
+                            <a data-th-href="${'/supplierItem/edit/'+ supplierDetail.id}" >
+                            <button class="btn btn-warning" type="button">Edit Item</button >
+                        </a ></span ></legend >
+                        <thead class="thead-inverse" >
+                        <tr >
+                            <th >No</th >
+                            <th >Name</th >
+                            <th >Price</th >
+                            <th >Status</th >
+                        </tr >
+                        </thead >
+                        <tbody >
+                        <tr data-th-each="currentlyBuyingItem, index : ${currentlyBuyingItems}" >
+                            <td data-th-text="${index.count}" ></td >
+                            <td data-th-text="${currentlyBuyingItem.item.name}" ></td >
+                            <td data-th-text="${currentlyBuyingItem.price}" ></td >
+                            <td data-th-text="${currentlyBuyingItem.itemSupplierStatus.itemSupplierStatus}" ></td >
+                        </tr >
+                        </tbody >
+                    </table >
+                </div >
+            </div >
             <!--Button-->
-            <div class="form-group col-md-12 col-sm-12 mt-4 text-center flex-column ">
+            <div class="form-group col-md-12 col-sm-12 mt-4 text-center flex-column " >
                 <!--Back Button-->
-                <a class="btn btn-dark" tabindex="11" href="/supplier">
-                    <i class="fas fa-arrow-circle-left" style="font-size: 20px"></i>&nbsp;&nbsp;Back
-                </a>
+                <a class="btn btn-dark" tabindex="11" href="/supplier" >
+                    <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
+                </a >
                 <!--Save Button-->
-                <button class="btn btn-success ml-5" type="submit" tabindex="9">
-                    <i class="fa fa-save " style="font-size: 20px"></i>&nbsp;&nbsp;Save
-                </button>
+                <button class="btn btn-success ml-5" type="submit" tabindex="9" >
+                    <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;Save
+                </button >
                 <!--Cancel Button-->
-                <button class="btn btn-warning ml-5" type="reset" tabindex="10">
-                    <i class="far fa-times-circle" style="font-size: 20px"></i>&nbsp;&nbsp;Cancel
-                </button>
-            </div>
-        </form>
+                <button class="btn btn-warning ml-5" type="reset" tabindex="10" >
+                    <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
+                </button >
+            </div >
+        </form >
         <!--Supplier Item add Form - end-->
-    </div>
-</div>
+    </div >
+</div >
 
 <!--Supplier Item add - end-->
 <div  data-th-replace="~{fragments/footer :: footerFragment}"></div>
 <div  data-th-replace="~{fragments/script :: scriptFragment}"></div>
-<script>
+<script >
     $(document).ready(function () {
 //when search criteria add
         $("#searchCriteria").bind("change", function () {
@@ -235,7 +235,7 @@
     //table row add
     let tableRowAdd = function (value) {
         let rows = $("#selectedItemInTable tr").length;
-
+        let supplierId = $("#supplierId").val();
         let rowCount = rows - 1;
         // let rowCount = itemCount + 1;
 
@@ -243,7 +243,9 @@
                         <td>${rows}</td>
                         <td>
                             <span>${value.name}</span>
+                            <input type="hidden" name="supplierItems[${rowCount}].id" value="">
                             <input type="hidden" name="supplierItems[${rowCount}].item.id" value="${value.value}">
+                            <input type="hidden" name="supplierItems[${rowCount}].supplier.id" value="${supplierId}">
                         </td>
                         <td>
                          <div class="form-row form-inline">
@@ -263,6 +265,6 @@
     }
 
 
-</script>
+</script >
 </body>
 </html>

@@ -113,6 +113,9 @@ public class InvoiceController {
         invoice.setCode("JNSI" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
       }
     }
+    invoice.getInvoiceLedgers().forEach(x->x.setInvoice(invoice));
+    //todo - Items are not getting deduct from the ledger
+
     invoice.setInvoiceValidOrNot(InvoiceValidOrNot.VALID);
     invoiceService.persist(invoice);
     //todo - if invoice is required needed to send pdf to backend
