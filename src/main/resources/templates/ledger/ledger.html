@@ -6,112 +6,110 @@
 </head >
 <body >
 <nav  data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+<div id="layoutSidenav">
+  <div th:replace="~{fragments/sideNav :: sideNavFragment}">
+  </div>
+  <div id="layoutSidenav_content">
+    <main>
+      <div class="container-fluid bg-light">
+        <!--heading Area-->
+        <div class="row formManagement mb-4 mt-4">
+          <!--ViewList Button-->
+          <div class="col">
+            <a href="/supplier" class="btn btn-outline-primary btn-sm" tabindex="1">
+              <i class="fa fa-list" style="font-size: 12px"></i>&nbsp;&nbsp;Supplier List
+            </a>
+          </div>
+          <!--Form Name-->
+          <div class="col">
+            <h5 class="text text-right">
+              <span th:text="${title}"></span>
+            </h5>
+          </div>
+        </div>
+        <div class="row" >
+            <div class="col-3" >
+              <a href="/ledger/reorderPoint" >
+                <button class="btn btn-sm btn-outline-primary" >Reorder Point Achieved</button >
+              </a >
+            </div >
+            <form action="/ledger/expiredDate" method="post" class="row">
+              <div class="form-group row mr-4" >
+                <label class="control-label mr-2" >Since</label >
+                <div>
+                  <input type="date" class="form-control form-control-sm" name="startDate" id="startDate" required >
+                </div>
+              </div >
+              <div class="form-group row mr-4" >
+                <label class="control-label mr-2" >To </label>
+                <div>
+                  <input type="date" class="form-control form-control-sm" name="endDate" id="endDate" required >
+                </div>
+              </div >
+              <div class="form-group row" >
+                <button type="submit" class="btn btn-sm btn-outline-success" >Submit</button >
+              </div >
+            </form >
+          </div >
+        <!--Item List-->
+        <div class="card mb-4">
 
-<!--heading Area-->
-<div class="container-fluid " >
-  <div class="row text-center formManagement border-info" >
-    <!-- New Item Button-->
-    <div class="col" >
-      <a class="btn btn-success" href="/supplier" tabindex="1" ><i class="fas fa-plus" style="font-size: 20px" ></i >&nbsp;&nbsp;Supplier
-                                                                                                                     Lis</a >&nbsp;
-    </div >
-    <!-- List Name-->
-    <div class="col" >
-      <h2 class="text-white text-center" >
-        <strong >
-          <span data-th-text="${title}" ></span >
-        </strong >
-      </h2 >
-    </div >
-    <!-- Home Button-->
-    <div class="col" >
-      <a href="/home" id="searchShow" class="btn btn-primary" tabindex="2" >
-        <!--<i class="fa fa-user " style="font-size: 20px"></i>&nbsp;Add&nbsp;-->
-        <i class="fas fa-home" style="font-size: 20px" ></i >&nbsp;&nbsp;Home
-        &nbsp;
-      </a >
-    </div >
-  </div >
-</div >
 
-<div class="container-fluid bg-info formBorder text-center" >
-
-  <div class="row" >
-    <div class="col-3" >
-      <a href="/ledger/reorderPoint" >
-        <button class="btn btn-primary" >Re Order Point Achieved</button >
-      </a >
-    </div >
-    <form action="/ledger/expiredDate" method="post" >
-      <div class="col-3" >
-        <label class="control-label" > Since :
-          <input type="date" class="form-control" name="startDate" id="startDate" required >
-        </label >
-      </div >
-      <div class="col-3" >
-        <label class="control-label" > To :
-          <input type="date" class="form-control" name="endDate" id="endDate" required >
-        </label >
-      </div >
-      <div class="col-3" >
-        <button type="submit" class="btn btn-success" > Send</button >
-      </div >
-    </form >
-  </div >
-</div >
-<div class="container-fluid bg-info formBorder text-center" >
-  <!--Table view-->
-  <div class="col"  data-th-if="${not #lists.isEmpty(ledgers)}" >
-    <div class="col" id="itemListPresent" >
-      <table class="table table-hover table-striped" id="myTable" >
-        <thead >
-        <tr >
-          <th > Index</th >
-          <th > Item Name</th >
-          <th > ROP</th >
-          <th > Quantity</th >
-          <th > Price</th >
-          <th > M Date</th >
-          <th > E Date</th >
-          <th > Modify</th >
-        </tr >
-        </thead >
-        <tbody >
-        <tr   data-th-each="ledger, rowCount : ${ledgers}" >
-          <th  data-th-text="${rowCount.count}" ></th >
-          <th  data-th-text="${ledger.item.name}" ></th >
-          <th  data-th-text="${ledger.item.rop}" ></th >
-          <th  data-th-text="${ledger.quantity}" ></th >
-          <th  data-th-text="${ledger.sellPrice}" ></th >
-          <th  data-th-text="${ledger.manufactureDate}" ></th >
-          <th  data-th-text="${ledger.expiredDate}" ></th >
-          <th >
-            <a  data-th-href="${'/purchaseOrder/supplier/' + ledger.goodReceivedNote.purchaseOrder.supplier.id}"
-               class="btn btn-primary btn-sm" ><i
-                  class="fa fa-folder-open" style="font-size: 15px" ></i >Purchase Order</a >
-          </th >
-        </tr >
-        </tbody >
-      </table >
-    </div >
-  </div >
-  <!--Error-->
-  <div class="row"  data-th-if="${ #lists.isEmpty(ledgers)}" >
-    <div class="col-sm-12" >
-      <div class="alert alert-warning alert-dismissible fade show" role="alert" >
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
-          <span aria-hidden="true" >&times;</span >
-        </button >
-        <h3 class="text-center text-danger" >
-          <strong >There is no item upto now please add item to the system using "New" button.</strong >
-        </h3 >
-      </div >
-    </div >
-  </div >
-</div >
-<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
-<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
-
+          <!--Table view-->
+          <div class="col"  data-th-if="${not #lists.isEmpty(ledgers)}" >
+            <div class="col" id="itemListPresent" >
+              <table class="table table-hover table-sm table-bordered" id="myTable" >
+                <thead >
+                <tr >
+                  <th > Index</th >
+                  <th > Item Name</th >
+                  <th > ROP</th >
+                  <th > Quantity</th >
+                  <th > Price</th >
+                  <th > M Date</th >
+                  <th > E Date</th >
+                  <th > Modify</th >
+                </tr >
+                </thead >
+                <tbody >
+                <tr   data-th-each="ledger, rowCount : ${ledgers}" >
+                  <td  data-th-text="${rowCount.count}" ></td >
+                  <td  data-th-text="${ledger.item.name}" ></td >
+                  <td  data-th-text="${ledger.item.rop}" ></td >
+                  <td  data-th-text="${ledger.quantity}" ></td >
+                  <td  data-th-text="${ledger.sellPrice}" ></td >
+                  <td  data-th-text="${ledger.manufactureDate}" ></td >
+                  <td  data-th-text="${ledger.expiredDate}" ></td >
+                  <td >
+                    <a  data-th-href="${'/purchaseOrder/supplier/' + ledger.goodReceivedNote.purchaseOrder.supplier.id}"
+                       class="btn btn-primary btn-sm" ><i
+                          class="fa fa-folder-open" style="font-size: 15px" ></i >Purchase Order</a >
+                  </td >
+                </tr >
+                </tbody >
+              </table >
+            </div >
+          </div >
+          <!--Error-->
+          <div class="row"  data-th-if="${ #lists.isEmpty(ledgers)}" >
+            <div class="col-sm-12" >
+              <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
+                  <span aria-hidden="true" >&times;</span >
+                </button >
+                <h3 class="text-center text-danger" >
+                  <strong >There is no item upto now please add item to the system using "New" button.</strong >
+                </h3 >
+              </div >
+            </div >
+          </div >
+        </div>
+      </div>
+    </main>
+    <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+    <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+  </div>
+</div>
 <script >
     $("#startDate, #endDate").bind('keyup',
         function () {
