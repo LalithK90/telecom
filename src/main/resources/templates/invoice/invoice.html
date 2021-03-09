@@ -93,8 +93,13 @@
 
 
         <!--There is message about invoice count-->
-        <p style="font-size:12px">*Attention : Below table shows the invoices for last three month.
-          To find older records, please use the custom search options</p>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>Notice!</strong> Below table shows the invoices for last three month only.
+          To find older records, please use the custom search options.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
         <!--List all invoice-->
         <div class="card mb-4">
           <!--Table Title-->
