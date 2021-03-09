@@ -82,7 +82,7 @@ public class InvoiceController {
     //send not expired and not zero quantity
     model.addAttribute("ledgers", ledgerService.findAll()
         .stream()
-        .filter(x -> 0 < Integer.parseInt(x.getQuantity()) && x.getExpiredDate().isAfter(LocalDate.now()))
+        .filter(x -> 0 < Integer.parseInt(x.getQuantity()))
         .collect(Collectors.toList()));
     return "invoice/addInvoice";
   }
@@ -108,12 +108,12 @@ public class InvoiceController {
     if ( invoice.getId() == null ) {
       if ( invoiceService.findByLastInvoice() == null ) {
         //need to generate new one
-        invoice.setCode("JNSI" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
+        invoice.setCode("CTSI" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
       } else {
         System.out.println("last customer not null");
         //if there is customer in db need to get that customer's code and increase its value
         String previousCode = invoiceService.findByLastInvoice().getCode().substring(4);
-        invoice.setCode("JNSI" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
+        invoice.setCode("CTSI" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
       }
     }
     invoice.getInvoiceLedgers().forEach(x -> x.setInvoice(invoice));
@@ -122,7 +122,7 @@ public class InvoiceController {
     Invoice saveInvoice = invoiceService.persist(invoice);
 
     for ( InvoiceLedger invoiceLedger : saveInvoice.getInvoiceLedgers() ) {
-      Ledger ledger = invoiceLedger.getLedger();
+      Ledger ledger = ledgerService.findById( invoiceLedger.getLedger().getId());
       String quantity = invoiceLedger.getQuantity();
       int availableQuantity = Integer.parseInt(ledger.getQuantity());
       int sellQuantity = Integer.parseInt(quantity);
