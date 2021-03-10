@@ -35,11 +35,6 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <!--Expired date-->
-                                <div class="form-group col-md-6">
-                                    <label for="exDate" class="text-dark">Expired Date :</label>
-                                    <input id="exDate" class="form-control" type="text" readonly/>
-                                </div>
                                 <!--Request count-->
                                 <div class="form-group col-md-6">
                                     <label for="sellPriceModal" class="text-dark">Sell Price :</label>
@@ -116,7 +111,6 @@
                                 <tr>
                                     <th>Index</th>
                                     <th>Item Name</th>
-                                    <th>Ex Date</th>
                                     <th>Available Quantity</th>
                                     <th>Unit Price</th>
                                     <th>Quantity</th>
@@ -129,7 +123,6 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td colspan="4" class="text-right"><label for="total">Total</label></td>
@@ -426,7 +419,6 @@
                 receivedLedgerItem.id = $("#ledgerId").val();
                 receivedLedgerItem.name = $("#itemName").val();
                 receivedLedgerItem.quantity = $("#abQuantity").val();
-                receivedLedgerItem.exDate = $("#exDate").val();
                 receivedLedgerItem.sellPrice = $("#sellPriceModal").val();
                 receivedLedgerItem.requestCount = $("#requestCount").val();
                 receivedLedgerItem.totalModal = $("#totalModal").val();
@@ -455,9 +447,6 @@
                           </th >
                           <th >
                           <input type="text" id="na${id}" class="form-control" value="${invoiceLedger.name}" readonly>
-                          </th >
-                          <th >
-                          <input type="text" id="ex${id}" class="form-control" value="${invoiceLedger.exDate}" readonly>
                           </th >
                           <th >
                           <input type="number" id="aq${id}" class="form-control" value="${invoiceLedger.quantity}" readonly>
