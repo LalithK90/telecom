@@ -52,14 +52,13 @@ public class InvoiceController {
   @GetMapping
   public String invoice(Model model) {
     model.addAttribute("invoices",
-                       invoiceService.findAll());
-    /*invoiceService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(dateTimeAgeService
-    .getPastDateByMonth(3)), dateTimeAgeService.dateTimeToLocalDateEndInDay(LocalDate.now())));*/
+                       invoiceService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(dateTimeAgeService
+                                                                                                                    .getPastDateByMonth(3)), dateTimeAgeService.dateTimeToLocalDateEndInDay(LocalDate.now())));
     model.addAttribute("firstInvoiceMessage", true);
     return "invoice/invoice";
   }
 
-  @GetMapping( "/search" )
+  @PostMapping( "/search" )
   public String invoiceSearch(@RequestAttribute( "startDate" ) LocalDate startDate,
                               @RequestAttribute( "endDate" ) LocalDate endDate, Model model) {
     model.addAttribute("invoices",
@@ -119,10 +118,11 @@ public class InvoiceController {
     invoice.getInvoiceLedgers().forEach(x -> x.setInvoice(invoice));
 
     invoice.setInvoiceValidOrNot(InvoiceValidOrNot.VALID);
+
     Invoice saveInvoice = invoiceService.persist(invoice);
 
     for ( InvoiceLedger invoiceLedger : saveInvoice.getInvoiceLedgers() ) {
-      Ledger ledger = ledgerService.findById( invoiceLedger.getLedger().getId());
+      Ledger ledger = ledgerService.findById(invoiceLedger.getLedger().getId());
       String quantity = invoiceLedger.getQuantity();
       int availableQuantity = Integer.parseInt(ledger.getQuantity());
       int sellQuantity = Integer.parseInt(quantity);
