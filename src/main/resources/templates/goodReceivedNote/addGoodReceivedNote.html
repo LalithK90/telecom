@@ -34,8 +34,6 @@
                                         <th>Index</th>
                                         <th>Item Name</th>
                                         <th>Request Quantity</th>
-                                        <th>Manufacture Date</th>
-                                        <th>Expire Date</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -61,14 +59,6 @@
                                                    data-th-name="${'ledgers[__${index.index}__].sellPrice'}"
                                                    data-th-value="${purchaseOrderItem.item.sellPrice}"
                                                    hidden>
-                                        </td>
-                                        <td>
-                                            <input type="date" class="form-control " onchange="dateMatch(this)"
-                                                   data-th-name="${'ledgers[__${index.index}__].manufactureDate'}" data-th-id="${'md'+index.count}">
-                                        </td>
-                                        <td>
-                                            <input type="date" class="form-control " onchange="dateMatch(this)"
-                                                   data-th-name="${'ledgers[__${index.index}__].expiredDate'}" data-th-id="${'ed'+index.count}">
                                         </td>
                                     </tr>
                                     </tbody>
@@ -108,26 +98,6 @@
         <!--/* script is included */-->
         <script data-th-replace="~{fragments/script :: scriptFragment}"></script>
 
-        <script>
-            function dateMatch(obj) {
-                let selectedFiledId = obj.getAttribute('id').slice(2);
-                let manufactureDate = $(`#md${selectedFiledId}`).val();
-                let expiredDate = $(`#ed${selectedFiledId}`).val();
-
-                if (manufactureDate !=="" && expiredDate !=="") {
-                    if (Date.parse(manufactureDate) > Date.parse(expiredDate)) {
-                        swal({
-                            title: "Could you accept those days.. !",
-                            icon: "warning",
-                            text: "Please check your date \n Expire Date can not be less than Manufacture Date",
-                        })
-                        $(`#ed${selectedFiledId}`).val($(`#md${selectedFiledId}`).val());
-                    }
-                }
-            }
-
-
-        </script>
     </div>
 </div>
 </body>
