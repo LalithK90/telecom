@@ -87,7 +87,7 @@ public class EmployeeController {
       employee.setFileInfo(employeeFilesService.employeeFileDownloadLinks(employee));
       employees.add(employee);
     }
-    System.out.println("dfsdfs "+employees.size());
+    System.out.println("dfsdfs " + employees.size());
     model.addAttribute("employees", employees);
     model.addAttribute("contendHeader", "Employee");
     return "employee/employee";
@@ -126,8 +126,7 @@ public class EmployeeController {
 
   //Employee add and update
   @PostMapping( value = {"/save", "/update"} )
-  public String addEmployee(@Valid @ModelAttribute Employee employee, BindingResult result, Model model
-                           ) {
+  public String addEmployee(@Valid @ModelAttribute Employee employee, BindingResult result, Model model) {
     if ( result.hasErrors() ) {
       model.addAttribute("addStatus", true);
       model.addAttribute("employee", employee);
@@ -162,7 +161,7 @@ public class EmployeeController {
 
     try {
       //save employee images file
-      if ( employee.getFile().getOriginalFilename() != null && !Objects.requireNonNull(employee.getFile().getContentType()).equals("application/octet-stream")) {
+      if ( employee.getFile().getOriginalFilename() != null && !Objects.requireNonNull(employee.getFile().getContentType()).equals("application/octet-stream") ) {
         EmployeeFiles employeeFiles = employeeFilesService.findByEmployee(employeeSaved);
         if ( employeeFiles != null ) {
           // update new contents
