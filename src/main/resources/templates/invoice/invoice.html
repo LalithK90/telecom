@@ -1,61 +1,63 @@
 <!DOCTYPE html>
-<html lang="en"  >
-<head  data-th-replace="~{fragments/header :: headerFragment}" >
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
   <meta name="viewport" content="width=device-width, initial-scale=1" >
   <meta charset="UTF-8" >
   <title >J N Super </title >
 </head >
-<body class="sb-nav-fixed">
-<nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
-<div id="layoutSidenav">
-  <div th:replace="~{fragments/sideNav :: sideNavFragment}">
-  </div>
-  <div id="layoutSidenav_content">
-    <main>
-      <div class="container-fluid">
+<body class="sb-nav-fixed" >
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+<div id="layoutSidenav" >
+  <div th:replace="~{fragments/sideNav :: sideNavFragment}" >
+  </div >
+  <div id="layoutSidenav_content" >
+    <main >
+      <div class="container-fluid" >
         <!--Heading Area-->
-        <div class="row formManagement border-info mb-4 mt-4">
-          <div class="col">
+        <div class="row formManagement border-info mb-4 mt-4" >
+          <div class="col" >
             <a class="btn btn-sm btn-success mr-4" href="/invoice/add" >
               <span class="glyphicon glyphicon-list-alt" ></span >&nbsp; New Invoice</a >
-            </div>
-          <div class="col">
-            <h4 class="text text-right">
-              <span>Invoice Management</span>
-            </h4>
-          </div>
+            <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal"
+                    data-target="#invoiceCustomSerch" >Custom Invoice Search
+            </button >
+          </div >
+          <div class="col" >
+            <h4 class="text text-right" >
+              <span >Invoice Management</span >
+            </h4 >
+          </div >
           <!-- Modal -->
-          <div class="modal fade" id="invoiceCustomSerch" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h6 class="modal-title" id="exampleModalCenterTitle">Select date range</h6>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body form-horizontal">
-                  <form class="mx-4" data-th-action="@{/invoice/search}" data-th-method="POST" id="invoiceDateRange">
-                      <div class="form-group">
-                        <label for="startDate" class="">From</label>
-                        <input class="form-control" id="startDate" name="startDate" type="date" />
-                      </div >
-                      <div class="form-group">
-                        <label for="endDate" >To</label >
-                        <input class="form-control" id="endDate" name="endDate" type="date" />
-                      </div >
-                      <!--button class="btn btn-success" id="btnSummaryFind" type="submit" ><span
-                              class="glyphicon glyphicon-search" ></span >&nbsp;Search
-                      </button -->
-                    </form >
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button  class="btn btn-success" form="invoiceDateRange" key="submit" htmlType="submit">Search</button>
-                </div>
-              </div>
-            </div>
-          </div><!--Model End-->
+          <div class="modal fade" id="invoiceCustomSerch" tabindex="-1" role="dialog"
+               aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
+            <div class="modal-dialog modal-dialog-centered modal-sm" role="document" >
+              <div class="modal-content" >
+                <div class="modal-header" >
+                  <h6 class="modal-title" id="exampleModalCenterTitle" >Select date range</h6 >
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
+                    <span aria-hidden="true" >&times;</span >
+                  </button >
+                </div >
+                <div class="modal-body form-horizontal" >
+                  <form class="mx-4" data-th-action="@{/invoice/search}" data-th-method="POST" id="invoiceDateRange" >
+                    <div class="form-group" >
+                      <label for="startDate" class="" >From</label >
+                      <input class="form-control" id="startDate" name="startDate" type="date" />
+                    </div >
+                    <div class="form-group" >
+                      <label for="endDate" >To</label >
+                      <input class="form-control" id="endDate" name="endDate" type="date" />
+                    </div >
+                  </form >
+                </div >
+                <div class="modal-footer" >
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button >
+                  <button class="btn btn-success" form="invoiceDateRange" key="submit" htmlType="submit" >Search
+                  </button >
+                </div >
+              </div >
+            </div >
+          </div ><!--Model End-->
 
           <!--=================================Custom Invoice search=========================================
           <button type="button" class="btn btn-info mb-5 btn-block text-capitalize" data-toggle="collapse"
@@ -89,57 +91,60 @@
 
 
         <!--There is message about invoice count-->
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-          <strong>Notice!</strong> Below table shows the invoices for last three month only.
-          To find older records, please use the custom search options.
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+          <p data-th-if="${messageView==false}" ><strong >Notice!</strong > Below table shows the invoices for last
+                                                                            three month only.
+                                                                            To find older records, please use the custom
+                                                                            search options.</p >
+          <p data-th-if="${messageView==true}" data-th-text="${message}"></p>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
+            <span aria-hidden="true" >&times;</span >
+          </button >
+        </div >
         <!--List all invoice-->
-        <div class="card mb-4">
+        <div class="card mb-4" >
           <!--Table Title-->
-          <div class="card-header">
-            <i class="fas fa-table mr-1"></i>
+          <div class="card-header" >
+            <i class="fas fa-table mr-1" ></i >
             Invoice List
-          </div>
+          </div >
           <!--Table view-->
-          <div class="card-body">
-          <div class="table-responsive-md" >
-            <table class="table table-bordered" id="myTable">
-              <thead >
-              <tr >
-                <th >Index</th >
-                <th >Number</th >
-                <th > Amount</th >
-                <th > Created By</th >
-                <th > Date of Invoice</th >
-                <th >View</th >
-                <th data-th-if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" > Delete Invoice
-                </th >
-              </tr >
-              </thead >
-              <tbody >
-              <tr data-th-each="invoice, rowCount : ${invoices}" >
-                <td data-th-text="${rowCount.count}" ></td >
-                <td data-th-text="${invoice.code}" ></td >
-                <td data-th-text="${invoice.totalAmount}" ></td >
-                <td data-th-text="${invoice.createdBy}" ></td >
-                <td data-th-text="${{invoice.createdAt}}" ></td >
-                <td ><a class="btn btn-sm btn-success" data-th-href="${'/invoice/'+ invoice.id}" ><i
-                      class="fa fa-folder-open" ></i >&nbsp;View</a >&nbsp;
-                </td >
-                <td data-th-if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" ><a
-                      class="btn btn-sm btn-danger" data-th-href="${'/invoice/remove/' + invoice.id}" >Delete</a >
-                </td >
-              </tr >
-              </tbody >
-            </table >
+          <div class="card-body" >
+            <div class="table-responsive-md" >
+              <table class="table table-bordered" id="myTable" >
+                <thead >
+                <tr >
+                  <th >Index</th >
+                  <th >Number</th >
+                  <th > Amount</th >
+                  <th > Created By</th >
+                  <th > Date of Invoice</th >
+                  <th >View</th >
+                  <th data-th-if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" > Delete Invoice
+                  </th >
+                </tr >
+                </thead >
+                <tbody >
+                <tr data-th-each="invoice, rowCount : ${invoices}" >
+                  <td data-th-text="${rowCount.count}" ></td >
+                  <td data-th-text="${invoice.code}" ></td >
+                  <td data-th-text="${invoice.totalAmount}" ></td >
+                  <td data-th-text="${invoice.createdBy}" ></td >
+                  <td data-th-text="${{invoice.createdAt}}" ></td >
+                  <td ><a class="btn btn-sm btn-success" data-th-href="${'/invoice/'+ invoice.id}" ><i
+                        class="fa fa-folder-open" ></i >&nbsp;View</a >&nbsp;
+                  </td >
+                  <td data-th-if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" ><a
+                        class="btn btn-sm btn-danger" data-th-href="${'/invoice/remove/' + invoice.id}" >Delete</a >
+                  </td >
+                </tr >
+                </tbody >
+              </table >
+            </div >
           </div >
         </div >
-        </div>
       </div >
-    </main>
+    </main >
     <!--/* footer is */-->
     <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
     <!--/* script is included */-->
@@ -166,7 +171,7 @@
 
 
     </script >
-  </div>
-</div>
+  </div >
+</div >
 </body >
 </html >

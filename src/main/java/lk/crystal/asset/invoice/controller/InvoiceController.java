@@ -56,6 +56,7 @@ public class InvoiceController {
                        invoiceService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(dateTimeAgeService
                                                                                                                     .getPastDateByMonth(3)), dateTimeAgeService.dateTimeToLocalDateEndInDay(LocalDate.now())));
     model.addAttribute("firstInvoiceMessage", true);
+    model.addAttribute("messageView", false);
     return "invoice/invoice";
   }
 
@@ -64,6 +65,8 @@ public class InvoiceController {
     model.addAttribute("invoices",
                        invoiceService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(twoDate.getStartDate()), dateTimeAgeService.dateTimeToLocalDateEndInDay(twoDate.getEndDate())));
     model.addAttribute("firstInvoiceMessage", true);
+    model.addAttribute("message", "This view is belongs to following date range start date "+twoDate.getStartDate() +" to "+ twoDate.getEndDate());
+    model.addAttribute("messageView", true);
     return "invoice/invoice";
   }
 

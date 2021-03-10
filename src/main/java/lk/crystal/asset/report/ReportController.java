@@ -5,6 +5,7 @@ import lk.crystal.asset.common_asset.model.NameCount;
 import lk.crystal.asset.common_asset.model.ParameterCount;
 import lk.crystal.asset.common_asset.model.TwoDate;
 import lk.crystal.asset.employee.entity.Employee;
+import lk.crystal.asset.employee.service.EmployeeService;
 import lk.crystal.asset.invoice.entity.Invoice;
 import lk.crystal.asset.invoice.entity.enums.PaymentMethod;
 import lk.crystal.asset.invoice.service.InvoiceService;
@@ -42,14 +43,19 @@ public class ReportController {
   private final DateTimeAgeService dateTimeAgeService;
   private final UserService userService;
   private final InvoiceLedgerService invoiceLedgerService;
+  private final EmployeeService employeeService;
 
-  public ReportController(PaymentService paymentService, InvoiceService invoiceService, OperatorService operatorService, DateTimeAgeService dateTimeAgeService, UserService userService, InvoiceLedgerService invoiceLedgerService) {
+  public ReportController(PaymentService paymentService, InvoiceService invoiceService,
+                          OperatorService operatorService, DateTimeAgeService dateTimeAgeService,
+                          UserService userService, InvoiceLedgerService invoiceLedgerService,
+                          EmployeeService employeeService) {
     this.paymentService = paymentService;
     this.invoiceService = invoiceService;
     this.operatorService = operatorService;
     this.dateTimeAgeService = dateTimeAgeService;
     this.userService = userService;
     this.invoiceLedgerService = invoiceLedgerService;
+    this.employeeService = employeeService;
   }
 
   private String commonAll(List< Payment > payments, List< Invoice > invoices, Model model, String message,
@@ -92,6 +98,7 @@ public class ReportController {
                      invoiceService.findByCreatedAtIsBetween(startDateTime, endDateTime), model, message,
                      startDateTime, endDateTime);
   }
+
   private void commonInvoices(List< Invoice > invoices, Model model) {
     // invoice count
     int invoiceTotalCount = invoices.size();
@@ -208,7 +215,7 @@ public class ReportController {
 
     createdByAll.forEach(x -> {
       NameCount nameCount = new NameCount();
-      Employee employee = userService.findByUserName(x).getEmployee();
+      Employee employee = employeeService.findById(userService.findByUserName(x).getEmployee().getId());
       nameCount.setName(employee.getTitle().getTitle() + " " + employee.getName());
       AtomicReference< BigDecimal > cashierTotalCount = new AtomicReference<>(BigDecimal.ZERO);
       List< Invoice > cashierInvoice =
@@ -254,7 +261,7 @@ public class ReportController {
 
     createdByAllPayment.forEach(x -> {
       NameCount nameCount = new NameCount();
-      Employee employee = userService.findByUserName(x).getEmployee();
+      Employee employee = employeeService.findById(userService.findByUserName(x).getEmployee().getId());
       nameCount.setName(employee.getTitle().getTitle() + " " + employee.getName());
       AtomicReference< BigDecimal > userTotalCount = new AtomicReference<>(BigDecimal.ZERO);
       List< Payment > paymentUser =
