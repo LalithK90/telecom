@@ -81,7 +81,7 @@
                                     <select id="item" class="form-control form-control-sm" tabindex="9">
                                         <option value="">Please select</option>
                                         <option data-th-each="ledger : ${ledgers}"
-                                                data-th-text="${'Item Name: '+ledger.item.name+'  Sell Price : '+ledger.item.sellPrice+'  Available quantity : '+ledger.quantity+'  Expired Date : '+ledger.expiredDate}"
+                                                data-th-text="${'Item Name: '+ledger.item.name+'  Sell Price : '+ledger.item.sellPrice+'  Available quantity : '+ledger.quantity}"
                                                 data-th-value="${ledger.id}">Please select
                                         </option>
                                     </select>

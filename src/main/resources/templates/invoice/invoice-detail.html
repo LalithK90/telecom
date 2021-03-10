@@ -34,7 +34,6 @@
                 <tr data-th-each="invoiceLedger, index : ${invoiceDetail.invoiceLedgers}">
                   <td data-th-text="${index.count}"></td>
                   <td data-th-text="${invoiceLedger.ledger.item.name}"></td>
-                  <td data-th-text="${invoiceLedger.ledger.expiredDate}"></td>
                   <td data-th-text="${invoiceLedger.quantity}"></td>
                   <td data-th-text="${invoiceLedger.sellPrice}"></td>
                   <td class="lineTotal"  data-th-text="${invoiceLedger.lineTotal}"></td>
