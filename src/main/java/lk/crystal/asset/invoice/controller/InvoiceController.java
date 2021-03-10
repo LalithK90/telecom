@@ -1,6 +1,7 @@
 package lk.crystal.asset.invoice.controller;
 
 
+import lk.crystal.asset.common_asset.model.TwoDate;
 import lk.crystal.asset.customer.service.CustomerService;
 import lk.crystal.asset.discount_ratio.service.DiscountRatioService;
 import lk.crystal.asset.invoice.entity.Invoice;
@@ -59,10 +60,9 @@ public class InvoiceController {
   }
 
   @PostMapping( "/search" )
-  public String invoiceSearch(@RequestAttribute( "startDate" ) LocalDate startDate,
-                              @RequestAttribute( "endDate" ) LocalDate endDate, Model model) {
+  public String invoiceSearch(@ModelAttribute TwoDate twoDate, Model model) {
     model.addAttribute("invoices",
-                       invoiceService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(startDate), dateTimeAgeService.dateTimeToLocalDateEndInDay(endDate)));
+                       invoiceService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(twoDate.getStartDate()), dateTimeAgeService.dateTimeToLocalDateEndInDay(twoDate.getEndDate())));
     model.addAttribute("firstInvoiceMessage", true);
     return "invoice/invoice";
   }
