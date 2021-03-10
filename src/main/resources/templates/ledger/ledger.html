@@ -33,23 +33,6 @@
                 <button class="btn btn-sm btn-outline-primary" >Reorder Point Achieved</button >
               </a >
             </div >
-            <form action="/ledger/expiredDate" method="post" class="row">
-              <div class="form-group row mr-4" >
-                <label class="control-label mr-2" >Since</label >
-                <div>
-                  <input type="date" class="form-control form-control-sm" name="startDate" id="startDate" required >
-                </div>
-              </div >
-              <div class="form-group row mr-4" >
-                <label class="control-label mr-2" >To </label>
-                <div>
-                  <input type="date" class="form-control form-control-sm" name="endDate" id="endDate" required >
-                </div>
-              </div >
-              <div class="form-group row" >
-                <button type="submit" class="btn btn-sm btn-outline-success" >Submit</button >
-              </div >
-            </form >
           </div >
         <!--Item List-->
         <div class="card mb-4">
@@ -66,8 +49,6 @@
                   <th > ROP</th >
                   <th > Quantity</th >
                   <th > Price</th >
-                  <th > M Date</th >
-                  <th > E Date</th >
                   <th > Modify</th >
                 </tr >
                 </thead >
@@ -78,8 +59,6 @@
                   <td  data-th-text="${ledger.item.rop}" ></td >
                   <td  data-th-text="${ledger.quantity}" ></td >
                   <td  data-th-text="${ledger.sellPrice}" ></td >
-                  <td  data-th-text="${ledger.manufactureDate}" ></td >
-                  <td  data-th-text="${ledger.expiredDate}" ></td >
                   <td >
                     <a  data-th-href="${'/purchaseOrder/supplier/' + ledger.goodReceivedNote.purchaseOrder.supplier.id}"
                        class="btn btn-primary btn-sm" ><i

@@ -212,7 +212,7 @@ public class ReportController {
 //name, count, total
     HashSet< String > createdByAll = new HashSet<>();
     invoices.forEach(x -> createdByAll.add(x.getCreatedBy()));
-
+    System.out.println(" size "+ createdByAll.size());
     createdByAll.forEach(x -> {
       NameCount nameCount = new NameCount();
       Employee employee = employeeService.findById(userService.findByUserName(x).getEmployee().getId());

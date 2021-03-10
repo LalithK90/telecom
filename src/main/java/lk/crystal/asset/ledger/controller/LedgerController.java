@@ -46,26 +46,12 @@ public class LedgerController {
     return "ledger/ledger";
   }
 
-  //near expired date
-  @PostMapping( "/expiredDate" )
-  public String expiredDate(@ModelAttribute TwoDate twoDate, Model model) {
-    System.out.println("star date " + twoDate.getStartDate() + " end " + twoDate.getEndDate());
-    model.addAttribute("title",
-                       "All items on given date range start at " + twoDate.getStartDate() + " end at " + twoDate.getEndDate());
-    model.addAttribute("ledgers",
-                       ledgerService.findByExpiredDateBetween(twoDate.getStartDate(), twoDate.getEndDate()));
-    System.out.println("star date " + dateTimeAgeService.dateTimeToLocalDateStartInDay(twoDate.getStartDate()) + " " +
-                           "end " + dateTimeAgeService.dateTimeToLocalDateEndInDay(twoDate.getEndDate()));
-    model.addAttribute("twoDate", new TwoDate());
-    return "ledger/ledger";
-  }
-
   @GetMapping( "/{id}" )
   @ResponseBody
   public MappingJacksonValue findId(@PathVariable Integer id) {
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(ledgerService.findById(id));
     SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "quantity", "sellPrice", "item","expiredDate");
+        .filterOutAllExcept("id", "quantity", "sellPrice", "item");
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterTwo = SimpleBeanPropertyFilter
         .filterOutAllExcept("id", "name");

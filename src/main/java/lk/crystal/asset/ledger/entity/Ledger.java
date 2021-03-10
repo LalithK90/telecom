@@ -33,12 +33,12 @@ public class Ledger extends AuditEntity {
 
     @Column( nullable = false, precision = 10, scale = 2 )
     private BigDecimal sellPrice;
-
+/*
     @DateTimeFormat( pattern = "yyyy-MM-dd" )
     private LocalDate manufactureDate;
 
     @DateTimeFormat( pattern = "yyyy-MM-dd" )
-    private LocalDate expiredDate;
+    private LocalDate expiredDate;*/
 
     @Enumerated( EnumType.STRING)
     private LiveDead liveDead;
