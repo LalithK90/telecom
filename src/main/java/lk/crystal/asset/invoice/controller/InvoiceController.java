@@ -58,7 +58,7 @@ public class InvoiceController {
     return "invoice/invoice";
   }
 
-  @GetMapping( "/search" )
+  @PostMapping( "/search" )
   public String invoiceSearch(@RequestAttribute( "startDate" ) LocalDate startDate,
                               @RequestAttribute( "endDate" ) LocalDate endDate, Model model) {
     model.addAttribute("invoices",
