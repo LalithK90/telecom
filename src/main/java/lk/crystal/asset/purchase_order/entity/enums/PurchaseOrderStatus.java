@@ -7,7 +7,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum PurchaseOrderStatus {
-
     NOT_COMPLETED(" Not Completed"),
     NOT_PROCEED(" Not Proceed"),
     COMPLETED(" Completed ");
