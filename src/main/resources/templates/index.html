@@ -1,17 +1,32 @@
 <!DOCTYPE html>
-<html lang="en" >
-<head data-th-replace="~{fragments/header :: headerFragment}" >
-  <meta charset="UTF-8" >
-  <title >Thymeleaf Springboot </title >
-</head >
-<body >
-<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+<html lang="en">
+<head data-th-replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>Thymeleaf Springboot </title>
+</head>
+<body>
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
 
-<h1 > I am index page</h1 >
+<div class="container-fluid text-center text-white">
+    <div class="card m-4 bg-info">
+        <div class="card m-4 bg-info border-0">
+            <h1>Get to Know Us</h1>
+            <p>We at Crystal Telecom know all of the phones, plans and providers so they can choose the perfect one just
+                for
+                you</p>
+            <hr>
+          <h3>We are trusted</h3>
+          <p>Our main goal and fundamental principle in the work is the satisfaction of customers – both retail buyers and organizations.</p>
+        </div>
 
-<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+    </div>
+</div>
+
+
+
+<div data-th-replace="~{fragments/footer :: footerFragment}"></div>
 <!--script include-->
-<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+<div data-th-replace="~{fragments/script :: scriptFragment}"></div>
 
-</body >
-</html >
+</body>
+</html>
