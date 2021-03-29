@@ -63,9 +63,9 @@
                                             <a data-th-if="${grnStatus}" data-th-href="${'/goodReceivedNote/' + purchaseOrder.id}"
                                                class="btn btn-outline-success btn-sm"><i
                                                     class="fa fa-edit" style="font-size: 15px"></i>&nbsp;GRN</a>
-                                            <a data-th-href="${'/purchaseOrder/delete/' + purchaseOrder.id}"
+                                            <a data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" data-th-href="${'/purchaseOrder/delete/' + purchaseOrder.id}"
                                                class="btn btn-outline-danger btn-sm">
-                                                <!--data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"--> <i
+                                                 <i
                                                     class="fa fa-trash" style="font-size: 15px"></i> Delete</a>
                                         </th>
                                     </tr>

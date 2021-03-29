@@ -102,9 +102,9 @@
                                 <i class="fas fa-file-invoice-dollar mr-2" style="font-size: 16px" aria-hidden="true"></i></i>Invoice
                             </div>
                             <div class="card-body">
-                                <a href="/workingPlace">
+                                <a href="/invoice/add">
                                     <div class="body">
-                                        <div class="text-white">Manage Customer orders</div>
+                                        <div class="text-white">New Invoice</div>
                                     </div>
                                 </a>
                             </div>
@@ -127,112 +127,43 @@
                     </div>
                 </div>
                 <!--*********************************Test Table*****************************************-->
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-table mr-1"></i>
-                        Today Salles
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
-                                </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
-                                </tfoot>
-                                <tbody>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                    <td>2011/04/25</td>
-                                    <td>$320,800</td>
-                                </tr>
-                                <tr>
-                                    <td>Garrett Winters</td>
-                                    <td>Accountant</td>
-                                    <td>Tokyo</td>
-                                    <td>63</td>
-                                    <td>2011/07/25</td>
-                                    <td>$170,750</td>
-                                </tr>
-                                <tr>
-                                    <td>Ashton Cox</td>
-                                    <td>Junior Technical Author</td>
-                                    <td>San Francisco</td>
-                                    <td>66</td>
-                                    <td>2009/01/12</td>
-                                    <td>$86,000</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <!--*********************************Test Table End*************************************-->
-                 <!--To day petition list-->
-                 <div class="col">
-                                    <p class="welcome-Notes">To Day Petitions</p>
-                                    <!--Petition Lists -->
-                                    <div class="container-fluid text-center" id="petitionListPresent">
-                                        <table class="table table-hover table-striped" id="myTable">
-                                            <thead>
-                                            <tr>
-                                                <th> Petition Number</th>
-                                                <th> Petition Priority</th>
-                                                <th> Working Place</th>
-                                                <th> State</th>
-                                                <th> Modify</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr id="petitionList">
-                                                <th id="petitionNumber"></th>
-                                                <th id="petitionPriority"></th>
-                                                <th id="workingPlace"></th>
-                                                <th id="petitionState"></th>
-                                                <th>
-                                                    <a id="petitionView" class="btn btn-success btn-sm"><i
-                                                            class="fa fa-folder-open"></i>&nbsp;View</a>
-                                                </th>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="row" id="petitionListNotPresent">
-                                        <div class="col-sm-12">
-                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                                <h3 class="text-center text-danger">
-                                                    <strong>There is no petition upto know please add petition to the system
-                                                            using add user button.
-                                                    </strong>
-                                                </h3>
-                                            </div>
-                                        </div>
-                                        <script>
-                                            $(".alert").alert();
-                                        </script>
-                                    </div>
-                                </div>
+                <!--Table view-->
+                <dev class="card">
+                    <div class="card-body" >
+                    <div class="table-responsive-md" >
+                        <table class="table table-bordered" id="myTable" >
+                            <thead >
+                            <tr >
+                                <th >Index</th >
+                                <th >Number</th >
+                                <th > Amount</th >
+                                <th > Created By</th >
+                                <th > Date of Invoice</th >
+                                <th >View</th >
+                                <th data-th-if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" > Delete Invoice
+                                </th >
+                            </tr >
+                            </thead >
+                            <tbody >
+                            <tr data-th-each="invoice, rowCount : ${invoices}" >
+                                <td data-th-text="${rowCount.count}" ></td >
+                                <td data-th-text="${invoice.code}" ></td >
+                                <td data-th-text="${invoice.totalAmount}" ></td >
+                                <td data-th-text="${invoice.createdBy}" ></td >
+                                <td data-th-text="${{invoice.createdAt}}" ></td >
+                                <td ><a class="btn btn-sm btn-success" data-th-href="${'/invoice/'+ invoice.id}" ><i
+                                        class="fa fa-folder-open" ></i >&nbsp;View</a >&nbsp;
+                                </td >
+                                <td data-th-if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" ><a
+                                        class="btn btn-sm btn-danger" data-th-href="${'/invoice/remove/' + invoice.id}" >Delete</a >
+                                </td >
+                            </tr >
+                            </tbody >
+                        </table >
+                    </div >
+                </div >
+                </dev>
+
             </div>
         </main>
         <!--footer include-->

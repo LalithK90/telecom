@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" href="css/styles.css">
+<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
 <body>
 
 
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark"  data-th-fragment="navBarFragment">
     <a class="navbar-brand mr-n5" href="/home">Crystal Telecom</a>
-    <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
-        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+    <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#" data-target="#layoutSidenav_nav"><i class="fas fa-bars"></i></button>
+
+
+
+
+    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
             aria-controls="collapsibleNavId"
             aria-expanded="false" aria-label="Toggle navigation"></button>
     <div class="collapse navbar-collapse" id="collapsibleNavId">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <!--<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-itemBatch dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
                    aria-expanded="false"> <i class="fa fa-user"></i> General</a>
@@ -61,9 +67,9 @@
                     <a data-sec-authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_PROCUREMENT_MANAGER' )" data-th-href="@{'/report/perItem'}" class="nav-link text-dark"> Per Item Report</a>
                 </div>
             </li>
-        </ul>
+        </ul>-->
     </div>
-    <!--login /logout /profile /password-change link according to sec confi-->
+    <!--login /logout /profile /password-change link according to sec config-->
     <div>
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0 justify-content-end">
             <li class="nav-item dropdown" data-sec-authorize="isAuthenticated()">
@@ -83,8 +89,7 @@
                 </div>
             </li>
             <li class="nav-item dropdown " data-sec-authorize="isAuthenticated()">
-                <a href="/logout" class="nav-link"> <i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp; Log
-                                                                                       out</a>
+                <a href="/logout" class="nav-link"> <i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Log out</a>
             </li>
             <li class="nav-item dropdown " data-sec-authorize="!isAuthenticated()">
                 <a href="/login" class="nav-link"><i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;Login</a>
