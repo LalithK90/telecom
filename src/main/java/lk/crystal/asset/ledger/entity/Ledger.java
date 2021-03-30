@@ -7,6 +7,7 @@ import lk.crystal.asset.common_asset.model.enums.LiveDead;
 import lk.crystal.asset.good_received_note.entity.GoodReceivedNote;
 import lk.crystal.asset.invoice_ledger.entity.InvoiceLedger;
 import lk.crystal.asset.item.entity.Item;
+import lk.crystal.asset.item.entity.enums.MainCategory;
 import lk.crystal.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,18 +34,15 @@ public class Ledger extends AuditEntity {
 
     @Column( nullable = false, precision = 10, scale = 2 )
     private BigDecimal sellPrice;
-/*
-    @DateTimeFormat( pattern = "yyyy-MM-dd" )
-    private LocalDate manufactureDate;
-
-    @DateTimeFormat( pattern = "yyyy-MM-dd" )
-    private LocalDate expiredDate;*/
 
     @Enumerated( EnumType.STRING)
     private LiveDead liveDead;
 
     @ManyToOne(fetch=FetchType.EAGER)
     private Item item;
+
+    @Enumerated( EnumType.STRING)
+    private MainCategory mainCategory;
 
     @ManyToOne
     @JsonIgnore

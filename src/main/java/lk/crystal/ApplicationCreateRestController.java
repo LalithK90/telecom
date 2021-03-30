@@ -42,23 +42,13 @@ public class ApplicationCreateRestController {
             role.setRoleName(s);
             roleService.persist(role);
         }
-
 //Employee
-        Employee employee = new Employee();
-        employee.setCode("11111111");
-        employee.setName("Admin User");
-        employee.setCallingName("Admin");
-        employee.setName("908670000V");
-        employee.setMobileOne("0750000000");
-        employee.setTitle(Title.MR);
-        employee.setGender(Gender.MALE);
-        employee.setDesignation(Designation.ADMIN);
-        employee.setCivilStatus(CivilStatus.UNMARRIED);
-        employee.setEmployeeStatus(EmployeeStatus.WORKING);
-        employee.setDateOfBirth(LocalDate.now().minusYears(18));
-        employee.setDateOfAssignment(LocalDate.now());
-        Employee employeeDb = employeeService.persist(employee);
-
+        Employee employee = new Employee();        employee.setCode("11111111");        employee.setName("Admin User");
+        employee.setCallingName("Admin");        employee.setName("908670000V");
+        employee.setMobileOne("0750000000");        employee.setTitle(Title.MR);        employee.setGender(Gender.MALE);
+        employee.setDesignation(Designation.ADMIN);        employee.setCivilStatus(CivilStatus.UNMARRIED);
+        employee.setEmployeeStatus(EmployeeStatus.WORKING);        employee.setDateOfBirth(LocalDate.now().minusYears(18));
+        employee.setDateOfAssignment(LocalDate.now());        Employee employeeDb = employeeService.persist(employee);
 
         //admin user one
         User user = new User();
