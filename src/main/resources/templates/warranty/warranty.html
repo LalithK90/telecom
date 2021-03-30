@@ -13,7 +13,7 @@
     <main >
       <!--heading Area-->
       <div class="container-fluid" >
-        <h1 class="mt-4" >Brands</h1 >
+        <h1 class="mt-4" >Find Invoice</h1 >
         <div class="row formManagement border-info mb-4 mt-4" >
           <!--New Brand Button-->
           <div class="col" >
@@ -23,11 +23,12 @@
           </div >
         </div >
 
-        <!--Brandes List-->
+        <!--Warranty List-->
         <div class="card mb-4" >
 
           <div class="col-sm-12 flex-column ">
-            <form id="form" method="POST"  data-th-action="${'/user/workingPlace'}"  data-th-object="${employee}"
+
+            <form id="form" method="POST"  data-th-action="${'/warranty/search'}"  data-th-object="${invoice}"
                   enctype="multipart/form-data">
               <div class="form-row">
                 <div class="col-5 flex-column">
@@ -38,9 +39,9 @@
                     <div class="col-8">
                       <select id="selectParameter" class="form-control" tabindex="1" required>
                         <option value="">Please select</option>
-                        <option value="nic">NIC Number</option>
-                        <option value="code">Registration Number</option>
-                        <option value="name">Name</option>
+                        <option value="code">Invoice code</option>
+                        <option value="invoiceLedgers[0].warrantyNumber">Warranty number</option>
+
                       </select>
                     </div>
                   </div>
@@ -75,15 +76,14 @@
             </form>
           </div>
           <!--Error-->
-          <div class="row"  data-th-if="${message}" >
+          <div class="row"  data-th-if="${messageShow}" >
             <div class="col-sm-12" >
               <div class="alert alert-warning alert-dismissible fade show" role="alert" >
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
                   <span aria-hidden="true" >&times;</span >
                 </button >
                 <h3 class="text-center text-danger" >
-                  <strong >There is no brand upto now please add brand to the system
-                           using "New" button.
+                  <strong data-th-text="${message}">
                   </strong >
                 </h3 >
               </div >

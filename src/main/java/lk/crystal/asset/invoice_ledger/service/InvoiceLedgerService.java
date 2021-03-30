@@ -18,4 +18,8 @@ private final InvoiceLedgerDao invoiceLedgerDao;
   public List< InvoiceLedger> findByCreatedAtIsBetween(LocalDateTime from, LocalDateTime to) {
   return invoiceLedgerDao.findByCreatedAtIsBetween(from,to);
   }
+
+    public InvoiceLedger findByWarrantyNumber(String warrantyNumber) {
+    return invoiceLedgerDao.findByWarrantyNumber(warrantyNumber);
+    }
 }

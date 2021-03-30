@@ -641,3 +641,15 @@ $(".reveal").on('click', function () {
 if ($("#nic").val() !== null || $("#nic").val() === undefined){
     $("input:radio[name=gender]").filter(`[value=${calculateGender($("#nic").val())}]`).prop('checked',true);
 }
+
+
+function confirmDelete(obj) {
+    swal("Are you sure to delete this?", {
+        dangerMode: true,
+        buttons: true,
+    }).then((x) => {
+        if (x) {
+            self.location = location.protocol + "//" + location.host + obj.getAttribute('id');
+        }
+    });
+}

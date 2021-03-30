@@ -476,7 +476,7 @@
                           <input type="number" id="sp${id}" class="form-control" name="invoiceLedgers[${id}].sellPrice" value="${invoiceLedger.sellPrice}" readonly>
                           </th >
                           <th >
-                          <input type="number" id="rq${id}" class="form-control" onchange="lineTotalCalculateByLine(this)"  onkeyup="lineTotalCalculateByLine(this)" name="invoiceLedgers[${id}].quantity" value="${invoiceLedger.requestCount}">
+                          <input type="number" id="rq${id}" class="form-control" onchange="lineTotalCalculateByLine(this)"  onkeyup="lineTotalCalculateByLine(this)" name="invoiceLedgers[${id}].quantity" value="${invoiceLedger.requestCount}" readonly>
                           </th >
                           <th >
                           <input type="number" id="wr${id}" class="form-control warrantyNumber" name="invoiceLedgers[${id}].warrantyNumber" value="${invoiceLedger.warrantyNumber}" readonly>
@@ -528,7 +528,7 @@
         }
 
         //modal total mount calculate
-        $("#requestCount").bind('keyup', function () {
+        $("#requestCount").bind('keyup keydown change ', function () {
             totalPriceCard();
         });
 
@@ -536,14 +536,10 @@
             let requestCountVal = $("#requestCount").val();
             let abQuantity = $("#abQuantity").val();
 
-            console.log("requestCountVal " + requestCountVal + " abQuantity " + abQuantity);
-
             if (parseFloat(abQuantity) >= parseFloat(requestCountVal)) {
-                console.log("asdada")
                 $("#totalModal").val(parseFloat($("#sellPriceModal").val()) * parseFloat(requestCountVal));
                 addButtonDisable();
             } else {
-                console.log("else part")
                 swal({
                     title: "Request more than available   ",
                     icon: "warning",
