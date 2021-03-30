@@ -4,6 +4,7 @@ package lk.crystal.asset.invoice.controller;
 import lk.crystal.asset.common_asset.model.TwoDate;
 import lk.crystal.asset.customer.service.CustomerService;
 import lk.crystal.asset.discount_ratio.service.DiscountRatioService;
+import lk.crystal.asset.employee.entity.Employee;
 import lk.crystal.asset.invoice.entity.Invoice;
 import lk.crystal.asset.invoice.entity.enums.InvoicePrintOrNot;
 import lk.crystal.asset.invoice.entity.enums.InvoiceValidOrNot;
@@ -14,8 +15,10 @@ import lk.crystal.asset.item.service.ItemService;
 import lk.crystal.asset.ledger.controller.LedgerController;
 import lk.crystal.asset.ledger.entity.Ledger;
 import lk.crystal.asset.ledger.service.LedgerService;
+import lk.crystal.asset.user_management.user.entity.User;
 import lk.crystal.util.service.DateTimeAgeService;
 import lk.crystal.util.service.MakeAutoGenerateNumberService;
+import org.aspectj.weaver.ast.Test;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +27,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -146,4 +150,7 @@ public class InvoiceController {
     invoiceService.persist(invoice);
     return "redirect:/invoice";
   }
+
+
+
 }
