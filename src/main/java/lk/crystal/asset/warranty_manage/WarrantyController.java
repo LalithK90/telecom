@@ -17,44 +17,51 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/warranty")
+@RequestMapping( "/warranty" )
 public class WarrantyController {
 
-    private final InvoiceLedgerService invoiceLedgerService;
-    private final InvoiceService invoiceService;
+  private final InvoiceLedgerService invoiceLedgerService;
+  private final InvoiceService invoiceService;
 
-    public WarrantyController(InvoiceLedgerService invoiceLedgerService, InvoiceService invoiceService) {
-        this.invoiceLedgerService = invoiceLedgerService;
-        this.invoiceService = invoiceService;
+  public WarrantyController(InvoiceLedgerService invoiceLedgerService, InvoiceService invoiceService) {
+    this.invoiceLedgerService = invoiceLedgerService;
+    this.invoiceService = invoiceService;
+  }
+
+  @GetMapping( "/form" )
+  public String form() {
+
+    return "warranty/warranty";
+  }
+
+  /*Test code*/
+  @PostMapping( value = "/search" )
+  public String addInvoiceDetails(@ModelAttribute Invoice invoice, Model model) {
+
+    if ( invoice.getCode() != null ) {
+
+      List< Invoice > invoices = invoiceService.search(invoice);
+
+      if ( invoices.size() == 1 ) {
+        Invoice invoiceDb = invoiceService.findById(invoices.get(0).getId());
+        model.addAttribute("invoiceDetail", invoiceDb);
+        model.addAttribute("customerDetail", invoiceDb.getCustomer());
+        return "invoice/invoice-detail";
+      }
+
+    }
+    if ( invoice.getInvoiceLedgers().get(0).getWarrantyNumber() != null ) {
+      InvoiceLedger invoiceLedger =
+          invoiceLedgerService.findByWarrantyNumber(invoice.getInvoiceLedgers().get(0).getWarrantyNumber());
+      Invoice invoiceDb = invoiceService.findById(invoiceLedger.getInvoice().getId());
+      model.addAttribute("invoiceDetail", invoiceDb);
+      model.addAttribute("customerDetail", invoiceDb.getCustomer());
+      return "invoice/invoice-detail";
     }
 
-    @GetMapping("/form")
-    public String form() {
-
-        return "warranty/warranty";
-    }
-
-    /*Test code*/
-    @PostMapping(value = "/search")
-    public String addInvoiceDetails(@ModelAttribute Invoice invoice, Model model) {
-
-        if (invoice.getCode() != null) {
-
-            List<Invoice> invoices = invoiceService.search(invoice);
-
-            if (invoices.size() == 1) {
-                model.addAttribute("invoiceDetail", invoiceService.findById(invoices.get(0).getId()));
-            } else {
-                InvoiceLedger invoiceLedger = invoiceLedgerService.findByWarrantyNumber(invoice.getInvoiceLedgers().get(0).getWarrantyNumber());
-                model.addAttribute("invoiceDetail", invoiceService.findById(invoiceLedger.getInvoice().getId()));
-
-
-
-            return "invoice/invoice-detail";
-
-        }
-        model.addAttribute("messageShow", true);
-        model.addAttribute("message", "There is not invoice in the system according to the provided details \n Could you please search again !!");
-        return "warranty/warranty";
-    }
+    model.addAttribute("messageShow", true);
+    model.addAttribute("message", "There is not invoice in the system according to the provided details \n Could " +
+        "you please search again !!");
+    return "warranty/warranty";
+  }
 }
