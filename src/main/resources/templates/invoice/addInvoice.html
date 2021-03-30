@@ -1,447 +1,468 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <!--/* Styles, meta data, and title are included */-->
-<head data-th-replace="~{fragments/header :: headerFragment}">
-    <meta charset="UTF-8">
-    <title>Thymeleaf Springboot </title>
-</head>
-<body class="sb-nav-fixed">
-<link data-th-href="@{/css/combo-box-search.css}" media="all" rel="stylesheet" type="text/css"/>
-<link data-th-href="@{/css/modal.css}" media="all" rel="stylesheet" type="text/css"/>
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body class="sb-nav-fixed" >
+<link data-th-href="@{/css/combo-box-search.css}" media="all" rel="stylesheet" type="text/css" />
+<link data-th-href="@{/css/modal.css}" media="all" rel="stylesheet" type="text/css" />
 <!--/* Nav bar is included */-->
-<nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
-<div id="layoutSidenav">
-    <div data-th-replace="~{fragments/sideNav :: sideNavFragment}">
-    </div>
-    <div id="layoutSidenav_content">
-        <main>
-            <div class="container-fluid">
-                <div class="card bg-light m-4">
-                    <div class="card-body">
-                    <!--Creates the popup body-->
-                    <div class="popup-overlay">
-                        <!--Creates the popup content-->
-                        <div class="popup-content">
-                            <div class="form-row">
-                                <!--item name-->
-                                <div class="form-group col-md-6">
-                                    <label for="itemName" class="text-dark">Item Name :</label>
-                                    <input id="itemName" class="form-control" type="text" readonly/>
-                                </div>
-                                <!--Available Quantity-->
-                                <div class="form-group col-md-6">
-                                    <label for="abQuantity" class="text-dark">Available Quantity :</label>
-                                    <input id="abQuantity" class="form-control" type="text" readonly/>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <!--Request count-->
-                                <div class="form-group col-md-6">
-                                    <label for="sellPriceModal" class="text-dark">Sell Price :</label>
-                                    <input id="sellPriceModal" class="form-control" type="number" step="0.01" readonly/>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <!--Expired date-->
-                                <div class="form-group col-md-6">
-                                    <label for="requestCount" class="text-dark">Request Count :</label>
-                                    <input id="requestCount" class="form-control" type="number" step="0.01"/>
-                                </div>
-                                <!--Total -->
-                                <div class="form-group col-md-6">
-                                    <label for="totalModal" class="text-dark">Total:</label>
-                                    <input id="totalModal" class="form-control" type="number" step="0.01" readonly/>
-                                    <input id="ledgerId" class="form-control" type="hidden" hidden/>
-                                </div>
-                            </div>
-                            <!--button area-->
-                            <div class="form-row">
-                                <div class="col-6"></div>
-                                <div class="col ">
-                                    <button class="btn btn-danger" id="close">Close</button>
-                                </div>
-                                <div class="col ">
-                                    <button class="btn btn-success" id="addModal">Add</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+<div id="layoutSidenav" >
+  <div data-th-replace="~{fragments/sideNav :: sideNavFragment}" >
+  </div >
+  <div id="layoutSidenav_content" >
+    <main >
+      <div class="container-fluid" >
+        <div class="card bg-light m-4" >
+          <div class="card-body" >
+            <!--Creates the popup body-->
+            <div class="popup-overlay" >
+              <!--Creates the popup content-->
+              <div class="popup-content" >
+                <div class="form-row" >
+                  <!--item name-->
+                  <div class="form-group col-md-6" >
+                    <label for="itemName" class="text-dark" >Item Name :</label >
+                    <input id="itemName" class="form-control" type="text" readonly />
+                  </div >
+                  <!--Available Quantity-->
+                  <div class="form-group col-md-6" >
+                    <label for="abQuantity" class="text-dark" >Available Quantity :</label >
+                    <input id="abQuantity" class="form-control" type="text" readonly />
+                  </div >
+                </div >
+                <div class="form-row" >
+                  <!--Request count-->
+                  <div class="form-group col-md-6" >
+                    <label for="sellPriceModal" class="text-dark" >Sell Price :</label >
+                    <input id="sellPriceModal" class="form-control" type="number" step="0.01" readonly />
+                  </div >
+                  <!--warranty filed-->
+                  <div class="form-group col-md-6" id="warrantyBlock" >
+                    <label for="warrantyNumber" class="text-dark" >Warranty No:</label >
+                    <input id="warrantyNumber" class="form-control" type="number" />
+                  </div >
+                </div >
+                <div class="form-row" >
+                  <!--Expired date-->
+                  <div class="form-group col-md-6" >
+                    <label for="requestCount" class="text-dark" >Request Count :</label >
+                    <input id="requestCount" class="form-control" type="number" step="1" />
+                  </div >
+                  <!--Total -->
+                  <div class="form-group col-md-6" >
+                    <label for="totalModal" class="text-dark" >Total:</label >
+                    <input id="totalModal" class="form-control" type="number" step="0.01" readonly />
+                    <input id="ledgerId" class="form-control" type="hidden" hidden />
+                  </div >
+                </div >
+                <!--button area-->
+                <div class="form-row" >
+                  <div class="col-6" ></div >
+                  <div class="col " >
+                    <button class="btn btn-danger" id="close" >Close</button >
+                  </div >
+                  <div class="col " >
+                    <button class="btn btn-success" id="addModal" >Add</button >
+                  </div >
+                </div >
+              </div >
+            </div >
 
-                    <form action="/invoice" method="post" data-th-object="${invoice}">
-                        <!--customer list-->
-                        <div class="form-group row">
-                            <div class="col-1">
-                                <label for="customer">Customer</label>
-                            </div>
-                            <div class="col-7">
-                                <select id="customer" data-th-field="*{customer}" class="form-control" tabindex="9"
-                                        required>
-                                    <option value="">Please select</option>
-                                    <option data-th-each="customer : ${customers}"
-                                            data-th-text="${customer.name+'  '+customer.mobile}"
-                                            data-th-value="${customer.id}">
-                                        Please select
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="col-4">
-                                <a class="btn btn-sm btn-outline-success float-right" href="/customer/add">Add customer</a>
-                            </div>
-                        </div>
-                        <hr>
-                        <!--ledgers will list-->
-                        <div class="form-group row">
-                            <div class="col-1">
-                            <label class="control-label" for="item">Items</label>
-                            </div>
-                            <div class="col-11">
-                                <select id="item" class="form-control form-control-sm" tabindex="9">
-                                    <option value="">Please select</option>
-                                    <option data-th-each="ledger : ${ledgers}"
-                                            data-th-text="${'Item Name: '+ledger.item.name+'  Sell Price : '+ledger.item.sellPrice+'  Available quantity : '+ledger.quantity}"
-                                            data-th-value="${ledger.id}">Please select
-                                    </option>
-                                </select>
-                            </div>
-                         </div>
-                        <!--selected ledger items-->
-                        <div class="table-responsive-md">
-                            <table class="table table-hover table-striped" id="myTable">
-                                <thead>
-                                <tr>
-                                    <th>Index</th>
-                                    <th>Item Name</th>
-                                    <th>Available Quantity</th>
-                                    <th>Unit Price</th>
-                                    <th>Quantity</th>
-                                    <th>Line Total</th>
-                                    <th>Modify</th>
-                                </tr>
-                                </thead>
-                                <tbody>
+            <form action="/invoice" method="post" data-th-object="${invoice}" >
+              <!--customer list-->
+              <div class="form-group row" >
+                <div class="col-1" >
+                  <label for="customer" >Customer</label >
+                </div >
+                <div class="col-7" >
+                  <select id="customer" data-th-field="*{customer}" class="form-control" tabindex="9"
+                          required >
+                    <option value="" >Please select</option >
+                    <option data-th-each="customer : ${customers}"
+                            data-th-text="${customer.name+'  '+customer.mobile}"
+                            data-th-value="${customer.id}" >
+                      Please select
+                    </option >
+                  </select >
+                </div >
+                <div class="col-4" >
+                  <a class="btn btn-sm btn-outline-success float-right" href="/customer/add" >Add customer</a >
+                </div >
+              </div >
+              <hr >
+              <!--ledgers will list-->
+              <div class="form-group row" >
+                <div class="col-1" >
+                  <label class="control-label" for="item" >Items</label >
+                </div >
+                <div class="col-11" >
+                  <select id="item" class="form-control form-control-sm" tabindex="9" >
+                    <option value="" >Please select</option >
+                    <option data-th-each="ledger : ${ledgers}"
+                            data-th-text="${'Item Name: '+ledger.item.name+'  Sell Price : '+ledger.item.sellPrice+'  Available quantity : '+ledger.quantity}"
+                            data-th-value="${ledger.id}" >Please select
+                    </option >
+                  </select >
+                </div >
+              </div >
+              <!--selected ledger items-->
+              <div class="table-responsive-md" >
+                <table class="table table-hover table-striped" id="myTable" >
+                  <thead >
+                  <tr >
+                    <th >Index</th >
+                    <th >Item Name</th >
+                    <th >Available Quantity</th >
+                    <th >Unit Price</th >
+                    <th >Quantity</th >
+                    <th >Warranty Number</th >
+                    <th >Line Total</th >
+                    <th >Modify</th >
+                  </tr >
+                  </thead >
+                  <tbody >
 
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td colspan="4" class="text-right"><label for="total">Total</label></td>
-                                    <td><input id="total" type="text" class="form-control form-control-sm" name="totalPrice"
-                                               placeholder="Total Price">
-                                    </td>
-                                </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                        <hr>
-                        <!--Payment Section-->
-                        <div class="form-group">
-                            <!--Payment method and total amount-->
-                            <div class="form-row text-right">
-                                <!--payment method-->
-                                <div class="col-md-6 ">
-                                    <div class="form-row text-right">
-                                        <div class="col-md-4">
-                                            <label data-th-for="${paymentMethod}">Payment Method:</label>
-                                        </div>
-                                        <div class="col-md-8 text-left">
-                                            <div class="custom-control custom-checkbox custom-control-inline "
-                                                 data-th-each="paymentMethod,index : ${paymentMethods}">
-                                                <input class="custom-control-input" required
-                                                       data-th-name="${'paymentMethod'}"
-                                                       data-th-value="${paymentMethod}"
-                                                       data-th-id="${index.index}+${paymentMethod}" type="radio"
-                                                />
-                                                <label class="custom-control-label"
-                                                       data-th-for="${index.index}+${paymentMethod}"
-                                                       data-th-text="${paymentMethod.paymentMethod}"> radio
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--Discount-->
-                                <div class="col-md-6 ">
-                                    <div class="form-row text-right">
-                                        <div class="col-md-4">
-                                            <label class="control-label" for="discountRatio">Discount Ratio :</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <select id="discountRatio" data-th-field="*{discountRatio}"
-                                                    class="form-control"
-                                                    tabindex="9"
-                                                    required>
-                                                <option value="">Please select</option>
-                                                <option data-th-each="discountRatio : ${discountRatios}"
-                                                        data-th-text="${discountRatio.amount}"
-                                                        data-th-value="${discountRatio.id}">
-                                                    Please select
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <!--Total Amount-->
-                                <div class="col-md-6 ">
-                                    <div class="form-row text-right">
-                                        <div class="col-md-4">
-                                            <label class="control-label" for="totalAmount">Total Amount :</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input id="totalAmount" data-th-field="*{totalAmount}" class="form-control"
-                                                   tabindex="6"
-                                                   type="text"
-                                                   required readonly/>
-                                            <span class="error" id="totalAmountError" data-th-errors="*{balance}"
-                                                  data-th-if="${#fields.hasErrors('totalAmount')}"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--Discount Amount-->
-                                <div class="col-md-6 ">
-                                    <div class="form-row text-right">
-                                        <div class="col-md-4">
-                                            <label class="control-label" for="discountAmount">Discount Amount :</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input id="discountAmount" data-th-field="*{discountAmount}"
-                                                   class="form-control" tabindex="6"
-                                                   type="text"
-                                                   required readonly/>
-                                            <span class="error" id="nicError" data-th-errors="*{discountAmount}"
-                                                  data-th-if="${#fields.hasErrors('discountAmount')}">Error
-                                                                             Discount Amount</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Amount tendered and balance  -->
-                            <div class="form-row text-right" id="cashPaymentBlock">
-                                <!--Amount Tendered-->
-                                <div class="col-md-6 ">
-                                    <div class="form-row text-right">
-                                        <div class="col-md-4">
-                                            <label class="control-label" for="amountTendered">Amount Tendered :</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input id="amountTendered" data-th-field="*{amountTendered}"
-                                                   class="form-control"
-                                                   tabindex="6" type="text"
-                                                   required/>
-                                            <span class="error" data-th-errors="*{amountTendered}"
-                                                  data-th-if="${#fields.hasErrors('amountTendered')}"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--Balance-->
-                                <div class="col-md-6 ">
-                                    <div class="form-row text-right">
-                                        <div class="col-md-4">
-                                            <label class="control-label" for="balance">Balance :</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input id="balance" data-th-field="*{balance}" class="form-control"
-                                                   tabindex="6"
-                                                   type="text"
-                                                   required readonly/>
-                                            <span class="error" id="balanceError" data-th-errors="*{balance}"
-                                                  data-th-if="${#fields.hasErrors('balance')}"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Card Payment -> Bank and card Number -->
-                            <div class="form-row text-right" id="bankNameBlock">
-                                <!--Bank -->
-                                <div class="col-md-6 ">
-                                    <div class="form-row text-right">
-                                        <div class="col-md-4">
-                                            <label class="control-label" for="bankName">Bank Name Tendered :</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input id="bankName" data-th-field="*{bankName}"
-                                                   class="form-control"
-                                                   tabindex="6" type="text"/>
-                                            <span class="error" data-th-errors="*{bankName}"
-                                                  data-th-if="${#fields.hasErrors('bankName')}"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--card number-->
-                                <div class="col-md-6 ">
-                                    <div class="form-row text-right">
-                                        <div class="col-md-4">
-                                            <label class="control-label" for="cardNumber">Card Number :</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input id="cardNumber" data-th-field="*{cardNumber}" class="form-control"
-                                                   tabindex="6"
-                                                   type="text"/>
-                                            <span class="error" data-th-errors="*{cardNumber}"
-                                                  data-th-if="${#fields.hasErrors('cardNumber')}"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
+                  </tbody >
+                  <tfoot >
+                  <tr >
+                    <td ></td >
+                    <td ></td >
+                    <td colspan="4" class="text-right" ><label for="total" >Total</label ></td >
+                    <td ><input id="total" type="text" class="form-control form-control-sm" name="totalPrice"
+                                placeholder="Total Price" >
+                    </td >
+                  </tr >
+                  </tfoot >
+                </table >
+              </div >
+              <hr >
+              <!--Payment Section-->
+              <div class="form-group" >
+                <!--Payment method and total amount-->
+                <div class="form-row text-right" >
+                  <!--payment method-->
+                  <div class="col-md-6 " >
+                    <div class="form-row text-right" >
+                      <div class="col-md-4" >
+                        <label data-th-for="${paymentMethod}" >Payment Method:</label >
+                      </div >
+                      <div class="col-md-8 text-left" >
+                        <div class="custom-control custom-checkbox custom-control-inline "
+                             data-th-each="paymentMethod,index : ${paymentMethods}" >
+                          <input class="custom-control-input" required
+                                 data-th-name="${'paymentMethod'}"
+                                 data-th-value="${paymentMethod}"
+                                 data-th-id="${index.index}+${paymentMethod}" type="radio"
+                          />
+                          <label class="custom-control-label"
+                                 data-th-for="${index.index}+${paymentMethod}"
+                                 data-th-text="${paymentMethod.paymentMethod}" > radio
+                          </label >
+                        </div >
+                      </div >
+                    </div >
+                  </div >
+                  <!--Discount-->
+                  <div class="col-md-6 " >
+                    <div class="form-row text-right" >
+                      <div class="col-md-4" >
+                        <label class="control-label" for="discountRatio" >Discount Ratio :</label >
+                      </div >
+                      <div class="col-md-8" >
+                        <select id="discountRatio" data-th-field="*{discountRatio}"
+                                class="form-control"
+                                tabindex="9"
+                                required >
+                          <option value="" >Please select</option >
+                          <option data-th-each="discountRatio : ${discountRatios}"
+                                  data-th-text="${discountRatio.amount}"
+                                  data-th-value="${discountRatio.id}" >
+                            Please select
+                          </option >
+                        </select >
+                      </div >
+                    </div >
+                  </div >
+                </div >
+                <div class="form-row" >
+                  <!--Total Amount-->
+                  <div class="col-md-6 " >
+                    <div class="form-row text-right" >
+                      <div class="col-md-4" >
+                        <label class="control-label" for="totalAmount" >Total Amount :</label >
+                      </div >
+                      <div class="col-md-8" >
+                        <input id="totalAmount" data-th-field="*{totalAmount}" class="form-control"
+                               tabindex="6"
+                               type="text"
+                               required readonly />
+                        <span class="error" id="totalAmountError" data-th-errors="*{balance}"
+                              data-th-if="${#fields.hasErrors('totalAmount')}" ></span >
+                      </div >
+                    </div >
+                  </div >
+                  <!--Discount Amount-->
+                  <div class="col-md-6 " >
+                    <div class="form-row text-right" >
+                      <div class="col-md-4" >
+                        <label class="control-label" for="discountAmount" >Discount Amount :</label >
+                      </div >
+                      <div class="col-md-8" >
+                        <input id="discountAmount" data-th-field="*{discountAmount}"
+                               class="form-control" tabindex="6"
+                               type="text"
+                               required readonly />
+                        <span class="error" id="nicError" data-th-errors="*{discountAmount}"
+                              data-th-if="${#fields.hasErrors('discountAmount')}" >Error
+                                                                             Discount Amount</span >
+                      </div >
+                    </div >
+                  </div >
+                </div >
+                <!--Amount tendered and balance  -->
+                <div class="form-row text-right" id="cashPaymentBlock" >
+                  <!--Amount Tendered-->
+                  <div class="col-md-6 " >
+                    <div class="form-row text-right" >
+                      <div class="col-md-4" >
+                        <label class="control-label" for="amountTendered" >Amount Tendered :</label >
+                      </div >
+                      <div class="col-md-8" >
+                        <input id="amountTendered" data-th-field="*{amountTendered}"
+                               class="form-control"
+                               tabindex="6" type="text"
+                               required />
+                        <span class="error" data-th-errors="*{amountTendered}"
+                              data-th-if="${#fields.hasErrors('amountTendered')}" ></span >
+                      </div >
+                    </div >
+                  </div >
+                  <!--Balance-->
+                  <div class="col-md-6 " >
+                    <div class="form-row text-right" >
+                      <div class="col-md-4" >
+                        <label class="control-label" for="balance" >Balance :</label >
+                      </div >
+                      <div class="col-md-8" >
+                        <input id="balance" data-th-field="*{balance}" class="form-control"
+                               tabindex="6"
+                               type="text"
+                               required readonly />
+                        <span class="error" id="balanceError" data-th-errors="*{balance}"
+                              data-th-if="${#fields.hasErrors('balance')}" ></span >
+                      </div >
+                    </div >
+                  </div >
+                </div >
+                <!-- Card Payment -> Bank and card Number -->
+                <div class="form-row text-right" id="bankNameBlock" >
+                  <!--Bank -->
+                  <div class="col-md-6 " >
+                    <div class="form-row text-right" >
+                      <div class="col-md-4" >
+                        <label class="control-label" for="bankName" >Bank Name Tendered :</label >
+                      </div >
+                      <div class="col-md-8" >
+                        <input id="bankName" data-th-field="*{bankName}"
+                               class="form-control"
+                               tabindex="6" type="text" />
+                        <span class="error" data-th-errors="*{bankName}"
+                              data-th-if="${#fields.hasErrors('bankName')}" ></span >
+                      </div >
+                    </div >
+                  </div >
+                  <!--card number-->
+                  <div class="col-md-6 " >
+                    <div class="form-row text-right" >
+                      <div class="col-md-4" >
+                        <label class="control-label" for="cardNumber" >Card Number :</label >
+                      </div >
+                      <div class="col-md-8" >
+                        <input id="cardNumber" data-th-field="*{cardNumber}" class="form-control"
+                               tabindex="6"
+                               type="text" />
+                        <span class="error" data-th-errors="*{cardNumber}"
+                              data-th-if="${#fields.hasErrors('cardNumber')}" ></span >
+                      </div >
+                    </div >
+                  </div >
+                </div >
+              </div >
+              <hr >
 
-                        <!--remarks and invoice print or not-->
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <!--invoice print or not-->
-                                    <div class="form-row text-right">
-                                        <div class="col-md-4">
-                                            <label data-th-for="${invoicePrintOrNot}">Print the Invoice :</label>
-                                        </div>
-                                        <div class="col-md-8 text-left">
-                                            <div class="custom-control custom-checkbox custom-control-inline "
-                                                 data-th-each="invoicePrintOrNot,index : ${invoicePrintOrNots}">
-                                                <input class="custom-control-input" required
-                                                       data-th-name="${'invoicePrintOrNot'}"
-                                                       data-th-value="${invoicePrintOrNot}"
-                                                       data-th-id="${index.index}+${invoicePrintOrNot}" type="radio"
-                                                />
-                                                <label class="custom-control-label"
-                                                       data-th-for="${index.index}+${invoicePrintOrNot}"
-                                                       data-th-text="${invoicePrintOrNot.invoicePrintOrNot}"> radio
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--Remarks-->
-                                <div class="col-md-6">
-                                    <div class="form-row text-right">
-                                        <div class="col-md-4">
-                                            <label for="remarks">Remarks :</label></div>
-                                        <div class="col-md-8">
-                                                    <textarea id="remarks" class="form-control" data-th-field="*{remarks}"
-                                                              rows="2"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <!--button-->
-                        <div class="form-group">
-                            <!--Button-->
-                            <div class="form-group ">
-                                <!--Back Button-->
-                                <a class="btn btn-dark" href="/invoice" tabindex="14">
-                                    <i class="fas fa-arrow-circle-left" style="font-size: 20px"></i>&nbsp;&nbsp;Back
-                                </a>
-                                <!--Cancel Button-->
-                                <button class="btn btn-warning" tabindex="13" type="reset">
-                                    <i class="far fa-times-circle" style="font-size: 20px"></i>&nbsp;&nbsp;Cancel
-                                </button>
-                                <!--Save Button-->
-                                <button class="btn btn-success ml-5 float-right" tabindex="12" type="submit">
-                                    <i class="fa fa-save" style="font-size: 20px"></i>&nbsp;&nbsp;<span
-                                        data-th-text="${'Save'}"
-                                        id="submit"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+              <!--remarks and invoice print or not-->
+              <div class="form-group" >
+                <div class="form-row" >
+                  <div class="col-md-6" >
+                    <!--invoice print or not-->
+                    <div class="form-row text-right" >
+                      <div class="col-md-4" >
+                        <label data-th-for="${invoicePrintOrNot}" >Print the Invoice :</label >
+                      </div >
+                      <div class="col-md-8 text-left" >
+                        <div class="custom-control custom-checkbox custom-control-inline "
+                             data-th-each="invoicePrintOrNot,index : ${invoicePrintOrNots}" >
+                          <input class="custom-control-input" required
+                                 data-th-name="${'invoicePrintOrNot'}"
+                                 data-th-value="${invoicePrintOrNot}"
+                                 data-th-id="${index.index}+${invoicePrintOrNot}" type="radio"
+                          />
+                          <label class="custom-control-label"
+                                 data-th-for="${index.index}+${invoicePrintOrNot}"
+                                 data-th-text="${invoicePrintOrNot.invoicePrintOrNot}" > radio
+                          </label >
+                        </div >
+                      </div >
+                    </div >
+                  </div >
+                  <!--Remarks-->
+                  <div class="col-md-6" >
+                    <div class="form-row text-right" >
+                      <div class="col-md-4" >
+                        <label for="remarks" >Remarks :</label ></div >
+                      <div class="col-md-8" >
+                                                    <textarea id="remarks" class="form-control"
+                                                              data-th-field="*{remarks}"
+                                                              rows="2" ></textarea >
+                      </div >
+                    </div >
+                  </div >
+                </div >
+              </div >
+              <hr >
+              <!--button-->
+              <div class="form-group" >
+                <!--Button-->
+                <div class="form-group " >
+                  <!--Back Button-->
+                  <a class="btn btn-dark" href="/invoice" tabindex="14" >
+                    <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
+                  </a >
+                  <!--Cancel Button-->
+                  <button class="btn btn-warning" tabindex="13" type="reset" >
+                    <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
+                  </button >
+                  <!--Save Button-->
+                  <button class="btn btn-success ml-5 float-right" tabindex="12" type="submit" >
+                    <i class="fa fa-save" style="font-size: 20px" ></i >&nbsp;&nbsp;<span
+                        data-th-text="${'Save'}"
+                        id="submit" ></span >
+                  </button >
+                </div >
+              </div >
+            </form >
 
-                    <input type="hidden" data-th-value="${ledgerItemURL}" id="ledgerItemURL">
-                    </div>
-                </div>
-            </div>
-        </main>
-        <!--/* footer is */-->
-        <div data-th-replace="~{fragments/footer :: footerFragment}"></div>
-        <!--/* script is included */-->
-        <div data-th-replace="~{fragments/script :: scriptFragment}"></div>
-        <script data-th-src="@{/js/combo-box-search.js}"></script>
-        <script>
-            //removes the "active" class to .popup and .popup-content when the "Close" button is clicked
-            $("#close, .popup-overlay body").on("click", function () {
-                $(".popup-overlay, .popup-content").removeClass("active");
-                modalValueZero();
-            });
+            <input type="hidden" data-th-value="${ledgerItemURL}" id="ledgerItemURL" >
+          </div >
+        </div >
+      </div >
+    </main >
+    <!--/* footer is */-->
+    <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+    <!--/* script is included */-->
+    <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+    <script data-th-src="@{/js/combo-box-search.js}" ></script >
+    <script >
+        //removes the "active" class to .popup and .popup-content when the "Close" button is clicked
+        $("#close, .popup-overlay body").on("click", function () {
+            $(".popup-overlay, .popup-content").removeClass("active");
+            modalValueZero();
+        });
 
-            $(document).ready(function () {
-                $("#btnshow").hide();
-                $("#item").select2({
-                    data: $(this).val()
-                }).change(() => {
-                    let finalUrl = $('#ledgerItemURL').val() + $("#item").val();
-                    $.ajax({
-                        type: 'GET',
-                        url: finalUrl,
-                        success: function (resp) {
-                            popUpDataSet(resp);
-                        },
-                        error: function (err) {
-                            console.log(err);
-                        }
-                    });
-
+        $(document).ready(function () {
+            $("#btnshow").hide();
+            $("#item").select2({
+                data: $(this).val()
+            }).change(() => {
+                let finalUrl = $('#ledgerItemURL').val() + $("#item").val();
+                $.ajax({
+                    type: 'GET',
+                    url: finalUrl,
+                    success: function (resp) {
+                        popUpDataSet(resp);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
                 });
 
-                $("#customer").select2({
-                    data: $(this).val()
-                });
-                $("input[value='CASH']").prop('checked', true);
-                showHideContent();
-                $("input[value='NOT_PRINTED']").prop('checked', true);
-
             });
 
-            let selectedInvoiceLedger = [];
-
-            function popUpDataSet(resp) {
-                $("#ledgerId").val(resp.id);
-                $("#itemName").val(resp.item.name);
-                $("#abQuantity").val(resp.quantity);
-                $("#sellPriceModal").val(resp.sellPrice);
-                $(".popup-overlay, .popup-content").addClass("active");
-                addButtonDisable();
-            }
-
-            function addButtonDisable() {
-                let requestInputValue = $('#requestCount').val();
-                if (requestInputValue) {
-                    $("#addModal").show();
-                } else {
-                    $("#addModal").hide();
-                }
-            }
-
-            $('#addModal').bind('click', function () {
-                let receivedLedgerItem = {};// ledgerItem
-                receivedLedgerItem.id = $("#ledgerId").val();
-                receivedLedgerItem.name = $("#itemName").val();
-                receivedLedgerItem.quantity = $("#abQuantity").val();
-                receivedLedgerItem.sellPrice = $("#sellPriceModal").val();
-                receivedLedgerItem.requestCount = $("#requestCount").val();
-                receivedLedgerItem.totalModal = $("#totalModal").val();
-                selectedInvoiceLedger.push(receivedLedgerItem);
-                $(".popup-overlay, .popup-content").removeClass("active");
-                optionElementRemove('#item');
-                itemAddToItemSelectTable();
-                modalValueZero();
+            $("#customer").select2({
+                data: $(this).val()
             });
+            $("input[value='CASH']").prop('checked', true);
+            showHideContent();
+            $("input[value='NOT_PRINTED']").prop('checked', true);
 
-            function itemAddToItemSelectTable() {
-                let html = "";
-                for (let i = 0; i < selectedInvoiceLedger.length; i++) {
-                    html += tableRowCreate(i, selectedInvoiceLedger[i]);
-                }
-                //$("#myTable tbody tr:last").after(html);
+        });
 
-                $("#myTable tbody ").html(html);
-                totalPrice();
+        let selectedInvoiceLedger = [];
+
+        function popUpDataSet(resp) {
+            $("#ledgerId").val(resp.id);
+            $("#itemName").val(resp.item.name);
+            $("#abQuantity").val(resp.quantity);
+            $("#sellPriceModal").val(resp.sellPrice);
+            $(".popup-overlay, .popup-content").addClass("active");
+            addButtonDisable();
+
+            if (resp.mainCategory === "MOBILE_PHONE") {
+                $("#requestCount").val(1).prop("disabled", true);
+                $("#warrantyBlock").show();
+                totalPriceCard();
+            } else {
+                $("#warrantyBlock").hide();
             }
+        }
 
-            function tableRowCreate(id, invoiceLedger) {
-                return `<tr >
+        function addButtonDisable() {
+            let requestInputValue = $('#requestCount').val();
+            if (requestInputValue) {
+                $("#addModal").show();
+            } else {
+                $("#addModal").hide();
+            }
+        }
+
+        $('#addModal').bind('click', function () {
+            let receivedLedgerItem = {};// ledgerItem
+            receivedLedgerItem.id = $("#ledgerId").val();
+            receivedLedgerItem.name = $("#itemName").val();
+            receivedLedgerItem.quantity = $("#abQuantity").val();
+            receivedLedgerItem.sellPrice = $("#sellPriceModal").val();
+            receivedLedgerItem.requestCount = $("#requestCount").val();
+            let warrantyNumber = $("#warrantyNumber").val();
+            if (warrantyNumber.length !== 0) {
+                receivedLedgerItem.warrantyNumber = warrantyNumber;
+            } else {
+                receivedLedgerItem.warrantyNumber = "No warranty";
+            }
+            receivedLedgerItem.totalModal = $("#totalModal").val();// to need to add
+            selectedInvoiceLedger.push(receivedLedgerItem);
+            $(".popup-overlay, .popup-content").removeClass("active");
+            optionElementRemove('#item');
+            itemAddToItemSelectTable();
+            modalValueZero();
+        });
+
+        function itemAddToItemSelectTable() {
+            let html = "";
+            for (let i = 0; i < selectedInvoiceLedger.length; i++) {
+                html += tableRowCreate(i, selectedInvoiceLedger[i]);
+            }
+            //$("#myTable tbody tr:last").after(html);
+
+            $("#myTable tbody ").html(html);
+            totalPrice();
+        }
+
+        function tableRowCreate(id, invoiceLedger) {
+            return `<tr >
                           <th >${id + 1}
                           <input type="hidden" id="id${id}" class="form-control"  name="invoiceLedgers[${id}].ledger.id" value="${invoiceLedger.id}">
                           </th >
@@ -458,142 +479,156 @@
                           <input type="number" id="rq${id}" class="form-control" onchange="lineTotalCalculateByLine(this)"  onkeyup="lineTotalCalculateByLine(this)" name="invoiceLedgers[${id}].quantity" value="${invoiceLedger.requestCount}">
                           </th >
                           <th >
+                          <input type="number" id="wr${id}" class="form-control warrantyNumber" name="invoiceLedgers[${id}].warrantyNumber" value="${invoiceLedger.warrantyNumber}" readonly>
+                          </th >
+                          <th >
                           <input type="number" id="lt${id}" class="form-control lineTotal" name="invoiceLedgers[${id}].lineTotal" value="${invoiceLedger.totalModal}" readonly>
                           </th >
                           <th>
                           <button type="button" id="rm${id}" class="btn btn-danger" onclick="removeItem(this)">Remove</button>
                           </th>
                         </tr >`
-            }
+        }
 
-            function removeItem(obj) {
-                let selectedFiledId = obj.getAttribute('id').slice(2);
-                //id,name,sellPrice,abQut,exDate
-                $("#item").append(optionTagAdd(
-                    $(`#id${selectedFiledId}`).val(),
-                    $(`#na${selectedFiledId}`).val(),
-                    $(`#sp${selectedFiledId}`).val(),
-                    $(`#aq${selectedFiledId}`).val(),
-                    $(`#ex${selectedFiledId}`).val()));
-                selectedInvoiceLedger = selectedInvoiceLedger.filter(function (obj) {
-                    return obj.id !== $(`#id${selectedFiledId}`).val();
-                })
-                document.getElementById("myTable").deleteRow(obj.parentNode.parentNode.rowIndex);
-                totalPrice();
-            }
+        function removeItem(obj) {
+            let selectedFiledId = obj.getAttribute('id').slice(2);
+            //id,name,sellPrice,abQut,exDate
+            $("#item").append(optionTagAdd(
+                $(`#id${selectedFiledId}`).val(),
+                $(`#na${selectedFiledId}`).val(),
+                $(`#sp${selectedFiledId}`).val(),
+                $(`#aq${selectedFiledId}`).val(),
+                $(`#ex${selectedFiledId}`).val()));
+            selectedInvoiceLedger = selectedInvoiceLedger.filter(function (obj) {
+                return obj.id !== $(`#id${selectedFiledId}`).val();
+            })
+            document.getElementById("myTable").deleteRow(obj.parentNode.parentNode.rowIndex);
+            totalPrice();
+        }
 
-            //calculate line total
-            function lineTotalCalculateByLine(obj) {
-                let selectedFiledId = obj.getAttribute('id').slice(2);
-                let price = $(`#sp${selectedFiledId}`).val();
-                $(`#lt${selectedFiledId}`).val(price * obj.value);
-                totalPrice();
-            }
+        //calculate line total
+        function lineTotalCalculateByLine(obj) {
+            let selectedFiledId = obj.getAttribute('id').slice(2);
+            let price = $(`#sp${selectedFiledId}`).val();
+            $(`#lt${selectedFiledId}`).val(price * obj.value);
+            totalPrice();
+        }
 
-            function totalPrice() {
-                let lineTotal = document.getElementsByClassName("lineTotal");
-                let totalValue = 0;
-                for (let i = 0; i < lineTotal.length; i++) {
-                    totalValue += parseFloat(lineTotal[i].value);
-                }
-                $("#total").val(totalValue);
-                $("#totalAmount").val(totalValue);
-                if ($("#discountRatio").find('option:selected').text() >= 0) {
-                    discountRatio();
-                }
+        function totalPrice() {
+            let lineTotal = document.getElementsByClassName("lineTotal");
+            let totalValue = 0;
+            for (let i = 0; i < lineTotal.length; i++) {
+                totalValue += parseFloat(lineTotal[i].value);
             }
+            $("#total").val(totalValue);
+            $("#totalAmount").val(totalValue);
+            if ($("#discountRatio").find('option:selected').text() >= 0) {
+                discountRatio();
+            }
+        }
 
-            //modal total mount calculate
-            $("#requestCount").bind('keyup', function () {
-                if ($("#abQuantity").val() >= $(this).val()) {
-                    $("#totalModal").val(parseFloat($("#sellPriceModal").val()) * parseFloat($(this).val()));
-                    addButtonDisable();
-                }else {
-                  swal({
+        //modal total mount calculate
+        $("#requestCount").bind('keyup', function () {
+            totalPriceCard();
+        });
+
+        function totalPriceCard() {
+            let requestCountVal = $("#requestCount").val();
+            let abQuantity = $("#abQuantity").val();
+
+            console.log("requestCountVal " + requestCountVal + " abQuantity " + abQuantity);
+
+            if (parseFloat(abQuantity) >= parseFloat(requestCountVal)) {
+                console.log("asdada")
+                $("#totalModal").val(parseFloat($("#sellPriceModal").val()) * parseFloat(requestCountVal));
+                addButtonDisable();
+            } else {
+                console.log("else part")
+                swal({
                     title: "Request more than available   ",
                     icon: "warning",
-                  });
-                }
-            });
-
-            //modal all values zero
-            function modalValueZero() {
-                $("#ledgerId").val(0);
-                $("#itemName").val('');
-                $("#abQuantity").val(0);
-                $("#exDate").val('');
-                $("#sellPriceModal").val(0.00);
-                $("#requestCount").val('');
-                $("#totalModal").val(0.00);
+                });
             }
+        }
 
-            $("input[name='paymentMethod']").bind('change', function () {
-                showHideContent();
-            });
+        //modal all values zero
+        function modalValueZero() {
+            $("#ledgerId").val(0);
+            $("#itemName").val('');
+            $("#abQuantity").val(0);
+            $("#warrantyNumber").val('');
+            $("#sellPriceModal").val(0.00);
+            $("#requestCount").val('');
+            $("#totalModal").val(0.00);
+        }
 
-            function showHideContent() {
-                let paymentMethodValue = $("input[name='paymentMethod']:checked").val();
-                if (paymentMethodValue === 'CASH') {
-                    $("#bankNameBlock").hide();
-                    $("#cashPaymentBlock").show();
-                    $("#amountTendered, #balance").prop('required', true);
-                } else {
-                    $("#cashPaymentBlock").hide();
-                    $("#bankNameBlock").show();
-                    $("#bankName, #cardNumber").prop('required', true);
-                }
+        $("input[name='paymentMethod']").bind('change', function () {
+            showHideContent();
+        });
+
+        function showHideContent() {
+            let paymentMethodValue = $("input[name='paymentMethod']:checked").val();
+            if (paymentMethodValue === 'CASH') {
+                $("#bankNameBlock").hide();
+                $("#cashPaymentBlock").show();
+                $("#amountTendered, #balance").prop('required', true);
+            } else {
+                $("#cashPaymentBlock").hide();
+                $("#bankNameBlock").show();
+                $("#bankName, #cardNumber").prop('required', true);
             }
+        }
 
-            $('#discountRatio').bind('change', function () {
-                let total = $("#total").val();
-                if (total <= 0 || total === null) {
-                    swal({
-                        title: "Before select discount have to select item  ",
-                        icon: "warning",
-                    });
-                }
-                discountRatio();
-            });
-
-            function discountRatio() {
-                let discountRatio = parseFloat($("#discountRatio").find('option:selected').text());
-                let total = parseFloat($("#total").val());
-                let discountAmount = total * discountRatio / 100;
-                $("#totalAmount").val(total - discountAmount);
-                $("#discountAmount").val(discountAmount);
+        $('#discountRatio').bind('change', function () {
+            let total = $("#total").val();
+            if (total <= 0 || total === null) {
+                swal({
+                    title: "Before select discount have to select item  ",
+                    icon: "warning",
+                });
             }
+            discountRatio();
+        });
 
-            $("#amountTendered").bind('focusout', function () {
-                let tenderedAmount = $(this).val();
-                let totalAmount = $("#totalAmount").val();
-                if (tenderedAmount < totalAmount) {
-                    swal({
-                        title: "Hey why do you try to pay less money",
-                        icon: "warning",
-                    });
-                    $("#amountTendered").val(totalAmount);
-                } else {
-                    $("#balance").val(tenderedAmount - totalAmount);
-                }
-            });
+        function discountRatio() {
+            let discountRatio = parseFloat($("#discountRatio").find('option:selected').text());
+            let total = parseFloat($("#total").val());
+            let discountAmount = total * discountRatio / 100;
+            $("#totalAmount").val(total - discountAmount);
+            $("#discountAmount").val(discountAmount);
+        }
 
-            //option tag remove
-            let optionElementRemove = (id) => {
-                let selectedValue = $(id).val();
-                let selectedItemId = `${id} option[value='${selectedValue}']`;
-                $(selectedItemId).remove();
+        $("#amountTendered").bind('focusout', function () {
+            let tenderedAmount = $(this).val();
+            let totalAmount = $("#totalAmount").val();
+            if (tenderedAmount < totalAmount) {
+                swal({
+                    title: "Hey why do you try to pay less money",
+                    icon: "warning",
+                });
+                $("#amountTendered").val(totalAmount);
+            } else {
+                $("#balance").val(tenderedAmount - totalAmount);
             }
+        });
 
-            //option tag add
-            function optionTagAdd(id, name, sellPrice, abQut, exDate) {
-                return `<option value="${id}">
+        //option tag remove
+        let optionElementRemove = (id) => {
+            let selectedValue = $(id).val();
+            let selectedItemId = `${id} option[value='${selectedValue}']`;
+            $(selectedItemId).remove();
+        }
+
+        //option tag add
+        function optionTagAdd(id, name, sellPrice, abQut, exDate) {
+            return `<option value="${id}">
                           Item Name: ${name}  Sell Price : {sellPrice}
                           Available quantity : ${abQut}  Expired Date : ${exDate}
                         </option>`;
-            }
+        }
 
-        </script>
-    </div>
-</div>
-</body>
-</html>
+    </script >
+  </div >
+</div >
+</body >
+</html >

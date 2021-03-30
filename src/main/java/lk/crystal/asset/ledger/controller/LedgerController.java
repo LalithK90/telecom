@@ -51,7 +51,7 @@ public class LedgerController {
   public MappingJacksonValue findId(@PathVariable Integer id) {
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(ledgerService.findById(id));
     SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "quantity", "sellPrice", "item");
+        .filterOutAllExcept("id", "quantity", "sellPrice", "item","mainCategory");
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterTwo = SimpleBeanPropertyFilter
         .filterOutAllExcept("id", "name");

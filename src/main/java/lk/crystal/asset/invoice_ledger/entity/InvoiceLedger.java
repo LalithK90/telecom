@@ -19,25 +19,28 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonFilter("InvoiceLedger")
+@JsonFilter( "InvoiceLedger" )
 public class InvoiceLedger extends AuditEntity {
 
-    @Column(nullable = false)
-    private String quantity;
+  @Column( nullable = false )
+  private String quantity;
 
-    @Column( nullable = false, precision = 10, scale = 2 )
-    private BigDecimal sellPrice;
+  @Column( nullable = false, unique = true )
+  private String warrantyNumber;
 
-    @Column( nullable = false, precision = 10, scale = 2 )
-    private BigDecimal lineTotal;
+  @Column( nullable = false, precision = 10, scale = 2 )
+  private BigDecimal sellPrice;
 
-    @Enumerated( EnumType.STRING)
-    private LiveDead liveDead;
+  @Column( nullable = false, precision = 10, scale = 2 )
+  private BigDecimal lineTotal;
 
-    @ManyToOne
-    private Ledger ledger;
+  @Enumerated( EnumType.STRING )
+  private LiveDead liveDead;
 
-    @ManyToOne
-    private Invoice invoice;
+  @ManyToOne
+  private Ledger ledger;
+
+  @ManyToOne
+  private Invoice invoice;
 
 }
