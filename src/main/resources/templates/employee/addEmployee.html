@@ -309,37 +309,50 @@
       <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
       <!--script include-->
       <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
-      <script >
-        $(document).ready(function () {
-            imageSrcAttributeCheck();
+    <script >
+      $(document).ready(function () {
+        imageSrcAttributeCheck();
+
+        $('[type="date"]').prop('max', function () {
+          return new Date().toJSON().split('T')[0];
         });
 
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                let reader = new FileReader();
+      });
 
-                reader.onload = function (e) {
-                    $('#image').attr('src', e.target.result);
-                }
+      function readURL(input) {
+        if (input.files && input.files[0]) {
+          let reader = new FileReader();
 
-                reader.readAsDataURL(input.files[0]); // convert to base64 string
-            }
+          reader.onload = function (e) {
+            $('#image').attr('src', e.target.result);
+          }
+
+          if (input.files[0].size < 10485760) {
+            reader.readAsDataURL(input.files[0]);
+          } else {
+            swal({
+              title: "Select file size was too large select less than 10MB file",
+              icon: "warning",
+            });
+          }
         }
+      }
 
-        //display selected image
-        $("#imgUpload").change(function () {
-            $("#image").toggle('show');
-            readURL(this);
+      //display selected image
+      $("#imgUpload").change(function () {
+        $("#image").toggle('show');
+        readURL(this);
 
-        });
+      });
 
-        //image is not -> showing area hide
-        function imageSrcAttributeCheck() {
-            let attribute = $("#image").attr("src");
-            if (attribute === '') {
-                $("#image").toggle('hide');
-            }
+      //image is not -> showing area hide
+      function imageSrcAttributeCheck() {
+        let attribute = $("#image").attr("src");
+        if (attribute === '') {
+          $("#image").toggle('hide');
         }
+      }
+
     </script >
   </div>
 </div>
