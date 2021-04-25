@@ -129,8 +129,10 @@ http.authorizeRequests(
                     .expiredUrl("/logout")
                     .sessionRegistry(sessionRegistry()))
         //Cross site disable
-        .csrf(AbstractHttpConfigurer::disable)
-        .exceptionHandling();
+    .csrf(AbstractHttpConfigurer::disable)
+    .exceptionHandling().and()
+    .headers()
+    .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
 
   }
 }
