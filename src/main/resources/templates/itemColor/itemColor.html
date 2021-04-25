@@ -65,7 +65,7 @@
                                                 class="fa fa-edit" style="font-size: 15px"></i>&nbsp;Edit</a>
 
                                         <button class="btn btn-outline-danger btn-sm"   data-th-id="${'/itemColor/delete/' + itemColor.id}"
-                                                onclick="confirmDelete(this)" >
+                                                onclick="testDelete(this)" >
                                             <!-- data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" -->
                                             <i class="fa fa-trash" style="font-size: 15px" ></i >
                                             Delete
@@ -105,6 +105,30 @@
                 self.location = location.protocol + "//" + location.host + obj.getAttribute('id');
             }
         });
+    }
+
+    function testDelete(obj){
+        swal({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((x) => {
+            if (x) {
+                self.location = location.protocol + "//" + location.host + obj.getAttribute('id');
+                swal(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+            }
+        })
+
+
+
     }
 
 </script >

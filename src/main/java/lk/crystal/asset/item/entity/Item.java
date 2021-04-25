@@ -32,7 +32,7 @@ import java.util.List;
 @JsonFilter("Item")
 public class Item extends AuditEntity {
 
-    @Size( min = 5, message = "Your name cannot be accepted" )
+    @Size( min = 2, message = "Your name cannot be accepted" )
     private String name;
 
     private String rop;

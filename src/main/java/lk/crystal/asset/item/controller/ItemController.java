@@ -50,17 +50,17 @@ public class ItemController implements AbstractController< Item, Integer > {
     model.addAttribute("warrantyPeriod", WarrantyPeriod.values());
     model.addAttribute("mainCategories", MainCategory.values());
     model.addAttribute("urlMainCategory", MvcUriComponentsBuilder
-        .fromMethodName(CategoryRestController.class, "getCategoryByMainCategory", "")
-        .build()
-        .toString());
+            .fromMethodName(CategoryRestController.class, "getCategoryByMainCategory", "")
+            .build()
+            .toString());
     return "item/addItem";
   }
 
   @GetMapping
   public String findAll(Model model) {
     model.addAttribute("items", itemService.findAll().stream()
-        .filter(x -> LiveDead.ACTIVE.equals(x.getLiveDead()))
-        .collect(Collectors.toList()));
+            .filter(x -> LiveDead.ACTIVE.equals(x.getLiveDead()))
+            .collect(Collectors.toList()));
     return "item/item";
   }
 
@@ -82,7 +82,7 @@ public class ItemController implements AbstractController< Item, Integer > {
     if ( item.getId() == null ) {
       item.setItemStatus(ItemStatus.JUSTENTERED);
       //if there is not item in db
-            if ( itemService.lastItem() == null ) {
+      if ( itemService.lastItem() == null ) {
         //need to generate new one
         item.setCode("CTSI" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
 
