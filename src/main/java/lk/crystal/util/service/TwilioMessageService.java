@@ -17,7 +17,7 @@ public class TwilioMessageService {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Message message = Message
                 .creator(new PhoneNumber(number), new PhoneNumber("+19386666123"),
-                         messageBody)
+                        messageBody)
                 .create();
 
         /*

@@ -52,7 +52,7 @@ public class Invoice extends AuditEntity {
 
     @Column(precision = 10, scale = 2)
     private BigDecimal balance;
-     private InvoicePrintOrNot invoicePrintOrNot;
+    private InvoicePrintOrNot invoicePrintOrNot;
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;

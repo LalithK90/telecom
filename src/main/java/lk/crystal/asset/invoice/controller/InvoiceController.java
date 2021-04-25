@@ -1,10 +1,10 @@
 package lk.crystal.asset.invoice.controller;
 
 
+import com.itextpdf.text.DocumentException;
 import lk.crystal.asset.common_asset.model.TwoDate;
 import lk.crystal.asset.customer.service.CustomerService;
 import lk.crystal.asset.discount_ratio.service.DiscountRatioService;
-import lk.crystal.asset.employee.entity.Employee;
 import lk.crystal.asset.invoice.entity.Invoice;
 import lk.crystal.asset.invoice.entity.enums.InvoicePrintOrNot;
 import lk.crystal.asset.invoice.entity.enums.InvoiceValidOrNot;
@@ -15,19 +15,22 @@ import lk.crystal.asset.item.service.ItemService;
 import lk.crystal.asset.ledger.controller.LedgerController;
 import lk.crystal.asset.ledger.entity.Ledger;
 import lk.crystal.asset.ledger.service.LedgerService;
-import lk.crystal.asset.user_management.user.entity.User;
 import lk.crystal.util.service.DateTimeAgeService;
 import lk.crystal.util.service.MakeAutoGenerateNumberService;
-import org.aspectj.weaver.ast.Test;
+import lk.crystal.util.service.TwilioMessageService;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -40,11 +43,12 @@ public class InvoiceController {
   private final DateTimeAgeService dateTimeAgeService;
   private final DiscountRatioService discountRatioService;
   private final MakeAutoGenerateNumberService makeAutoGenerateNumberService;
+  private final TwilioMessageService twilioMessageService;
 
   public InvoiceController(InvoiceService invoiceService, ItemService itemService, CustomerService customerService,
                            LedgerService ledgerService, DateTimeAgeService dateTimeAgeService,
                            DiscountRatioService discountRatioService,
-                           MakeAutoGenerateNumberService makeAutoGenerateNumberService) {
+                           MakeAutoGenerateNumberService makeAutoGenerateNumberService, TwilioMessageService twilioMessageService) {
     this.invoiceService = invoiceService;
     this.itemService = itemService;
     this.customerService = customerService;
@@ -52,13 +56,14 @@ public class InvoiceController {
     this.dateTimeAgeService = dateTimeAgeService;
     this.discountRatioService = discountRatioService;
     this.makeAutoGenerateNumberService = makeAutoGenerateNumberService;
+    this.twilioMessageService = twilioMessageService;
   }
 
   @GetMapping
   public String invoice(Model model) {
     model.addAttribute("invoices",
-                       invoiceService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(dateTimeAgeService
-                                                                                                                    .getPastDateByMonth(3)), dateTimeAgeService.dateTimeToLocalDateEndInDay(LocalDate.now())));
+            invoiceService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(dateTimeAgeService
+                    .getPastDateByMonth(3)), dateTimeAgeService.dateTimeToLocalDateEndInDay(LocalDate.now())));
     model.addAttribute("firstInvoiceMessage", true);
     model.addAttribute("messageView", false);
     return "invoice/invoice";
@@ -67,7 +72,7 @@ public class InvoiceController {
   @PostMapping( "/search" )
   public String invoiceSearch(@ModelAttribute TwoDate twoDate, Model model) {
     model.addAttribute("invoices",
-                       invoiceService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(twoDate.getStartDate()), dateTimeAgeService.dateTimeToLocalDateEndInDay(twoDate.getEndDate())));
+            invoiceService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(twoDate.getStartDate()), dateTimeAgeService.dateTimeToLocalDateEndInDay(twoDate.getEndDate())));
     model.addAttribute("firstInvoiceMessage", true);
     model.addAttribute("message", "This view is belongs to following date range start date "+twoDate.getStartDate() +" to "+ twoDate.getEndDate());
     model.addAttribute("messageView", true);
@@ -81,15 +86,15 @@ public class InvoiceController {
     model.addAttribute("customers", customerService.findAll());
     model.addAttribute("discountRatios", discountRatioService.findAll());
     model.addAttribute("ledgerItemURL", MvcUriComponentsBuilder
-        .fromMethodName(LedgerController.class, "findId", "")
-        .build()
-        .toString());
+            .fromMethodName(LedgerController.class, "findId", "")
+            .build()
+            .toString());
     System.out.println("Sixe" + ledgerService.findAll().size());
     //send not expired and not zero quantity
     model.addAttribute("ledgers", ledgerService.findAll()
-        .stream()
-        .filter(x -> 0 < Integer.parseInt(x.getQuantity()))
-        .collect(Collectors.toList()));
+            .stream()
+            .filter(x -> 0 < Integer.parseInt(x.getQuantity()))
+            .collect(Collectors.toList()));
     return "invoice/addInvoice";
   }
 
@@ -114,12 +119,12 @@ public class InvoiceController {
     if ( invoice.getId() == null ) {
       if ( invoiceService.findByLastInvoice() == null ) {
         //need to generate new one
-        invoice.setCode("CTSI" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
+        invoice.setCode("SPSI" + makeAutoGenerateNumberService.numberAutoGen(null).toString());
       } else {
         System.out.println("last customer not null");
         //if there is customer in db need to get that customer's code and increase its value
         String previousCode = invoiceService.findByLastInvoice().getCode().substring(4);
-        invoice.setCode("CTSI" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
+        invoice.setCode("SPSI" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
       }
     }
     invoice.getInvoiceLedgers().forEach(x -> x.setInvoice(invoice));
@@ -136,10 +141,15 @@ public class InvoiceController {
       ledger.setQuantity(String.valueOf(availableQuantity - sellQuantity));
       ledgerService.persist(ledger);
     }
-
-    //todo - if invoice is required needed to send pdf to backend
-
-    return "redirect:/invoice/add";
+    if ( saveInvoice.getCustomer() != null ) {
+      try {
+        String mobileNumber = saveInvoice.getCustomer().getMobile().substring(1, 10);
+        twilioMessageService.sendSMS("+94" + mobileNumber, "Thank You Come Again \n Samarasinghe Super ");
+      } catch ( Exception e ) {
+        e.printStackTrace();
+      }
+    }
+    return "redirect:/invoice/fileView/" + saveInvoice.getId();
   }
 
 
@@ -151,6 +161,29 @@ public class InvoiceController {
     return "redirect:/invoice";
   }
 
+  @GetMapping( value = "/file/{id}", produces = MediaType.APPLICATION_PDF_VALUE )
+  public ResponseEntity<InputStreamResource> invoicePrint(@PathVariable( "id" ) Integer id) throws DocumentException {
+    var headers = new HttpHeaders();
+    headers.add("Content-Disposition", "inline; filename=invoice.pdf");
+    InputStreamResource pdfFile = new InputStreamResource(invoiceService.createPDF(id));
 
+    return ResponseEntity
+            .ok()
+            .headers(headers)
+            .contentType(MediaType.APPLICATION_PDF)
+            .body(pdfFile);
+  }
+
+  @GetMapping( "/fileView/{id}" )
+  public String fileRequest(@PathVariable( "id" ) Integer id, Model model, HttpServletRequest request) {
+    model.addAttribute("pdfFile", MvcUriComponentsBuilder
+            .fromMethodName(InvoiceController.class, "invoicePrint", id)
+            .toUriString());
+    model.addAttribute("redirectUrl", MvcUriComponentsBuilder
+            .fromMethodName(InvoiceController.class, "getInvoiceForm", "")
+            .toUriString());
+    return "invoice/pdfSilentPrint";
+  }
 
 }
+
