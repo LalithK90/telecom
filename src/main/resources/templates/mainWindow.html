@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Thymeleaf Springboot </title>
 </head>
-<body class="sb-nav-fixed">
+<body class="sb-nav-fixed" style="background-image: url(../img/dashboard.jpg);">
 <nav  data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
 <div id="layoutSidenav">
     <div  data-th-replace="~{fragments/sideNav :: sideNavFragment}">
@@ -12,7 +12,12 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid">
-                <h1 class="mt-4">Dashboard</h1>
+                <div class="row">
+                    <div class="col"><h1 class="mt-4">Dashboard</h1></div>
+                    <div class="col text-right"> <button class="btn btn-danger" type="button" data-toggle="modal" href="#myModal">
+                        <i class="fa fa-bell" aria-hidden="true"></i> Low Stock Items <span data-th-text="${'(' + ropList.size() + ')'}"></span>
+                    </button> </div>
+                </div>
                 <!--Tiles-->
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item active">Home Tabs</li>
@@ -127,42 +132,55 @@
                     </div>
                 </div>
                 <!--*********************************Test Table*****************************************-->
-                <!--Table view-->
-                <dev class="card">
-                    <div class="card-body" >
-                    <div class="table-responsive-md" >
-                        <table class="table table-bordered" id="myTable" >
-                            <thead >
-                            <tr >
-                                <th >Index</th >
-                                <th >Number</th >
-                                <th > Amount</th >
-                                <th > Created By</th >
-                                <th > Date of Invoice</th >
-                                <th >View</th >
-                                <th data-th-if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" > Delete Invoice
-                                </th >
-                            </tr >
-                            </thead >
-                            <tbody >
-                            <tr data-th-each="invoice, rowCount : ${invoices}" >
-                                <td data-th-text="${rowCount.count}" ></td >
-                                <td data-th-text="${invoice.code}" ></td >
-                                <td data-th-text="${invoice.totalAmount}" ></td >
-                                <td data-th-text="${invoice.createdBy}" ></td >
-                                <td data-th-text="${{invoice.createdAt}}" ></td >
-                                <td ><a class="btn btn-sm btn-success" data-th-href="${'/invoice/'+ invoice.id}" ><i
-                                        class="fa fa-folder-open" ></i >&nbsp;View</a >&nbsp;
-                                </td >
-                                <td data-th-if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" ><a
-                                        class="btn btn-sm btn-danger" data-th-href="${'/invoice/remove/' + invoice.id}" >Delete</a >
-                                </td >
-                            </tr >
-                            </tbody >
-                        </table >
-                    </div >
-                </div >
-                </dev>
+
+                <!--  data area showing-->
+                <div class="modal fade" id="myModal">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header bg-light">
+                                <h6 class="modal-title">Low stock item list - Please order as needed !</h6>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                            <div class="" data-th-if="${not #lists.isEmpty(ropList)}" >
+                                <div class="col" >
+                                    <table class="table table-sm table-hover table-striped  text-sm" >
+                                        <thead >
+                                        <tr >
+                                            <th > Index</th >
+                                            <th > Item Name</th >
+                                            <th > ROP</th >
+                                            <th > Quantity</th >
+                                            <th > Price</th >
+                                            <th class="text-right"> Modify</th >
+                                        </tr >
+                                        </thead >
+                                        <tbody >
+                                        <tr data-th-each="ledger, rowCount : ${ropList}" >
+                                            <td data-th-text="${rowCount.count}" ></td >
+                                            <td data-th-text="${ledger.item.name}" ></td >
+                                            <td data-th-text="${ledger.item.rop}" ></td >
+                                            <td data-th-text="${ledger.quantity}" ></td >
+                                            <td data-th-text="${ledger.sellPrice}" ></td >
+
+                                            <td class="text-right">
+                                                <a data-th-href="${'/purchaseOrder/supplier/' + ledger.goodReceivedNote.purchaseOrder.supplier.id}"
+                                                   class="btn btn-outline-secondary btn-sm" ><i
+                                                        class="fa fa-folder-open" style="font-size: 15px" ></i > Purchase Order</a >
+                                            </td >
+                                        </tr >
+                                        </tbody >
+                                    </table >
+                                </div >
+                            </div >
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+
 
             </div>
         </main>
@@ -173,6 +191,7 @@
     </div>
 
 </div>
+
 </body>
 </html>
 

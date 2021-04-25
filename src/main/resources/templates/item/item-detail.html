@@ -12,27 +12,27 @@
     <div id="layoutSidenav_content">
         <main>
             <!--heading Area-->
-            <div class="container-fluid bg-dark form-Border">
-                <div class="row text-center formManagement border-info">
-                    <!--View List Button-->
+            <div class="container-fluid">
+                <div class="row formManagement border-info mb-4 mt-4">
+                    <!--ViewList Button-->
                     <div class="col">
-                        <a href="/item" class="btn btn-primary" tabindex="2">
-                            <i class="fa fa-list" style="font-size: 20px"></i>&nbsp; View List
+                        <a href="/item" class="btn btn-outline-primary btn-sm" tabindex="1">
+                            <i class="fa fa-list" style="font-size: 12px"></i>&nbsp;&nbsp;View List
                         </a>
                     </div>
                     <!--Item Name-->
                     <div class="col">
-                        <h2 class="text-white text-center">
-                            <strong>
+                        <h2 class="text-right">
+
                                 <p th:text="${itemDetail.name}"></p>
-                            </strong>
+
                         </h2>
                     </div>
 
                 </div>
             </div>
             <!--details-->
-            <div th:fragment="itemDetailsFragment" class="container-fluid bg-info formBorder">
+            <div th:fragment="itemDetailsFragment" class="container-fluid formBorder">
                 <div class="col-sm-12 flex-column ">
                     <div class="row">
                         <!--Left Side-->
@@ -46,14 +46,7 @@
                                     <p id="id" th:text="${itemDetail.id}" class="display_detail"></p>
                                 </div>
                             </div>
-                            <!--Code-->
-                            <!--<div class="form-row text-right">
-                                <div class="col-md-4">
-                                    <label class="control-label" for="departmentIdNumber">Depart Id No :</label>
-                                </div>
-                                <div class="col-md-8">
-                                    <p id="departmentIdNumber" th:text="${itemDetail.departmentIdNumber}" class="display_detail"></p></div>
-                            </div>-->
+
                             <!--Main Category-->
                             <div class="form-row text-right">
                                 <div class="col-md-4">
@@ -81,6 +74,16 @@
                                 </div>
                                 <div class="col-md-8">
                                     <p id="name" th:text="${itemDetail.name}"
+                                       class="display_detail"></p>
+                                </div>
+                            </div>
+                            <!--Brand-->
+                            <div class="form-row text-right">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="brand">Brand :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p id="brand" th:text="${itemDetail.getBrand().getName()}"
                                        class="display_detail"></p>
                                 </div>
                             </div>
