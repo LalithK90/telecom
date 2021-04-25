@@ -83,7 +83,7 @@
                         <option value="" selected > Please Select</option >
                         <option data-th-each="item : ${items}"
                                 data-th-value="${item.id}"
-                                data-th-text="${item.name}" > Please Select
+                                data-th-text="${item.name}+' - '+${'  Sell Price:  ' +item.sellPrice}" > Please Select
                         </option >
                     </select >
                 </div >
@@ -98,7 +98,7 @@
                         <tr >
                             <th >Index</th >
                             <th >Item Name</th >
-                            <th >Price</th >
+                            <th >Supplier Price</th >
                             <th data-th-if="${supplierItemEdit}" >Status</th >
                         </tr >
                         </thead >
@@ -254,7 +254,6 @@
                                 </label>
                          </div>
                         </td>
-
                         <td>
                             <button type="button" class="btn btn-outline-danger" onclick="tableRowRemove(this)">Remove</button>
                         </td>

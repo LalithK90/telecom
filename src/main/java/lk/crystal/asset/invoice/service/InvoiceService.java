@@ -91,7 +91,7 @@ public class InvoiceService implements AbstractService<Invoice, Integer > {
     Font highLiltedFont = FontFactory.getFont("Arial", 8, BaseColor.BLACK);
 
 
-    Paragraph paragraph = new Paragraph("Scubes Phones & Accessories \n \t\t Raddolugama\n ", mainFont);
+    Paragraph paragraph = new Paragraph("Crystal Telecom Services \n \t\t Negombo\n ", mainFont);
     paragraph.setAlignment(Element.ALIGN_CENTER);
     paragraph.setIndentationLeft(50);
     paragraph.setIndentationRight(50);
@@ -125,7 +125,7 @@ public class InvoiceService implements AbstractService<Invoice, Integer > {
 
     Rectangle page = document.getPageSize();
 
-    PdfPTable ledgerItemDisplay = new PdfPTable(7);//column amount
+    PdfPTable ledgerItemDisplay = new PdfPTable(8);//column amount
     ledgerItemDisplay.setWidthPercentage(100);
     ledgerItemDisplay.setSpacingBefore(10f);
     ledgerItemDisplay.setSpacingAfter(10);
@@ -135,9 +135,15 @@ public class InvoiceService implements AbstractService<Invoice, Integer > {
     Font tableHeaderOnly = FontFactory.getFont("Arial", 12, BaseColor.BLACK);
 
 
+
+
     PdfPCell indexHeader = new PdfPCell(new Paragraph("Index", tableHeaderOnly));
     pdfCellHeaderCommonStyle(indexHeader);
     ledgerItemDisplay.addCell(indexHeader);
+
+    PdfPCell customerHeader = new PdfPCell(new Paragraph("customer", tableHeaderOnly));
+    pdfCellHeaderCommonStyle(customerHeader);
+    ledgerItemDisplay.addCell(customerHeader);
 
     PdfPCell itemNameHeader = new PdfPCell(new Paragraph("Item Name", tableHeaderOnly));
     pdfCellHeaderCommonStyle(itemNameHeader);
@@ -167,6 +173,11 @@ public class InvoiceService implements AbstractService<Invoice, Integer > {
       PdfPCell index = new PdfPCell(new Paragraph(Integer.toString(i+1), tableHeader));
       pdfCellBodyCommonStyle(index);
       ledgerItemDisplay.addCell(index);
+
+      PdfPCell customerName =
+              new PdfPCell(new Paragraph(invoice.getCustomer().getName() , tableHeader));
+      pdfCellBodyCommonStyle(customerName);
+      ledgerItemDisplay.addCell(customerName);
 
       PdfPCell itemName =
               new PdfPCell(new Paragraph(invoice.getInvoiceLedgers().get(i).getLedger().getItem().getName(), tableHeader));
