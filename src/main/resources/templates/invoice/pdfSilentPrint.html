@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+    <meta charset="UTF-8" >
+    <title >Thymeleaf Springboot </title >
+</head >
+<body class="sb-nav-fixed" >
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+
+
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+
+<script >
+    $(document).ready(function () {
+        loadOtherPage();
+        checkIframeLoaded('printf');
+    });
+
+    //create iframe and set pdf url on it
+    function loadOtherPage() {
+        $("<iframe class='printPage'>") // create a new iframe element
+            .attr({
+                src: "[[${pdfFile}]]",
+                id: "printf",
+                loading: "eager",
+                importance: "high",
+                width: "100%",
+                height: "100%"
+            }) // point the iframe to the page link you want to print
+            .appendTo("body");
+
+
+    }
+
+    function checkIframeLoaded(id) {
+        // Get a handle to the iframe element
+        let iframe = document.getElementById(id);
+        let iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+        // Check if loading is complete
+        if (iframeDoc.readyState === 'complete') {
+            //iframe.contentWindow.alert("Hello");
+            iframe.contentWindow.onload = function () {
+                let printOrNot = printFrame(id);
+                if (printOrNot) {
+                    $('.printPage', window.parent.document).hide();
+                    swal("Congratulation printing process is completed")
+                        .then((value) => {
+                            swal({
+                                title: "Thank for your confirmation !",
+                                icon: "success",
+                            });
+                            if (value) {
+                                location.replace("[[${redirectUrl}]]");
+                            }
+                        });
+                }
+                // The loading is complete, call the function we want executed once the iframe is loaded
+            };
+            return;
+        }
+        // If we are here, it is not loaded. Set things up so we check   the status again in 100 milliseconds
+        window.setTimeout(checkIframeLoaded, 100);
+    }
+
+    //id is the  id of the iframe
+    function printFrame(id) {
+        let frm = document.getElementById(id).contentWindow;
+        frm.focus();// focus on contentWindow is needed on some ie versions
+        frm.print();
+        return true;
+    }
+
+</script >
+
+</body >
+</html >

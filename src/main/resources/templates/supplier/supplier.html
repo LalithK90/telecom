@@ -48,13 +48,13 @@
                                     </thead>
                                     <tbody>
                                     <tr data-th-each="supplier, rowCount : ${suppliers}">
-                                        <th data-th-text="${rowCount.count}"></th>
-                                        <th data-th-text="${supplier.code}"></th>
-                                        <th data-th-text="${supplier.name}"></th>
-                                        <th data-th-text="${supplier.contactOne}"></th>
-                                        <th data-th-text="${supplier.email}"></th>
-                                        <th data-th-text="${supplier.address}"></th>
-                                        <th data-th-if="${supplierDetailShow !=true}">
+                                        <td data-th-text="${rowCount.count}"></td>
+                                        <td data-th-text="${supplier.code}"></td>
+                                        <td data-th-text="${supplier.name}"></td>
+                                        <td data-th-text="${supplier.contactOne}"></td>
+                                        <td data-th-text="${supplier.email}"></td>
+                                        <td data-th-text="${supplier.address}"></td>
+                                        <td data-th-if="${supplierDetailShow !=true}">
                                             <a class="btn btn-primary btn-sm" data-th-href="${'/supplierItem/edit/' + supplier.id}"><i
                                                     class="fa fa-folder-open" style="font-size: 15px"></i>Edit Item </a>
                                             <a class="btn btn-primary btn-sm" data-th-href="${'/supplierItem/supplier/' + supplier.id}"><i
@@ -68,11 +68,11 @@
                                             <a class="btn btn-danger btn-sm" data-th-href="${'/supplier/delete/' + supplier.id}">
                                                 <!--data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"--> <i
                                                     class="fa fa-trash" style="font-size: 15px"></i> Delete</a>
-                                        </th>
-                                        <th data-th-if="${supplierDetailShow==true}">
+                                        </td>
+                                        <td data-th-if="${supplierDetailShow==true}">
                                             <a class="btn btn-primary btn-sm" data-th-href="${supplierDetailShow==true ?'/purchaseOrder/supplier/' + supplier.id :'/supplierItem/supplier/' + supplier.id}"><i
                                                     class="fa fa-thumbs-up" style="font-size: 15px"></i>&nbsp;Select</a>
-                                        </th>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
