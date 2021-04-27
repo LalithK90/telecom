@@ -12,6 +12,9 @@ import lk.crystal.asset.invoice.service.InvoiceService;
 import lk.crystal.asset.invoice_ledger.entity.InvoiceLedger;
 import lk.crystal.asset.invoice_ledger.service.InvoiceLedgerService;
 import lk.crystal.asset.item.entity.Item;
+import lk.crystal.asset.item.entity.enums.MainCategory;
+import lk.crystal.asset.ledger.entity.Ledger;
+import lk.crystal.asset.ledger.service.LedgerService;
 import lk.crystal.asset.payment.entity.Payment;
 import lk.crystal.asset.payment.service.PaymentService;
 import lk.crystal.asset.user_management.user.service.UserService;
@@ -34,6 +37,9 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
+import static lk.crystal.asset.item.entity.enums.MainCategory.ACCESSORIES;
+import static lk.crystal.asset.item.entity.enums.MainCategory.MOBILE_PHONE;
+
 @Controller
 @RequestMapping( "/report" )
 public class ReportController {
@@ -44,11 +50,12 @@ public class ReportController {
   private final UserService userService;
   private final InvoiceLedgerService invoiceLedgerService;
   private final EmployeeService employeeService;
+  private final LedgerService ledgerService;
 
   public ReportController(PaymentService paymentService, InvoiceService invoiceService,
                           OperatorService operatorService, DateTimeAgeService dateTimeAgeService,
                           UserService userService, InvoiceLedgerService invoiceLedgerService,
-                          EmployeeService employeeService) {
+                          EmployeeService employeeService, LedgerService ledgerService) {
     this.paymentService = paymentService;
     this.invoiceService = invoiceService;
     this.operatorService = operatorService;
@@ -56,6 +63,7 @@ public class ReportController {
     this.userService = userService;
     this.invoiceLedgerService = invoiceLedgerService;
     this.employeeService = employeeService;
+    this.ledgerService = ledgerService;
   }
 
   private String commonAll(List< Payment > payments, List< Invoice > invoices, Model model, String message,
@@ -342,6 +350,23 @@ public class ReportController {
     commonPerItem(startDateTime, endDateTime, model);
     model.addAttribute("message", message);
     return "report/perItemReport";
+  }
+
+  @GetMapping("/searchByCategory")
+  public String searchItemsByCategory(Model model) {
+    model.addAttribute("ledger", new Ledger());
+
+    return "report/searchByCategory";
+  }
+
+
+  @PostMapping("/itemsByCategory")
+  public String getItemsByCategory(@ModelAttribute Ledger ledger, Model model) {
+   /* MainCategory mainCategory = ACCESSORIES;*/
+    model.addAttribute("ledgers", ledgerService.findByCategory(ledger.getMainCategory()));
+
+
+    return "report/itemsByCategoryReport";
   }
 
 }

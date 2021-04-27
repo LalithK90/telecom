@@ -3,6 +3,7 @@ package lk.crystal.asset.ledger.service;
 
 import lk.crystal.asset.common_asset.model.enums.LiveDead;
 import lk.crystal.asset.item.entity.Item;
+import lk.crystal.asset.item.entity.enums.MainCategory;
 import lk.crystal.asset.ledger.dao.LedgerDao;
 import lk.crystal.asset.ledger.entity.Ledger;
 import lk.crystal.util.interfaces.AbstractService;
@@ -72,6 +73,10 @@ public class LedgerService implements AbstractService< Ledger, Integer> {
 
     public List<Ledger> findByCreatedAtIsBetween(LocalDateTime startDate, LocalDateTime endDate) {
         return ledgerDao.findByCreatedAtBetween(startDate, endDate);
+    }
+
+    public Object findByCategory(MainCategory mainCategory) {
+        return ledgerDao.findByMainCategory(mainCategory);
     }
 
 

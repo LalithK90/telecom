@@ -92,6 +92,8 @@ public class ItemController implements AbstractController< Item, Integer > {
         item.setCode("CTSI" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
 
       }
+
+
     }
     itemService.persist(item);
     return "redirect:/item";

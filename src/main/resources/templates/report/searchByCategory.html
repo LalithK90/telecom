@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form method="POST" data-th-action="${'/report/itemsByCategory'}"  data-th-object="${ledger}">
+
+
+            <div class="col-md-4">
+                <label class="control-label" for="mainCategory"><small>Main Category :</small></label>
+                <select name="mainCategory" id="mainCategory" class="form-control form-control-sm" tabindex="4" style="font-size: large"
+                        required>
+                    <option value="" disabled>Please select</option>
+                    <option value="MOBILE_PHONE">Mobile Phone</option>
+                    <option value="ACCESSORIES">Accessories</option>
+
+                </select>
+                <button class="btn btn-success" tabindex="3" type="submit">
+                    <i class="fa fa-search " style="font-size: 20px"></i>&nbsp; &nbsp;Search
+                </button>
+            </div>
+
+
+
+</form >
+
+</body>
+</html>
