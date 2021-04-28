@@ -1,5 +1,6 @@
 package lk.crystal.asset.item.service;
 
+import lk.crystal.asset.category.entity.Category;
 import lk.crystal.asset.common_asset.model.enums.LiveDead;
 import lk.crystal.asset.item.dao.ItemDao;
 import lk.crystal.asset.item.entity.Item;
@@ -57,5 +58,11 @@ public class ItemService implements AbstractService<Item, Integer> {
 
     public Item lastItem() {
         return itemDao.findFirstByOrderByIdDesc();
+    }
+
+    public List<Item> findByCategory(Category category) {
+        return itemDao.findByCategory(category).stream()
+                .filter(x -> LiveDead.ACTIVE.equals(x.getLiveDead()))
+                .collect(Collectors.toList());
     }
 }

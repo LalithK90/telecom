@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form method="POST" data-th-action="${'/report/itemsBySubCategory'}"  data-th-object="${item}">
+
+
+
+    <!--Main Category -->
+    <div class="form-row text-right">
+        <div class="col-md-4">
+            <label class="control-label" for="mainCategory"><small>Main Category :</small></label>
+        </div>
+        <div class="col-md-4">
+            <select id="mainCategory" class="form-control form-control-sm" tabindex="4" style="font-size: large"
+                    required>
+                <option value="" disabled>Please select</option>
+                <option th:each="mainCategory : ${mainCategories}"
+                        th:text="${mainCategory.mainCategory}"
+                        th:value="${mainCategory}"
+                >
+                </option>
+            </select>
+        </div>
+    </div>
+    <!--Sub Category -->
+    <div class="form-row text-right">
+        <div class="col-md-4">
+            <label class="control-label" for="subCategory"><small>Sub Category :</small></label>
+        </div>
+        <div class="col-md-4">
+            <select id="subCategory" th:name="${'category'}" class="form-control form-control-sm" tabindex="4"
+                    style="font-size: large" required>
+                <option value="" disabled>Please select</option>
+
+            </select>
+        </div>
+    </div>
+    <button class="btn btn-success" tabindex="3" type="submit">
+        <i class="fa fa-search " style="font-size: 20px"></i>&nbsp; &nbsp;Search
+    </button>
+
+
+</form >
+
+
+<!--script include-->
+<script data-th-replace="~{fragments/script :: scriptFragment}"></script>
+<script>
+    $(document).ready(function () {
+            let mainCategoryValueBind = $("#mainCategoryValueBind").val();
+            if (mainCategoryValueBind !== null || mainCategoryValueBind !== undefined) {
+                $("#mainCategory").val(mainCategoryValueBind);
+                getSubCategory(mainCategoryValueBind);
+            }
+        }
+    );
+    $("#mainCategory").bind("change", function () {
+        getSubCategory(this.value);
+    });
+    let getSubCategory = function (val) {
+        let url = "[[${urlMainCategory}]]" + val;
+        removeOption('subCategory');
+        $.getJSON(url, function (val) {
+            $.each(val, function () {
+                $("#subCategory").append(`<option value="${this.id}">${this.name}</option>`);
+            });
+        });
+
+    };
+    let removeOption = function (idValue) {
+        $(`#${idValue}`).find('option')
+            .remove();
+    }
+
+
+</script>
+
+</body>
+</html>

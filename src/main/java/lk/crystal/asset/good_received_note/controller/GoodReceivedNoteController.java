@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,14 +63,16 @@ public class GoodReceivedNoteController {
 //New Leger add to add system as new item on ledger
         List< Ledger > ledgers = new ArrayList<>();
         for ( Ledger ledger : goodReceivedNote.getLedgers() ) {
-            Ledger ledgerDB = ledgerService.findByItemAndSellPrice(ledger.getItem(),
-                                                                                    ledger.getItem().getSellPrice());
+
+            /*todo*/
+            Ledger ledgerDB = ledgerService.findByItemAndSellPrice(ledger.getItem(), new BigDecimal(ledger.getItem().getSellPrice().toString()));
             Item item = itemService.findById(ledger.getItem().getId());
             ledger.setMainCategory(item.getCategory().getMainCategory());
+            System.out.println(ledgerDB.getId());
 //if there is on value in ledger need to update it
             if ( ledgerDB != null ) {
                 //before update need to check price and expire date
-                if ( ledgerDB.getSellPrice().equals(ledger.getSellPrice()) ) {
+                if ( ledgerDB.getItem().equals(ledger.getItem()) ) {
                     ledgerDB.setQuantity(ledgerDB.getQuantity() + ledger.getQuantity());
 
                     ledgerDB.setGoodReceivedNote(goodReceivedNote);
