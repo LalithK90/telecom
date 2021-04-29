@@ -61,41 +61,40 @@ public class GoodReceivedNoteController {
             return "redirect:/goodReceivedNote/".concat(String.valueOf(goodReceivedNote.getPurchaseOrder().getId()));
         }
 //New Leger add to add system as new item on ledger
-        List< Ledger > ledgers = new ArrayList<>();
+        GoodReceivedNote goodReceivedNoteDb = goodReceivedNoteService.persist(goodReceivedNote);
+
         for ( Ledger ledger : goodReceivedNote.getLedgers() ) {
 
-            /*todo*/
-            Ledger ledgerDB = ledgerService.findByItemAndSellPrice(ledger.getItem(), new BigDecimal(ledger.getItem().getSellPrice().toString()));
             Item item = itemService.findById(ledger.getItem().getId());
-            ledger.setMainCategory(item.getCategory().getMainCategory());
-            System.out.println(ledgerDB.getId());
+
+            Ledger ledgerDB = ledgerService.findByItemAndSellPrice(item,
+                                                                   item.getSellPrice());
 //if there is on value in ledger need to update it
             if ( ledgerDB != null ) {
                 //before update need to check price and expire date
-                if ( ledgerDB.getItem().equals(ledger.getItem()) ) {
+                if ( ledgerDB.getSellPrice().equals(ledger.getSellPrice()) ) {
                     ledgerDB.setQuantity(ledgerDB.getQuantity() + ledger.getQuantity());
-
-                    ledgerDB.setGoodReceivedNote(goodReceivedNote);
-                    ledgers.add(ledgerDB);
+                    ledgerDB.setGoodReceivedNote(goodReceivedNoteDb);
+                    ledgerService.persist(ledgerDB);
+                    System.out.println("same item");
                 } else {
-                    ledger.setGoodReceivedNote(goodReceivedNote);
+                    System.out.println("price change item");
+                    ledger.setGoodReceivedNote(goodReceivedNoteDb);
                     ledger.setLiveDead(LiveDead.ACTIVE);
-                    ledgers.add(ledger);
+                    ledgerService.persist(ledger);
                 }
+            } else {
+                System.out.println("new item");
+                ledger.setGoodReceivedNote(goodReceivedNoteDb);
+                ledger.setLiveDead(LiveDead.ACTIVE);
+                ledgerService.persist(ledger);
             }
-            ledger.setGoodReceivedNote(goodReceivedNote);
-            ledger.setLiveDead(LiveDead.ACTIVE);
-            ledgers.add(ledger);
-
         }
-        goodReceivedNote.setGoodReceivedNoteState(GoodReceivedNoteState.NOT_PAID);
-        goodReceivedNote.setLedgers(ledgers);
 
-        PurchaseOrder purchaseOrder = purchaseOrderService.findById(goodReceivedNote.getPurchaseOrder().getId());
-        purchaseOrder.setPurchaseOrderStatus(PurchaseOrderStatus.NOT_PROCEED);
 
-        purchaseOrderService.persist(purchaseOrder);
-        goodReceivedNoteService.persist(goodReceivedNote);
+        PurchaseOrder purchaseOrderDb = purchaseOrderService.findById(goodReceivedNoteDb.getPurchaseOrder().getId());
+        purchaseOrderDb.setPurchaseOrderStatus(PurchaseOrderStatus.NOT_PROCEED);
+        purchaseOrderService.persist(purchaseOrderDb);
         return "redirect:/goodReceivedNote";
     }
 
