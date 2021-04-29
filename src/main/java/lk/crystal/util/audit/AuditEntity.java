@@ -1,6 +1,7 @@
 package lk.crystal.util.audit;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lk.crystal.asset.ledger.entity.Ledger;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -47,4 +48,5 @@ public abstract class AuditEntity {
     @Basic( optional = false )
     @Column( nullable = false )
     private String updatedBy;
+
 }

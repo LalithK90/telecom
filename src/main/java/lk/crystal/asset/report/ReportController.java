@@ -1,6 +1,7 @@
 package lk.crystal.asset.report;
 
 import lk.crystal.asset.category.controller.CategoryRestController;
+import lk.crystal.asset.category.entity.Category;
 import lk.crystal.asset.common_asset.model.NameCount;
 
 import lk.crystal.asset.common_asset.model.ParameterCount;
@@ -392,19 +393,37 @@ public class ReportController {
   }
 
   @PostMapping("/itemsBySubCategory")
-  public String getItemsBySubCategory(@ModelAttribute Item item, Model model) {
+  public String LedgerByCategory(@ModelAttribute Category category, Model model) {
 
-    model.addAttribute("ledgerItems", ledgerService.findAll());
-    model.addAttribute("items", itemService.findByCategory(item.getCategory()));
+    /*below code can be used instead*/
+    /*List<Ledger> ledgers = ledgerService.findAll();
+    List<Item> items = itemService.findByCategory(category);
 
-    if ( item.getId() != null ) {
+    System.out.println(ledgers);
+    System.out.println(items);
+
+    List<Ledger> ledgersByCategory = new ArrayList<>();
 
 
+    ledgers.forEach(x-> {
+
+      for (Item item : items) {
+        if (item.equals(x.getItem())) {
+         ledgersByCategory.add(x);
+        }
+      }
+
+    });*/
+    List<Item> items = itemService.findByCategory(category);
 
 
+    List<Ledger> ledgersByCategory = new ArrayList<>();
 
-    }
+    items.forEach(x->{
+      ledgersByCategory.addAll(ledgerService.findByItem(x));
+    });
 
+    model.addAttribute("ledgersByCategory", ledgersByCategory);
     return "report/itemsBySubCategory";
   }
 
