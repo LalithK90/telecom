@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head data-th-replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>item</title>
+</head>
+<body>
+
+        <!--Table view-->
+        <div class="card-body">
+            <div class="table-responsive-md" id="itemListPresent" data-th-if="${not #lists.isEmpty(items)}">
+                <table class="table table-bordered" id="myTable">
+                    <thead>
+                    <tr>
+                        <th> Index</th>
+                        <th> Main Category</th>
+                        <th> Sub Category</th>
+                        <th> Name</th>
+                        <th> Color</th>
+                        <th> ROP</th>
+                        <th> Modify</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-th-each="item, rowCount : ${items}">
+                        <td data-th-text="${rowCount.count}"></td>
+                        <td data-th-text="${item.category.mainCategory.mainCategory}"></td>
+                        <td data-th-text="${item.category.name}"></td>
+                        <td data-th-text="${item.name}"></td>
+                        <td data-th-text="${item.itemColor.name}"></td>
+                        <td data-th-text="${item.rop}"></td>
+                        <td>
+                            <a id="itemView" data-th-href="${'/item/' + item.id}" class="btn btn-outline-primary btn-sm"><i class="fa fa-folder-open" style="font-size: 15px"></i>&nbsp;View</a>
+                            <a id="itemEdit" data-th-href="${'/item/edit/' + item.id}" class="btn btn-outline-success btn-sm"><i class="fa fa-edit" style="font-size: 15px"></i>&nbsp;Edit</a>
+                            <a id="itemRemove" data-th-href="${'/item/delete/' + item.id}" class="btn btn-outline-danger btn-sm" onclick="confirmDelete(this)">
+                                <!--data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"--><i class="fa fa-trash" style="font-size: 15px"></i> Delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--Error-->
+        <div class="row" data-th-if="${ #lists.isEmpty(items)}">
+            <div class="col align-self-center mx-4">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    There is no item upto now please add item to the system using "New" button.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            <script>
+                /*active boostrap alert - start*/
+                $(".alert").alert();
+                /*active boostrap alert - end*/
+
+
+
+            </script>
+        </div>
+
+
+</body>
+</html>

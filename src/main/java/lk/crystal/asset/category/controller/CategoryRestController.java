@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static lk.crystal.asset.item.entity.enums.MainCategory.valueOf;
+
 @RestController
 @RequestMapping("/category")
 public class CategoryRestController {
@@ -31,6 +33,7 @@ public class CategoryRestController {
     public MappingJacksonValue getCategoryByMainCategory(@PathVariable String mainCategory) {
         Category category = new Category();
         category.setMainCategory(MainCategory.valueOf(mainCategory));
+
 
         //MappingJacksonValue
         List<Category> categories = categoryService.search(category).stream()

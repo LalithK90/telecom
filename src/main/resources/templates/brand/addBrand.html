@@ -44,7 +44,9 @@
                         <div class="form-group col-sm-4">
                             <label for="name">Name :</label>
                             <input type="text" class="form-control" placeholder="Brand name" id="name"  data-th-field="*{name}" tabindex="4" required/>
+                            <span id="nameError" th:errors="*{name}" th:if="${#fields.hasErrors('name')}" class="error">Error Name</span>
                         </div>
+
                         <!--ID-->
                         <div class="form-group col-sm-4" id="idStatus"  data-th-if="${addStatus==false}">
                             <label for="id">ID :</label>
@@ -71,7 +73,7 @@
                         </a>
                         <!--Save Button-->
                         <button class="btn btn-outline-success" type="submit" tabindex="9">
-                            <i class="fa fa-save" style="font-size: 15px"></i>&nbsp;&nbsp;<span id="submit"  data-th-text="${addStatus==true?'Save': 'Update'}"></span>
+                            <i class="fa fa-save" style="font-size: 15px"></i>&nbsp;&nbsp;<span id="submit"  data-th-text="${addStatus==true?'save': 'update'}"></span>
                         </button>
                         <!--Cancel Button-->
                         <button class="btn btn-outline-warning" type="reset" tabindex="10">

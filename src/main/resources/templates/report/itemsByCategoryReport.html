@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head  data-th-replace="~{fragments/header :: headerFragment}" >
+    <meta charset="UTF-8" >
+    <title >item</title >
+</head >
+<body >
+<nav  data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+<div id="layoutSidenav">
+    <div data-th-replace="~{fragments/sideNav :: sideNavFragment}">
+    </div>
+    <div id="layoutSidenav_content">
+        <main class="bg-light">
+            <p>Hellow World</p>
+
+
+                    <!--Table view-->
+                    <div class="col"  data-th-if="${not #lists.isEmpty(ledgers)}" >
+                        <div class="col" id="itemListPresent" >
+                            <table class="table table-hover table-sm table-bordered" id="myTable" >
+                                <thead >
+                                <tr >
+                                    <th > Index</th >
+                                    <th > Item Name</th >
+                                    <th > ROP</th >
+                                    <th > Quantity</th >
+                                    <th > Price</th >
+                                    <th > Modify</th >
+                                </tr >
+                                </thead >
+                                <tbody >
+                                <tr   data-th-each="ledger, rowCount : ${ledgers}" >
+                                    <td  data-th-text="${rowCount.count}" ></td >
+                                    <td  data-th-text="${ledger.item.name}" ></td >
+                                    <td  data-th-text="${ledger.item.rop}" ></td >
+                                    <td  data-th-text="${ledger.quantity}" ></td >
+                                    <td  data-th-text="${ledger.sellPrice}" ></td >
+                                    <td >
+                                        <a  data-th-href="${'/purchaseOrder/supplier/' + ledger.goodReceivedNote.purchaseOrder.supplier.id}"
+                                            class="btn btn-primary btn-sm" ><i
+                                                class="fa fa-folder-open" style="font-size: 15px" ></i >Purchase Order</a >
+                                    </td >
+                                </tr >
+                                </tbody >
+                            </table >
+                        </div >
+                    </div >
+                    <!--Error-->
+                    <div class="row"  data-th-if="${ #lists.isEmpty(ledgers)}" >
+                        <div class="col-sm-12" >
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
+                                    <span aria-hidden="true" >&times;</span >
+                                </button >
+                                <h3 class="text-center text-danger" >
+                                    <strong >There is no item upto now please add item to the system using "New" button.</strong >
+                                </h3 >
+                            </div >
+                        </div >
+                    </div >
+
+        </main>
+        <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+        <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+    </div>
+</div>
+
+</body >
+</html >

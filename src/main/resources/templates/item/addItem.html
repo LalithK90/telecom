@@ -35,13 +35,15 @@
 
                                 <div class="form-group col-md-12 col-sm-12 flex-column ">
                                     <!--Id-->
-                                    <div id="idStatus" th:if="${addStatus==false}" class="form-row">
+                                    <div id="idStatus" th:if="${addStatus==false}" class="form-row text-right">
                                         <div class="col-md-4">
-                                            <label class="control-label" for="id">ID :</label>
+                                            <label class="control-label" for="id">Item Code :</label>
                                         </div>
                                         <div class="col-md-4">
-                                            <input id="id" th:field="*{id}" class="form-control" type="text" readonly/>
+                                            <input id="id" th:field="*{id}" class="form-control" type="hidden" readonly/>
                                             <input id="id" th:field="*{liveDead}" class="form-control" type="hidden" readonly/>
+                                            <input id="id" th:field="*{code}" class="form-control" type="text" readonly/>
+                                            <input id="id" th:field="*{itemStatus}" class="form-control" type="hidden" readonly/>
                                         </div>
                                     </div>
                                     <!--Main Category -->
@@ -251,7 +253,7 @@
                                     <!--Save Button-->
                                     <button class="btn btn-success ml-5" type="submit" tabindex="12">
                                         <i class="fa fa-save " style="font-size: 20px"></i>&nbsp;&nbsp;<span id="submit"
-                                                                                                             th:text="${addStatus==true?'Save': 'Update'}"></span>
+                                          th:text="${addStatus==true?'Save': 'Update'}"></span>
                                     </button>
                                     <!--Cancel Button-->
                                     <button class="btn btn-warning ml-5" type="reset" tabindex="13">

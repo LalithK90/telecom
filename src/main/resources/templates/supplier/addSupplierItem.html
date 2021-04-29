@@ -6,6 +6,7 @@
 </head>
 <body>
 <!--Multi CSS-->
+<link data-th-href="@{/css/combo-box-search.css}" media="all" rel="stylesheet" type="text/css" />
 <link   data-th-href="@{/css/multi.css}" media="all" rel="stylesheet" type="text/css"/>
 
 <nav  data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
@@ -78,15 +79,17 @@
                 <div class="col-md-4" >
                     <label class="control-label" for="item" >Select Items:</label >
                 </div >
+
                 <div class="text-left col-md-8" >
-                    <select class="form-control" id="item" >
-                        <option value="" selected > Please Select</option >
+                    <select class="form-control" id="item" tabindex="9">
+                        <option value="" selected hidden > Please Select</option >
                         <option data-th-each="item : ${items}"
                                 data-th-value="${item.id}"
-                                data-th-text="${item.name}" > Please Select
+                                data-th-text="${item.name}+' - '+${'  Sell Price:  ' +item.sellPrice}" > Please Select
                         </option >
                     </select >
                 </div >
+
             </div >
 
             <div class="form-row col-md-12 col-sm-12 mt-4 text-center" >
@@ -98,7 +101,7 @@
                         <tr >
                             <th >Index</th >
                             <th >Item Name</th >
-                            <th >Price</th >
+                            <th >Supplier Price</th >
                             <th data-th-if="${supplierItemEdit}" >Status</th >
                         </tr >
                         </thead >
@@ -197,6 +200,8 @@
 <!--Supplier Item add - end-->
 <div  data-th-replace="~{fragments/footer :: footerFragment}"></div>
 <div  data-th-replace="~{fragments/script :: scriptFragment}"></div>
+
+<script data-th-src="@{/js/combo-box-search.js}" ></script >
 <script >
     $(document).ready(function () {
 //when search criteria add
@@ -254,7 +259,6 @@
                                 </label>
                          </div>
                         </td>
-
                         <td>
                             <button type="button" class="btn btn-outline-danger" onclick="tableRowRemove(this)">Remove</button>
                         </td>

@@ -6,7 +6,7 @@
     "Iskoola Pota";
     --error-color: #fa370d;
 }
-/* for login form - start*/
+/*!* for login form - start*!
 #loginBack {
     background-image: url('../img/12.jpg');
     margin: 0;
@@ -14,7 +14,7 @@
     background-size: cover;
 
 
-}
+}*/
 
 #loginPage .logo1 {
     position: absolute;
@@ -108,5 +108,10 @@
     font-weight: 400;
 }
 
+.form-row {
+    margin-top: 5px;
+}
+
+#imgUpload {
 
 }

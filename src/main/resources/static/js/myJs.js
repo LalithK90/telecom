@@ -39,10 +39,10 @@ $(document).ready(function () {
 
 });
 
-
-
+// new nic
+let nicRegex = /^([0-9]{9}[|X|V]|[0-9]{12})$/;
 // regex
-let nicRegex = /^([0-9]{9}[vV|xX])|^([0-9]{12})$/;
+// let nicRegex = /^([0-9]{9}[vV|xX])|^([0-9]{12})$/;
 let mobileRegex = /^([0][7][\d]{8}$)|^([7][\d]{8})$/;
 let landRegex = /^0((11)|(2(1|[3-7]))|(3[1-8])|(4(1|5|7))|(5(1|2|4|5|7))|(6(3|[5-7]))|([8-9]1))([2-4]|5|7|9)[0-9]{6}$/;
 let nameRegex = /^[a-zA-Z .-]{5}[ a-zA-Z.-]+$/;
@@ -644,12 +644,31 @@ if ($("#nic").val() !== null || $("#nic").val() === undefined){
 
 
 function confirmDelete(obj) {
-    swal("Are you sure to delete this?", {
-        dangerMode: true,
-        buttons: true,
+
+    swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
     }).then((x) => {
         if (x) {
             self.location = location.protocol + "//" + location.host + obj.getAttribute('id');
         }
     });
+}
+
+
+
+
+
+
+function confirmSubmit() {
+    if (confirm('Do you want to submit?')) {
+        yourformelement.submit();
+    } else {
+        return false;
+    }
 }

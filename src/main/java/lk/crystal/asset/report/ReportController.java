@@ -1,5 +1,6 @@
 package lk.crystal.asset.report;
 
+import lk.crystal.asset.category.controller.CategoryRestController;
 import lk.crystal.asset.common_asset.model.NameCount;
 
 import lk.crystal.asset.common_asset.model.ParameterCount;
@@ -12,6 +13,12 @@ import lk.crystal.asset.invoice.service.InvoiceService;
 import lk.crystal.asset.invoice_ledger.entity.InvoiceLedger;
 import lk.crystal.asset.invoice_ledger.service.InvoiceLedgerService;
 import lk.crystal.asset.item.entity.Item;
+import lk.crystal.asset.item.entity.enums.ItemStatus;
+import lk.crystal.asset.item.entity.enums.MainCategory;
+import lk.crystal.asset.item.entity.enums.WarrantyPeriod;
+import lk.crystal.asset.item.service.ItemService;
+import lk.crystal.asset.ledger.entity.Ledger;
+import lk.crystal.asset.ledger.service.LedgerService;
 import lk.crystal.asset.payment.entity.Payment;
 import lk.crystal.asset.payment.service.PaymentService;
 import lk.crystal.asset.user_management.user.service.UserService;
@@ -24,6 +31,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -33,6 +41,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
+
+import static lk.crystal.asset.item.entity.enums.MainCategory.ACCESSORIES;
+import static lk.crystal.asset.item.entity.enums.MainCategory.MOBILE_PHONE;
 
 @Controller
 @RequestMapping( "/report" )
@@ -44,11 +55,13 @@ public class ReportController {
   private final UserService userService;
   private final InvoiceLedgerService invoiceLedgerService;
   private final EmployeeService employeeService;
+  private final LedgerService ledgerService;
+  private final ItemService itemService;
 
   public ReportController(PaymentService paymentService, InvoiceService invoiceService,
                           OperatorService operatorService, DateTimeAgeService dateTimeAgeService,
                           UserService userService, InvoiceLedgerService invoiceLedgerService,
-                          EmployeeService employeeService) {
+                          EmployeeService employeeService, LedgerService ledgerService, ItemService itemService) {
     this.paymentService = paymentService;
     this.invoiceService = invoiceService;
     this.operatorService = operatorService;
@@ -56,6 +69,8 @@ public class ReportController {
     this.userService = userService;
     this.invoiceLedgerService = invoiceLedgerService;
     this.employeeService = employeeService;
+    this.ledgerService = ledgerService;
+    this.itemService = itemService;
   }
 
   private String commonAll(List< Payment > payments, List< Invoice > invoices, Model model, String message,
@@ -342,6 +357,55 @@ public class ReportController {
     commonPerItem(startDateTime, endDateTime, model);
     model.addAttribute("message", message);
     return "report/perItemReport";
+  }
+
+ /* search by main category test commands*/
+  @GetMapping("/searchByCategory")
+  public String searchItemsByCategory(Model model) {
+    model.addAttribute("ledger", new Ledger());
+
+    return "report/searchByCategory";
+  }
+
+
+  @PostMapping("/itemsByCategory")
+  public String getItemsByCategory(@ModelAttribute Ledger ledger, Model model) {
+   /* MainCategory mainCategory = ACCESSORIES;*/
+    model.addAttribute("ledgers", ledgerService.findByCategory(ledger.getMainCategory()));
+
+
+    return "report/itemsByCategoryReport";
+  }
+
+  /* search by sub category test commands*/
+  @GetMapping("/searchBySubCategory")
+  public String searchItemsBySubCategory(Model model) {
+    model.addAttribute("ledger", new Ledger());
+    model.addAttribute("item", new Item());
+    model.addAttribute("mainCategories", MainCategory.values());
+    model.addAttribute("urlMainCategory", MvcUriComponentsBuilder
+            .fromMethodName(CategoryRestController.class, "getCategoryByMainCategory", "")
+            .build()
+            .toString());
+
+    return "report/searchBySubCategory";
+  }
+
+  @PostMapping("/itemsBySubCategory")
+  public String getItemsBySubCategory(@ModelAttribute Item item, Model model) {
+
+    model.addAttribute("ledgerItems", ledgerService.findAll());
+    model.addAttribute("items", itemService.findByCategory(item.getCategory()));
+
+    if ( item.getId() != null ) {
+
+
+
+
+
+    }
+
+    return "report/itemsBySubCategory";
   }
 
 }

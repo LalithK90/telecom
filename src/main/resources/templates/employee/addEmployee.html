@@ -173,8 +173,9 @@
                   <div class="col-md-2">
                     <label for="mobileOne"><small>Mobile [1]</small></label>
                     <input id="mobileOne" data-th-field="*{mobileOne}" class="form-control form-control-sm mobile" tabindex="13"
-                           type="text"
+                           pattern="([0][7][\d]{8}$)|^([7][\d]{8})" title="Incorrect mobile number"
                            maxlength="10" min="9"
+                           type="text"
                            required />
                     <span class="error" data-th-errors="*{mobileOne}"
                           data-th-if="${#fields.hasErrors('mobileOne')}"
@@ -185,8 +186,10 @@
                   <div class="col-md-2">
                     <label for="mobileTwo"><small>Mobile [2]</small></label>
                     <input id="mobileTwo" data-th-field="*{mobileTwo}" class="form-control form-control-sm mobile" tabindex="14"
-                             type="text"
-                             maxlength="10" min="9" />
+                           pattern="([0][7][\d]{8}$)|^([7][\d]{8})" title="Incorrect mobile number"
+                           maxlength="10" min="9"
+                           type="text"
+                           />
                     <span class="error" data-th-errors="*{mobileTwo}"
                             data-th-if="${#fields.hasErrors('mobileTwo')}"
                             id="mobileTwoError" >Error Mobile Number</span >
@@ -200,17 +203,7 @@
                     <span class="error" data-th-errors="*{land}"
                           data-th-if="${#fields.hasErrors('land')}" id="landError" >Error Land Number</span >
                   </div >
-                  <!--Email-->
-                  <!--<div class="form-row text-right">
-                      <div class="col-md-4">
-                          <label class="control-label" for="email">Email :</label>
-                      </div>
-                      <div class="col-md-8">
-                          <input id="email" data-th-field="*{email}" class="form-control" tabindex="16" type="email" required/>
-                          <span class="error" data-th-errors="*{email}"
-                                data-th-if="${#fields.hasErrors('email')}" id="emailError">Error Email</span>
-                      </div>
-                  </div>-->
+
                   <!--Office email-->
                   <div class="col-md-6">
                     <label for="officeEmail"><small>Email</small></label>
