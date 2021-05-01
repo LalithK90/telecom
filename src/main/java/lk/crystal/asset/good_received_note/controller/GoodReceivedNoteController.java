@@ -67,8 +67,8 @@ public class GoodReceivedNoteController {
 
             Item item = itemService.findById(ledger.getItem().getId());
 
-            Ledger ledgerDB = ledgerService.findByItemAndSellPrice(item,
-                                                                   item.getSellPrice());
+            Ledger ledgerDB = ledgerService.findByItemAndSellPrice(item,  item.getSellPrice());
+            ledger.setMainCategory(item.getCategory().getMainCategory());
 //if there is on value in ledger need to update it
             if ( ledgerDB != null ) {
                 //before update need to check price and expire date
