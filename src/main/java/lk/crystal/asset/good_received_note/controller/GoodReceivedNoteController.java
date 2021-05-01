@@ -75,6 +75,7 @@ public class GoodReceivedNoteController {
                 if ( ledgerDB.getSellPrice().equals(ledger.getSellPrice()) ) {
                     int quantity = Integer.parseInt(ledgerDB.getQuantity()) + Integer.parseInt(ledger.getQuantity());
                     ledgerDB.setQuantity(Integer.toString(quantity));
+                    ledgerDB.setGoodReceivedNote(goodReceivedNoteDb);
                     ledgerService.persist(ledgerDB);
                     System.out.println("same item");
                 } else {

@@ -90,14 +90,25 @@ public class PaymentController {
   public String addPaymentAmount(@PathVariable( "id" ) Integer id, Model model) {
     //payment need to make
     PurchaseOrder purchaseOrderNeedToPay = purchaseOrderService.findById(id);
+    List< BigDecimal > needPayAmount = new ArrayList<>();
+    paymentService.findByPurchaseOrder(purchaseOrderNeedToPay).forEach(x -> {
+      needPayAmount.add(x.getAmount());
+    });
+    purchaseOrderNeedToPay
+        .setNeedToPaid(operatorService
+                           .subtraction(purchaseOrderNeedToPay.getPrice(), needPayAmount.stream().reduce(BigDecimal.ZERO,BigDecimal::add)));
+
 
     //1. still not processed po 2. partially paid po
     List< PurchaseOrder > purchaseOrdersDB =
-            purchaseOrderService.findByPurchaseOrderStatusAndSupplier(PurchaseOrderStatus.NOT_PROCEED,
-                    purchaseOrderNeedToPay.getSupplier());
+        purchaseOrderService.findByPurchaseOrderStatusAndSupplier(PurchaseOrderStatus.NOT_PROCEED,
+                                                                  purchaseOrderNeedToPay.getSupplier());
+
+
     List< PurchaseOrder > purchaseOrderNotPaid = new ArrayList<>();
 
     if ( purchaseOrdersDB != null ) {
+      purchaseOrdersDB.remove(purchaseOrderNeedToPay);
       for ( PurchaseOrder purchaseOrder : purchaseOrdersDB ) {
         List< Payment > payments = paymentService.findByPurchaseOrder(purchaseOrder);
         if ( payments != null ) {
@@ -110,12 +121,14 @@ public class PaymentController {
           } else {
             purchaseOrder.setGrnAt(LocalDateTime.now());
           }
+
           purchaseOrder.setPaidAmount(paidAmount);
-          purchaseOrderNeedToPay.setNeedToPaid(operatorService.subtraction(purchaseOrder.getPrice(), paidAmount));
+          purchaseOrder.setNeedToPaid(operatorService.subtraction(purchaseOrder.getPrice(), paidAmount));
+          purchaseOrderNotPaid.add(purchaseOrder);
         }
-        purchaseOrderNotPaid.add(purchaseOrder);
       }
     }
+    System.out.println(purchaseOrderNotPaid.size() +"  not paid size");
     model.addAttribute("payment", new Payment());
     model.addAttribute("purchaseOrders", purchaseOrderNotPaid);
     model.addAttribute("purchaseOrderNeedToPay", purchaseOrderNeedToPay);
