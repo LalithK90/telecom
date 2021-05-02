@@ -133,6 +133,8 @@ public class InvoiceController {
       System.out.println("length "+x.getWarrantyNumber()+"  length" + x.getWarrantyNumber().length());
       if (x.getWarrantyNumber().length() > 0){
         System.out.println(" im here ");
+      }else {
+        x.setWarrantyNumber(null);
       }
       x.setInvoice(invoice);
     });
