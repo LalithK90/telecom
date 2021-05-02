@@ -6,6 +6,8 @@ import lk.crystal.asset.common_asset.model.NameCount;
 
 import lk.crystal.asset.common_asset.model.ParameterCount;
 import lk.crystal.asset.common_asset.model.TwoDate;
+import lk.crystal.asset.customer.entity.Customer;
+import lk.crystal.asset.customer.service.CustomerService;
 import lk.crystal.asset.employee.entity.Employee;
 import lk.crystal.asset.employee.service.EmployeeService;
 import lk.crystal.asset.invoice.entity.Invoice;
@@ -14,9 +16,7 @@ import lk.crystal.asset.invoice.service.InvoiceService;
 import lk.crystal.asset.invoice_ledger.entity.InvoiceLedger;
 import lk.crystal.asset.invoice_ledger.service.InvoiceLedgerService;
 import lk.crystal.asset.item.entity.Item;
-import lk.crystal.asset.item.entity.enums.ItemStatus;
 import lk.crystal.asset.item.entity.enums.MainCategory;
-import lk.crystal.asset.item.entity.enums.WarrantyPeriod;
 import lk.crystal.asset.item.service.ItemService;
 import lk.crystal.asset.ledger.entity.Ledger;
 import lk.crystal.asset.ledger.service.LedgerService;
@@ -43,9 +43,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
-import static lk.crystal.asset.item.entity.enums.MainCategory.ACCESSORIES;
-import static lk.crystal.asset.item.entity.enums.MainCategory.MOBILE_PHONE;
-
 @Controller
 @RequestMapping( "/report" )
 public class ReportController {
@@ -58,11 +55,12 @@ public class ReportController {
   private final EmployeeService employeeService;
   private final LedgerService ledgerService;
   private final ItemService itemService;
+  private final CustomerService customerService;
 
   public ReportController(PaymentService paymentService, InvoiceService invoiceService,
                           OperatorService operatorService, DateTimeAgeService dateTimeAgeService,
                           UserService userService, InvoiceLedgerService invoiceLedgerService,
-                          EmployeeService employeeService, LedgerService ledgerService, ItemService itemService) {
+                          EmployeeService employeeService, LedgerService ledgerService, ItemService itemService, CustomerService customerService) {
     this.paymentService = paymentService;
     this.invoiceService = invoiceService;
     this.operatorService = operatorService;
@@ -72,6 +70,7 @@ public class ReportController {
     this.employeeService = employeeService;
     this.ledgerService = ledgerService;
     this.itemService = itemService;
+    this.customerService = customerService;
   }
 
   private String commonAll(List< Payment > payments, List< Invoice > invoices, Model model, String message,
@@ -378,6 +377,10 @@ public class ReportController {
     return "report/itemsByCategoryReport";
   }
 
+
+
+  /*==========testing============*/
+
   /* search by sub category test commands*/
   @GetMapping("/searchBySubCategory")
   public String searchItemsBySubCategory(Model model) {
@@ -426,5 +429,28 @@ public class ReportController {
     model.addAttribute("ledgersByCategory", ledgersByCategory);
     return "report/itemsBySubCategory";
   }
+
+
+  @GetMapping("/invoicesByCustomer")
+  public String invoicesByCustomer(Model model){
+    model.addAttribute("customer", new Customer());
+    model.addAttribute("customers", customerService.findAll());
+    return "report/invoicesByCustomer";
+
+  }
+
+  @PostMapping("/searchInvoiceByCustomer")
+  public String searchInvoiceByCustomer(@ModelAttribute Customer customer, Model model){
+    Customer temp = customer;
+    System.out.println(temp);
+
+    List<Invoice> invoiceList = invoiceService.findByCustomer(customer);
+    System.out.println(invoiceList);
+
+    model.addAttribute("invoiceList", invoiceList);
+    return "report/invoicesByCustomer";
+  }
+
+
 
 }
