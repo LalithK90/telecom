@@ -421,13 +421,13 @@
                 $(".popup-overlay, .popup-content").addClass("active");
                 addButtonDisable();
 
-                if (resp.mainCategory === "MOBILE_PHONE") {
+                /*if (resp.mainCategory === "MOBILE_PHONE") {
                     $("#requestCount").val(1).prop("disabled", true);
                     $("#warrantyBlock").show();
                     totalPriceCard();
                 } else {
                     $("#warrantyBlock").hide();
-                }
+                }*/
             }
 
             function addButtonDisable() {
@@ -640,8 +640,8 @@
             //option tag add
             function optionTagAdd(id, name, sellPrice, abQut, exDate) {
                 return `<option value="${id}">
-                          Item Name: ${name}  Sell Price : {sellPrice}
-                          Available quantity : ${abQut}  Expired Date : ${exDate}
+                          Item Name: ${name}  Sell Price : ${sellPrice}
+                          Available quantity : ${abQut}
                         </option>`;
             }
 
