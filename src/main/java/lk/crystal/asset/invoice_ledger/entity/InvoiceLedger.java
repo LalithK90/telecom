@@ -25,7 +25,7 @@ public class InvoiceLedger extends AuditEntity {
   @Column( nullable = false )
   private String quantity;
 
-  @Column( nullable = false, unique = true )
+  @Column( unique = true )
   private String warrantyNumber;
 
   @Column( nullable = false, precision = 10, scale = 2 )

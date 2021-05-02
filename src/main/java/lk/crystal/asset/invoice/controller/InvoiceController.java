@@ -127,7 +127,15 @@ public class InvoiceController {
         invoice.setCode("CTSI" + makeAutoGenerateNumberService.numberAutoGen(previousCode).toString());
       }
     }
-    invoice.getInvoiceLedgers().forEach(x -> x.setInvoice(invoice));
+
+
+    invoice.getInvoiceLedgers().forEach(x -> {
+      System.out.println("length "+x.getWarrantyNumber()+"  length" + x.getWarrantyNumber().length());
+      if (x.getWarrantyNumber().length() > 0){
+        System.out.println(" im here ");
+      }
+      x.setInvoice(invoice);
+    });
 
     invoice.setInvoiceValidOrNot(InvoiceValidOrNot.VALID);
 
