@@ -96,6 +96,7 @@ http.authorizeRequests(
                 .antMatchers("/supplier/**").hasAnyRole("MANAGER","PROCUREMENT_MANAGER")
                 .antMatchers("/supplierItem/**").hasAnyRole("MANAGER","PROCUREMENT_MANAGER")
                 .antMatchers("/user/**").hasAnyRole("MANAGER","HR_MANAGER","ADMIN")
+                    .antMatchers("/invoice/**").hasAnyRole("MANAGER","CASHIER")
                 .anyRequest()
                 .authenticated())
         // Login form
