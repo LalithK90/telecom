@@ -32,7 +32,7 @@
                     <div class="my-5">
                     <form id="form" class="form-horizontal" th:action="${addStatus==true?'/item/save':'/item/update'}"
                               th:object="${item}" method="POST" enctype="multipart/form-data">
-
+                                <!--Form content-->
                                 <div class="form-group col-md-12 col-sm-12 flex-column ">
                                     <!--Id-->
                                     <div id="idStatus" th:if="${addStatus==false}" class="form-row text-right">
@@ -193,56 +193,6 @@
                                     </div>
                                 </div>
 
-
-
-                                <!-- &lt;!&ndash;Batch&ndash;&gt;
-                                 <div class="form-row text-right">
-                                     <div class="col-md-4">
-                                         <label class="control-label" for="batch">Batch :</label>
-                                     </div>
-                                     <div class="col-md-4">
-                                         <input id="batch" th:field="*{batch}" class="form-control" tabindex="9" type="text" maxlength="10" min="9" required/>
-                                         <span id="batchError" th:errors="*{batch}"
-                                               th:if="${#fields.hasErrors('batch')}" class="error">Error Batch</span>
-                                     </div>
-                                 </div>
-                                 &lt;!&ndash;Manufactured Date&ndash;&gt;
-                                 <div class="form-row text-right">
-                                     <div class="col-md-4">
-                                         <label class="control-label" for="mDate">Manufactured Date :</label>
-                                     </div>
-                                     <div class="col-md-4">
-                                         <input id="mDate" th:field="*{mDate}" class="form-control" tabindex="10" type="date" required/>
-                                         <span id="nameError" th:errors="*{mDate}"
-                                               th:if="${#fields.hasErrors('mDate')}" class="error">Error Date</span>
-                                     </div>
-                                 </div>
-                                 &lt;!&ndash;Expiration Date&ndash;&gt;
-                                 <div class="form-row text-right">
-                                     <div class="col-md-4">
-                                         <label class="control-label" for="eDate">Expiration Date :</label>
-                                     </div>
-                                     <div class="col-md-4">
-                                         <input id="eDate" th:field="*{eDate}" class="form-control" tabindex="11" type="date" required/>
-                                         <span id="nameError" th:errors="*{eDate}"
-                                               th:if="${#fields.hasErrors('eDate')}" class="error">Error Date</span>
-                                     </div>
-
-                                    <div class="form-row text-right">
-                                        <div class="col-md-4">
-                                            <label class="control-label" for="status">Status :</label>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <select id="status" th:field="*{itemStatus}" class="form-control" tabindex="3" required>
-                                                <option value="">Please Select</option>
-                                                <option th:each="status : ${statuses}"
-                                                        th:text="${status.itemStatus}"
-                                                        th:value="${status}"
-                                                        th:selected="${status==item.itemStatus?'selected':'unselected'}"></option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                 </div>-->
 
                                 <!--Button-->
                                 <div class="form-group col-md-12 col-sm-12 text-center flex-column ">

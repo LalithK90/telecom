@@ -4,158 +4,157 @@
     <meta charset="UTF-8">
     <title>customer-detail</title>
 </head>
-<body>
+<body class="sb-nav-fixed">
 <nav  data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
-
-<!--heading Area-->
-<div class="container-fluid ">
-    <div class="row text-center formManagement border-info">
-        <!--ViewList Button-->
-        <div class="col">
-            <a href="/customer" class="btn btn-primary" tabindex="1">
-                <i class="fa fa-list" style="font-size: 20px"></i>&nbsp;&nbsp;View List
-            </a>
-        </div>
-        <!--Customer Name-->
-        <div class="col">
-            <h2 class="text-light text-center">
-                <strong>
-                    <p  data-th-text="${customerDetail.title.title} +${' '} +${customerDetail.name}"></p>
-                </strong>
-            </h2>
-        </div>
-        <!--Home Button-->
-        <div class="col">
-            <a class="btn btn-primary" href="/home" tabindex="2">
-                <i class="fa fa-home" style="font-size: 20px"></i> &nbsp;&nbsp;Home
-            </a>
-        </div>
+<div id="layoutSidenav">
+    <div data-th-replace="~{fragments/sideNav :: sideNavFragment}">
     </div>
-</div>
-<!--details-->
-<div   data-th-fragment="customerDetailsFragment" class="container-fluid bg-dark formBorder">
-    <div class="col-sm-12 flex-column ">
-        <div class="row">
-            <!--Left Side-->
-            <div class="form-group col-md-6 col-sm-6 text-left flex-column">
-                <!--id-->
-                <div class="form-row text-right">
-                    <div class="col-md-4">
-                        <label class="control-label" for="id">ID :</label>
+    <div id="layoutSidenav_content">
+        <main>
+            <!--heading Area-->
+            <div class="container-fluid">
+                <div class="row formManagement border-info mb-4 mt-4">
+                    <!--View Employee List Button-->
+                    <div class="col">
+                        <a class="btn btn-outline-primary btn-sm" href="/customer" tabindex="1">
+                            <i class="fa fa-list" style="font-size: 12px"></i>&nbsp;&nbsp;View List
+                        </a>
                     </div>
-                    <div class="col-md-8">
-                        <p id="id"  data-th-text="${customerDetail.id}" class="display_detail"></p>
-                    </div>
-                </div>
-                <!--Code-->
-                <div class="form-row text-right">
-                    <div class="col-md-4">
-                        <label class="control-label" for="departmentIdNumber">Customer Code :</label>
-                    </div>
-                    <div class="col-md-8">
-                        <p id="departmentIdNumber"  data-th-text="${customerDetail.code}" class="display_detail"></p></div>
-                </div>
-                <!--Name-->
-                <div class="form-row text-right">
-                    <div class="col-md-4">
-                        <label class="control-label" for="name">Name :</label>
-                    </div>
-                    <div class="col-md-8">
-                        <p id="name"  data-th-text="${customerDetail.title.title} +${' '} +${customerDetail.name}"
-                           class="display_detail"></p>
-                    </div>
-                </div>
-                <!--NIC-->
-                <div class="form-row text-right">
-                    <div class="col-md-4">
-                        <label class="control-label" for="nic">NIC No :</label>
-                    </div>
-                    <div class="col-md-8">
-                        <p id="nic"  data-th-text="${customerDetail.nic}" class="display_detail"></p>
-                    </div>
-                </div>
-                <!--Address-->
-                <div class="form-row text-right">
-                    <div class="col-md-4">
-                        <label class="control-label" for="address">Address :</label>
-                    </div>
-                    <div class="col-md-8 text-left">
-                        <p id="address" class="display_detail " th:utext="${customerDetail.address}"></p>
-                    </div>
-                </div>
-                <!--Mobile-->
-                <div class="form-row text-right">
-                    <div class="col-md-4">
-                        <label class="control-label" for="mobile">Mobile No :</label>
-                    </div>
-                    <div class="col-md-8">
-                        <p id="mobile"  data-th-text="${customerDetail.mobile}" class="display_detail"></p>
+                    <!--Emloyee Name-->
+                    <div class="col">
+                        <h4 class="text-right">
+                            <p data-th-text="${customerDetail.title.title} +${' '} +${customerDetail.name}"></p>
+                        </h4>
                     </div>
                 </div>
             </div>
-            <!--Right Side-->
-            <div class="form-group col-md-6 col-sm-6 text-right flex-column">
-                <!--Email-->
-                <div class="form-row text-right">
-                    <div class="col-md-4">
-                        <label class="control-label" for="email">Email :</label>
-                    </div>
-                    <div class="col-md-8">
-                        <p id="email"  data-th-text="${customerDetail.email}" class="display_detail"></p>
-                    </div>
-                </div>
-                <!--Created By-->
-                <div class="form-row text-right">
-                    <div class="col-md-4">
-                        <label class="control-label" for="createdBy">Created By :</label>
-                    </div>
-                    <div class="col-md-8">
-                        <p id="createdBy"  data-th-text="${customerDetail.createdBy}" class="display_detail"></p>
-                    </div>
-                </div>
-                <!--Created at-->
-                <div class="form-row text-right">
-                    <div class="col-md-4">
-                        <label class="control-label" for="createdAt">Created At :</label>
-                    </div>
-                    <div class="col-md-8">
-                        <p id="createdAt"  data-th-text="${#temporals.format(customerDetail.createdAt, 'dd-MM-yyyy HH:mm')}"
-                           class="display_detail"></p>
-                    </div>
-                </div>
-                <!--Updated by-->
-                <div class="form-row text-right">
-                    <div class="col-md-4">
-                        <label class="control-label" for="updatedBy">Updated By :</label>
-                    </div>
-                    <div class="col-md-8">
-                        <p id="updatedBy"  data-th-text="${customerDetail.updatedBy}" class="display_detail"></p>
-                    </div>
-                </div>
-                <!--Updated at-->
-                <div class="form-row text-right">
-                    <div class="col-md-4">
-                        <label class="control-label" for="updatedAt">Updated At :</label>
-                    </div>
-                    <div class="col-md-8">
-                        <p id="updatedAt"  data-th-text="${{customerDetail.updatedAt}}" class="display_detail"></p>
+
+            <!--details-->
+            <div   data-th-fragment="customerDetailsFragment" class="container-fluid formBorder">
+                <div class="col-sm-12 flex-column ">
+                    <div class="row">
+                        <!--Left Side-->
+                        <div class="form-group col-md-6 col-sm-6 text-left flex-column">
+                            <!--id-->
+                            <div class="form-row text-right">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="id">ID :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p id="id"  data-th-text="${customerDetail.id}" class="display_detail"></p>
+                                </div>
+                            </div>
+                            <!--Code-->
+                            <div class="form-row text-right">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="departmentIdNumber">Customer Code :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p id="departmentIdNumber"  data-th-text="${customerDetail.code}" class="display_detail"></p></div>
+                            </div>
+                            <!--Name-->
+                            <div class="form-row text-right">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="name">Name :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p id="name"  data-th-text="${customerDetail.title.title} +${' '} +${customerDetail.name}"
+                                       class="display_detail"></p>
+                                </div>
+                            </div>
+                            <!--NIC-->
+                            <div class="form-row text-right">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="nic">NIC No :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p id="nic"  data-th-text="${customerDetail.nic}" class="display_detail"></p>
+                                </div>
+                            </div>
+                            <!--Address-->
+                            <div class="form-row text-right">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="address">Address :</label>
+                                </div>
+                                <div class="col-md-8 text-left">
+                                    <p id="address" class="display_detail " th:utext="${customerDetail.address}"></p>
+                                </div>
+                            </div>
+                            <!--Mobile-->
+                            <div class="form-row text-right">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="mobile">Mobile No :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p id="mobile"  data-th-text="${customerDetail.mobile}" class="display_detail"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Right Side-->
+                        <div class="form-group col-md-6 col-sm-6 text-right flex-column">
+                            <!--Email-->
+                            <div class="form-row text-right">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="email">Email :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p id="email"  data-th-text="${customerDetail.email}" class="display_detail"></p>
+                                </div>
+                            </div>
+                            <!--Created By-->
+                            <div class="form-row text-right">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="createdBy">Created By :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p id="createdBy"  data-th-text="${customerDetail.createdBy}" class="display_detail"></p>
+                                </div>
+                            </div>
+                            <!--Created at-->
+                            <div class="form-row text-right">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="createdAt">Created At :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p id="createdAt"  data-th-text="${#temporals.format(customerDetail.createdAt, 'dd-MM-yyyy HH:mm')}"
+                                       class="display_detail"></p>
+                                </div>
+                            </div>
+                            <!--Updated by-->
+                            <div class="form-row text-right">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="updatedBy">Updated By :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p id="updatedBy"  data-th-text="${customerDetail.updatedBy}" class="display_detail"></p>
+                                </div>
+                            </div>
+                            <!--Updated at-->
+                            <div class="form-row text-right">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="updatedAt">Updated At :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <p id="updatedAt"  data-th-text="${{customerDetail.updatedAt}}" class="display_detail"></p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <!--Back Button-->
+            <div class="form-group col-md-12 col-sm-12 text-center flex-column ">
+                <a href="/customer">
+                    <button class="btn btn-dark" type="button" tabindex="3">
+                        <i class="fas fa-arrow-circle-left" style="font-size: 20px"></i>&nbsp; &nbsp;Back
+                    </button>
+                </a>
+            </div>
+        </main>
+        <div   data-th-replace="~{fragments/footer :: footerFragment}"></div>
+        <!--script include-->
+        <div  data-th-replace="~{fragments/script :: scriptFragment}"></div>
     </div>
 </div>
-<!--Back Button-->
-<div class="form-group col-md-12 col-sm-12 text-center flex-column ">
-    <a href="/customer">
-        <button class="btn btn-dark" type="button" tabindex="3">
-            <i class="fas fa-arrow-circle-left" style="font-size: 20px"></i>&nbsp; &nbsp;Back
-        </button>
-    </a>
-</div>
-<div   data-th-replace="~{fragments/footer :: footerFragment}"></div>
-<!--script include-->
-<div  data-th-replace="~{fragments/script :: scriptFragment}"></div>
-
 </body>
 </html>

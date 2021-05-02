@@ -6,6 +6,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import lk.crystal.asset.common_asset.model.enums.LiveDead;
+import lk.crystal.asset.customer.entity.Customer;
 import lk.crystal.asset.invoice.dao.InvoiceDao;
 import lk.crystal.asset.invoice.entity.Invoice;
 import lk.crystal.asset.invoice.entity.enums.PaymentMethod;
@@ -320,5 +321,9 @@ public class InvoiceService implements AbstractService<Invoice, Integer > {
     paragraph.setAlignment(Element.ALIGN_LEFT);
     paragraph.setIndentationLeft(50);
     paragraph.setIndentationRight(50);
+  }
+
+  public List<Invoice> findByCustomer(Customer customer) {
+    return  invoiceDao.findByCustomer(customer);
   }
 }

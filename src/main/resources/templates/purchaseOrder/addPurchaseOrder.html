@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>JN_Super</title>
 </head>
-<body>
+<body class="sb-nav-fixed">
 <!--Multi CSS-->
 <link data-th-href="@{/css/multi.css}" media="all" rel="stylesheet" type="text/css"/>
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
@@ -12,7 +12,7 @@
     <div data-th-replace="~{fragments/sideNav :: sideNavFragment}">
     </div>
     <div id="layoutSidenav_content">
-        <main>
+        <main class="bg-light">
             <!--Heading Area -->
             <div class="container-fluid ">
                 <div class="row formManagement border-info mb-4 mt-4">
@@ -32,7 +32,7 @@
             </div>
 
             <!--Form Content - start -->
-            <div class="container-fluid bg-info">
+            <div class="container-fluid ">
                 <!--Supplier Search - Start-->
                 <div class="offset-1 flex-column"  data-th-if="${searchAreaShow==true}">
                     <form class="form-inline" data-th-action="${'/purchaseOrder/find'}" data-th-object="${purchaseOrder}"
@@ -62,7 +62,7 @@
                 <!--Supplier List Show - end-->
                 <!--Supplier Item add- start-->
                 <div class="col-12 flex-column"  data-th-if="${supplierDetailShow==false}">
-                    <a aria-controls="hrefCollapse" aria-expanded="false" class="btn btn-primary col-12" data-toggle="collapse"
+                    <a aria-controls="hrefCollapse" aria-expanded="false" class="btn btn-primary col-12  mb-4" data-toggle="collapse"
                        href="#hrefCollapse">Show Supplier Details</a>
                     <div class="collapse" id="hrefCollapse">
                         <section data-th-replace="~{supplier/supplier-detail :: supplierDetailsFragment}"></section>
@@ -87,11 +87,11 @@
                         </div>
 
                         <div class="form-row col-md-12 col-sm-12 mt-4 text-center">
-                            <div class="form-row container-fluid">
-                                <div class="col-6 text-left h3 text-capitalize font-weight-bold">Selected Item List</div>
-                                <div class="col-6 form-row">
-                                    <div class="col-6 text-left h3 text-capitalize font-weight-bold">Selected Item Count:</div>
-                                    <div class="col-3 text-left h3 text-capitalize font-weight-bold">
+                            <div class="form-row container-fluid mb-4">
+                                <div class="col-4 text-left h4 text-capitalize font-weight-bold">Selected Item List</div>
+                                <div class="col-8 form-row">
+                                    <div class="col-6 text-left h4 text-capitalize font-weight-bold">Selected Item Count:</div>
+                                    <div class="col-3 text-left h4 text-capitalize font-weight-bold">
                                         <span id="selectedItemCount"></span>
                                     </div>
                                 </div>

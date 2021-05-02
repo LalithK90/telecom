@@ -56,26 +56,25 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                </div>
-                <!--Error-->
-                <div class="row" data-th-if="${ #lists.isEmpty(notCompleteAll)}">
-                    <div class="col-sm-12">
-                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h3 class="text-center text-danger">
-                                <strong>There is no pending purchaseOrder upto now please make a purchaseOrder.</strong>
-                            </h3>
+                        <!--Error-->
+                        <div class="row" data-th-if="${ #lists.isEmpty(notCompleteAll)}">
+                            <div class="col align-self-center mx-4">
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    There is no pending purchase order upto now. Please make a purchase order.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <script>
+                                /*active boostrap alert - start*/
+                                $(".alert").alert();
+                                /*active boostrap alert - end*/
+                            </script>
                         </div>
                     </div>
-                    <script>
-                        /*active boostrap alert - start*/
-                        $(".alert").alert();
-                        /*active boostrap alert - end*/
-                    </script>
                 </div>
+
             </div>
         </main>
 
