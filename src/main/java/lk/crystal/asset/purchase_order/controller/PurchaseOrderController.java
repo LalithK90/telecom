@@ -15,6 +15,7 @@ import lk.crystal.asset.supplier_item.controller.SupplierItemController;
 import lk.crystal.util.service.EmailService;
 import lk.crystal.util.service.MakeAutoGenerateNumberService;
 import lk.crystal.util.service.OperatorService;
+import lk.crystal.util.service.TwilioMessageService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,11 +37,12 @@ public class PurchaseOrderController {
   private final OperatorService operatorService;
   private final EmailService emailService;
   private final ItemService itemService;
+  private final TwilioMessageService twilioMessageService;
 
   public PurchaseOrderController(PurchaseOrderService purchaseOrderService,
                                  SupplierService supplierService
-      , CommonService commonService, MakeAutoGenerateNumberService makeAutoGenerateNumberService,
-                                 OperatorService operatorService, EmailService emailService, ItemService itemService) {
+          , CommonService commonService, MakeAutoGenerateNumberService makeAutoGenerateNumberService,
+                                 OperatorService operatorService, EmailService emailService, ItemService itemService, TwilioMessageService twilioMessageService) {
     this.purchaseOrderService = purchaseOrderService;
     this.supplierService = supplierService;
     this.commonService = commonService;
@@ -48,6 +50,7 @@ public class PurchaseOrderController {
     this.operatorService = operatorService;
     this.emailService = emailService;
       this.itemService = itemService;
+    this.twilioMessageService = twilioMessageService;
   }
 
   @GetMapping
@@ -122,6 +125,18 @@ public class PurchaseOrderController {
       }
       emailService.sendEmail(purchaseOrderSaved.getSupplier().getEmail(),
                              "Requesting Items According To PO Code " + purchaseOrder.getCode(), message.toString());
+
+      if (purchaseOrderSaved.getSupplier().getContactOne() != null) {
+        try {
+          String mobileNumber = purchaseOrderSaved.getSupplier().getContactOne().substring(1,10);
+          twilioMessageService.sendSMS("+94"+mobileNumber, "There is immediate PO from " +
+                  "Crystal Telecom Services  \nPlease Check Your Email Form Further Details");
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+
+
     }
     return "redirect:/purchaseOrder/all";
   }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head >
+    <link rel="stylesheet" href="/css/403.css">
+    <meta charset="UTF-8">
+    <title>Access Denied</title>
+</head>
+<body>
+
+<h1>Forbidden!</h1>
+<h2>Code 403</h2>
+<div id="jail">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 1000 1000" preserveAspectRatio="xMinYMin" id="spinner">
+        <!--     thank you https://stackoverflow.com/posts/15496546/revisions -->
+        <defs>
+            <path id="textPath" d="M 250 500 A 250,250 0 1 1 250 500.0001" />
+        </defs>
+        <text x="0" y="0" text-anchor="left" style="font-size:90pt;">
+            <textPath xlink:href="#textPath" startOffset="0%">MOUSE JAIL</textPath>
+            <textPath xlink:href="#textPath" startOffset="50%">MOUSE JAIL</textPath>
+        </text>
+    </svg>
+    <div id="cursor"></div>
+</div>
+</body>
+</html>

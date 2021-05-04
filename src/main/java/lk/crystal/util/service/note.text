@@ -115,3 +115,736 @@ class City {
     String name;
 
 }*/
+
+
+/*per item*/
+
+  @GetMapping( "/perItem" )
+  public String perItemToday(Model model) {
+    LocalDate localDate = LocalDate.now();
+    String message = "This report is belongs to " + localDate.toString();
+    LocalDateTime startDateTime = dateTimeAgeService.dateTimeToLocalDateStartInDay(localDate);
+    LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(localDate);
+    commonPerItem(startDateTime, endDateTime, model);
+    model.addAttribute("message", message);
+    return "report/perItemReport";
+  }
+
+  @PostMapping( "/perItem/search" )
+  public String getPerItemSearch(@ModelAttribute( "twoDate" ) TwoDate twoDate, Model model) {
+    String message =
+        "This report is between from " + twoDate.getStartDate().toString() + " to " + twoDate.getEndDate().toString();
+    LocalDateTime startDateTime = dateTimeAgeService.dateTimeToLocalDateStartInDay(twoDate.getStartDate());
+    LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(twoDate.getEndDate());
+    commonPerItem(startDateTime, endDateTime, model);
+    model.addAttribute("message", message);
+    return "report/perItemReport";
+  }
+
+
+
+
+  /*per item income*/
+
+  @GetMapping( "/incomeItem" )
+  public String incomeItemToday(Model model) {
+    LocalDate localDate = LocalDate.now();
+    String message = "This report is belongs to " + localDate.toString();
+    LocalDateTime startDateTime = dateTimeAgeService.dateTimeToLocalDateStartInDay(localDate);
+    LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(localDate);
+
+    //purchase order list
+//    List< PurchaseOrder > purchaseOrders = purchaseOrderService.findByUpdatedAtIsBetween(startDateTime, endDateTime)
+//        .stream()
+//        .filter(x -> !x.getPurchaseOrderStatus().equals(PurchaseOrderStatus.NOT_COMPLETED))
+//        .collect(Collectors.toList());
+
+    return commonIncomeItem(startDateTime,endDateTime,model, message);
+  }
+
+  @PostMapping( "/incomeItem" )
+  public String incomeItemToday(@ModelAttribute TwoDate twoDate, Model model) {
+
+    String message = "This report is belongs to " + twoDate.getStartDate() +"  to "+ twoDate.getEndDate();
+    LocalDateTime startDateTime = dateTimeAgeService.dateTimeToLocalDateStartInDay(twoDate.getStartDate());
+    LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(twoDate.getEndDate());
+
+    //purchase order list
+//    List< PurchaseOrder > purchaseOrders = purchaseOrderService.findByUpdatedAtIsBetween(startDateTime, endDateTime)
+//        .stream()
+//        .filter(x -> !x.getPurchaseOrderStatus().equals(PurchaseOrderStatus.NOT_COMPLETED))
+//        .collect(Collectors.toList());
+
+    return commonIncomeItem(startDateTime,endDateTime,model, message);
+  }
+  private String commonIncomeItem(LocalDateTime startDateTime, LocalDateTime endDateTime, Model model, String message){
+    List< ItemSellPriceQuantityBuyingPrice > itemSellPriceQuantityBuyingPrices = new ArrayList<>();
+//given date invoices
+    List< LedgerQuantitySellPrice > ledgerQuantitySellPrices = new ArrayList<>();
+
+    List< Invoice > invoices =
+        invoiceService.findByCreatedAtIsBetween(startDateTime, endDateTime).stream().filter(x -> x.getLiveDead().equals(LiveDead.ACTIVE)).collect(Collectors.toList());
+//
+    for ( Invoice invoice : invoices ) {
+      for ( InvoiceLedger invoiceLedger : invoice.getInvoiceLedgers() ) {
+        LedgerQuantitySellPrice ledgerQuantitySellPrice = new LedgerQuantitySellPrice();
+        ledgerQuantitySellPrice.setLedger(ledgerService.findById(invoiceLedger.getLedger().getId()));
+        ledgerQuantitySellPrice.setAmount(invoiceLedger.getSellPrice());
+        ledgerQuantitySellPrice.setCounter(Integer.parseInt(invoiceLedger.getQuantity()));
+        ledgerQuantitySellPrices.add(ledgerQuantitySellPrice);
+      }
+    }
+
+    List< Ledger > ledgers = new ArrayList<>();
+    for ( LedgerQuantitySellPrice ledgerQuantitySellPrice : ledgerQuantitySellPrices ) {
+      ledgers.add(ledgerQuantitySellPrice.getLedger());
+    }
+    //duplicate removed
+    List< Ledger > duplicateRemovedLedgers = ledgers.stream().distinct().collect(Collectors.toList());
+    for ( Ledger duplicateRemovedLedger : duplicateRemovedLedgers ) {
+      ItemSellPriceQuantityBuyingPrice itemSellPriceQuantityBuyingPrice = new ItemSellPriceQuantityBuyingPrice();
+      int counter = 0;
+      for ( LedgerQuantitySellPrice ledgerQuantitySellPrice : ledgerQuantitySellPrices ) {
+        if ( duplicateRemovedLedger.equals(ledgerQuantitySellPrice.getLedger()) ) {
+          counter = counter + ledgerQuantitySellPrice.getCounter();
+        }
+      }
+      itemSellPriceQuantityBuyingPrice.setItem(itemService.findById(duplicateRemovedLedger.getItem().getId()));
+      itemSellPriceQuantityBuyingPrice.setSellPrice(duplicateRemovedLedger.getSellPrice());
+      itemSellPriceQuantityBuyingPrice.setItemCounter(counter);
+      itemSellPriceQuantityBuyingPrice.setSellPrice(duplicateRemovedLedger.getSellPrice());
+      itemSellPriceQuantityBuyingPrice.setSellTotalPrice(duplicateRemovedLedger.getSellPrice().multiply(new BigDecimal(counter)));
+      BigDecimal buyingPrices =
+          purchaseOrderItemService.findByPurchaseOrderAndItem(duplicateRemovedLedger.getGoodReceivedNote().getPurchaseOrder(),
+                                                              duplicateRemovedLedger.getItem()).getBuyingPrice();
+      itemSellPriceQuantityBuyingPrice.setBuyingPrice(buyingPrices);
+      itemSellPriceQuantityBuyingPrice.setBuyingTotalPrice(buyingPrices.multiply(new BigDecimal(counter)));
+
+      itemSellPriceQuantityBuyingPrices.add(itemSellPriceQuantityBuyingPrice);
+    }
+    model.addAttribute("itemSellPriceQuantityBuyingPrices", itemSellPriceQuantityBuyingPrices);
+
+
+    model.addAttribute("message", message);
+    return "report/incomeItem";
+  }
+
+
+
+
+
+
+
+
+
+incomeItem.html
+
+<!DOCTYPE html>
+<html lang="en"  >
+<head  data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+ <body class="sb-nav-fixed" >
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+<div class="container-fluid bg-secondary form-Border" style="margin-top:100px">
+  <div class="row text-center formManagement border-info" >
+    <div class="col" >
+
+    </div >
+    <div class="col " >
+      <h4 class="text-dark text-center" >
+        <strong >
+          Report <br > <span data-th-text="${message}" ></span >
+        </strong >
+      </h4 >
+    </div >
+    <div class="col" >
+    </div >
+  </div >
+</div >
+<!--Custom search -->
+<div class="container-fluid" >
+  <div class="row" >
+    <!--Custom Invoice search-->
+    <button type="button" class="btn btn-success mb-5 btn-block text-capitalize" data-toggle="collapse"
+            data-target="#dataTargetCollapse"
+            aria-expanded="false" aria-controls="dataTargetCollapse"
+    > Custom Payment Search
+    </button >
+    <div class="collapse mx-auto" id="dataTargetCollapse" >
+      <div class="container-fluid text-center" >
+        <div class="row" >
+          <div class="col-sm-6 col-sm-offset-3" >
+            <h4 class="text-dark" ><b > Custom Search</b ></h4 >
+            <form class="form-inline" data-th-action="@{/report/incomeItem}" data-th-method="POST" >
+              <div class="form-group" >
+                <label for="startDate" >FROM :</label >
+                <input class="form-control" id="startDate" name="startDate" type="date" />
+              </div >
+              <div class="form-group" >
+                <label for="endDate" >TO :</label >
+                <input class="form-control" id="endDate" name="endDate" type="date" />
+              </div >
+              <button class="btn btn-success" id="btnSummaryFind" type="submit" ><span
+                    class="glyphicon glyphicon-search" ></span >&nbsp;Search
+              </button >
+            </form >
+          </div >
+        </div >
+      </div >
+    </div >
+  </div >
+</div >
+<!--Item count -->
+<div class="container-fluid" >
+  <div class="container" >
+    <h3 >Item and Sell Count</h3 >
+  </div >
+  <div class="offset-2 col-8 col-sm-8 col-md-8" >
+    <div class="table-responsive" >
+      <table class="table table-striped table-condensed" >
+        <thead >
+        <tr >
+          <th > Index</th >
+          <th > Item Name</th >
+          <th >Item Count</th >
+          <th >Sell Price</th >
+          <th >Sell Total Price</th >
+          <th >Buying Price</th >
+          <th >Buying Total Price</th >
+          <th >Deference</th >
+        </tr >
+        </thead >
+        <tbody >
+        <tr data-th-each="itemSellPriceQuantityBuyingPrice, rowCount : ${itemSellPriceQuantityBuyingPrices}" >
+          <th data-th-text="${rowCount.count}" ></th >
+          <th data-th-text="${itemSellPriceQuantityBuyingPrice.item.name}" ></th >
+          <th data-th-text="${itemSellPriceQuantityBuyingPrice.itemCounter}" ></th >
+          <th data-th-text="${itemSellPriceQuantityBuyingPrice.sellPrice}" ></th >
+          <th data-th-text="${itemSellPriceQuantityBuyingPrice.sellTotalPrice}" ></th >
+          <th data-th-text="${itemSellPriceQuantityBuyingPrice.buyingPrice}" ></th >
+          <th data-th-text="${itemSellPriceQuantityBuyingPrice.buyingTotalPrice}" ></th >
+          <th data-th-text="${itemSellPriceQuantityBuyingPrice.sellTotalPrice - itemSellPriceQuantityBuyingPrice.buyingTotalPrice}"></th>
+        </tr >
+        </tbody >
+      </table >
+    </div >
+  </div >
+</div >
+
+
+<div  data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div  data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+
+</body >
+</html >
+
+
+
+
+
+private final LedgerService ledgerService;
+  private final ItemService itemService;
+  private final PurchaseOrderItemService purchaseOrderItemService;
+
+ ---
+
+ nuwa
+ newreport
+ ReoportNewController
+
+ package lk.aro_computers.asset.newreport;
+
+
+ import lk.aro_computers.asset.common_asset.model.enums.LiveDead;
+ import lk.aro_computers.asset.item.entity.Item;
+ import lk.aro_computers.asset.item.service.ItemService;
+ import lk.aro_computers.asset.ledger.entity.Ledger;
+ import lk.aro_computers.asset.ledger.service.LedgerService;
+ import lk.aro_computers.asset.supplier.entity.Supplier;
+ import lk.aro_computers.asset.supplier.service.SupplierService;
+ import lk.aro_computers.asset.supplier_item.entity.SupplierItem;
+ import lk.aro_computers.asset.supplier_item.service.SupplierItemService;
+ import lk.aro_computers.util.service.DateTimeAgeService;
+ import lk.aro_computers.util.service.OperatorService;
+ import org.springframework.stereotype.Controller;
+ import org.springframework.ui.Model;
+ import org.springframework.validation.BindingResult;
+ import org.springframework.web.bind.annotation.GetMapping;
+ import org.springframework.web.bind.annotation.ModelAttribute;
+ import org.springframework.web.bind.annotation.PostMapping;
+ import org.springframework.web.bind.annotation.RequestMapping;
+ import javax.validation.Valid;
+
+ import java.util.ArrayList;
+ import java.util.List;
+ import java.util.stream.Collectors;
+
+ @RequestMapping("/newreport")
+ @Controller
+ public class ReoportNewController {
+
+     private final ItemService serviceItem;
+     private final DateTimeAgeService serviceDateTime;
+     private final  OperatorService serviceOperator;
+     private final SupplierService serviceSupplier;
+     private final SupplierItemService supplierItemService;
+     private final LedgerService serviceLedger;
+
+     public ReoportNewController(ItemService serviceItem, DateTimeAgeService serviceDateTime, OperatorService serviceOperator, SupplierService serviceSupplier, SupplierItemService supplierItemService, LedgerService serviceLedger) {
+         this.serviceItem = serviceItem;
+         this.serviceDateTime = serviceDateTime;
+         this.serviceOperator = serviceOperator;
+         this.serviceSupplier = serviceSupplier;
+         this.supplierItemService = supplierItemService;
+         this.serviceLedger = serviceLedger;
+     }
+
+     @GetMapping("/getform")
+     public String getForm(Model model){
+
+         List<Supplier> suppliers = new ArrayList<>();
+         for ( Supplier supplier : serviceSupplier.findAll()
+                 .stream()
+                 .filter(x -> LiveDead.ACTIVE.equals(x.getLiveDead()))
+                 .collect(Collectors.toList())
+         ) {
+
+             suppliers.add(supplier);
+         }
+         model.addAttribute("supplier",new Supplier());
+
+
+         model.addAttribute("supplers", suppliers);
+         model.addAttribute("show",false);
+         return "newreport/supplier";
+
+     }
+
+     @PostMapping("/process")
+
+     public String process(@Valid  @ModelAttribute Supplier supplier, BindingResult result, Model model  ){
+
+
+         String name = supplier.getName();
+
+         Supplier supDBobject =   serviceSupplier.findByName(name);
+         List< SupplierItem >  supitem=  supplierItemService.findBySupplier(supDBobject);
+
+         List< SupplierItem > supplierItems= supDBobject.getSupplierItems();
+
+         List<Item> itemlist =new ArrayList<Item>();
+         List  ItemNames =new ArrayList();
+         List  ItemCode =new ArrayList();
+         List  ItemSellPrice =new ArrayList();
+         List  ItemGetPrice =new ArrayList();
+         List  AvailableQty =new ArrayList();
+
+
+         for ( SupplierItem supplierItem : supplierItems ) {
+             Item item = serviceItem.findById(supplierItem.getItem().getId());
+
+             List<Ledger> ledger = serviceLedger.findByItem(item);
+
+             for(Ledger l :ledger){
+                 AvailableQty.add(l.getQuantity());
+             }
+
+             ItemGetPrice.add(supplierItem.getPrice());
+             itemlist.add(item);
+         }
+
+
+         for (Item i  : itemlist) {
+             ItemNames.add(i.getName());
+             ItemSellPrice.add(i.getSellPrice());
+             ItemCode.add(i.getCode());
+         }
+
+         model.addAttribute("supName",name);
+         System.out.println("supName "+name);
+
+         model.addAttribute("itemcount",supitem.size());
+         model.addAttribute("show",true);
+
+         model.addAttribute("ItemCode",ItemCode);
+         System.out.println("ItemCode "+ItemCode);
+
+         model.addAttribute("ItemNames",ItemNames);
+         System.out.println("ItemNames "+ItemNames);
+
+         model.addAttribute("ItemGetPrice",ItemGetPrice);
+         System.out.println("ItemGetPrice "+ItemGetPrice);
+
+         model.addAttribute("ItemSellPrice",ItemSellPrice);
+         System.out.println("ItemSellPrice "+ItemSellPrice);
+
+         model.addAttribute("AvailableQty",AvailableQty);
+         System.out.println(" AvailableQty "+AvailableQty);
+
+
+
+         return "newreport/supplier";
+     }
+
+
+ }
+
+
+==================
+newreport
+supplier.html
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h2 style="text-align: center">Supplier Item  Summary Details Report</h2>
+<hr>
+<form data-th-action="${'/newreport/process'}" method="POST" class="mb-5" data-th-object="${supplier}">
+
+    <div class="container-fluid" data-th-if="${show==false}">
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="text-left col-md-6">
+                    <select class="form-control" id="name" data-th-field="*{name}" >
+                        <option value="" selected> Please Select </option>
+                        <option data-th-each="sup : ${supplers}"
+                                data-th-value="${sup.name}"
+                                data-th-text="${sup.name}+' - '+${'  Code : ' +sup.code}"> Please Select
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6"  >
+
+                <div class="form-group col-md-6 col-sm-6 text-center "  >
+                    <button class="btn btn-success btn-space" type="submit" >
+                        <span id="submit" data-th-text="Submit" ></span >
+                    </button >
+                    <!--Cancel Button-->
+                    <button class="btn btn-warning btn-space" type="reset" >
+                        <i class="fa fa-redo" style="font-size: 20px" ></i >&nbsp;&nbsp;Clear
+                    </button >
+                </div >
+            </div>
+
+
+        </div>
+    </div>
+</form>
+
+<div class="container-fluid" data-th-if="${show==true}">
+
+
+    <div>
+
+        <th>Supplier Name : </th>
+        <th data-th-text="${supName}"> </th>
+
+        <br><br>
+        <th>Total Registered Item Count: </th>
+        <th data-th-text="${itemcount}"> </th>
+
+
+    </div>
+    <hr>
+    <hr>
+
+    <div class="row">
+
+        <div  class="col-md-1.75">
+            <h5>Item Code</h5>
+            <ul style="font-size: 13px">
+                <li data-th-text="${ItemCode}" data-th-each="ItemCode : ${ItemCode}"></li>
+            </ul>
+        </div>
+
+
+
+
+        <div  class="col-md-5">
+            <h5>Item Names</h5>
+            <ul style="font-size: 13px">
+                <li data-th-text="${ItemNames}" data-th-each="ItemNames : ${ItemNames}"></li>
+            </ul>
+        </div>
+
+
+        <div  class="col-md-1.75">
+            <h5> Get Price</h5>
+            <ul style="font-size: 13px">
+                <li data-th-text="${ItemGetPrice}"  data-th-each="ItemGetPrice : ${ItemGetPrice}"></li>
+            </ul>
+        </div>
+
+        <div  class="col-md-1.75">
+            <h5> Sale Price</h5>
+            <ul style="font-size: 13px">
+                <li data-th-text="${ItemSellPrice}" data-th-each="ItemSellPrice : ${ItemSellPrice}"></li>
+            </ul>
+        </div>
+
+        <div  class="col-md-1.75">
+            <h5> Available Qty</h5>
+            <ul style="font-size: 13px">
+                <li data-th-text="${AvailableQty}" data-th-each="AvailableQty : ${AvailableQty}"></li>
+            </ul>
+        </div>
+    </div>
+
+    <hr>
+    <hr>
+    <h3 style="text-align: center">Income Report By Supplier</h3>
+    <div class="row">
+
+        <div  class="col-md-1.75">
+            <h5>Item Code</h5>
+            <ul style="font-size: 13px">
+                <li data-th-text="${ItemCode}" data-th-each="ItemCode : ${ItemCode}"></li>
+            </ul>
+        </div>
+
+
+
+
+        <div  class="col-md-5">
+            <h5 >Item Names</h5>
+            <ul style="font-size: 13px">
+                <li data-th-text="${ItemNames}" data-th-each="ItemNames : ${ItemNames}"></li>
+            </ul>
+        </div>
+
+
+        <div  class="col-md-1.75">
+            <h5>Sold Quentity</h5>
+            <ul style="font-size: 13px">
+
+            </ul>
+        </div>
+
+        <div  class="col-md-1.75">
+            <h5> Total Income</h5>
+            <ul style="font-size: 13px">
+
+            </ul>
+        </div>
+
+        <div  class="col-md-1.75">
+            <h5> Profit</h5>
+            <ul style="font-size: 13px">
+
+            </ul>
+        </div>
+    </div>
+
+
+</div>
+
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+</body>
+</html>
+
+
+------
+testreportcontroller
+TestReportController
+
+package lk.aro_computers.asset.testreportcontroller;
+
+
+import lk.aro_computers.asset.employee.entity.Employee;
+import lk.aro_computers.asset.employee.entity.enums.EmployeeStatus;
+import lk.aro_computers.asset.employee.service.EmployeeService;
+import lombok.NonNull;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Controller
+@RequestMapping("/testreport")
+public class TestReportController {
+
+
+    private final EmployeeService employeeService;
+
+
+    public TestReportController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+
+    }
+
+    @GetMapping("/employee")
+    public  String employeeList(@NonNull Model model){
+
+        List<Employee> employees = new ArrayList<>();
+
+        for (Employee employee :employeeService.findAll().stream()
+                .filter(x-> EmployeeStatus.RETIRED
+                        .equals(x.getEmployeeStatus()))
+                            .collect(Collectors.toList())
+        ){
+          employees.add(employee);
+        }
+        model.addAttribute("balla",employees);
+        return "testreport/employee";
+    }
+
+    @GetMapping("/employee/se")
+    public  String employeeSelect(@NonNull Model model){
+
+        model.addAttribute("showStatus",false);
+        model.addAttribute("employeeStatus", EmployeeStatus.values());
+        model.addAttribute("employee",new Employee());
+        return "testreport/empsel";
+    }
+
+    @PostMapping("/employee/seget")
+    public String employeeGet(@Valid @ModelAttribute Employee employee, BindingResult result, Model model){
+
+        EmployeeStatus status = employee.getEmployeeStatus();
+
+        List<Employee> employees = new ArrayList<>();
+
+        for (Employee employe :employeeService.findAll().stream()
+                .filter(x->status
+                        .equals(x.getEmployeeStatus()))
+                .collect(Collectors.toList())
+        ){
+            employees.add(employe);
+        }
+        model.addAttribute("balla",employees);
+        model.addAttribute("showStatus",true);
+        model.addAttribute("employeeStatus", EmployeeStatus.values());
+
+      return "testreport/empsel";
+    }
+
+}
+
+
+testreport
+employee.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head  data-th-replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+     <h2 style="color: mediumvioletred ;text-align: center">Employee Report According To The Given Status</h2>
+     <hr>
+     <table class="table table-striped table-condensed" id="myTable">
+         <thead>
+               <th>Index</th>
+               <th>Code</th>
+               <th>Name</th>
+               <th>Calling Name</th>
+               <th>Nic</th>
+               <th>Gender</th>
+               <th>Employee Status</th>
+
+         </thead>
+         <tbody>
+         <tr data-th-each="employeeswithstatus, rowCount : ${balla}" >
+             <th data-th-text="${rowCount.count}" ></th >
+             <th data-th-text="${employeeswithstatus.code}" ></th >
+             <th data-th-text="${employeeswithstatus.name}" ></th >
+             <th data-th-text="${employeeswithstatus.callingName}" ></th >
+             <th data-th-text="${employeeswithstatus.nic}" ></th >
+             <th data-th-text="${employeeswithstatus.gender}" ></th >
+             <th data-th-text="${employeeswithstatus.employeeStatus}" ></th >
+
+         </tr >
+
+
+         </tbody>
+     </table>
+</body>
+</html>
+
+
+empsel.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head  data-th-replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+   <div class="container-fluid">
+       <div class="row">
+           <div class="col-md-6">
+               <h2>Employee Report Via Employee Status</h2>
+               <form data-th-action="${'/testreport/employee/seget'}"  data-th-object="${employee}"  enctype="multipart/form-data"  method="POST"   >
+
+                   <div class="col-md-8" >
+                       <select id="employeeStatus" data-th-field="*{employeeStatus}" class="form-control"
+                               required >
+                           <option value="" >Select Employee Status </option >
+                           <option data-th-each="employeeStatuss : ${employeeStatus}"
+                                   data-th-text="${employeeStatuss.employeeStatus}"
+                                   data-th-value="${employeeStatuss}"
+                                   data-th-selected="${employeeStatuss==employee.employeeStatus?'selected':'unselected'}" ></option >
+                       </select >
+                       <button class="btn btn-danger">Submit</button>
+                   </div >
+               </form>
+           </div>
+       </div>
+       <div class="row">
+
+           <div data-th-if="${showStatus==true}">
+               <h2 style="color: mediumvioletred ;text-align: center">Employee Report According To The Given Status</h2>
+               <hr>
+               <table class="table table-striped table-condensed" id="myTable">
+                   <thead>
+                   <th>Index</th>
+                   <th>Code</th>
+                   <th>Name</th>
+                   <th>Calling Name</th>
+                   <th>Nic</th>
+                   <th>Gender</th>
+                   <th>Employee Status</th>
+
+                   </thead>
+                   <tbody>
+                   <tr data-th-each="employeeswithstatus, rowCount : ${balla}" >
+                       <th data-th-text="${rowCount.count}" ></th >
+                       <th data-th-text="${employeeswithstatus.code}" ></th >
+                       <th data-th-text="${employeeswithstatus.name}" ></th >
+                       <th data-th-text="${employeeswithstatus.callingName}" ></th >
+                       <th data-th-text="${employeeswithstatus.nic}" ></th >
+                       <th data-th-text="${employeeswithstatus.gender}" ></th >
+                       <th data-th-text="${employeeswithstatus.employeeStatus}" ></th >
+                   </tr >
+                   </tbody>
+               </table>
+           </div>
+
+       </div>
+   </div>
+</body>
+</html>

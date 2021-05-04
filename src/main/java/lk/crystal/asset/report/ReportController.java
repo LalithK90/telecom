@@ -6,6 +6,7 @@ import lk.crystal.asset.common_asset.model.NameCount;
 
 import lk.crystal.asset.common_asset.model.ParameterCount;
 import lk.crystal.asset.common_asset.model.TwoDate;
+import lk.crystal.asset.common_asset.model.enums.LiveDead;
 import lk.crystal.asset.customer.entity.Customer;
 import lk.crystal.asset.customer.service.CustomerService;
 import lk.crystal.asset.employee.entity.Employee;
@@ -22,6 +23,9 @@ import lk.crystal.asset.ledger.entity.Ledger;
 import lk.crystal.asset.ledger.service.LedgerService;
 import lk.crystal.asset.payment.entity.Payment;
 import lk.crystal.asset.payment.service.PaymentService;
+import lk.crystal.asset.purchase_order_item.service.PurchaseOrderItemService;
+import lk.crystal.asset.report.model.ItemSellPriceQuantityBuyingPrice;
+import lk.crystal.asset.report.model.LedgerQuantitySellPrice;
 import lk.crystal.asset.user_management.user.service.UserService;
 import lk.crystal.util.service.DateTimeAgeService;
 import lk.crystal.util.service.OperatorService;
@@ -56,11 +60,12 @@ public class ReportController {
   private final LedgerService ledgerService;
   private final ItemService itemService;
   private final CustomerService customerService;
+  private final PurchaseOrderItemService purchaseOrderItemService;
 
   public ReportController(PaymentService paymentService, InvoiceService invoiceService,
                           OperatorService operatorService, DateTimeAgeService dateTimeAgeService,
                           UserService userService, InvoiceLedgerService invoiceLedgerService,
-                          EmployeeService employeeService, LedgerService ledgerService, ItemService itemService, CustomerService customerService) {
+                          EmployeeService employeeService, LedgerService ledgerService, ItemService itemService, CustomerService customerService, PurchaseOrderItemService purchaseOrderItemService) {
     this.paymentService = paymentService;
     this.invoiceService = invoiceService;
     this.operatorService = operatorService;
@@ -71,6 +76,7 @@ public class ReportController {
     this.ledgerService = ledgerService;
     this.itemService = itemService;
     this.customerService = customerService;
+    this.purchaseOrderItemService = purchaseOrderItemService;
   }
 
   private String commonAll(List< Payment > payments, List< Invoice > invoices, Model model, String message,
@@ -451,6 +457,93 @@ public class ReportController {
     return "report/invoicesByCustomer";
   }
 
+
+
+
+  /*per item income*/
+
+  @GetMapping( "/incomeItem" )
+  public String incomeItemToday(Model model) {
+    LocalDate localDate = LocalDate.now();
+    String message = "This report is belongs to " + localDate.toString();
+    LocalDateTime startDateTime = dateTimeAgeService.dateTimeToLocalDateStartInDay(localDate);
+    LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(localDate);
+
+    //purchase order list
+//    List< PurchaseOrder > purchaseOrders = purchaseOrderService.findByUpdatedAtIsBetween(startDateTime, endDateTime)
+//        .stream()
+//        .filter(x -> !x.getPurchaseOrderStatus().equals(PurchaseOrderStatus.NOT_COMPLETED))
+//        .collect(Collectors.toList());
+
+    return commonIncomeItem(startDateTime,endDateTime,model, message);
+  }
+
+  @PostMapping( "/incomeItem" )
+  public String incomeItemToday(@ModelAttribute TwoDate twoDate, Model model) {
+
+    String message = "This report is belongs to " + twoDate.getStartDate() +"  to "+ twoDate.getEndDate();
+    LocalDateTime startDateTime = dateTimeAgeService.dateTimeToLocalDateStartInDay(twoDate.getStartDate());
+    LocalDateTime endDateTime = dateTimeAgeService.dateTimeToLocalDateEndInDay(twoDate.getEndDate());
+
+    //purchase order list
+//    List< PurchaseOrder > purchaseOrders = purchaseOrderService.findByUpdatedAtIsBetween(startDateTime, endDateTime)
+//        .stream()
+//        .filter(x -> !x.getPurchaseOrderStatus().equals(PurchaseOrderStatus.NOT_COMPLETED))
+//        .collect(Collectors.toList());
+
+    return commonIncomeItem(startDateTime,endDateTime,model, message);
+  }
+  private String commonIncomeItem(LocalDateTime startDateTime, LocalDateTime endDateTime, Model model, String message){
+    List<ItemSellPriceQuantityBuyingPrice> itemSellPriceQuantityBuyingPrices = new ArrayList<>();
+//given date invoices
+    List<LedgerQuantitySellPrice> ledgerQuantitySellPrices = new ArrayList<>();
+
+    List< Invoice > invoices =
+            invoiceService.findByCreatedAtIsBetween(startDateTime, endDateTime).stream().filter(x -> x.getLiveDead().equals(LiveDead.ACTIVE)).collect(Collectors.toList());
+//
+    for ( Invoice invoice : invoices ) {
+      for ( InvoiceLedger invoiceLedger : invoice.getInvoiceLedgers() ) {
+        LedgerQuantitySellPrice ledgerQuantitySellPrice = new LedgerQuantitySellPrice();
+        ledgerQuantitySellPrice.setLedger(ledgerService.findById(invoiceLedger.getLedger().getId()));
+        ledgerQuantitySellPrice.setAmount(invoiceLedger.getSellPrice());
+        ledgerQuantitySellPrice.setCounter(Integer.parseInt(invoiceLedger.getQuantity()));
+        ledgerQuantitySellPrices.add(ledgerQuantitySellPrice);
+      }
+    }
+
+    List< Ledger > ledgers = new ArrayList<>();
+    for ( LedgerQuantitySellPrice ledgerQuantitySellPrice : ledgerQuantitySellPrices ) {
+      ledgers.add(ledgerQuantitySellPrice.getLedger());
+    }
+    //duplicate removed
+    List< Ledger > duplicateRemovedLedgers = ledgers.stream().distinct().collect(Collectors.toList());
+    for ( Ledger duplicateRemovedLedger : duplicateRemovedLedgers ) {
+      ItemSellPriceQuantityBuyingPrice itemSellPriceQuantityBuyingPrice = new ItemSellPriceQuantityBuyingPrice();
+      int counter = 0;
+      for ( LedgerQuantitySellPrice ledgerQuantitySellPrice : ledgerQuantitySellPrices ) {
+        if ( duplicateRemovedLedger.equals(ledgerQuantitySellPrice.getLedger()) ) {
+          counter = counter + ledgerQuantitySellPrice.getCounter();
+        }
+      }
+      itemSellPriceQuantityBuyingPrice.setItem(itemService.findById(duplicateRemovedLedger.getItem().getId()));
+      itemSellPriceQuantityBuyingPrice.setSellPrice(duplicateRemovedLedger.getSellPrice());
+      itemSellPriceQuantityBuyingPrice.setItemCounter(counter);
+      itemSellPriceQuantityBuyingPrice.setSellPrice(duplicateRemovedLedger.getSellPrice());
+      itemSellPriceQuantityBuyingPrice.setSellTotalPrice(duplicateRemovedLedger.getSellPrice().multiply(new BigDecimal(counter)));
+      BigDecimal buyingPrices =
+              purchaseOrderItemService.findByPurchaseOrderAndItem(duplicateRemovedLedger.getGoodReceivedNote().getPurchaseOrder(),
+                      duplicateRemovedLedger.getItem()).getBuyingPrice();
+      itemSellPriceQuantityBuyingPrice.setBuyingPrice(buyingPrices);
+      itemSellPriceQuantityBuyingPrice.setBuyingTotalPrice(buyingPrices.multiply(new BigDecimal(counter)));
+
+      itemSellPriceQuantityBuyingPrices.add(itemSellPriceQuantityBuyingPrice);
+    }
+    model.addAttribute("itemSellPriceQuantityBuyingPrices", itemSellPriceQuantityBuyingPrices);
+
+
+    model.addAttribute("message", message);
+    return "report/incomeItem";
+  }
 
 
 }
