@@ -116,4 +116,13 @@ public class ItemController implements AbstractController< Item, Integer > {
     model.addAttribute("itemDetail", itemService.findById(id));
     return "item/item-detail";
   }
+
+
+
+
+
+
+
+
+
 }
