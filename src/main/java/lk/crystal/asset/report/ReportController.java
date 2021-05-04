@@ -333,10 +333,11 @@ public class ReportController {
     invoiceItems.forEach(x -> {
       ParameterCount parameterCount = new ParameterCount();
       parameterCount.setName(x.getName());
-      parameterCount.setCount((int) invoiceLedgers
-          .stream()
-          .filter(a -> a.getLedger().getItem().equals(x))
-          .count());
+      parameterCount.setItemPrice(x.getSellPrice());
+      List<InvoiceLedger> itemInvoiceLedger = invoiceLedgers.stream().filter(y->y.getLedger().getItem().equals(x)).collect(Collectors.toList());
+      parameterCount.setCount(itemInvoiceLedger.size());
+      int quantity = itemInvoiceLedger.stream().mapToInt(z -> Integer.parseInt(z.getQuantity())).sum();
+      parameterCount.setItemSellCount(quantity);
       itemNameAndItemCount.add(parameterCount);
     });
     model.addAttribute("itemNameAndItemCount", itemNameAndItemCount);

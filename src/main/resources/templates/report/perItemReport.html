@@ -73,7 +73,9 @@
               <tr >
                 <th > Index</th >
                 <th > Item Name</th >
-                <th >Item Count</th >
+                <th >Item Invoice Count</th >
+                <th >Price</th >
+                <th >Total Quantity</th >
               </tr >
               </thead >
               <tbody >
@@ -81,6 +83,8 @@
                 <th data-th-text="${rowCount.count}" ></th >
                 <th data-th-text="${itemNameAndCount.name}" ></th >
                 <th data-th-text="${itemNameAndCount.count}" ></th >
+                <th data-th-text="${itemNameAndCount.itemPrice}" ></th >
+                <th data-th-text="${itemNameAndCount.itemSellCount}" ></th >
               </tr >
               </tbody >
             </table >
