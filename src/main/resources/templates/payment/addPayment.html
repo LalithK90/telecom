@@ -265,7 +265,7 @@
           let poAmount = parseInt(poAmountString);
           let amount = parseInt(amountString);
 
-          $("#balance").val(parseFloat(balance(poValue, amount)).toFixed(2));
+          $("#balance").val(parseFloat(balance(poValue, (amount + poAmount))).toFixed(2));
 
           if ((poAmount !== amount && poAmountString.length === amountString.length) && (amount > poAmount &&
               poAmountString.length === amountString.length) || balance(poValue, amount) < 0) {

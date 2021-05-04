@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head  data-th-replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Employee Report Via Employee Status</h2>
+            <form data-th-action="${'/testreport/employee/seget'}"  data-th-object="${employee}"  enctype="multipart/form-data"  method="POST"   >
+
+                <div class="col-md-8" >
+                    <select id="employeeStatus" data-th-field="*{employeeStatus}" class="form-control"
+                            required >
+                        <option value="" >Select Employee Status </option >
+                        <option data-th-each="employeeStatuss : ${employeeStatus}"
+                                data-th-text="${employeeStatuss.employeeStatus}"
+                                data-th-value="${employeeStatuss}"
+                                data-th-selected="${employeeStatuss==employee.employeeStatus?'selected':'unselected'}" ></option >
+                    </select >
+                    <button class="btn btn-danger">Submit</button>
+                </div >
+            </form>
+        </div>
+    </div>
+    <div class="row">
+
+        <div data-th-if="${showStatus==true}">
+            <h2 style="color: mediumvioletred ;text-align: center">Employee Report According To The Given Status</h2>
+            <hr>
+            <table class="table table-striped table-condensed" id="myTable">
+                <thead>
+                <th>Index</th>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Calling Name</th>
+                <th>Nic</th>
+                <th>Gender</th>
+                <th>Employee Status</th>
+
+                </thead>
+                <tbody>
+                <tr data-th-each="employeeswithstatus, rowCount : ${balla}" >
+                    <th data-th-text="${rowCount.count}" ></th >
+                    <th data-th-text="${employeeswithstatus.code}" ></th >
+                    <th data-th-text="${employeeswithstatus.name}" ></th >
+                    <th data-th-text="${employeeswithstatus.callingName}" ></th >
+                    <th data-th-text="${employeeswithstatus.nic}" ></th >
+                    <th data-th-text="${employeeswithstatus.gender}" ></th >
+                    <th data-th-text="${employeeswithstatus.employeeStatus}" ></th >
+                </tr >
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
