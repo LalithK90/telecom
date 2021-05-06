@@ -127,6 +127,7 @@ public class SupplierItemController {
     List< SupplierItem > supplierItems = supplier.getSupplierItems();
     for ( SupplierItem supplierItem : supplierItems ) {
       SupplierItem supplierItemOne = new SupplierItem();
+
       if ( supplierItem.getId() != null ) {
         supplierItemOne.setId(supplierItem.getId());
       }
@@ -134,6 +135,8 @@ public class SupplierItemController {
         supplierItemOne.setSupplier(supplierService.findById(supplierItem.getSupplier().getId()));
         supplierItemOne.setItem(itemService.findById(supplierItem.getItem().getId()));
         supplierItemOne.setPrice(supplierItem.getPrice());
+        supplierItemOne.setItemSupplierStatus(supplierItem.getItemSupplierStatus());
+        supplierItemOne.setLiveDead(supplierItem.getLiveDead());
       }
       supplierItemService.persist(supplierItemOne);
     }
